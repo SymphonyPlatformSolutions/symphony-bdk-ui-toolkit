@@ -1,0 +1,31 @@
+{
+  "name": "sms-sdk-toolbox-ui",
+  "version": "1.0.0",
+  "description": "Package with component-based development of SMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui/issues"
+  },
+  "homepage": "https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
