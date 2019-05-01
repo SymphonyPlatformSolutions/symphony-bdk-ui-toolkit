@@ -3,6 +3,7 @@
 
 // Base
 @import './typography';
+@import './modal';
 
 // Components 
 @import './components/button';
@@ -13,3 +14,4 @@
 @import './components/tabs';
 @import './components/danger-action-confirmation';
 @import './components/table';
+@import './components/message-box';

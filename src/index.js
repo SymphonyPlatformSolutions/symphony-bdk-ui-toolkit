@@ -16,6 +16,7 @@ import TableHeaderItem from './components/table/table-header-item';
 import TableHeader from './components/table/table-header';
 import TableItem from './components/table/table-item';
 import TableRow from './components/table/table-row';
+import MessageBox from './components/message-box/message-box';
 
 export {
   Button,
@@ -35,4 +36,5 @@ export {
   TableHeader,
   TableItem,
   TableRow,
+  MessageBox,
 };
