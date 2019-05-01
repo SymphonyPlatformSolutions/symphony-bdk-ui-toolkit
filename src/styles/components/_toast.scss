@@ -28,6 +28,11 @@ $toast-border-radius: 0.3rem;
     position: absolute;
   }
 
+  &--message {
+    background-color: $color-white;
+    border: 1px solid $color-message;
+  }
+
   &--success {
     background-color: $color-success;
   }
@@ -71,6 +76,10 @@ $toast-border-radius: 0.3rem;
       color: $color-info;
     }
 
+    &--message {
+      color: $color-white;
+    }
+
     &--warning {
       color: $color-warning;
     }
@@ -81,11 +90,18 @@ $toast-border-radius: 0.3rem;
     width: 1.5rem;
     border-radius: 50%;
     height: 1.5rem;
-    background-color: white;
     text-align: center;
     vertical-align: middle;
     align-items: center;
     justify-content: center;
+
+    &--light {
+      background-color: $color-message;
+    }
+
+    &--dark {
+      background-color: $color-white;
+    }
   }
 
   &__text {
@@ -94,7 +110,14 @@ $toast-border-radius: 0.3rem;
     align-self: center;
     justify-self: start;
     text-align: start;
-    color: $color-white;
+    
+    &--light {
+      color: $color-message;
+    }
+
+    &--dark {
+      color: $color-white;
+    }
   }
 
   &__button-container {

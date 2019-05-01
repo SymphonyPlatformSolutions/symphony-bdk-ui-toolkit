@@ -52,6 +52,8 @@ $color-secondary: #161616;
 $color-main-text: #4d4d4d;
 $color-link: #1589ee;
 
+$color-general-gray: #979797;
+
 // BUTTON
 $color-button-text-color: #4a4a4a;
 $color-button-primary: #006caf;
@@ -64,6 +66,7 @@ $color-fail: #ec4d5c;
 $color-success: #56b68b;
 $color-info: #767676;
 $color-warning: #d36535;
+$color-message: $color-general-gray;
 
 // MODAL
 $color-modal-overlay: rgba(0, 0, 0, 0.6);
@@ -99,7 +102,7 @@ $color-radio-filled-disabled: #a0a0a0;
 
 // CHECKBOX
 $color-checkbox-filled: $color-primary;
-$color-checkbox-outline: #979797;
+$color-checkbox-outline: $color-general-gray;
 $color-check: $color-white;
 $color-checkbox-font-disabled: #a0a0a0;
 $color-checkbox-disabled: #f2f2f2;

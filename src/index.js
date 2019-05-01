@@ -16,6 +16,7 @@ import TableHeaderItem from './components/table/table-header-item';
 import TableHeader from './components/table/table-header';
 import TableItem from './components/table/table-item';
 import TableRow from './components/table/table-row';
+import Toast from './components/toast/toast';
 import MessageBox from './components/message-box/message-box';
 
 export {
@@ -36,5 +37,6 @@ export {
   TableHeader,
   TableItem,
   TableRow,
+  Toast,
   MessageBox,
 };

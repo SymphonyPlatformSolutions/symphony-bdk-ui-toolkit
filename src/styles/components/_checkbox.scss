@@ -35,6 +35,15 @@
   transition: background-color 0.2s ease;
 }
 
+.checkbox-label .checkbox__checkmark::after {
+  left: 4px;
+  top: 2px;
+  width: 4px;
+  height: 7px;
+  border: solid $color-check;
+  border-width: 0 2px 2px 0;
+}
+
 .checkbox__checkmark::after {
   content: "";
   position: absolute;
@@ -77,13 +86,4 @@
   transform: rotate(45deg) scale(0);
   display: block;
   opacity: 0;
-}
-
-.checkbox__checkmark::after .checkbox-label {
-  left: 4px;
-  top: 2px;
-  width: 4px;
-  height: 7px;
-  border: solid $color-check;
-  border-width: 0 2px 2px 0;
 }
