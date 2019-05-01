@@ -5,4 +5,11 @@
 @import './typography';
 
 // Components 
-@import './button';
+@import './components/button';
+@import './components/checkbox';
+@import './components/dropdown-config';
+@import './components/radio';
+@import './components/text-input';
+@import './components/tabs';
+@import './components/danger-action-confirmation';
+@import './components/table';

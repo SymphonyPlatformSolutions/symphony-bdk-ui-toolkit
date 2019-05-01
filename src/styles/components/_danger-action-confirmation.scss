@@ -1,0 +1,36 @@
+.danger-action-confirmation {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "title"
+    "message"
+    "buttons";
+
+  &__title {
+    grid-area: title;
+    justify-self: center;
+  }
+
+  &__message {
+    grid-area: message;
+    justify-self: center;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: $color-main-text;
+    text-align: center;
+  }
+
+  &__buttons {
+    grid-area: buttons;
+    justify-self: center;
+    align-self: center;
+    margin-top: 1em;
+  }
+}
+
+.danger-action-confirmation__right-button {
+  display: inline;
+  margin-left: 1.5rem;
+}

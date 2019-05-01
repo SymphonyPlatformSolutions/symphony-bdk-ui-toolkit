@@ -1,0 +1,101 @@
+.dropdown-container {
+  padding: 0.35rem 0;
+
+  & .dropdown-config__placeholder {
+    margin-left: 5px;
+    margin-top: 1px;
+    color: $color-dropdown-placeholder;
+  }
+
+  & .dropdown-config__control {
+    width: 100%;
+    height: 2.1rem;
+    min-height: initial;
+    border-color: $color-dropdown-border;
+    box-shadow: $color-dropdown-border;
+    border-radius: 0.2rem;
+
+    &:hover {
+      border-color: $color-dropdown-border-focused;
+      box-shadow: none;
+    }
+  }
+
+  & .dropdown-config__indicators {
+    height: 100%;
+  }
+
+  & .dropdown-config__value-container--has-value {
+    background: $color-background-selected;
+
+    & + .dropdown-config__indicators {
+      background: $color-background-selected;
+    }
+  }
+
+  & .dropdown-config__control--is-disabled {
+    background-color: $color-dropdown-disabled;
+
+    & .dropdown-config__value-container--has-value {
+      background: $color-dropdown-disabled;
+    }
+  }
+
+  & .dropdown-config__option {
+    background-color: none;
+    cursor: pointer;
+
+    &.dropdown-config__option--is-focused {
+      background-color: $color-dropdown-option-background;
+      color: $color-black;
+    }
+  }
+
+  & .dropdown-config__indicator-separator {
+    margin: 0;
+    width: 2px;
+    background-color: $color-dropdown-border;
+  }
+
+  & .dropdown-config__menu {
+    margin: 0;
+    top: 89%;
+    border-radius: 0.2rem;
+  }
+
+  & .dropdown-config__value-container {
+    height: 100%;
+  }
+
+  & .dropdown-config__indicator {
+    color: $color-icons;
+
+    &:hover {
+      color: $color-icons;
+    }
+  }
+}
+
+.dropdown-custom-indicator {
+  height: 100%;
+  width: 2rem;
+  justify-content: center;
+  background: $color-white;
+  display: flex;
+  color: $color-icons;
+}
+
+.dropdown-custom-indicator--is-disabled {
+  background-color: $color-dropdown-disabled;
+}
+
+.dropdown-custom-indicator__icon-container {
+  align-self: center;
+  transition: all 0.3s ease;
+  margin-top: 4px;
+
+  &.dropdown-menu-is-open {
+    margin-top: 0;
+    transform: rotate(90deg) translateY(2px);
+  }
+}

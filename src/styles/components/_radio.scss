@@ -1,0 +1,93 @@
+.radio-input {
+  visibility: hidden;
+  position: absolute;
+  left: -1px;
+  top: -2px;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.radio-label {
+  position: relative;
+  padding-left: 1.4rem;
+  cursor: pointer;
+  line-height: 0.9rem;
+  display: inline-block;
+
+  &--disabled {
+    cursor: default;
+  }
+}
+
+.radio-input:checked::after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.radio-input:not(:checked)::after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.radio-input:checked::before {
+  visibility: visible;
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid $color-radio-selected;
+  border-radius: 100%;
+  background: $color-radio-background;
+}
+
+.radio-input:not(:checked)::before {
+  visibility: visible;
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid $color-radio-border;
+  border-radius: 100%;
+  background: $color-radio-background;
+}
+
+.radio-input:disabled:checked::before {
+  border: 2px solid $color-radio-filled-disabled;
+  background: $color-radio-disabled;
+}
+
+.radio-input:disabled:not(:checked)::before {
+  background: $color-radio-disabled;
+}
+
+.radio-container {
+  margin: 0.5rem 0;
+}
+
+.radio-input:checked::after,
+.radio-input:not(:checked)::after {
+  visibility: visible;
+  content: '';
+  left: 1px;
+  top: 1px;
+  width: 8px;
+  height: 8px;
+  background: $color-radio-selected;
+  position: absolute;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.radio-input:disabled:checked::after,
+.radio-input:disabled:not(:checked)::after {
+  background: $color-radio-filled-disabled;
+}
