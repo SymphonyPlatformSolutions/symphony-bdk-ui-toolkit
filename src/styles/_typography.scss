@@ -5,11 +5,54 @@ textarea {
   color: $font-grey;
 }
 
-p,
 span,
-div,
+div {
+  font-size: 0.87rem;
+}
+
 a {
-  font-size: 0.85rem;
+  font-size: 0.87rem;
+  color: $color-link;
+  text-decoration: none;
+  
+  &:hover {
+    color: $color-link;
+    text-decoration: underline;
+  }
+}
+
+p {
+  color: $color-main-text;
+  font-size: 0.87rem;
+}
+
+h1 {
+  color: $color-main-text;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2 {
+  color: $color-main-text;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h3 {
+  color: $color-main-text;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+h4 {
+  color: $color-main-text;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+h5 {
+  color: $color-main-text;
+  font-weight: bold;
 }
 
 .modal-title {

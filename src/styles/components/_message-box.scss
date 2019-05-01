@@ -1,0 +1,27 @@
+.message-box {
+  display: flex;
+  border: 1px solid;
+  border-radius: .2rem;
+  padding: .5rem;
+  align-items: center;
+
+  &--default {
+    border-color: $color-checkbox-outline;
+  }
+}
+
+.message-box__icon {
+  font-size: 1.3rem;
+  margin-right: .5rem;
+  &--default{
+    color: $color-checkbox-outline;
+  }
+}
+
+.message-box__message {
+  font-size: .8rem;
+  text-align: left;
+  &--default {
+    color: $color-checkbox-outline;
+  }
+}
