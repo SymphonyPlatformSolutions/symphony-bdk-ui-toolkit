@@ -1,0 +1,117 @@
+/*
+  COLORS
+*/
+$color-white: #fff;
+$color-almost-white: rgba(153, 153, 153, 0.4);
+$color-grey-white: #fbfbfb;
+$color-black: #000;
+$color-red: #d50935;
+
+$color-grey-dark: #323232;
+$color-grey-medium: #4a4a4a;
+$color-greyish-two: #a3a3a3;
+$color-grey-light: #b2b2b2;
+$color-pinkish-grey: #bdbdbd;
+$color-charcoal-grey: #2f3237;
+$color-grey-lighter: #e1e1e1;
+$color-disabled-grey: #949494;
+$color-warm-grey-40: rgba(153, 153, 153, 0);
+$color-greyish-brown: #68696b;
+$color-greyish-black: #3b3e45;
+$color-greyish-black-light: #6a707c;
+
+$color-teal-blue: #00a4b1;
+$color-dodger-blue: #3ca2fd;
+$color-cerulean: #007ecc;
+$color-cerulean-blue: #0962f1;
+$color-ocean-blue: #006caf;
+
+$color-dodger-blue-three: #46abf3;
+$color-light-blue-grey: #cce0ef;
+
+$color-cherry: #d50935;
+$color-dark-red: #b0072c;
+$color-lipstick: #d4172d;
+$color-light-peach: #ffc2c2;
+
+$color-issue-opened: #1aaa55;
+$color-issue-updated: #c3b74d;
+$color-issue-closed: #c63838;
+$color-issue-reopened: #489164;
+
+$color-dropdown-placeholder: $color-greyish-black;
+$color-dropdown-border: #9fa4ad;
+$color-dropdown-border-focused: #323232;
+$color-dropdown-option-background: #ebebeb;
+$color-dropdown-option-selected-background: #e3e5e8;
+$color-dropdown-option-selected-color: $color-white;
+
+$color-primary: #006caf;
+$color-secondary: #161616;
+
+$color-main-text: #4d4d4d;
+$color-link: #1589ee;
+
+// BUTTON
+$color-button-text-color: #4a4a4a;
+$color-button-primary: #006caf;
+$color-button-danger: #d0021b;
+$color-button-disable-light: #d6d8dc;
+$color-button-disable-dark: #9197a1;
+
+//TOAST
+$color-fail: #ec4d5c;
+$color-success: #56b68b;
+$color-info: #767676;
+$color-warning: #d36535;
+
+// MODAL
+$color-modal-overlay: rgba(0, 0, 0, 0.6);
+
+// FONTS
+$font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif;
+$font-grey: #4d4d4d;
+$heading-font-family-bold: Lato-Bold;
+$heading-5: #b2b2b2;
+
+// INPUT
+$input-border-color: #dce1ea;
+$input-placeholder-color: #a6b1c2;
+$input-disabled-color: #f9fafc;
+
+// DROPDOWN
+$color-dropdown-border: #dce1ea;
+$color-dropdown-border-focused: #dce1ea;
+$color-dropdown-option-background: #ebebeb;
+$color-dropdown-option-selected-background: #e3e5e8;
+$color-dropdown-option-selected-color: $color-white;
+$color-dropdown-placeholder: #a6b1c2;
+$color-background-selected: $color-white;
+$color-icons: $color-black;
+$color-dropdown-disabled: #f9fafc;
+
+// RADIO
+$color-radio-selected: $color-primary;
+$color-radio-border: #dce1ea;
+$color-radio-background: $color-white;
+$color-radio-disabled: #f2f2f2;
+$color-radio-filled-disabled: #a0a0a0;
+
+// CHECKBOX
+$color-checkbox-filled: $color-primary;
+$color-checkbox-outline: #979797;
+$color-check: $color-white;
+$color-checkbox-font-disabled: #a0a0a0;
+$color-checkbox-disabled: #f2f2f2;
+$color-checkbox-filled-disabled: #a0a0a0;
+
+// TABLE
+$color-table-header-background: #f6f6f6;
+$color-table-header-border: #e6eaf0;
+$color-table-empty: $color-grey-white;
+
+/*
+  FONTS
+*/
+$heading-font-family: Lato;
+$heading-font-family-bold: Lato-Bold;
