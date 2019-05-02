@@ -47,6 +47,7 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-select": "^2.4.3",
-    "react-spinners": "^0.5.4"
+    "react-spinners": "^0.5.4",
+    "styled-components": "^4.2.0"
   }
 }
