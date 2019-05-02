@@ -1,6 +1,6 @@
 const path = require('path');
 
-const config = {
+module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist/'),
@@ -19,5 +19,3 @@ const config = {
     ],
   },
 };
-
-module.exports = config;
