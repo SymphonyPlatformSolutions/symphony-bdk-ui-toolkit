@@ -3,7 +3,9 @@ import Button from '../src/components/button/button';
 
 const ExamplePage = () => (
   <div>
-    <Button />
+    <Button>
+      My Button
+    </Button>
   </div>
 );
 
