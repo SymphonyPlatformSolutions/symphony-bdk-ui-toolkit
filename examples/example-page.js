@@ -1,13 +1,17 @@
 import React from 'react';
-import Button from '../src/components/button/button';
+import Button from '../src/base/button/button';
+
+const styles = {
+  color: 'red',
+  fontSize: '10px',
+};
 
 const ExamplePage = () => (
   <div>
     <Button
-      color="primary"
-      typeButton="raised"
+      styles={styles}
     >
-      My Button
+      With in Line
     </Button>
   </div>
 );
