@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { colorPrimary, colorWhite } from '../../styled-utils/colors';
+import { colorPrimary, colorWhite } from '../../colors/colors';
 
 const primaryStyle = css`
   background-color: ${colorWhite};
