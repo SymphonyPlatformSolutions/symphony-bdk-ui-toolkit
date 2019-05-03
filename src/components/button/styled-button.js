@@ -1,4 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { colorPrimary, colorWhite } from '../../styled-utils/colors';
+
+const primaryStyle = css`
+  background-color: ${colorWhite};
+  color: ${colorPrimary};
+`;
+
+const styles = props => '';
 
 const StyledButton = styled.button`
   font-size: 0.75rem;
@@ -9,6 +17,11 @@ const StyledButton = styled.button`
   padding: 0.4rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease-in;
+  width: ${props => (props.fill ? '100%' : '')}
+
+  /* Button Outline Primary */
+  /* ${console.log(primaryStyle)} */
+  ${props => props.color === 'primary' && primaryStyle}
 `;
 
 export { StyledButton };

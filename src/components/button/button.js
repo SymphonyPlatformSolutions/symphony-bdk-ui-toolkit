@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyledButton } from './styled-button';
 
 class Button extends React.PureComponent {
   executePress = (e) => {
@@ -15,22 +16,28 @@ class Button extends React.PureComponent {
     } = this.props;
 
     return (
-      <button
-        type={!typeButton ? 'button' : typeButton}
-        onClick={onClick ? this.executePress : null}
-        className={
-          `${disable
-            ? `${className || ''} btn btn-${type}--disable`
-            : `${className || ''} btn btn-${type}--${color}`
-          } ${fill ? 'btn--fill' : ''}`
-          }
-        disabled={disable || isLoading}
+      <StyledButton
+        color={color}
+        buttonType={typeButton}
       >
-        <div className="button-content">
-          <span className={isLoading ? 'button-text--hide' : ''}>{children}</span>
-          {isLoading ? <div className="button-loading">{loadingComponent}</div> : null}
-        </div>
-      </button>
+        {children}
+      </StyledButton>
+    //   <button
+    //     type={!typeButton ? 'button' : typeButton}
+    //     onClick={onClick ? this.executePress : null}
+    //     className={
+    //       `${disable
+    //         ? `${className || ''} btn btn-${type}--disable`
+    //         : `${className || ''} btn btn-${type}--${color}`
+    //       } ${fill ? 'btn--fill' : ''}`
+    //       }
+    //     disabled={disable || isLoading}
+    //   >
+    //     <div className="button-content">
+    //       <span className={isLoading ? 'button-text--hide' : ''}>{children}</span>
+    //       {isLoading ? <div className="button-loading">{loadingComponent}</div> : null}
+    //     </div>
+    //   </button>
     );
   }
 }

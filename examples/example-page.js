@@ -3,7 +3,10 @@ import Button from '../src/components/button/button';
 
 const ExamplePage = () => (
   <div>
-    <Button>
+    <Button
+      color="primary"
+      typeButton="raised"
+    >
       My Button
     </Button>
   </div>
