@@ -23,12 +23,16 @@ const executePress = (e) => {
 };
 
 const Button = (props) => {
-  const { children, onClick } = props;
+  const { children, onClick, styles } = props;
+
+  const overrideStyle = {
+    ...baseButtonstyles, ...styles,
+  };
 
   return (
     <button
       type="button"
-      style={baseButtonstyles}
+      style={styles ? overrideStyle : baseButtonstyles}
       onClick={onClick ? executePress : null}
     >
       {children}
