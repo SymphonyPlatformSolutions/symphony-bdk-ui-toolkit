@@ -1,6 +1,6 @@
-$toast-border-radius: 0.3rem;
+$message-border-radius: 0.3rem;
 
-.toast {
+.message {
   display: grid;
   grid-template-areas: 'logo text button';
   grid-template-columns: 2.6rem auto auto;
@@ -10,7 +10,7 @@ $toast-border-radius: 0.3rem;
   max-width: 28rem;
   min-width: 17rem;
   min-height: 2.2rem;
-  border-radius: $toast-border-radius;
+  border-radius: $message-border-radius;
   list-style-type: none;
   transform: translateX(-50%);
 
@@ -53,8 +53,8 @@ $toast-border-radius: 0.3rem;
     grid-area: logo;
     display: grid;
     font-weight: bold;
-    border-top-left-radius: $toast-border-radius;
-    border-bottom-left-radius: $toast-border-radius;
+    border-top-left-radius: $message-border-radius;
+    border-bottom-left-radius: $message-border-radius;
     justify-content: center;
     align-content: center;
   }
@@ -133,7 +133,7 @@ $toast-border-radius: 0.3rem;
   }
 }
 
-.toast__button-close {
+.message__button-close {
   margin: 2px 4px 0 0;
   border: none;
   background: none;
