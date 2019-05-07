@@ -18,6 +18,7 @@ import TableItem from './components/table/table-item';
 import TableRow from './components/table/table-row';
 import Toast from './components/toast/toast';
 import MessageBox from './components/message-box/message-box';
+import Collapsible from './components/collapsible/collapsible';
 
 export {
   Button,
@@ -39,4 +40,5 @@ export {
   TableRow,
   Toast,
   MessageBox,
+  Collapsible,
 };

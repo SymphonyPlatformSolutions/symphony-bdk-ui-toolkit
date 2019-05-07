@@ -1,0 +1,38 @@
+.collapsible {
+  padding-top: 0.4rem;
+
+  &__header {
+    cursor: pointer;
+    display: grid;
+    grid-template-areas: 'collapsible-chevron collapsible-title';
+    grid-template-columns: 1.4rem;
+    color: $color-collapsible-font;
+    background-color: $color-white;
+    transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+    padding: 0.4rem;
+  }
+
+  &__title {
+    grid-area: collapsible-title;
+    padding-left: 0.4rem;
+    margin: 0;
+  }
+
+  &__chevron {
+    grid-area: collapsible-chevron;
+    font-size: 1rem;
+    align-self: center;
+    justify-self: center;
+
+    -webkit-transition: -webkit-transform .2s;
+    -ms-transition: -ms-transform .2s;
+    transition: transform .2s;
+
+    &--open {
+      transform:rotate(90deg);
+      -ms-transform:rotate(90deg);
+      -webkit-transform:rotate(90deg);
+    }
+  }
+}
