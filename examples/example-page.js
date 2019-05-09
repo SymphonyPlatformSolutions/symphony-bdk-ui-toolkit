@@ -1,19 +1,25 @@
-import React from 'react';
-import Button from '../src/base/button/button';
-
-const styles = {
-  color: 'red',
-  fontSize: '10px',
-};
+import React from 'react'
+import styled from 'styled-components'
+import Button from '../src/base/button/button'
 
 const ExamplePage = () => (
   <div>
-    <Button
-      styles={styles}
-    >
-      With in Line
+    <Button>
+      Button
+    </Button>
+    <Button danger>
+      TomatoButton
+    </Button>
+    <Button small>
+      Small
+    </Button>
+    <Button medium>
+      Medium
+    </Button>
+    <Button large>
+      Large
     </Button>
   </div>
-);
+)
 
-export { ExamplePage };
+export { ExamplePage }
