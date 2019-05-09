@@ -1,5 +1,4 @@
 import React from 'react';
-// import color from 'color';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { colors } from '../../../styles/colors';

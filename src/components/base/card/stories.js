@@ -6,7 +6,6 @@ import { action } from '@storybook/addon-actions';
 import Card from '.';
 import Box from '../Box';
 import Text from '../Text';
-import { colors } from '../../../styles/colors';
 
 storiesOf('Base', module)
   .add('Card', () => (
