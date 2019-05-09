@@ -30,6 +30,10 @@ module.exports = {
     ],
   },
 
+  // resolve: {
+  //   symlinks: false,
+  // },
+
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
