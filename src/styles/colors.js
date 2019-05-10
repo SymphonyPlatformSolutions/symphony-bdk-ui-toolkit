@@ -12,6 +12,7 @@ const colors = {
   fontColor: '#626365',
   inputDanger: '#c64542',
   disabled: '#cecece',
+  inputBorder: '#d2d3d8',
   inputPlaceHolder: '#b3b3b4',
   inputTextDisabled: '#62636b',
 };
