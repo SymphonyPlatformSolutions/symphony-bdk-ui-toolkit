@@ -5,23 +5,35 @@ import { colors } from '../../../styles/colors';
 
 const PADDING = {
   tiny: '3px 10px',
-  small: '5px 15px',
-  large: '5px 20px',
+  small: '5px 10px',
+  large: '8px 10px',
 };
 const FONTSIZE = {
-  tiny: '10px',
-  small: '16px',
-  large: '24px',
+  tiny: '12px',
+  small: '14px',
+  large: '16px',
 };
-const FONTTITLE = {
+const FONTSIZETITLE = {
+  tiny: '12px',
+  small: '16px',
+  large: '18px',
+};
+const LINEHEIGHT = {
+  tiny: '16px',
+  small: '16px',
+  large: '20px'
+};
+const LINEHEIGHTTITLE = {
   tiny: '14px',
-  small: '22px',
-  large: '28px',
+  small: '16px',
+  large: '24px'
 };
 
-const getTextColor = () => colors.darkgrey;
+const getTextColor = (title, size) => (title || size!=='tiny' ? colors.darkgrey : colors.lightgrey);
 const getPadding = size => PADDING[size];
-const getFontSize = (title, size) => (title ? FONTTITLE[size] : FONTSIZE[size]);
+const getFontStyle = (title, size) => (title || size!=='tiny' ? 'normal' : 'italic');
+const getFontSize = (title, size) => (title ? FONTSIZETITLE[size] : FONTSIZE[size]);
+const getLineHeight = (title, size) => (title ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = title => (title ? '900' : '400');
 const getBorderBottom = (title, size) => (title ? ((size === 'large') ? '1px #E6E6E6 solid' : '0px') : '0px');
 
@@ -54,10 +66,12 @@ export default Text;
 
 const BaseText = styled.div.attrs({
 })`
+  color: ${p => getTextColor(p.title, p.size)};
   font-family: 'Lato', sans-serif;
-  color: ${p => getTextColor()};;
+  font-style: ${p => getFontStyle(p.title, p.size)};
   font-size: ${p => getFontSize(p.title, p.size)};
   font-weight: ${p => getFontWeight(p.title)};
+  line-height: ${p => getLineHeight(p.title, p.size)};
   padding: ${p => getPadding(p.size)};
   border-bottom: ${p => getBorderBottom(p.title, p.size)};
   margin-top: 10px;
