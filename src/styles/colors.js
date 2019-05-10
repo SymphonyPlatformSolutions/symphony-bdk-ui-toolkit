@@ -1,10 +1,10 @@
 const colors = {
   white: '#fff',
   darkgrey: '#4A4A4A',
-  danger: '#CC4545',
-  warning: '#D36535',
-  success: '#56B68B',
-  primary: '#459af7'
+  lightgrey: '#979797',
+  caution: '#CD4747',
+  cta: '#57B68B',
+  system: '#006CAF'
 };
 
 export { colors };

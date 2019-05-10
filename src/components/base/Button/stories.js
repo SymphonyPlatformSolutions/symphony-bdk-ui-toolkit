@@ -15,46 +15,46 @@ storiesOf('Base', module)
       <Box>
         <Text title size="large">Button types</Text>
         <Box horizontal space={20}>
-          <Button size="large" type="primary" fill onClick={action('clicked')}>
-            <span>Primary</span>
+          <Button size="large" type="cta" fill onClick={action('clicked')}>
+            <span>CTA</span>
           </Button>
-          <Button size="large" type="danger" fill onClick={action('clicked')}>
-            <span>Danger</span>
+          <Button size="large" type="caution" fill onClick={action('clicked')}>
+            <span>Caution</span>
           </Button>
-          <Button size="large" type="warning" fill onClick={action('clicked')}>
-            <span>Warning</span>
+          <Button size="large" type="system" fill onClick={action('clicked')}>
+            <span>System</span>
           </Button>
-          <Button size="large" type="success" fill onClick={action('clicked')}>
-            <span>Success</span>
+          <Button size="large" type="darkgrey" ghost onClick={action('clicked')}>
+            <span>GHOST</span>
+          </Button>
+          <Button size="large" type="caution" ghost onClick={action('clicked')}>
+            <span>GHOST</span>
           </Button>
         </Box>
       </Box>
       <Box>
         <Text title size="large">Outlined buttons</Text>
         <Box horizontal space={20}>
-          <Button size="large" type="primary" onClick={action('clicked')}>
-            <span>Primary</span>
+          <Button size="large" type="cta" onClick={action('clicked')}>
+            <span>CTA</span>
           </Button>
-          <Button size="large" type="danger" onClick={action('clicked')}>
-            <span>Danger</span>
+          <Button size="large" type="caution" onClick={action('clicked')}>
+            <span>Caution</span>
           </Button>
-          <Button size="large" type="warning" onClick={action('clicked')}>
-            <span>Warning</span>
-          </Button>
-          <Button size="large" type="success" onClick={action('clicked')}>
-            <span>Success</span>
+          <Button size="large" type="system" onClick={action('clicked')}>
+            <span>System</span>
           </Button>
         </Box>
         <Box>
           <Text title size="large">Button size</Text>
           <Box horizontal space={20} align="center">
-            <Button size="large" type="primary" fill onClick={action('clicked')}>
+            <Button size="large" type="cta" fill onClick={action('clicked')}>
               <span>Large</span>
             </Button>
-            <Button size="small" type="danger" onClick={action('clicked')}>
+            <Button size="small" type="caution" onClick={action('clicked')}>
               <span>Small</span>
             </Button>
-            <Button size="tiny" type="success" onClick={action('clicked')}>
+            <Button size="tiny" type="system" onClick={action('clicked')}>
               <span>Tiny</span>
             </Button>
           </Box>
@@ -63,13 +63,13 @@ storiesOf('Base', module)
       <Box>
         <Text title size="large">Async loader</Text>
         <Box horizontal space={20} align="center">
-          <Button size="large" type="primary" fill onClick={asyncAction}>
+          <Button size="large" type="cta" fill onClick={asyncAction}>
             <span>Next</span>
           </Button>
-          <Button size="large" type="danger" onClick={asyncAction}>
+          <Button size="large" type="caution" onClick={asyncAction}>
             <span>Delete</span>
           </Button>
-          <Button size="small" fill type="success" onClick={asyncAction}>
+          <Button size="small" fill type="system" onClick={asyncAction}>
             <span>Submit</span>
           </Button>
         </Box>
@@ -77,17 +77,17 @@ storiesOf('Base', module)
       <Box>
         <Text title size="large">Disabled buttons</Text>
         <Box horizontal space={20} align="center">
-          <Button size="large" type="primary" fill disabled onClick={asyncAction}>
+          <Button size="large" type="cta" fill disabled onClick={asyncAction}>
             <span>Disabled</span>
           </Button>
-          <Button size="large" type="danger" disabled onClick={asyncAction}>
+          <Button size="large" type="caution" disabled onClick={asyncAction}>
             <span>Disabled</span>
           </Button>
-          <Button size="small" type="warning" fill disabled onClick={asyncAction}>
+          <Button size="small" type="system" fill disabled onClick={asyncAction}>
             <span>Disabled</span>
           </Button>
-          <Button size="tiny" type="success" disabled onClick={asyncAction}>
-            <span>Disabled</span>
+          <Button size="large" type="darkgrey" disabled ghost onClick={action('clicked')}>
+            <span>DISABLED</span>
           </Button>
         </Box>
       </Box>
