@@ -5,19 +5,21 @@ import colors from '../../../styles/colors';
 
 const InputField = (props) => {
   const {
-    blur, disabled, inputType, name, onChange, placeholder, values,
+    blur, disabled, inputType, isRequire, messageRequired, name, onChange, placeholder, values,
+
   } = props;
 
   return (
     <BaseInputField
-      type="text"
-      name={name || undefined}
       blur={blur || undefined}
-      inputType={inputType}
-      value={values}
-      placeholder={placeholder}
-      onChange={onChange}
       disabled={disabled}
+      isRequire={isRequire}
+      inputType={inputType}
+      name={name || undefined}
+      onChange={onChange}
+      placeholder={placeholder}
+      type="text"
+      value={values}
     />
   );
 };
@@ -26,6 +28,8 @@ InputField.propTypes = {
   blur: PropTypes.string,
   disabled: PropTypes.bool,
   inputType: PropTypes.string,
+  isRequire: PropTypes.bool,
+  messageRequired: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   values: PropTypes.string,
@@ -36,12 +40,13 @@ InputField.defaultProps = {
   blur: undefined,
   disabled: false,
   inputType: '',
+  isRequire: false,
   name: undefined,
+  messageRequired: 'Enter a valid input',
   placeholder: 'Input text here...',
   values: '',
 };
 
-// const getColor = (type => )
 
 const BaseInputField = styled.input`
   font-family: 'Lato', sans-serif;
@@ -51,6 +56,11 @@ const BaseInputField = styled.input`
   border: 1px solid #d2d3d8;
   width: 100%;
   padding: .6rem .75rem .6rem .75rem;
+  cursor: ${props => (props.disabled ? 'default' : 'text')};
+
+  &:disabled {
+    background-color: {$}
+  }
 
   &:focus {
     outline: none;
