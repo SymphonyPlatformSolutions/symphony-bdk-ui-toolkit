@@ -12,6 +12,8 @@ const colors = {
   fontColor: '#626365',
   inputDanger: '#c64542',
   disabled: '#cecece',
+  inputPlaceHolder: '#b3b3b4',
+  inputTextDisabled: '#62636b',
 };
 
 export { colors };
