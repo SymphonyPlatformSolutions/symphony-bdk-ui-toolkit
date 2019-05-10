@@ -4,11 +4,19 @@ import { action } from '@storybook/addon-actions';
 import Box from '../Box';
 import TextField from './TextField';
 
-const []
+const [input, setInput] = useState('');
+
+function handleInput(e) {
+  setInput(e.target.value);
+}
 
 storiesOf('Base', module)
   .add('Input', () => (
     <Box>
-      <TextField />
+      <TextField
+        value={input}
+        onChange={handleInput}
+        placeholder="Enter a Text Here!"
+      />
     </Box>
   ));

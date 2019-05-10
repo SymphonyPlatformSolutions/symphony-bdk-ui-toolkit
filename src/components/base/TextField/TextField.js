@@ -5,7 +5,7 @@ import { colors } from '../../../styles/colors';
 
 const InputField = (props) => {
   const {
-    blur, disabled, type, name, onChange, placeholder, values,
+    blur, disabled, type, name, onChange, placeholder, value,
 
   } = props;
 
@@ -17,7 +17,7 @@ const InputField = (props) => {
       onChange={onChange}
       placeholder={placeholder}
       type={type === 'password' ? type : 'text'}
-      value={values}
+      value={value}
     />
   );
 };
@@ -28,7 +28,7 @@ InputField.propTypes = {
   name: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  values: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
@@ -38,7 +38,7 @@ InputField.defaultProps = {
   name: undefined,
   placeholder: 'Input text here...',
   type: '',
-  values: '',
+  value: '',
 };
 
 export default InputField;
