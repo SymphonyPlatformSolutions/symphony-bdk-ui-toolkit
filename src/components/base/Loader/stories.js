@@ -13,11 +13,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={15}
-            color={colors.danger}
+            color={colors.caution}
           />
           <Loader
             size={35}
-            color={colors.danger}
+            color={colors.caution}
           />
         </Box>
       </Box>
@@ -26,11 +26,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={25}
-            color={colors.success}
+            color={colors.cta}
           />
           <Loader
             size={25}
-            color={colors.primary}
+            color={colors.cta}
           />
         </Box>
       </Box>

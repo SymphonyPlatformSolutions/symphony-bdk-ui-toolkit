@@ -15,8 +15,8 @@ const FONTSIZE = {
 };
 const FONTSIZETITLE = {
   tiny: '12px',
-  small: '16px',
-  large: '18px',
+  small: '18px',
+  large: '24px',
 };
 const LINEHEIGHT = {
   tiny: '16px',
@@ -25,26 +25,26 @@ const LINEHEIGHT = {
 };
 const LINEHEIGHTTITLE = {
   tiny: '14px',
-  small: '16px',
-  large: '24px'
+  small: '20px',
+  large: '29px'
 };
 
-const getTextColor = (title, size) => (title || size!=='tiny' ? colors.darkgrey : colors.lightgrey);
+const getTextColor = (title, size) => (title || size!=='tiny' ? colors.darkgrey : colors.grey);
 const getPadding = size => PADDING[size];
 const getFontStyle = (title, size) => (title || size!=='tiny' ? 'normal' : 'italic');
 const getFontSize = (title, size) => (title ? FONTSIZETITLE[size] : FONTSIZE[size]);
 const getLineHeight = (title, size) => (title ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = title => (title ? '900' : '400');
-const getBorderBottom = (title, size) => (title ? ((size === 'large') ? '1px #E6E6E6 solid' : '0px') : '0px');
+const getBorderBottom = (underline) => (underline ? '1px ' + colors.lightgrey + ' solid' : '0px');
 
 class Text extends React.PureComponent {
   render() {
     const {
-      children, title, size, ...rest
+      children, title, size, underline, ...rest
     } = this.props;
 
     return (
-      <BaseText title={title} size={size} {...rest}>
+      <BaseText title={title} size={size} underline={underline} {...rest}>
         {children}
       </BaseText>
     );
@@ -54,12 +54,13 @@ class Text extends React.PureComponent {
 Text.propTypes = {
   title: PropTypes.bool,
   size: PropTypes.string,
+  underline: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 
 Text.defaultProps = {
   title: false,
-  size: 'large',
+  size: 'large'
 };
 
 export default Text;
@@ -73,7 +74,7 @@ const BaseText = styled.div.attrs({
   font-weight: ${p => getFontWeight(p.title)};
   line-height: ${p => getLineHeight(p.title, p.size)};
   padding: ${p => getPadding(p.size)};
-  border-bottom: ${p => getBorderBottom(p.title, p.size)};
+  border-bottom: ${p => getBorderBottom(p.underline)};
   margin-top: 10px;
   margin-bottom: 10px;
 `;

@@ -15,6 +15,9 @@ storiesOf('Base', module)
         <Card title="Card with title">
           <Text size="small">Lorem ipsum dolor</Text>
         </Card>
+        <Card>
+          <Text size="small">Card without title</Text>
+        </Card>
       </Box>
     </Box>
   ));

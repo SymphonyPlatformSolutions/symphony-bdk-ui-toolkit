@@ -36,6 +36,7 @@ const BaseBox = styled.div`
   justify-content: ${p => p.justify};
   align-items: ${p => p.align};
   padding: ${padding};
+  background: ${p => p.bg};
   ${space};
 `;
 export default Box;
@@ -47,6 +48,7 @@ Box.propTypes = {
   justify: PropTypes.string,
   grow: PropTypes.string,
   space: PropTypes.number,
+  bg: PropTypes.string,
   p: PropTypes.number,
 };
 Box.defaultProps = {
@@ -56,5 +58,6 @@ Box.defaultProps = {
   justify: 'flex-start',
   grow: 'initial',
   space: 0,
+  bg: 'inherit',
   p: 0,
 };
