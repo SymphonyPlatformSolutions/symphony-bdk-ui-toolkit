@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Box from '../Box'
@@ -8,67 +8,50 @@ const getTabHeaderBorder = () => '1px ' + colors.lightgrey + ' solid';
 const getTabItemBorder = (activeTab, label) => (activeTab === label ? '4px ' + colors.blue : '0px ' + colors.lightgrey);
 const getTabItemFontWeight = (activeTab, label) => (activeTab === label ? 'bold' : '100');
 const getTabItemColor = (activeTab, label) => (activeTab === label ? colors.blue : colors.darkgrey);
-const getTabItemAlign = (align) => (align==='right' ? 'right': 'left');
-const getTabHeaderIndicatorMarginLeft = (index, align) => (align==='right' ? 'calc(100% - 150px)': index * 150 + 'px');
+const getTabItemAlign = (align) => (align === 'right' ? 'right': 'left');
+const getTabHeaderIndicatorMarginLeft = (index, align) => (align === 'right' ? 'calc(100% - 150px)': index * 150 + 'px');
 
-class Tabs extends React.PureComponent {
-  constructor(props) {
-    super(props);
+export default function Tabs(props) {
 
-    this.state = {
-      activeTab: this.props.children[this.props.activeTab].props.label,
-      activeTabIndex: this.props.activeTab,
-      activeTabAlign: this.props.children[this.props.activeTab].props.align
-    };
+  const [activeTab, setActiveTab] = useState(props.children[props.activeTab].props.label);
+  const [activeTabIndex, setActiveTabIndex] = useState(props.activeTab)
+  const [activeTabAlign, setActiveTabAlign] = useState(props.children[props.activeTab].props.align)
+
+  const onClickTabItem = (label, index, align) => {
+    setActiveTab(label);
+    setActiveTabIndex(index);
+    setActiveTabAlign(align);
   }
 
-  onClickTabItem = (label, index, align) => {
-    this.setState({
-      activeTab: label,
-      activeTabIndex: index,
-      activeTabAlign: align
-    });
-  }
+  const {
+    children,
+    ...rest
+  } = props;
 
-  render() {
-    const {
-      onClickTabItem,
-      props: {
-        children,
-        ...rest
-      },
-      state: {
-        activeTab,
-        activeTabIndex,
-        activeTabAlign
-      }
-    } = this;
-
-    return (
-      <BaseTabs {...rest}>
-        <Box horizontal>
-          <TabHeader>
-            {children.map((child, index) => {
-              const { label, align } = child.props;
-              return (
-                <TabHeaderItem key={label} label={label} activeTab={activeTab} align={align}
-                  onClick={() => onClickTabItem(label, index, align)}>
-                  <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
-                </TabHeaderItem>
-              );
-            })}
-            <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign}></TabHeaderIndicator>
-          </TabHeader>
-        </Box>
-        <Box horizontal>
-          {children.map((child) => {
-            if (child.props.label !== activeTab) return undefined;
-            return child.props.children;
+  return (
+    <BaseTabs {...rest}>
+      <Box horizontal>
+        <TabHeader>
+          {children.map((child, index) => {
+            const { label, align } = child.props;
+            return (
+              <TabHeaderItem key={label} label={label} activeTab={activeTab} align={align}
+                onClick={() => onClickTabItem(label, index, align)}>
+                <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
+              </TabHeaderItem>
+            );
           })}
-        </Box>
-      </BaseTabs>
-    );
-  }
+          <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign}></TabHeaderIndicator>
+        </TabHeader>
+      </Box>
+      <Box horizontal>
+        {children.map((child) => {
+          if (child.props.label !== activeTab) return undefined;
+          return child.props.children;
+        })}
+      </Box>
+    </BaseTabs>
+  );
 }
 
 Tabs.propTypes = {
@@ -80,24 +63,19 @@ Tabs.defaultProps = {
   activeTab: 0
 };
 
-export default Tabs;
-
-const BaseTabs = styled.div.attrs({
-})`
+const BaseTabs = styled.div`
   margin-top: 0px;
   margin-bottom: 0px;
   width: 100%;
 `;
 
-const TabHeader = styled.ol.attrs({
-})`
+const TabHeader = styled.ol`
   padding-left: 0;
   width: 100%;
   border-bottom: ${p => getTabHeaderBorder()};
 `;
 
-const TabHeaderLabel = styled.span.attrs({
-})`
+const TabHeaderLabel = styled.span`
   font-family: 'Lato', sans-serif;
   font-size: 18px;
   font-weight: ${p => getTabItemFontWeight(p.activeTab, p.label)};
@@ -106,8 +84,7 @@ const TabHeaderLabel = styled.span.attrs({
   color: ${p => getTabItemColor(p.activeTab, p.label)};
 `;
 
-const TabHeaderItem = styled.li.attrs({
-})`
+const TabHeaderItem = styled.li`
   display: inline-block;
   width: 150px;
   list-style: none;
@@ -129,5 +106,3 @@ const TabHeaderIndicator = styled.div`
   -webkit-transition: margin 0.5s ease;
   transition: margin 0.5s ease;
 `;
-
-//${p => getTabItemBorder(p.activeTab, p.label)} solid

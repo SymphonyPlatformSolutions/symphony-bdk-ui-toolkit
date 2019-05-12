@@ -3,33 +3,14 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { colors } from '../../../styles/colors';
 
-const getBorderBottom = (underline) => '1px ' + colors.lightgrey + ' solid';
+export default function Separator() {
 
-class Separator extends React.PureComponent {
-  render() {
-    const {
-      children, ...rest
-    } = this.props;
-
-    return (
-      <BaseSeparator {...rest}>
-        {children}
-      </BaseSeparator>
-    );
-  }
+  return (
+    <BaseSeparator />
+  );
 }
 
-Separator.propTypes = {
-  children: PropTypes.node
-};
-
-Separator.defaultProps = {
-};
-
-export default Separator;
-
-const BaseSeparator = styled.div.attrs({
-})`
+const BaseSeparator = styled.div`
   width: 100%;
-  border-bottom: ${p => getBorderBottom()};
+  border-bottom: 1px ${colors.lightgrey} solid;
 `;

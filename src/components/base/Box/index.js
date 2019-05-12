@@ -22,7 +22,7 @@ const padding = props => `${px(props.p)}`;
 
 const direction = props => (props.horizontal ? 'row' : 'column');
 
-function Box(props) {
+export default function Box(props) {
   console.log('props', props);
   return (
     <BaseBox {...props} />
@@ -39,7 +39,6 @@ const BaseBox = styled.div`
   background: ${p => p.bg};
   ${space};
 `;
-export default Box;
 
 Box.propTypes = {
   display: PropTypes.string,

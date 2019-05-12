@@ -21,34 +21,32 @@ const FONTSIZETITLE = {
 const LINEHEIGHT = {
   tiny: '16px',
   small: '16px',
-  large: '20px'
+  large: '20px',
 };
 const LINEHEIGHTTITLE = {
   tiny: '14px',
   small: '20px',
-  large: '29px'
+  large: '29px',
 };
 
-const getTextColor = (title, size) => (title || size!=='tiny' ? colors.darkgrey : colors.grey);
+const getTextColor = (title, size) => (title || size !== 'tiny' ? colors.darkgrey : colors.grey);
 const getPadding = size => PADDING[size];
-const getFontStyle = (title, size) => (title || size!=='tiny' ? 'normal' : 'italic');
+const getFontStyle = (title, size) => (title || size !== 'tiny' ? 'normal' : 'italic');
 const getFontSize = (title, size) => (title ? FONTSIZETITLE[size] : FONTSIZE[size]);
 const getLineHeight = (title, size) => (title ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = title => (title ? '900' : '400');
-const getBorderBottom = (underline) => (underline ? '1px ' + colors.lightgrey + ' solid' : '0px');
+const getBorderBottom = underline => (underline ? `1px ${colors.lightgrey} solid` : '0px');
 
-class Text extends React.PureComponent {
-  render() {
-    const {
-      children, title, size, underline, ...rest
-    } = this.props;
+export default function Text(props) {
+  const {
+    children, title, size, underline, ...rest
+  } = props;
 
-    return (
-      <BaseText title={title} size={size} underline={underline} {...rest}>
-        {children}
-      </BaseText>
-    );
-  }
+  return (
+    <BaseText title={title} size={size} underline={underline} {...rest}>
+      {children}
+    </BaseText>
+  );
 }
 
 Text.propTypes = {
@@ -60,13 +58,11 @@ Text.propTypes = {
 
 Text.defaultProps = {
   title: false,
-  size: 'large'
+  size: 'large',
+  underline: false,
 };
 
-export default Text;
-
-const BaseText = styled.div.attrs({
-})`
+const BaseText = styled.div`
   color: ${p => getTextColor(p.title, p.size)};
   font-family: 'Lato', sans-serif;
   font-style: ${p => getFontStyle(p.title, p.size)};
