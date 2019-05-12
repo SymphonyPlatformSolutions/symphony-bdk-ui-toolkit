@@ -8,7 +8,8 @@ const getTabHeaderBorder = () => '1px ' + colors.lightgrey + ' solid';
 const getTabItemBorder = (activeTab, label) => (activeTab === label ? '4px ' + colors.blue : '0px ' + colors.lightgrey);
 const getTabItemFontWeight = (activeTab, label) => (activeTab === label ? 'bold' : '100');
 const getTabItemColor = (activeTab, label) => (activeTab === label ? colors.blue : colors.darkgrey);
-const getTabItemFloat = (align) => (align==='right' ? 'right': 'left');
+const getTabItemAlign = (align) => (align==='right' ? 'right': 'left');
+const getTabHeaderIndicatorMarginLeft = (index, align) => (align==='right' ? 'calc(100% - 150px)': index * 150 + 'px');
 
 class Tabs extends React.PureComponent {
   constructor(props) {
@@ -16,11 +17,17 @@ class Tabs extends React.PureComponent {
 
     this.state = {
       activeTab: this.props.children[this.props.activeTab].props.label,
+      activeTabIndex: this.props.activeTab,
+      activeTabAlign: this.props.children[this.props.activeTab].props.align
     };
   }
 
-  onClickTabItem = (label) => {
-    this.setState({ activeTab: label });
+  onClickTabItem = (label, index, align) => {
+    this.setState({
+      activeTab: label,
+      activeTabIndex: index,
+      activeTabAlign: align
+    });
   }
 
   render() {
@@ -32,6 +39,8 @@ class Tabs extends React.PureComponent {
       },
       state: {
         activeTab,
+        activeTabIndex,
+        activeTabAlign
       }
     } = this;
 
@@ -39,15 +48,16 @@ class Tabs extends React.PureComponent {
       <BaseTabs {...rest}>
         <Box horizontal>
           <TabHeader>
-            {children.map((child) => {
+            {children.map((child, index) => {
               const { label, align } = child.props;
               return (
                 <TabHeaderItem key={label} label={label} activeTab={activeTab} align={align}
-                  onClick={() => onClickTabItem(label)}>
+                  onClick={() => onClickTabItem(label, index, align)}>
                   <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
                 </TabHeaderItem>
               );
             })}
+            <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign}></TabHeaderIndicator>
           </TabHeader>
         </Box>
         <Box horizontal>
@@ -99,9 +109,25 @@ const TabHeaderLabel = styled.span.attrs({
 const TabHeaderItem = styled.li.attrs({
 })`
   display: inline-block;
+  width: 150px;
   list-style: none;
   margin-bottom: -1px;
   padding: 0 0.75rem 17px 0.75rem;
-  border-bottom: ${p => getTabItemBorder(p.activeTab, p.label)} solid;
-  float: ${p => getTabItemFloat(p.align)};
+  border-bottom: 0px;
+  text-align: ${p => getTabItemAlign(p.align)};
+  float: ${p => getTabItemAlign(p.align)};
 `;
+
+const TabHeaderIndicator = styled.div`
+  width: 150px;
+  height: 3px;
+  display: absolute;
+  background: ${colors.blue};
+  margin-top: 38px;
+  margin-left: ${p => getTabHeaderIndicatorMarginLeft(p.activeTabIndex, p.activeTabAlign)};
+
+  -webkit-transition: margin 0.5s ease;
+  transition: margin 0.5s ease;
+`;
+
+//${p => getTabItemBorder(p.activeTab, p.label)} solid
