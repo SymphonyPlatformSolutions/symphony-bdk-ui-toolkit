@@ -9,7 +9,7 @@ import Separator from '../Separator';
 
 storiesOf('Base', module)
   .add('Tabs', () => (
-    <Box p={15} bg={colors.basegrey}>
+    <Box p={15}>
       <Box space={20}>
         <Text title size="large">Tabs</Text>
         <Box horizontal space={60}>

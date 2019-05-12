@@ -4,23 +4,21 @@ import styled from 'styled-components';
 import Box from '../Box';
 import Text from '../Text';
 
-class Card extends React.PureComponent {
-  render() {
-    const {
-      children, title, ...rest
-    } = this.props;
+export default function Card(props) {
+  const {
+    children, title, ...rest
+  } = props;
 
-    return (
-      <BaseCard {...rest}>
+  return (
+    <BaseCard {...rest}>
+      <Box>
         <Box>
-          <Box>
-            <Text title size="large" underline>{title}</Text>
-          </Box>
-          <Box>{children}</Box>
+          <Text title size="large" underline>{title}</Text>
         </Box>
-      </BaseCard>
-    );
-  }
+        <Box>{children}</Box>
+      </Box>
+    </BaseCard>
+  );
 }
 
 Card.propTypes = {
@@ -31,8 +29,6 @@ Card.propTypes = {
 Card.defaultProps = {
   title: 'Title',
 };
-
-export default Card;
 
 const BaseCard = styled.div`
   margin-top: 10px;
