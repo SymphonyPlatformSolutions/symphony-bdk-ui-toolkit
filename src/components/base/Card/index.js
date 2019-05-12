@@ -14,7 +14,7 @@ class Card extends React.PureComponent {
       <BaseCard {...rest}>
         <Box>
           <Box>
-            <Text title size="large">{title}</Text>
+            <Text title size="large" underline>{title}</Text>
           </Box>
           <Box>{children}</Box>
         </Box>
@@ -34,8 +34,7 @@ Card.defaultProps = {
 
 export default Card;
 
-const BaseCard = styled.div.attrs({
-})`
+const BaseCard = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px #D4D4D4 solid;
@@ -45,4 +44,6 @@ const BaseCard = styled.div.attrs({
   &:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
+  width: 100%;
+  background: #fff;
 `;
