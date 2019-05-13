@@ -15,6 +15,7 @@ const colors = {
   inputBorder: '#d2d3d8',
   inputPlaceHolder: '#b3b3b4',
   inputTextDisabled: '#62636b',
+  checkBoxBorder: '#e3e5e8',
 };
 
 export { colors };
