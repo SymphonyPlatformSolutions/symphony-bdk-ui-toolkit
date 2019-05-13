@@ -41,7 +41,6 @@ const CheckBoxLabel = styled.label.attrs({
   key: `label_${props => props.children}`,
   htmlFor: `checkbox-${props => props.children}`,
 })`
-  ${props => console.log('CHIL', props)}
   display: flex;
   vertical-align: middle;
   line-height: 1.3rem;

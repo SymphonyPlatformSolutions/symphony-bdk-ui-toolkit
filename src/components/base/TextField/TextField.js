@@ -48,7 +48,7 @@ const BaseInputField = styled.input`
   font-size: 0.875rem;
   border-radius: 0.2rem;
   border: 1px solid ${colors.inputBorder};
-  width: 100%;
+  width: 14rem;
   padding: .6rem .75rem .6rem .75rem;
   cursor: ${props => (props.disabled ? 'default' : 'text')};
 
