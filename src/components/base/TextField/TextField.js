@@ -65,5 +65,4 @@ const BaseInputField = styled.input`
     outline: none;
     border-color: #2d66f8;
   }
-  <div style=danger>{message}</div>
 `;

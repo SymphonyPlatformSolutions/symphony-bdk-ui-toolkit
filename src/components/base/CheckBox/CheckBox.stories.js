@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Checkbox from './CheckBox';
 import Box from '../Box';
 
-storiesOf('Base', module)
-  .add('Checkbox', () => (
+const CheckBoxComponent = () => {
+  const [isChecked, setCheckMark] = useState(false);
+
+  function handleCheckMark(e) {
+    setCheckMark(e.target.checked);
+  }
+
+  return (
     <Box>
-      <span>TEst</span>
-      <Checkbox isChecked>
-        my-label
-      </Checkbox>
-      <Checkbox>
-        random-label
+      <Checkbox
+        isChecked={isChecked}
+        onChange={handleCheckMark}
+        disabled={false}
+      >
+        <span>Awesome Label</span>
       </Checkbox>
     </Box>
+  );
+};
+
+storiesOf('Base', module)
+  .add('Checkbox', () => (
+    <CheckBoxComponent />
   ));
