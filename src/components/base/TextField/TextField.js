@@ -58,7 +58,7 @@ const BaseInputField = styled.input`
   }
   
   &::placeholder {
-    color: ${props => (!props.disabled ? colors.inputPlaceHolder : colors.disabled)}
+    color: ${props => (!props.disabled ? colors.inputPlaceHolder : colors.grey)}
   }
 
   &:focus {
