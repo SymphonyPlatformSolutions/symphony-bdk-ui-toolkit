@@ -14,7 +14,6 @@ const colors = {
   disabled: '#cecece',
   inputBorder: '#d2d3d8',
   inputPlaceHolder: '#b3b3b4',
-  inputTextDisabled: '#62636b',
 };
 
 export { colors };

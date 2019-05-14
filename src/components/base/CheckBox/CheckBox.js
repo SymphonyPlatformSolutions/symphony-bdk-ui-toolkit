@@ -3,6 +3,11 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { colors } from '../../../styles/colors';
 
+const getBgColor = (isChecked, disabled) => (
+  (!disabled && isChecked)
+    ? colors.system
+    : (disabled || isChecked ? colors.disabled : colors.white)
+);
 
 const CheckBox = (props) => {
   const {
@@ -10,10 +15,9 @@ const CheckBox = (props) => {
   } = props;
 
   return (
-
     <CheckBoxLabel>
       <CheckBoxInput checked={isChecked} disabled={disabled} onChange={onChange} />
-      <BaseCheckBox isChecked={isChecked}>
+      <BaseCheckBox isChecked={isChecked} disabled={disabled}>
         <Checkmark isChecked={isChecked} viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
         </Checkmark>
@@ -74,8 +78,8 @@ const BaseCheckBox = styled.div`
   width: 1rem;
   height: 1rem;
   margin-right: .5rem;
-  background: ${props => (props.isChecked ? colors.system : colors.white)}
-  border: 1px solid ${props => (props.isChecked ? colors.system : colors.grey)};
+  background: ${props => getBgColor(props.isChecked, props.disabled)}
+  border: 1px solid ${props => (!props.disabled && props.isChecked ? colors.system : colors.grey)};
   border-radius: 4px;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;

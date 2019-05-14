@@ -1,27 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
-import Box from '../Box'
+import Box from '../Box';
 import { colors } from '../../../styles/colors';
 
-const getTabHeaderBorder = () => '1px ' + colors.lightgrey + ' solid';
-const getTabItemBorder = (activeTab, label) => (activeTab === label ? '4px ' + colors.blue : '0px ' + colors.lightgrey);
+const getTabHeaderBorder = () => `1px ${  colors.lightgrey  } solid`;
+const getTabItemBorder = (activeTab, label) => (activeTab === label ? `4px ${  colors.blue}` : `0px ${  colors.lightgrey}`);
 const getTabItemFontWeight = (activeTab, label) => (activeTab === label ? 'bold' : '100');
 const getTabItemColor = (activeTab, label) => (activeTab === label ? colors.blue : colors.darkgrey);
-const getTabItemAlign = (align) => (align === 'right' ? 'right': 'left');
-const getTabHeaderIndicatorMarginLeft = (index, align) => (align === 'right' ? 'calc(100% - 150px)': index * 150 + 'px');
+const getTabItemAlign = align => (align === 'right' ? 'right' : 'left');
+const getTabHeaderIndicatorMarginLeft = (index, align) => (align === 'right' ? 'calc(100% - 150px)' : `${index * 150  }px`);
 
 export default function Tabs(props) {
-
   const [activeTab, setActiveTab] = useState(props.children[props.activeTab].props.label);
-  const [activeTabIndex, setActiveTabIndex] = useState(props.activeTab)
-  const [activeTabAlign, setActiveTabAlign] = useState(props.children[props.activeTab].props.align)
+  const [activeTabIndex, setActiveTabIndex] = useState(props.activeTab);
+  const [activeTabAlign, setActiveTabAlign] = useState(props.children[props.activeTab].props.align);
 
   const onClickTabItem = (label, index, align) => {
     setActiveTab(label);
     setActiveTabIndex(index);
     setActiveTabAlign(align);
-  }
+  };
 
   const {
     children,
@@ -35,13 +34,18 @@ export default function Tabs(props) {
           {children.map((child, index) => {
             const { label, align } = child.props;
             return (
-              <TabHeaderItem key={label} label={label} activeTab={activeTab} align={align}
-                onClick={() => onClickTabItem(label, index, align)}>
+              <TabHeaderItem
+key={label}
+label={label}
+activeTab={activeTab}
+align={align}
+                onClick={() => onClickTabItem(label, index, align)}
+              >
                 <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
               </TabHeaderItem>
             );
           })}
-          <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign}></TabHeaderIndicator>
+          <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign} />
         </TabHeader>
       </Box>
       <Box horizontal>
@@ -60,7 +64,7 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
-  activeTab: 0
+  activeTab: 0,
 };
 
 const BaseTabs = styled.div`

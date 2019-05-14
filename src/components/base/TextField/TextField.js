@@ -53,12 +53,12 @@ const BaseInputField = styled.input`
   cursor: ${props => (props.disabled ? 'default' : 'text')};
 
   &:disabled {
-    color: ${colors.inputTextDisabled}
+    color: ${colors.disabled}
     background-color: ${colors.disabled}
   }
   
   &::placeholder {
-    color: ${colors.inputPlaceHolder}
+    color: ${props => (!props.disabled ? colors.inputPlaceHolder : colors.disabled)}
   }
 
   &:focus {
