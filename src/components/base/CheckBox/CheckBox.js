@@ -15,8 +15,20 @@ const CheckBox = (props) => {
   } = props;
 
   return (
-    <CheckBoxLabel>
-      <CheckBoxInput checked={isChecked} disabled={disabled} onChange={onChange} />
+
+    <CheckBoxLabel
+      key={`checkbox_${children}`}
+      htmlFor={`checkbox-${children}`}
+      disabled={disabled}
+    >
+      <CheckBoxInput
+        key={`checkbox_${children}`}
+        id={`checkbox-${children}`}
+        checked={isChecked}
+        disabled={disabled}
+        type="checkbox"
+        onChange={onChange}
+      />
       <BaseCheckBox isChecked={isChecked} disabled={disabled}>
         <Checkmark isChecked={isChecked} viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
@@ -41,16 +53,13 @@ CheckBox.defaultProps = {
 
 export default CheckBox;
 
-const CheckBoxLabel = styled.label.attrs({
-  key: `label_${props => props.children}`,
-  htmlFor: `checkbox-${props => props.children}`,
-})`
+const CheckBoxLabel = styled.label`
   display: flex;
   vertical-align: middle;
   line-height: 1.3rem;
   position: relative;
   user-select: none;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'default' : 'pointer')}
   width: fit-content;
 `;
 
@@ -63,12 +72,7 @@ const Checkmark = styled.svg`
   transition: all 0.2s ease;
 `;
 
-const CheckBoxInput = styled.input.attrs({
-  disabled: props => (!!props.disabled),
-  key: `checkbox_${props => props.children}`,
-  id: `checkbox-${props => props.children}`,
-  type: 'checkbox',
-})`
+const CheckBoxInput = styled.input`
   position: absolute;
   opacity: 0;
 `;
@@ -81,6 +85,7 @@ const BaseCheckBox = styled.div`
   background: ${props => getBgColor(props.isChecked, props.disabled)}
   border: 1px solid ${props => (!props.disabled && props.isChecked ? colors.system : colors.grey)};
   border-radius: 4px;
+  cursor: ${props => (props.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 `;
