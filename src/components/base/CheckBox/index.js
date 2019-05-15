@@ -1,17 +1,18 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
+import Text from '../Text';
 import { colors } from '../../../styles/colors';
 
 const getBgColor = (isChecked, disabled) => (
   (!disabled && isChecked)
     ? colors.system
-    : (disabled || isChecked ? colors.disabled : colors.white)
+    : (disabled || isChecked ? colors.grey : colors.white)
 );
 
 const CheckBox = (props) => {
   const {
-    children, disabled, isChecked, onChange,
+    children, disabled, isChecked, onChange, label,
   } = props;
 
   return (
@@ -34,7 +35,7 @@ const CheckBox = (props) => {
           <polyline points="20 6 9 17 4 12" />
         </Checkmark>
       </BaseCheckBox>
-      {children}
+      <Text size="small">{label}</Text>
     </CheckBoxLabel>
   );
 };

@@ -5,7 +5,7 @@ import { colors } from '../../../styles/colors';
 
 const InputField = (props) => {
   const {
-    blur, disabled, name, onChange, placeholder, value,
+    blur, disabled, name, onChange, placeholder, value, inputState,
 
   } = props;
 
@@ -18,6 +18,7 @@ const InputField = (props) => {
       placeholder={placeholder}
       type="text"
       value={value}
+      inputState={inputState}
     />
   );
 };
@@ -45,7 +46,7 @@ const BaseInputField = styled.input`
   font-family: 'Lato', sans-serif;
   font-size: 0.875rem;
   border-radius: 0.2rem;
-  border: 1px solid ${colors.lightgrey};
+  border: 1px solid ${props => (props.inputState ? colors.caution : colors.lightgrey)};
   width: 100%;
   padding: .6rem .75rem .6rem .75rem;
   cursor: ${props => (props.disabled ? 'default' : 'text')};
@@ -56,11 +57,11 @@ const BaseInputField = styled.input`
   }
   
   &::placeholder {
-    color: ${props => (!props.disabled ? colors.inputPlaceHolder : colors.grey)}
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border-color: ${colors.blue};
+    border-color: ${props => (props.inputState ? 'none' : colors.blue)};
   }
 `;
