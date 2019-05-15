@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Checkbox from './CheckBox';
+import Checkbox from '.';
 import Box from '../Box';
 import Text from '../Text';
 
@@ -17,7 +17,9 @@ const CheckBoxComponent = () => {
       onChange={handleCheckMark}
       disabled={false}
     >
-      Awesome Label
+      <Text>
+        Awesome Label
+      </Text>
     </Checkbox>
   );
 };

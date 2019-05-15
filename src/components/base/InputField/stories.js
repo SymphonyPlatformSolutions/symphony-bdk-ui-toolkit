@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Box from '../Box';
-import TextField from './TextField';
+import TextField from '.';
 import Text from '../Text';
 
 const TextFieldComponent = () => {

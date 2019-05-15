@@ -8,12 +8,6 @@ const colors = {
   caution: '#CD4747',
   cta: '#57B68B',
   system: '#006CAF',
-  outlineInput: '#2d66f8',
-  fontColor: '#626365',
-  inputDanger: '#c64542',
-  disabled: '#cecece',
-  inputBorder: '#d2d3d8',
-  inputPlaceHolder: '#b3b3b4',
 };
 
 export { colors };
