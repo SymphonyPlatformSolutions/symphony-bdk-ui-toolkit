@@ -3,4 +3,4 @@ export { default as Button } from './base/Button';
 export { default as Card } from './base/Card';
 export { default as Loader } from './base/Loader';
 export { default as Text } from './base/Text';
-export { default as TextField } from './base/TextField';
+export { default as InputField } from './base/InputField';

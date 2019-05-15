@@ -18,7 +18,7 @@ const CheckBoxComponent = () => {
       disabled={false}
     >
       <Text>
-        Awesome Label
+        Label
       </Text>
     </Checkbox>
   );

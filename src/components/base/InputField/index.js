@@ -35,7 +35,7 @@ InputField.defaultProps = {
   blur: undefined,
   disabled: false,
   name: undefined,
-  placeholder: 'Input text here...',
+  placeholder: 'Input here...',
   value: '',
 };
 
@@ -45,14 +45,14 @@ const BaseInputField = styled.input`
   font-family: 'Lato', sans-serif;
   font-size: 0.875rem;
   border-radius: 0.2rem;
-  border: 1px solid ${colors.inputBorder};
+  border: 1px solid ${colors.lightgrey};
   width: 100%;
   padding: .6rem .75rem .6rem .75rem;
   cursor: ${props => (props.disabled ? 'default' : 'text')};
 
   &:disabled {
-    color: ${colors.disabled}
-    background-color: ${colors.disabled}
+    color: ${colors.darkgrey}
+    background-color: ${colors.lightgrey}
   }
   
   &::placeholder {
@@ -61,6 +61,6 @@ const BaseInputField = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #2d66f8;
+    border-color: ${colors.blue};
   }
 `;

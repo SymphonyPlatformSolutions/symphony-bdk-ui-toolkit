@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Box from '../Box';
-import TextField from '.';
+import InputField from '.';
 import Text from '../Text';
 
-const TextFieldComponent = () => {
+const InputFieldComponent = () => {
   const styles = {
     display: 'flex',
     width: '14rem',
@@ -17,20 +17,20 @@ const TextFieldComponent = () => {
   return (
     <Box p={15}>
       <Box vertical space={20}>
-        <Text title size="large">Default text field</Text>
+        <Text title size="large">Default input field</Text>
         <div style={styles}>
 
-          <TextField
+          <InputField
             value={input}
             onChange={handleInput}
-            placeholder="Enter a Text Here!"
+            placeholder="Input here..."
           />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text title size="large">Disabled text field</Text>
+        <Text title size="large">Disabled input field</Text>
         <div style={styles}>
-          <TextField disabled />
+          <InputField disabled />
         </div>
       </Box>
     </Box>
@@ -39,6 +39,6 @@ const TextFieldComponent = () => {
 };
 
 storiesOf('Base', module)
-  .add('TextField', () => (
-    <TextFieldComponent />
+  .add('InputField', () => (
+    <InputFieldComponent />
   ));
