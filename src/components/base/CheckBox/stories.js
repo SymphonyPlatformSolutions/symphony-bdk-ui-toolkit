@@ -30,7 +30,8 @@ storiesOf('Base', module)
       </Box>
       <Box vertical space={20}>
         <Text title size="large">Disabled CheckBox</Text>
-        <Checkbox isChecked disabled label="Disabled CheckBox" />
+        <Checkbox disabled label="Disabled Unchecked" />
+        <Checkbox isChecked disabled label="Disabled Checked" />
       </Box>
     </Box>
   ));

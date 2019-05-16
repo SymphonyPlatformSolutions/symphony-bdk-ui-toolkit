@@ -41,7 +41,7 @@ const InputField = (props) => {
                 copyInput={copyInput}
               />
               <CopyInput copyInput={copyInput} onClick={copyToClipBoard}>
-                Copy
+                copy
               </CopyInput>
             </CopyLinkInputWrapper>
           )

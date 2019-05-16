@@ -4,19 +4,50 @@ import styled from 'styled-components';
 import Text from '../Text';
 import { colors } from '../../../styles/colors';
 
-const getBgColor = (isChecked, disabled) => (
-  (!disabled && isChecked)
-    ? colors.system
-    : (disabled || isChecked ? colors.grey : colors.white)
-);
+
+// (!disabled && isChecked)
+// ? colors.system
+// : (disabled || isChecked ? colors.grey : colors.white)
+
+// const getColor = (disabled, isChecked) => (
+//   disabled && isChecked ? `background-color: ${colors.grey}; border-color: ${colors.grey}`
+//     : (!disabled && !isChecked ? `background-color: ${colors.system}; border-color: ${colors.white}`)
+// );
+
+
+// const checkBoxPropObj = {
+//   backgroundColor: '',
+//   borderColor: '',
+// };
+
+const handleBackgroundAndBorder = (disabled, isChecked) => {
+  let backgroundColor;
+  let borderColor;
+
+  if (disabled) {
+    backgroundColor = colors.grey;
+    if (isChecked) {
+      borderColor = colors.grey;
+    }
+  } else {
+    borderColor = colors.system;
+    if (isChecked) {
+      backgroundColor = colors.system;
+    }
+  }
+  if (!isChecked) {
+    backgroundColor = colors.white;
+  }
+  return backgroundColor + borderColor;
+};
 
 const CheckBox = (props) => {
   const {
     disabled, isChecked, onChange, label,
   } = props;
 
-  return (
 
+  return (
     <CheckBoxLabel
       key={`checkbox_${label}`}
       htmlFor={`checkbox-${label}`}
@@ -83,8 +114,8 @@ const BaseCheckBox = styled.div`
   align-self:center;
   width: 1rem;
   height: 1rem;
-  background: ${props => getBgColor(props.isChecked, props.disabled)}
-  border: 1px solid ${props => (!props.disabled && props.isChecked ? colors.system : colors.grey)};
+  background: ${props => handleBackgroundAndBorder(props.disabled)}
+  border: 1px solid ${props => props.checkBoxPropObj.borderColor};
   border-radius: 4px;
   cursor: ${props => (props.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
