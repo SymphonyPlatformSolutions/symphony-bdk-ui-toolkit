@@ -5,7 +5,7 @@ import Box from '../Box';
 import Text from '../Text';
 
 const CheckBoxComponent = () => {
-  const [isChecked, setCheckMark] = useState(false);
+  const [isChecked, setCheckMark] = useState(true);
 
   function handleCheckMark(e) {
     setCheckMark(e.target.checked);

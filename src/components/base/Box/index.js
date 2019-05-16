@@ -23,7 +23,6 @@ const padding = props => `${px(props.p)}`;
 const direction = props => (props.horizontal ? 'row' : 'column');
 
 export default function Box(props) {
-  console.log('props', props);
   return (
     <BaseBox {...props} />
   );

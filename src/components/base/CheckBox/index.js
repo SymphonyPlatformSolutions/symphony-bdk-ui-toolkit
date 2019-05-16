@@ -12,19 +12,19 @@ const getBgColor = (isChecked, disabled) => (
 
 const CheckBox = (props) => {
   const {
-    children, disabled, isChecked, onChange, label,
+    disabled, isChecked, onChange, label,
   } = props;
 
   return (
 
     <CheckBoxLabel
-      key={`checkbox_${children}`}
-      htmlFor={`checkbox-${children}`}
+      key={`checkbox_${label}`}
+      htmlFor={`checkbox-${label}`}
       disabled={disabled}
     >
       <CheckBoxInput
-        key={`checkbox_${children}`}
-        id={`checkbox-${children}`}
+        key={`checkbox_${label}`}
+        id={`checkbox-${label}`}
         checked={isChecked}
         disabled={disabled}
         type="checkbox"
@@ -41,15 +41,16 @@ const CheckBox = (props) => {
 };
 
 CheckBox.propTypes = {
-  children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   isChecked: PropTypes.bool,
+  label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 CheckBox.defaultProps = {
   disabled: false,
   isChecked: false,
+  label: '',
 };
 
 export default CheckBox;
@@ -82,7 +83,6 @@ const BaseCheckBox = styled.div`
   align-self:center;
   width: 1rem;
   height: 1rem;
-  margin-right: .5rem;
   background: ${props => getBgColor(props.isChecked, props.disabled)}
   border: 1px solid ${props => (!props.disabled && props.isChecked ? colors.system : colors.grey)};
   border-radius: 4px;

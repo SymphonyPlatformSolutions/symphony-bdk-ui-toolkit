@@ -1,54 +1,109 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { colors } from '../../../styles/colors';
 
-const InputField = (props) => {
-  const {
-    blur, disabled, name, onChange, placeholder, value, inputState,
+const getWidth = copyInput => (copyInput ? 'calc(100% - 3rem)' : '100%');
 
+const InputField = (props) => {
+  const inputRef = useRef(null);
+
+  function copyToClipBoard() {
+    inputRef.current.select();
+    document.execCommand('copy');
+  }
+
+  const {
+    id,
+    disabled,
+    onChange,
+    placeholder,
+    value,
+    inputState,
+    copyInput,
   } = props;
 
   return (
-    <BaseInputField
-      blur={blur || undefined}
-      disabled={disabled}
-      name={name || undefined}
-      onChange={onChange}
-      placeholder={placeholder}
-      type="text"
-      value={value}
-      inputState={inputState}
-    />
+    <div>
+      {
+        copyInput
+          ? (
+            <CopyLinkInputWrapper>
+              <BaseInputField
+                disabled={disabled}
+                id={id}
+                onChange={onChange}
+                placeholder={placeholder}
+                type="text"
+                value={value}
+                inputState={inputState}
+                ref={inputRef}
+                copyInput={copyInput}
+              />
+              <CopyInput copyInput={copyInput} onClick={copyToClipBoard}>
+                Copy
+              </CopyInput>
+            </CopyLinkInputWrapper>
+          )
+          : (
+            <BaseInputField
+              disabled={disabled}
+              id={id}
+              onChange={onChange}
+              placeholder={placeholder}
+              type="text"
+              value={value}
+              inputState={inputState}
+              ref={inputRef}
+            />
+          )
+      }
+    </div>
   );
 };
 
 InputField.propTypes = {
-  blur: PropTypes.string,
+  copyInput: PropTypes.bool,
   disabled: PropTypes.bool,
-  name: PropTypes.string,
+  id: PropTypes.string,
+  inputState: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 InputField.defaultProps = {
-  blur: undefined,
+  copyInput: false,
   disabled: false,
-  name: undefined,
+  inputState: false,
+  id: '',
   placeholder: 'Input here...',
   value: '',
 };
 
 export default InputField;
 
+const CopyLinkInputWrapper = styled.div`
+  position: relative;
+`;
+
+const CopyInput = styled.div`
+  position: absolute;
+  top: 11px;
+  right: -12px;
+  font-family: 'Lato', sans-serif;
+  font-size: .875rem;
+  color: ${props => (props.disabled ? colors.grey : colors.blue)}
+  cursor: pointer;
+`;
+
 const BaseInputField = styled.input`
   font-family: 'Lato', sans-serif;
-  font-size: 0.875rem;
-  border-radius: 0.2rem;
+  font-size: .875rem;
+  border-radius: .2rem;
   border: 1px solid ${props => (props.inputState ? colors.caution : colors.lightgrey)};
-  width: 100%;
-  padding: .6rem .75rem .6rem .75rem;
+  width: ${props => getWidth(props.copyInput)};
+  padding: .6rem ${props => (props.copyInput ? '3.75rem' : '.75rem')} .6rem .75rem;
   cursor: ${props => (props.disabled ? 'default' : 'text')};
 
   &:disabled {

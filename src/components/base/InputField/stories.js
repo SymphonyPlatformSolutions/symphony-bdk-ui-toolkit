@@ -5,11 +5,10 @@ import InputField from '.';
 import Text from '../Text';
 
 const styles = {
-  display: 'flex',
   width: '24rem',
 };
 
-const InputFieldWithError = () => {
+const InputFieldWithErrorStory = () => {
   const [input, setInput] = useState('');
   const error = true;
 
@@ -19,7 +18,7 @@ const InputFieldWithError = () => {
 
   return (
     <Box vertical space={2}>
-      <Text title size="large">Input Field With Error</Text>
+      <Text title size="large">Input Field with error</Text>
       <div style={styles}>
 
         <InputField
@@ -37,7 +36,7 @@ const InputFieldWithError = () => {
   );
 };
 
-const InputFieldComponent = () => {
+const InputFieldStory = () => {
   const [input, setInput] = useState('');
 
   function handleInput(e) {
@@ -58,16 +57,39 @@ const InputFieldComponent = () => {
   );
 };
 
+const InputFieldCopyOptionStory = () => {
+  const [input, setInput] = useState('');
+
+  function handleInput(e) {
+    setInput(e.target.value);
+  }
+  return (
+    <Box vertical space={20}>
+      <Text title size="large">Input Field with copy option</Text>
+      <div style={styles}>
+
+        <InputField
+          value={input}
+          onChange={handleInput}
+          placeholder="Input here..."
+          copyInput
+        />
+      </div>
+    </Box>
+  );
+};
+
 storiesOf('Base', module)
   .add('InputField', () => (
     <Box p={15}>
-      <InputFieldComponent />
+      <InputFieldStory />
+      <InputFieldCopyOptionStory />
       <Box vertical space={20}>
         <Text title size="large">Disabled input field</Text>
         <div style={styles}>
           <InputField disabled />
         </div>
       </Box>
-      <InputFieldWithError />
+      <InputFieldWithErrorStory />
     </Box>
   ));
