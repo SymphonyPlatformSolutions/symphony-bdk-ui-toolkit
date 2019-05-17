@@ -8,7 +8,8 @@ import { colors } from '../../../styles/colors';
 const getBackgroundColor = (isChecked, disabled) => (
   isChecked
     ? disabled ? colors.grey : colors.system
-    : colors.white
+    : disabled ? colors.lightgrey
+      : colors.white
 );
 
 const CheckBox = (props) => {
@@ -85,7 +86,7 @@ const BaseCheckBox = styled.div`
   width: 1rem;
   height: 1rem;
   background: ${props => getBackgroundColor(props.isChecked, props.disabled)};
-  border: 1px solid ${props => (props.disabled ? colors.grey : colors.system)};
+  border: 1px solid ${colors.grey};
   border-radius: 4px;
   cursor: ${props => (props.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
