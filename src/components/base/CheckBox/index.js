@@ -5,41 +5,11 @@ import Text from '../Text';
 import { colors } from '../../../styles/colors';
 
 
-// (!disabled && isChecked)
-// ? colors.system
-// : (disabled || isChecked ? colors.grey : colors.white)
-
-// const getColor = (disabled, isChecked) => (
-//   disabled && isChecked ? `background-color: ${colors.grey}; border-color: ${colors.grey}`
-//     : (!disabled && !isChecked ? `background-color: ${colors.system}; border-color: ${colors.white}`)
-// );
-
-
-// const checkBoxPropObj = {
-//   backgroundColor: '',
-//   borderColor: '',
-// };
-
-const handleBackgroundAndBorder = (disabled, isChecked) => {
-  let backgroundColor;
-  let borderColor;
-
-  if (disabled) {
-    backgroundColor = colors.grey;
-    if (isChecked) {
-      borderColor = colors.grey;
-    }
-  } else {
-    borderColor = colors.system;
-    if (isChecked) {
-      backgroundColor = colors.system;
-    }
-  }
-  if (!isChecked) {
-    backgroundColor = colors.white;
-  }
-  return backgroundColor + borderColor;
-};
+const getBackgroundColor = (isChecked, disabled) => (
+  isChecked
+    ? disabled ? colors.grey : colors.system
+    : colors.white
+);
 
 const CheckBox = (props) => {
   const {
@@ -114,8 +84,8 @@ const BaseCheckBox = styled.div`
   align-self:center;
   width: 1rem;
   height: 1rem;
-  background: ${props => handleBackgroundAndBorder(props.disabled)}
-  border: 1px solid ${props => props.checkBoxPropObj.borderColor};
+  background: ${props => getBackgroundColor(props.isChecked, props.disabled)};
+  border: 1px solid ${props => (props.disabled ? colors.grey : colors.system)};
   border-radius: 4px;
   cursor: ${props => (props.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
