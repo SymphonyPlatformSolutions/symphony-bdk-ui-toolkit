@@ -63,7 +63,7 @@ const CheckBoxLabel = styled.label`
   line-height: 1.3rem;
   position: relative;
   user-select: none;
-  cursor: ${props => (props.disabled ? 'default' : 'pointer')}
+  cursor: ${p => (p.disabled ? 'default' : 'pointer')}
   width: fit-content;
 `;
 
@@ -71,7 +71,7 @@ const Checkmark = styled.svg`
   fill: none;
   stroke: white;
   stroke-width: 2px;
-  opacity: ${props => (props.isChecked ? 1 : 0)}
+  opacity: ${p => (p.isChecked ? 1 : 0)}
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 `;
@@ -79,16 +79,19 @@ const Checkmark = styled.svg`
 const CheckBoxInput = styled.input`
   position: absolute;
   opacity: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
 `;
 
 const BaseCheckBox = styled.div`
   align-self:center;
   width: 1rem;
   height: 1rem;
-  background: ${props => getBackgroundColor(props.isChecked, props.disabled)};
+  background: ${p => getBackgroundColor(p.isChecked, p.disabled)};
   border: 1px solid ${colors.grey};
   border-radius: 4px;
-  cursor: ${props => (props.disabled ? 'default' : 'pointer')}
+  cursor: ${p => (p.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 `;

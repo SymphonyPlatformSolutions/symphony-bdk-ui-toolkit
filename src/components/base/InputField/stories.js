@@ -10,7 +10,7 @@ const styles = {
 
 const InputFieldWithErrorStory = () => {
   const [input, setInput] = useState('');
-  const error = true;
+  const inputState = 'error';
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -22,7 +22,7 @@ const InputFieldWithErrorStory = () => {
       <div style={styles}>
 
         <InputField
-          inputState={error}
+          inputState={inputState}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
@@ -30,7 +30,7 @@ const InputFieldWithErrorStory = () => {
 
       </div>
       {
-        error && <Text size="tiny">Error message here.</Text>
+        inputState === 'error' && <Text size="tiny">Error message here.</Text>
       }
     </Box>
   );
@@ -38,6 +38,7 @@ const InputFieldWithErrorStory = () => {
 
 const InputFieldStory = () => {
   const [input, setInput] = useState('');
+  const inputState = 'initial';
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -49,6 +50,7 @@ const InputFieldStory = () => {
 
         <InputField
           value={input}
+          inputState={inputState}
           onChange={handleInput}
           placeholder="Input here..."
         />
@@ -59,6 +61,7 @@ const InputFieldStory = () => {
 
 const InputFieldCopyOptionStory = () => {
   const [input, setInput] = useState('');
+  const inputState = 'initial';
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -69,6 +72,7 @@ const InputFieldCopyOptionStory = () => {
       <div style={styles}>
 
         <InputField
+          inputState={inputState}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
@@ -87,7 +91,7 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <Text title size="large">Disabled input field</Text>
         <div style={styles}>
-          <InputField disabled />
+          <InputField disabled copyInput />
         </div>
       </Box>
       <InputFieldWithErrorStory />
