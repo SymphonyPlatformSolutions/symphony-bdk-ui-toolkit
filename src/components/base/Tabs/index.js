@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import Box from '../Box';
 import { colors } from '../../../styles/colors';
 
-const getTabHeaderBorder = () => `1px ${  colors.lightgrey  } solid`;
-const getTabItemBorder = (activeTab, label) => (activeTab === label ? `4px ${  colors.blue}` : `0px ${  colors.lightgrey}`);
+const getTabHeaderBorder = () => `1px ${colors.lightgrey} solid`;
+const getTabItemBorder = (activeTab, label) => (activeTab === label ? `4px ${colors.blue}` : `0px ${colors.lightgrey}`);
 const getTabItemFontWeight = (activeTab, label) => (activeTab === label ? 'bold' : '100');
 const getTabItemColor = (activeTab, label) => (activeTab === label ? colors.blue : colors.darkgrey);
 const getTabItemAlign = align => (align === 'right' ? 'right' : 'left');
-const getTabHeaderIndicatorMarginLeft = (index, align) => (align === 'right' ? 'calc(100% - 150px)' : `${index * 150  }px`);
+const getTabHeaderIndicatorMarginLeft = (index, align) => (align === 'right' ? 'calc(100% - 150px)' : `${index * 150}px`);
 
 export default function Tabs(props) {
   const [activeTab, setActiveTab] = useState(props.children[props.activeTab].props.label);
@@ -35,10 +35,10 @@ export default function Tabs(props) {
             const { label, align } = child.props;
             return (
               <TabHeaderItem
-key={label}
-label={label}
-activeTab={activeTab}
-align={align}
+                key={label}
+                label={label}
+                activeTab={activeTab}
+                align={align}
                 onClick={() => onClickTabItem(label, index, align)}
               >
                 <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
