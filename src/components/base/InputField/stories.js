@@ -17,7 +17,7 @@ const InputFieldWithErrorStory = () => {
   }
 
   return (
-    <Box vertical space={2}>
+    <Box vertical space={20}>
       <Text title size="large">Input Field with error</Text>
       <div style={styles}>
 
@@ -91,7 +91,7 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <Text title size="large">Disabled input field</Text>
         <div style={styles}>
-          <InputField disabled copyInput />
+          <InputField disabled />
         </div>
       </Box>
       <InputFieldWithErrorStory />
