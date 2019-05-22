@@ -90,7 +90,7 @@ const BaseCheckBox = styled.div`
   height: 1rem;
   background: ${p => getBackgroundColor(p.isChecked, p.disabled)};
   border: 1px solid ${colors.grey};
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: ${p => (p.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;

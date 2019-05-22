@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { colors } from '../../../styles/colors';
 
 const BORDERCOLOR = {
-  initial: colors.grey,
+  initial: colors.lightgrey,
   modified: colors.grey,
   error: colors.caution,
 };
@@ -119,7 +119,7 @@ const BaseInputField = styled.input`
   font-family: 'Lato', sans-serif;
   font-size: .875rem;
   border-radius: .2rem;
-  border: 1px solid ${p => (p.disabled ? colors.grey : getBorderColor(p.inputState))};
+  border: 1px solid ${p => (p.disabled ? colors.lightgrey : getBorderColor(p.inputState))};
   width: ${p => getWidth(p.copyInput)};
   padding: .6rem ${p => (p.copyInput ? '3.75rem' : '.75rem')} .6rem .75rem;
   cursor: ${p => (p.disabled ? 'default' : 'text')};
