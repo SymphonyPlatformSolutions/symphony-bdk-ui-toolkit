@@ -7,7 +7,7 @@ const colors = {
   basegrey: '#F7F8F8',
   caution: '#CD4747',
   cta: '#57B68B',
-  system: '#006CAF'
+  system: '#006CAF',
 };
 
 export { colors };
