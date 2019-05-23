@@ -12,9 +12,11 @@ export default function Card(props) {
   return (
     <BaseCard {...rest}>
       <Box>
-        <Box>
-          <Text title size="large" underline>{title}</Text>
-        </Box>
+        <CardTitle title={title}>
+          <Box>
+            <Text title size="large" underline>{title}</Text>
+          </Box>
+        </CardTitle>
         <Box>{children}</Box>
       </Box>
     </BaseCard>
@@ -27,7 +29,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  title: 'Title',
+  title: ''
 };
 
 const BaseCard = styled.div`
@@ -42,4 +44,8 @@ const BaseCard = styled.div`
   }
   width: 100%;
   background: #fff;
+`;
+
+const CardTitle = styled.span`
+  display: ${p => (p.title==='' ? 'none' : 'inline-block')};
 `;

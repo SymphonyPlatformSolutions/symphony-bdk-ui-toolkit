@@ -97,7 +97,7 @@ const BaseButton = styled.button.attrs({
 })`
   color: ${p => getColor(p.type, p.fill)};
   font-size: ${p => getFontSize(p.size)};
-  margin: 1em;
+  margin: 0;
   padding: ${p => getPadding(p.size)};
   background-color: ${p => getBgColor(p.fill, p.type)};
   border: ${p => getBorderStyle(p.fill, p.type)};
