@@ -93,4 +93,3 @@ storiesOf('Base', module)
       </Box>
     </Box>
   ));
-  

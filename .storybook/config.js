@@ -1,4 +1,4 @@
-import { configure } from '@storybook/react';
+import { addParameters, configure } from '@storybook/react';
 
 function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);
@@ -7,5 +7,7 @@ function requireAll(requireContext) {
 function loadStories() {
   requireAll(require.context("../src/components", true, /stories\.js?$/));
 }
+
+addParameters({ viewport: { defaultViewport: 'responsive' } });
 
 configure(loadStories, module);
