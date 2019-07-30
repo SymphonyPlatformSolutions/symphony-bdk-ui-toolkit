@@ -5,12 +5,19 @@ import { colors } from '../../../styles/colors';
 import Loader from '../Loader';
 import Box from '../Box';
 
-const COLORS = {
+export const COLORS = {
   caution: colors.caution,
   cta: colors.cta,
   system: colors.system,
   darkgrey: colors.darkgrey,
 };
+
+const FILL_TYPES = {
+  FILLED: 'filled',
+  GHOST: 'ghost',
+  NONE: 'none',
+};
+
 const PADDING = {
   tiny: '3px 10px',
   small: '5px 15px',
@@ -27,12 +34,12 @@ const SPINNER_SIZE = {
   large: 15,
 };
 
-const getColor = (type, fill) => (fill === 'ghost' ? COLORS[type]
-  : (fill === 'filled' ? colors.white : COLORS[type]));
+const getColor = (type, fill) => (fill === FILL_TYPES.GHOST ? COLORS[type]
+  : (fill === FILL_TYPES.FILLED ? colors.white : COLORS[type]));
 const getPadding = size => PADDING[size];
 const getFontSize = size => FONTSIZE[size];
-const getBgColor = (fill, type) => (fill === 'filled' ? getColor(type) : 'transparent');
-const getBorderStyle = (fill, type) => (fill === 'filled' || fill === 'ghost' ? 'none' : `2px solid ${getColor(type)}`);
+const getBgColor = (fill, type) => (fill === FILL_TYPES.FILLED ? getColor(type) : 'transparent');
+const getBorderStyle = (fill, type) => (fill === FILL_TYPES.FILLED || fill === FILL_TYPES.GHOST ? FILL_TYPES.NONE : `2px solid ${getColor(type)}`);
 
 
 const Button = (props) => {

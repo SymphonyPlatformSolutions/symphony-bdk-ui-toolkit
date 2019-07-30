@@ -1,7 +1,11 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
+import { storiesOf, setAddon } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import {
+  withKnobs, text, boolean, select,
+} from '@storybook/addon-knobs';
+import { jsxDecorator } from 'storybook-addon-jsx/lib';
 
 import Button from '.';
 import Box from '../Box';
@@ -9,9 +13,48 @@ import Text from '../Text';
 
 const asyncAction = async () => new Promise(success => setTimeout(success, 2000));
 
+const EditableComponent = () => {
+  const BUTTON_TYPES = {
+    Caution: 'caution',
+    CTA: 'cta',
+    System: 'system',
+    Darkgrey: 'darkgrey',
+  };
+
+  const FILL_TYPES = {
+    FILLED: 'filled',
+    GHOST: 'ghost',
+    NONE: 'none',
+  };
+
+  const BUTTON_SIZES = {
+    TINY: 'tiny',
+    SMALL: 'small',
+    LARGE: 'large',
+  };
+
+  return (
+    <Box horizontal space={20} align="center">
+      <Button
+        size={select('Button Size', BUTTON_SIZES, 'large')}
+        type={select('Button Type', BUTTON_TYPES, 'cta')}
+        fill={select('Button Fill Type', FILL_TYPES)}
+        disabled={boolean('Disabled', false)}
+      >
+        <span>{text('Button Label', 'Sample')}</span>
+      </Button>
+    </Box>
+  );
+};
 storiesOf('Base', module)
+  .addDecorator(withKnobs)
+  .addDecorator(jsxDecorator)
   .add('Button', () => (
     <Box p={15}>
+      <Box>
+        <Text title size="large">Live Example (Knobs)</Text>
+        { EditableComponent() }
+      </Box>
       <Box>
         <Text title size="large">Button types</Text>
         <Box horizontal space={20}>
