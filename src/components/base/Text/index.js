@@ -63,7 +63,7 @@ Text.defaultProps = {
 };
 
 const BaseText = styled.div`
-  color: ${p => getTextColor(p.title, p.size)};
+  color: ${p => (p.theme.mode === 'light' ? colors.darkgrey : colors.white)};
   font-family: 'Lato', sans-serif;
   font-style: ${p => getFontStyle(p.title, p.size)};
   font-size: ${p => getFontSize(p.title, p.size)};

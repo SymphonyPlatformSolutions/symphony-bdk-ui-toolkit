@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { storiesOf, setAddon } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs, text, boolean, select,
 } from '@storybook/addon-knobs';
 import { jsxDecorator } from 'storybook-addon-jsx/lib';
+import styled from 'styled-components';
 
 import Button from '.';
 import Box from '../Box';
 import Text from '../Text';
+import { THEME_TYPES, colors } from '../../../styles/colors';
 
 const asyncAction = async () => new Promise(success => setTimeout(success, 2000));
 
@@ -46,11 +48,16 @@ const EditableComponent = () => {
     </Box>
   );
 };
+
+const StoryWrapper = styled(Box)`
+  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : colors.darkgrey)};
+`;
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .addDecorator(jsxDecorator)
   .add('Button', () => (
-    <Box p={15}>
+    <StoryWrapper p={15}>
       <Box>
         <Text title size="large">Live Example (Knobs)</Text>
         { EditableComponent() }
@@ -134,5 +141,5 @@ storiesOf('Base', module)
           </Button>
         </Box>
       </Box>
-    </Box>
+    </StoryWrapper>
   ));
