@@ -1,20 +1,10 @@
+import { darken, lighten } from 'polished';
 import { THEME_TYPES, colors } from '../../../styles/colors';
 
-export const BUTTON_THEME = {
-  [THEME_TYPES.LIGHT]: {
-    TEXT_COLOR: colors.white,
-    BG_COLOR: colors.white,
-  },
-  [THEME_TYPES.DARK]: {
-    TEXT_COLOR: colors.white,
-    BG_COLOR: colors.lightgrey,
-  },
-};
-
-const FILL_TYPES = {
+export const FILL_TYPES = {
   FILLED: 'filled',
   GHOST: 'ghost',
-  NONE: 'none',
+  OUTLINED: 'outlined',
 };
 
 const PADDING = {
@@ -34,22 +24,76 @@ export const SPINNER_SIZE = {
   large: 15,
 };
 
-export const getColor = ({
-  theme, type, fill,
-}) => {
+/**
+ * Theme Definition
+ */
+export const BUTTON_THEME = (theme, type, fill) => {
   const isFilled = fill === FILL_TYPES.FILLED;
-  return isFilled ? BUTTON_THEME[theme.mode].TEXT_COLOR : theme.theme[type];
+  if (!theme) {
+    return {};
+  }
+  const selectedTheme = {
+    [THEME_TYPES.LIGHT]: {
+      TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
+      BG_COLOR: isFilled ? theme.theme[type] : 'inherit',
+    },
+    [THEME_TYPES.DARK]: {
+      TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
+      BG_COLOR: isFilled ? theme.theme[type] : 'transparent',
+    },
+  };
+
+  return selectedTheme[theme.mode];
 };
 
-export const getBgColor = (props) => {
-  const isFilled = props.fill === FILL_TYPES.FILLED;
-  return isFilled ? props.theme.theme[props.type] : BUTTON_THEME[props.theme.mode].BG_COLOR;
+/**
+ * Helper Functions
+ */
+
+export const getColor = ({
+  theme, type, fill, disabled,
+}) => {
+  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  return disabled ? theme.theme.grey : selectedTheme.TEXT_COLOR;
 };
+
+export const getHoverActiveColor = ({
+  theme, fill, disabled, type,
+}) => {
+  const isOutlined = fill === FILL_TYPES.OUTLINED;
+  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  return disabled ? theme.theme.grey : isOutlined ? colors.white : selectedTheme.TEXT_COLOR;
+};
+
+export const getHoverBgColor = ({
+  theme, type, fill, disabled,
+}) => {
+  const isFilled = fill === FILL_TYPES.FILLED;
+  const isGhost = fill === FILL_TYPES.GHOST;
+  const buttonBg = theme.theme[type];
+  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  return disabled || isGhost ? null : isFilled ? darken(0.1, buttonBg) : selectedTheme.TEXT_COLOR;
+};
+
+export const getBgColor = ({
+  theme, type, fill, disabled,
+}) => {
+  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  const disabledBg = fill === FILL_TYPES.FILLED ? theme.theme.darkgrey : 'transparent';
+  return disabled ? disabledBg : selectedTheme.BG_COLOR;
+};
+
+export const getSpinnerColor = ({
+  theme, type, fill, isMouseOver
+}) => {
+  const isOutlined = fill === FILL_TYPES.OUTLINED;
+  return isOutlined && !isMouseOver ? getColor({ theme, type, fill }) : colors.white;
+};
+export const getBorderStyle = (props) => {
+  const isOutlined = props.fill === FILL_TYPES.OUTLINED;
+  return isOutlined ? `2px solid ${getColor(props)}` : 'inherit';
+};
+
 
 export const getPadding = props => PADDING[props.size];
 export const getFontSize = props => FONTSIZE[props.size];
-export const getBorderStyle = props => (props.fill === FILL_TYPES.FILLED || props.fill === FILL_TYPES.GHOST ? FILL_TYPES.NONE : `2px solid ${getColor(props)}`);
-
-export const getHoverBackground = (props) => {
-  return props.fill === FILL_TYPES.FILLED
-}
