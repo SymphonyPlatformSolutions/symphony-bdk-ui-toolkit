@@ -13,6 +13,7 @@ import Box from '../Box';
 import Text from '../Text';
 import { FILL_TYPES } from './theme';
 import { THEME_TYPES } from '../../../styles/colors';
+import { NoOp } from '../../../utils/helpers';
 
 const asyncAction = async () => new Promise(success => setTimeout(success, 2000));
 
@@ -33,6 +34,7 @@ const EditableComponent = () => {
   return (
     <Box horizontal space={20} align="center">
       <Button
+        onClick={NoOp}
         size={select('Button Size', BUTTON_SIZES, 'large')}
         type={select('Button Type', BUTTON_TYPES, 'primary')}
         fill={select('Button Fill Type', FILL_TYPES)}
@@ -76,7 +78,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box>
-        <Text title size="large">Outlined buttons</Text>
+        <Text title size="large">Button Fill types</Text>
         <Box horizontal space={20}>
           <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
             <span>Filled</span>

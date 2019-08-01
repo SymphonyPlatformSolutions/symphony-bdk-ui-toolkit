@@ -1,8 +1,14 @@
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
+import { THEME_TYPES } from '../../../styles/colors';
 
 export const getBackgroundColor = ({ theme, isChecked, disabled }) => (
   isChecked
-    ? disabled ? theme.theme.darkgrey : theme.theme.secondary
-    : disabled ? theme.theme.grey
-      : lighten(0.1, theme.theme.grey)
+    ? disabled
+      ? theme.theme.darkgrey
+      : theme.theme.secondary
+    : disabled
+      ? theme.theme.grey
+      : theme.mode === THEME_TYPES.LIGHT
+        ? darken(0.1, theme.theme.grey)
+        : lighten(0.1, theme.theme.grey)
 );

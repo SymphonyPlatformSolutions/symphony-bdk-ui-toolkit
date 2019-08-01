@@ -10,8 +10,8 @@ const THEMES = [
       primary: '#006CAF',
       secondary: '#006CAF',
       danger: '#D50935',
-      grey: '#9197A1',
-      darkgrey: '#E3E5E8',
+      darkgrey: '#9197A1',
+      grey: '#E3E5E8',
     },
   },
   {
@@ -20,14 +20,15 @@ const THEMES = [
       primary: '#006CAF',
       secondary: '#33b1ff',
       danger: '#f74a6f',
-      grey: '#868C97',
-      darkgrey: '#464B53',
+      darkgrey: '#868C97',
+      grey: '#464B53',
     },
   },
 
 ];
 
 const colors = {
+
   white: '#fff',
   blue: '#1066F2',
   darkgrey: '#4A4A4A',

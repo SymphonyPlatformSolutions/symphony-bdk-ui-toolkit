@@ -3,19 +3,21 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Box from '../Box';
 import Text from '../Text';
+import { getBackgroundColor, getBorderColor, getBoxShadowColor } from './theme';
 
 const BaseCard = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border: 1px #D4D4D4 solid;
+  border: ${props => `1px solid ${getBorderColor(props)}`};
   border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: ${props => `0 1px 3px ${getBoxShadowColor(props)}, 0 1px 2px ${getBoxShadowColor(props)}`};
+
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   &:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: ${props => `0 14px 28px ${getBoxShadowColor(props)}, 0 10px 10px ${getBoxShadowColor(props)}`};
+    background-color: ${props => getBackgroundColor(props)};
   }
   width: 100%;
-  background: #fff;
 `;
 
 const CardTitle = styled.span`

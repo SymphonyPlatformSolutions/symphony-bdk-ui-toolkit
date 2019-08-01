@@ -2,15 +2,57 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { colors } from '../../../styles/colors';
+import {
+  getBackgroundColor,
+  getBorderColor,
+  getColor,
+  getPadding,
+  getPlaceholderColor,
+  getWidth,
+} from './theme';
 
-const BORDERCOLOR = {
-  initial: colors.lightgrey,
-  modified: colors.grey,
-  error: colors.caution,
-};
 
-const getBorderColor = inputState => BORDERCOLOR[inputState];
-const getWidth = copyInput => (copyInput ? 'calc(100% - 3rem)' : '100%');
+const CopyLinkInputWrapper = styled.div`
+  position: relative;
+`;
+
+const CopyInput = styled.div`
+  position: absolute;
+  top: 11px;
+  right: -12px;
+  font-family: 'Lato', sans-serif;
+  font-size: .875rem;
+  color: ${p => (p.disabled ? colors.grey : colors.blue)}
+  cursor: ${p => (p.disabled ? 'default' : 'pointer')};
+  pointer-events: ${p => (p.disabled ? 'none' : '')}
+`;
+
+const BaseInputField = styled.input`
+  font-family: 'Lato', sans-serif;
+  font-size: .875rem;
+  border-radius: .2rem;
+  border: 1px solid ${props => getBorderColor(props)};
+  width: ${props => getWidth(props)};
+  padding: .6rem ${props => (getPadding(props))} .6rem .75rem;
+  cursor: ${p => (p.disabled ? 'inherit' : 'text')};
+  transition: border 1s cubic-bezier(.25,.8,.25,1);
+  background: ${props => getBackgroundColor(props)};
+  color: ${props => getColor(props)};
+  &:disabled {
+    opacity: .8;
+    cursor: not-allowed;
+  }
+  
+  &::placeholder {
+    color: ${props => getPlaceholderColor(props)};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${p => (p.inputState === 'error' ? colors.caution : colors.blue)};
+  }
+`;
+
 
 const InputField = (props) => {
   const inputRef = useRef(null);
@@ -99,42 +141,3 @@ InputField.defaultProps = {
 };
 
 export default InputField;
-
-const CopyLinkInputWrapper = styled.div`
-  position: relative;
-`;
-
-const CopyInput = styled.div`
-  position: absolute;
-  top: 11px;
-  right: -12px;
-  font-family: 'Lato', sans-serif;
-  font-size: .875rem;
-  color: ${p => (p.disabled ? colors.grey : colors.blue)}
-  cursor: ${p => (p.disabled ? 'default' : 'pointer')};
-  pointer-events: ${p => (p.disabled ? 'none' : '')}
-`;
-
-const BaseInputField = styled.input`
-  font-family: 'Lato', sans-serif;
-  font-size: .875rem;
-  border-radius: .2rem;
-  border: 1px solid ${p => (p.disabled ? colors.lightgrey : getBorderColor(p.inputState))};
-  width: ${p => getWidth(p.copyInput)};
-  padding: .6rem ${p => (p.copyInput ? '3.75rem' : '.75rem')} .6rem .75rem;
-  cursor: ${p => (p.disabled ? 'default' : 'text')};
-
-  &:disabled {
-    color: ${colors.darkgrey}
-    background-color: ${colors.lightgrey}
-  }
-  
-  &::placeholder {
-    color: ${colors.grey};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${p => (p.inputState === 'error' ? colors.caution : colors.blue)};
-  }
-`;

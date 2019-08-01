@@ -6,6 +6,7 @@ import Checkbox from '.';
 import Box from '../Box';
 import Text from '../Text';
 import { THEME_TYPES } from '../../../styles/colors';
+import {NoOp} from "../../../utils/helpers";
 
 const CheckBoxComponent = () => {
   const [isChecked, setCheckMark] = useState(true);
@@ -56,8 +57,8 @@ storiesOf('Base', module)
       </Box>
       <Box vertical space={20}>
         <Text title size="large">Disabled CheckBox</Text>
-        <Checkbox disabled label="Disabled Unchecked" />
-        <Checkbox isChecked disabled label="Disabled Checked" />
+        <Checkbox onChange={NoOp} disabled label="Disabled Unchecked" />
+        <Checkbox onChange={NoOp} isChecked disabled label="Disabled Checked" />
       </Box>
     </StoryWrapper>
   ));

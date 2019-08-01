@@ -1,33 +1,21 @@
-// import { colors } from '../../../styles/colors';
-//
-//
-// const BORDERCOLOR ({theme, inputState}) = {
-//   return {
-//   initial: colors.lightgrey,
-//   modified: colors.grey,
-//   error: colors.caution,
-// }};
-//
-// export const INPUT_FIELD_THEME = (theme, inputState) => {
-//   const isFilled = fill === FILL_TYPES.FILLED;
-//   if (!theme) {
-//     return {};
-//   }
-//   const selectedTheme = {
-//     [THEME_TYPES.LIGHT]: {
-//       TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
-//       BG_COLOR: isFilled ? theme.theme[type] : 'inherit',
-//     },
-//     [THEME_TYPES.DARK]: {
-//       TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
-//       BG_COLOR: isFilled ? theme.theme[type] : 'transparent',
-//     },
-//   };
-//
-//   return selectedTheme[theme.mode];
-// };
-//
-//
-// const getBorderColor = inputState => BORDERCOLOR[inputState];
-// const getWidth = copyInput => (copyInput ? 'calc(100% - 3rem)' : '100%');
-//
+import { darken } from 'polished';
+import { THEME_TYPES } from '../../../styles/colors';
+
+
+const getThemedBorderColor = ({ theme, inputState, disabled }) => {
+  const border = {
+    initial: darken(0.1, theme.theme.grey),
+    modified: theme.theme.darkgrey,
+    error: theme.theme.danger,
+  };
+  return disabled ? theme.theme.grey : border[inputState];
+};
+
+
+export const getColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#F1F2F3' : '#25272A');
+export const getPlaceholderColor = ({ theme }) => theme.theme.darkgrey;
+
+export const getBorderColor = props => getThemedBorderColor(props);
+export const getBackgroundColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#2F3237' : 'transparent');
+export const getPadding = ({ copyInput }) => (copyInput ? '3.75rem' : '.75rem');
+export const getWidth = ({ copyInput }) => (copyInput ? 'calc(100% - 3rem)' : '100%');

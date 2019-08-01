@@ -51,7 +51,7 @@ storiesOf('Base', module)
         <Box space={20}>
           <Text title size="large">Modal</Text>
           <Box align="flex-start">
-            <Button onClick={handleModalClick}>Open Modal...</Button>
+            <Button type="primary" onClick={handleModalClick}>Open Modal...</Button>
           </Box>
           <Modal title="This is a Modal" isOpened={isModalOpened} onClose={onModalClose}>
             <Box horizontal>
@@ -61,7 +61,7 @@ storiesOf('Base', module)
         </Box>
         <Box space={20}>
           <Text title size="large">Confirmation</Text>
-          <Box align="flex-start">
+          <Box type="primary" align="flex-start">
             <Button onClick={handleConfirmClick}>Open Confirmation...</Button>
           </Box>
           <Modal title="Confirmation" isOpened={isConfirmOpened} onClose={onConfirmClose} width="600px" height="185px">
@@ -71,8 +71,8 @@ storiesOf('Base', module)
                 <Text>Do you confirm your action?</Text>
               </Box>
               <Box horizontal align="flex-start" style={commandBarStyle}>
-                <Button type="system" fill="filled" onClick={onConfirmOK}>OK</Button>
-                <Button type="caution" fill="ghost" onClick={onConfirmCancel}>Cancel</Button>
+                <Button type="secondary" fill="filled" onClick={onConfirmOK}>OK</Button>
+                <Button type="danger" fill="ghost" onClick={onConfirmCancel}>Cancel</Button>
               </Box>
             </Box>
           </Modal>
