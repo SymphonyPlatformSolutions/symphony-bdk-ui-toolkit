@@ -9,7 +9,7 @@ export const getBackgroundColor = ({ theme }) => (
 export const getBoxShadowColor = ({ theme }) => (
   theme.mode === THEME_TYPES.LIGHT
     ? transparentize(0.86, '#000')
-    : null
+    : theme.theme.grey
 );
 
 export const getBorderColor = ({ theme }) => (

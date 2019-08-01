@@ -12,8 +12,8 @@ const getThemedBorderColor = ({ theme, inputState, disabled }) => {
 };
 
 
-export const getColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#F1F2F3' : '#25272A');
-export const getPlaceholderColor = ({ theme }) => theme.theme.darkgrey;
+export const getColor = ({ theme, inputState }) => (inputState === 'error' ? theme.theme.danger : (theme.mode === THEME_TYPES.DARK ? '#F1F2F3' : '#25272A'));
+export const getPlaceholderColor = ({ theme, inputState }) => (inputState === 'error' ? theme.theme.danger : theme.theme.darkgrey);
 
 export const getBorderColor = props => getThemedBorderColor(props);
 export const getBackgroundColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#2F3237' : 'transparent');

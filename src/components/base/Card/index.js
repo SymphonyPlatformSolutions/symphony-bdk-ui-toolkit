@@ -14,7 +14,7 @@ const BaseCard = styled.div`
 
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   &:hover {
-    box-shadow: ${props => `0 14px 28px ${getBoxShadowColor(props)}, 0 10px 10px ${getBoxShadowColor(props)}`};
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     background-color: ${props => getBackgroundColor(props)};
   }
   width: 100%;
