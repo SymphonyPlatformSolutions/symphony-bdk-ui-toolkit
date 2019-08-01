@@ -1,4 +1,4 @@
-import { darken, lighten } from 'polished';
+import { darken } from 'polished';
 import { THEME_TYPES, colors } from '../../../styles/colors';
 
 export const FILL_TYPES = {

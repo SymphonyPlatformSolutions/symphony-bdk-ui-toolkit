@@ -12,7 +12,7 @@ import Button from '.';
 import Box from '../Box';
 import Text from '../Text';
 import { FILL_TYPES } from './theme';
-import { THEME_TYPES, colors } from '../../../styles/colors';
+import { THEME_TYPES } from '../../../styles/colors';
 
 const asyncAction = async () => new Promise(success => setTimeout(success, 2000));
 
@@ -123,7 +123,7 @@ storiesOf('Base', module)
           <Button size="large" type="primary" fill="filled" disabled onClick={asyncAction}>
             <span>Disabled</span>
           </Button>
-          <Button size="large" type="danger" disabled onClick={asyncAction}>
+          <Button size="large" type="danger" fill="outlined" disabled onClick={asyncAction}>
             <span>Disabled</span>
           </Button>
           <Button size="small" type="secondary" fill="filled" disabled onClick={asyncAction}>

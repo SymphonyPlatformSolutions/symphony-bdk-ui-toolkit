@@ -36,6 +36,14 @@ const InputFieldWithErrorStory = () => {
   );
 };
 
+import styled from 'styled-components';
+
+import { THEME_TYPES } from '../../../styles/colors';
+const StoryWrapper = styled(Box)`
+  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
+`;
+
+
 const InputFieldStory = () => {
   const [input, setInput] = useState('');
   const inputState = 'initial';
@@ -44,7 +52,7 @@ const InputFieldStory = () => {
     setInput(e.target.value);
   }
   return (
-    <Box vertical space={20}>
+    <StoryWrapper vertical space={20}>
       <Text title size="large">Input Field</Text>
       <div style={styles}>
 
@@ -55,7 +63,7 @@ const InputFieldStory = () => {
           placeholder="Input here..."
         />
       </div>
-    </Box>
+    </StoryWrapper>
   );
 };
 
