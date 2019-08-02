@@ -5,7 +5,16 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist/'),
     filename: 'bundle.js',
-    libraryTarget: 'commonjs2',
+    library: 'sms-sdk-toolbox-ui',
+    libraryTarget: 'umd',
+    publicPath: '/dist/',
+    umdNamedDefine: true,
+  },
+  resolve: {
+    alias: {
+      'react': path.resolve(__dirname, './node_modules/react'),
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+    },
   },
   module: {
     rules: [
@@ -18,5 +27,20 @@ module.exports = {
         },
       },
     ],
+  },
+  externals: {
+    // Don't bundle react or react-dom
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'react',
+      root: 'React',
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'ReactDOM',
+      root: 'ReactDOM',
+    },
   },
 };
