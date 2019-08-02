@@ -2,15 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Text from '../Text';
-import { colors } from '../../../styles/colors';
-
-
-const getBackgroundColor = (isChecked, disabled) => (
-  isChecked
-    ? disabled ? colors.grey : colors.system
-    : disabled ? colors.lightgrey
-      : colors.white
-);
+import { getBackgroundColor } from './theme';
 
 const CheckBox = (props) => {
   const {
@@ -88,8 +80,8 @@ const BaseCheckBox = styled.div`
   align-self:center;
   width: 1rem;
   height: 1rem;
-  background: ${p => getBackgroundColor(p.isChecked, p.disabled)};
-  border: 1px solid ${colors.grey};
+  background: ${props => getBackgroundColor(props)};
+  border: 1px solid ${props => getBackgroundColor(props)};
   border-radius: 2px;
   cursor: ${p => (p.disabled ? 'default' : 'pointer')}
   -webkit-transition: all 0.2s ease;

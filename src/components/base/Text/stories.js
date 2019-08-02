@@ -1,11 +1,18 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import styled from 'styled-components';
 import Box from '.';
 import Text from '.';
 
+import { THEME_TYPES } from '../../../styles/colors';
+
+const StoryWrapper = styled(Box)`
+  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
+`;
+
 storiesOf('Base', module)
   .add('Text', () => (
-    <Box p={15}>
+    <StoryWrapper p={15}>
       <Box space={20}>
         <Text title size="large">Title</Text>
         <Box>
@@ -18,5 +25,5 @@ storiesOf('Base', module)
           <Text size="tiny">Tiny Text</Text>
         </Box>
       </Box>
-    </Box>
+    </StoryWrapper>
   ));

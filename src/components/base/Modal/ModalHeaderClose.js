@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { GoX } from 'react-icons/go';
+import { lighten } from 'polished';
 import { colors } from '../../../styles/colors';
 
 export default function ModalHeaderClose(props) {
@@ -28,8 +29,8 @@ const ModalCloseBase = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${colors.grey}
+  color: ${({ theme }) => theme.theme.darkgrey};
   &:hover {
-    color: ${colors.darkgrey}
+    color: ${({ theme }) => lighten(0.1, theme.theme.darkgrey)};
   }
 `;

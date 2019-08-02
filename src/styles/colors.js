@@ -1,4 +1,34 @@
+export const THEME_TYPES = {
+  LIGHT: 'LIGHT',
+  DARK: 'DARK',
+};
+
+const THEMES = [
+  {
+    mode: THEME_TYPES.LIGHT,
+    theme: {
+      primary: '#006CAF',
+      secondary: '#006CAF',
+      danger: '#D50935',
+      darkgrey: '#9197A1',
+      grey: '#E3E5E8',
+    },
+  },
+  {
+    mode: THEME_TYPES.DARK,
+    theme: {
+      primary: '#006CAF',
+      secondary: '#33b1ff',
+      danger: '#f74a6f',
+      darkgrey: '#868C97',
+      grey: '#464B53',
+    },
+  },
+
+];
+
 const colors = {
+
   white: '#fff',
   blue: '#1066F2',
   darkgrey: '#4A4A4A',
@@ -11,4 +41,4 @@ const colors = {
   system: '#006CAF',
 };
 
-export { colors };
+export { THEMES, colors };

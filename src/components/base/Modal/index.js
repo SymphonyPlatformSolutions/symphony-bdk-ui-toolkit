@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ModalHeaderTitle from './ModalHeaderTitle';
 import ModalHeaderClose from './ModalHeaderClose';
 import { colors } from '../../../styles/colors';
+import { getBackgroundColor } from './theme';
 
 const Modal = (props) => {
   const {
@@ -28,15 +29,15 @@ Modal.propTypes = {
   isOpened: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 Modal.defaultProps = {
   title: false,
   isOpened: false,
-  width: "80%",
-  height: "80%"
+  width: '80%',
+  height: '80%',
 };
 
 export default Modal;
@@ -56,7 +57,7 @@ const ModalOverlay = styled.span`
 
 const BaseModal = styled.div`
   display: flex;
-  background-color: ${colors.white};
+  background-color: ${props => getBackgroundColor(props)};
   border-radius: 0px;
   box-shadow: 0 2px 4px 0 ${colors.lightGrey};
   position: fixed;

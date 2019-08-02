@@ -1,88 +1,16 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import styled from 'styled-components';
-import { colors } from '../../../styles/colors';
+import styled, { withTheme } from 'styled-components';
 import Loader from '../Loader';
 import Box from '../Box';
-
-const COLORS = {
-  caution: colors.caution,
-  cta: colors.cta,
-  system: colors.system,
-  darkgrey: colors.darkgrey,
-};
-const PADDING = {
-  tiny: '3px 10px',
-  small: '5px 15px',
-  large: '5px 20px',
-};
-const FONTSIZE = {
-  tiny: '0.5em',
-  small: '0.7em',
-  large: '1em',
-};
-const SPINNER_SIZE = {
-  tiny: 8,
-  small: 10,
-  large: 15,
-};
-
-const getColor = (type, fill) => (fill === 'ghost' ? COLORS[type]
-  : (fill === 'filled' ? colors.white : COLORS[type]));
-const getPadding = size => PADDING[size];
-const getFontSize = size => FONTSIZE[size];
-const getBgColor = (fill, type) => (fill === 'filled' ? getColor(type) : 'transparent');
-const getBorderStyle = (fill, type) => (fill === 'filled' || fill === 'ghost' ? 'none' : `2px solid ${getColor(type)}`);
-
-
-const Button = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const handleClick = () => {
-    const { onClick } = props;
-    setIsLoading(true);
-    Promise.resolve()
-      .then(onClick)
-      .catch(err => err)
-      .then(() => setIsLoading(false));
-  };
-
-  const {
-    children, size, type, fill, ...rest
-  } = props;
-  return (
-    <BaseButton size={size} type={type} fill={fill} {...rest} onClick={handleClick}>
-      <Container>
-        <ChildrenContainer isLoading={isLoading}>
-          {children}
-        </ChildrenContainer>
-        {isLoading && (
-        <Loader
-          size={SPINNER_SIZE[size]}
-          color={getColor(type, fill)}
-        />
-        )}
-      </Container>
-    </BaseButton>
-  );
-};
-
-Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  size: PropTypes.string,
-  fill: PropTypes.string,
-  disabled: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-};
-
-Button.defaultProps = {
-  type: 'cta',
-  size: 'large',
-  fill: 'outlined',
-  disabled: false,
-};
-
-export default Button;
+import {
+  getColor,
+  getPadding,
+  getFontSize,
+  getBgColor,
+  getBorderStyle,
+  SPINNER_SIZE, getHoverBgColor, getHoverActiveColor, getSpinnerColor,
+} from './theme';
 
 const Container = styled(Box)`
 display: flex;
@@ -92,21 +20,86 @@ const ChildrenContainer = styled(Box)`
   opacity: ${p => (p.isLoading ? 0.3 : 1)};
   cursor: ${p => (p.isLoading ? 'none' : 'inherit')};`;
 
+
 const BaseButton = styled.button.attrs({
   fontFamily: 'Lato, sans-serif',
 })`
-  color: ${p => getColor(p.type, p.fill)};
-  font-size: ${p => getFontSize(p.size)};
+  color: ${props => getColor(props)};
+  font-size: ${props => getFontSize(props)};
   margin: 0;
-  padding: ${p => getPadding(p.size)};
-  background-color: ${p => getBgColor(p.fill, p.type)};
-  border: ${p => getBorderStyle(p.fill, p.type)};
+  padding: ${props => getPadding(props)};
+  background-color: ${props => getBgColor(props)};
+  border: ${props => getBorderStyle(props)};
   border-radius: 22px;
-  cursor: ${p => (p.disabled ? 'none' : 'pointer')};
-  &:disabled {
-    opacity: 0.4
-  }
+  cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   &:focus {
     outline: 0
   }
+  &:hover {
+    background: ${props => getHoverBgColor(props)};
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+    color: ${props => getHoverActiveColor(props)}
+  }
 `;
+
+
+const Button = ({
+  children, size, type, fill, theme, ...rest
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMouseOver, setMouseOver] = useState(false);
+
+  const handleClick = () => {
+    const { onClick } = rest;
+    setIsLoading(true);
+    Promise.resolve()
+      .then(onClick)
+      .catch(err => err)
+      .then(() => setIsLoading(false));
+  };
+
+  return (
+    <BaseButton
+      size={size}
+      type={type}
+      fill={fill}
+      {...rest}
+      onClick={handleClick}
+      onMouseEnter={() => setMouseOver(true)}
+      onMouseLeave={() => setMouseOver(false)}
+    >
+      <Container>
+        <ChildrenContainer isLoading={isLoading}>
+          {children}
+        </ChildrenContainer>
+        {isLoading && (
+        <Loader
+          size={SPINNER_SIZE[size]}
+          color={getSpinnerColor({
+            theme, type, fill, isMouseOver,
+          })}
+        />
+        )}
+      </Container>
+    </BaseButton>
+  );
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'grey']),
+  size: PropTypes.string,
+  fill: PropTypes.string,
+  disabled: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+Button.defaultProps = {
+  type: 'primary',
+  size: 'large',
+  fill: 'filled',
+  disabled: false,
+};
+
+export default withTheme(Button);

@@ -1,17 +1,15 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
-import { FaTimes } from 'react-icons/fa';
-import { colors } from '../../../styles/colors';
-import Text from '../Text'
+import Text from '../Text';
 
 export default function ModalHeaderTitle(props) {
   const { modalTitle } = props;
 
   const titleStyle = {
     marginTop: '3px',
-    fontSize: '18px'
-  }
+    fontSize: '18px',
+  };
 
   return (
     <ModalTitleBase>
@@ -21,7 +19,7 @@ export default function ModalHeaderTitle(props) {
 }
 
 ModalHeaderTitle.propTypes = {
-  modalTitle: PropTypes.string
+  modalTitle: PropTypes.string,
 };
 
 const ModalTitleBase = styled.div`

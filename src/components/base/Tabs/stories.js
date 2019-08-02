@@ -1,19 +1,24 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { colors } from '../../../styles/colors';
+import styled from 'styled-components';
+import { THEME_TYPES } from '../../../styles/colors';
 import Tabs from '.';
 import Box from '../Box';
-import Card from '../Card';
+
 import Text from '../Text';
-import Separator from '../Separator';
+
+
+const StoryWrapper = styled(Box)`
+  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
+`;
 
 storiesOf('Base', module)
   .add('Tabs', () => (
-    <Box p={15}>
+    <StoryWrapper p={15}>
       <Box space={20}>
         <Text title size="large">Tabs</Text>
         <Box horizontal space={60}>
-          <Tabs activeTab={2}>
+          <Tabs activeTab={1}>
             <div label="Info">
               <Text small>This is a content for Info</Text>
             </div>
@@ -26,5 +31,5 @@ storiesOf('Base', module)
           </Tabs>
         </Box>
       </Box>
-    </Box>
+    </StoryWrapper>
   ));
