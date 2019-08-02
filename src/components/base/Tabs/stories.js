@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { jsxDecorator } from 'storybook-addon-jsx/lib';
 import Tabs from '.';
 import Box from '../Box';
 import { StoryWrapper } from '../Wrappers';
@@ -8,6 +9,7 @@ import { StoryWrapper } from '../Wrappers';
 import Text from '../Text';
 
 storiesOf('Base', module)
+  .addDecorator(jsxDecorator)
   .add('Tabs', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
