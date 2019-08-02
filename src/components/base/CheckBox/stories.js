@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import styled from 'styled-components';
 import Checkbox from '.';
 import Box from '../Box';
 import Text from '../Text';
-import { THEME_TYPES } from '../../../styles/colors';
-import {NoOp} from "../../../utils/helpers";
+import { NoOp } from '../../../utils/helpers';
+import { StoryWrapper } from '../Wrappers';
 
 const CheckBoxComponent = () => {
   const [isChecked, setCheckMark] = useState(true);
@@ -41,10 +40,6 @@ const CheckBoxWithKnobs = () => {
     />
   );
 };
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
 
 
 storiesOf('Base', module)

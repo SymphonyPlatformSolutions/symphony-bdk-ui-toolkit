@@ -1,16 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import styled from 'styled-components';
-import { THEME_TYPES } from '../../../styles/colors';
 import Tabs from '.';
 import Box from '../Box';
+import { StoryWrapper } from '../Wrappers';
+
 
 import Text from '../Text';
-
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
 
 storiesOf('Base', module)
   .add('Tabs', () => (

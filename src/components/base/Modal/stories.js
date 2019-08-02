@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { GoAlert } from 'react-icons/go';
-import styled from 'styled-components';
 import Modal from '.';
 import Box from '../Box';
 import Button from '../Button';
 import Text from '../Text';
-import { colors, THEME_TYPES } from '../../../styles/colors';
 
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
+import { StoryWrapper } from '../Wrappers';
 
 
 storiesOf('Base', module)
@@ -43,7 +38,7 @@ storiesOf('Base', module)
     const iconStyle = {
       lineHeight: '32px',
       fontSize: '32px',
-      color: colors.orange,
+      color: '#f58b3a',
       marginLeft: '10px',
     };
     return (

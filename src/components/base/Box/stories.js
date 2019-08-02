@@ -1,12 +1,10 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
-import styled from 'styled-components';
 import Box from '.';
 import Text from '../Text';
-import { colors, THEME_TYPES } from '../../../styles/colors';
+import { StoryWrapper } from '../Wrappers';
 
 
 const boxStyle = {
@@ -17,21 +15,17 @@ const boxStyle = {
   fontFamily: '"Lato", sans-serif',
 };
 const boxCTA = {
-  background: colors.cta,
-  color: colors.white,
+  background: '#006CAF',
+  color: '#fff',
 };
 const boxCaution = {
-  background: colors.caution,
-  color: colors.white,
+  background: '#D50935',
+  color: '#fff',
 };
 const boxSystem = {
-  background: colors.system,
-  color: colors.white,
+  background: '#006CAF',
+  color: '#fff',
 };
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
-
 
 storiesOf('Base', module)
   .add('Box', () => (

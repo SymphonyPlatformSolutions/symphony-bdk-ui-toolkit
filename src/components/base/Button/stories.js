@@ -6,14 +6,13 @@ import {
   withKnobs, text, boolean, select,
 } from '@storybook/addon-knobs';
 import { jsxDecorator } from 'storybook-addon-jsx/lib';
-import styled from 'styled-components';
 
 import Button from '.';
 import Box from '../Box';
 import Text from '../Text';
 import { FILL_TYPES } from './theme';
-import { THEME_TYPES } from '../../../styles/colors';
 import { NoOp } from '../../../utils/helpers';
+import { StoryWrapper } from '../Wrappers';
 
 const asyncAction = async () => new Promise(success => setTimeout(success, 2000));
 
@@ -45,11 +44,6 @@ const EditableComponent = () => {
     </Box>
   );
 };
-
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)

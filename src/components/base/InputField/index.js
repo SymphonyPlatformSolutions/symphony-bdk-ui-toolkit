@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { colors } from '../../../styles/colors';
 import {
   getBackgroundColor,
   getBorderColor,
-  getColor,
+  getColor, getInputColor, getInputFocusBorderColor,
   getPadding,
   getPlaceholderColor,
   getWidth,
@@ -22,7 +21,7 @@ const CopyInput = styled.div`
   right: -12px;
   font-family: 'Lato', sans-serif;
   font-size: .875rem;
-  color: ${p => (p.disabled ? colors.grey : colors.blue)}
+  color: ${props => getInputColor(props)}
   cursor: ${p => (p.disabled ? 'default' : 'pointer')};
   pointer-events: ${p => (p.disabled ? 'none' : '')}
 `;
@@ -49,7 +48,7 @@ const BaseInputField = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${p => (p.inputState === 'error' ? colors.caution : colors.blue)};
+    border-color: ${props => getInputFocusBorderColor(props)};
   }
 `;
 

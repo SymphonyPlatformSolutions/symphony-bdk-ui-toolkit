@@ -9,7 +9,10 @@ import {
   getFontSize,
   getBgColor,
   getBorderStyle,
-  SPINNER_SIZE, getHoverBgColor, getHoverActiveColor, getSpinnerColor,
+  getHoverBgColor,
+  getHoverActiveColor,
+  getSpinnerColor,
+  SPINNER_SIZE,
 } from './theme';
 
 const Container = styled(Box)`

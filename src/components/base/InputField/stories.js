@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import styled from 'styled-components';
 import Box from '../Box';
 import InputField from '.';
 import Text from '../Text';
-
-
-import { THEME_TYPES } from '../../../styles/colors';
+import { StoryWrapper } from '../Wrappers';
 
 const styles = {
   width: '24rem',
@@ -86,10 +83,6 @@ const InputFieldCopyOptionStory = () => {
     </Box>
   );
 };
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
 
 storiesOf('Base', module)
   .add('InputField', () => (

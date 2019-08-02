@@ -3,8 +3,7 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import ModalHeaderTitle from './ModalHeaderTitle';
 import ModalHeaderClose from './ModalHeaderClose';
-import { colors } from '../../../styles/colors';
-import { getBackgroundColor } from './theme';
+import {getBackgroundColor, getBoxShadow} from './theme';
 
 const Modal = (props) => {
   const {
@@ -59,7 +58,7 @@ const BaseModal = styled.div`
   display: flex;
   background-color: ${props => getBackgroundColor(props)};
   border-radius: 0px;
-  box-shadow: 0 2px 4px 0 ${colors.lightGrey};
+  box-shadow: ${props => getBoxShadow(props)};
   position: fixed;
   top: 50%;
   left: 50%;

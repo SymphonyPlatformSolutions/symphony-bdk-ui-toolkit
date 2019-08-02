@@ -3,16 +3,12 @@ import { storiesOf } from '@storybook/react';
 import {
   withKnobs, color, number,
 } from '@storybook/addon-knobs';
-import styled from 'styled-components';
-import { colors, THEME_TYPES } from '../../../styles/colors';
 import Loader from '.';
 import Box from '../Box';
 import Text from '../Text';
 
+import { StoryWrapper } from '../Wrappers';
 
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -23,7 +19,7 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={number('Size: ', 15)}
-            color={color('Loader Color: ', colors.caution)}
+            color={color('Loader Color: ', '#D50935')}
           />
         </Box>
       </Box>
@@ -32,11 +28,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={15}
-            color={colors.caution}
+            color={'#D50935'}
           />
           <Loader
             size={35}
-            color={colors.caution}
+            color={'#D50935'}
           />
         </Box>
       </Box>
@@ -45,11 +41,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={25}
-            color={colors.cta}
+            color={'#006CAF'}
           />
           <Loader
             size={25}
-            color={colors.caution}
+            color={'#006CAF'}
           />
         </Box>
       </Box>

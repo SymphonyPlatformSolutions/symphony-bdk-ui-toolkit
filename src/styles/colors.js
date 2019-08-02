@@ -10,8 +10,18 @@ const THEMES = [
       primary: '#006CAF',
       secondary: '#006CAF',
       danger: '#D50935',
-      darkgrey: '#9197A1',
       grey: '#E3E5E8',
+      colors: {
+        white: '#fff',
+        blue: '#1066F2',
+        darkgrey: '#9197A1',
+        grey: '#E3E5E8',
+        lightgrey: '#E6E6E6',
+        basegrey: '#F7F8F8',
+        orange: '#f58b3a',
+        dark: '#17191C',
+        darkaccent: '#25272A',
+      },
     },
   },
   {
@@ -20,25 +30,22 @@ const THEMES = [
       primary: '#006CAF',
       secondary: '#33b1ff',
       danger: '#f74a6f',
-      darkgrey: '#868C97',
       grey: '#464B53',
+
+      colors: {
+        white: '#fff',
+        blue: '#1066F2',
+        darkgrey: '#868C97',
+        grey: '#464B53',
+        lightgrey: '#E6E6E6',
+        basegrey: '#F1F2F3',
+        orange: '#f58b3a',
+        dark: '#17191C',
+        darkaccent: '#25272A',
+      },
     },
   },
 
 ];
 
-const colors = {
-
-  white: '#fff',
-  blue: '#1066F2',
-  darkgrey: '#4A4A4A',
-  grey: '#979797',
-  lightgrey: '#E6E6E6',
-  basegrey: '#F7F8F8',
-  orange: '#f58b3a',
-  caution: '#CD4747',
-  cta: '#57B68B',
-  system: '#006CAF',
-};
-
-export { THEMES, colors };
+export { THEMES };

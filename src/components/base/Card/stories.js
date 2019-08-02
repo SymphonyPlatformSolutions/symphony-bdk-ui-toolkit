@@ -1,19 +1,11 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
-import styled from 'styled-components';
 import Card from '.';
 import Box from '../Box';
 import Text from '../Text';
-
-
-import { THEME_TYPES } from '../../../styles/colors';
-
-const StoryWrapper = styled(Box)`
-  background-color: ${props => (props.theme.mode === THEME_TYPES.LIGHT ? 'white' : '#17191C')};
-`;
+import { StoryWrapper } from '../Wrappers';
 
 
 storiesOf('Base', module)

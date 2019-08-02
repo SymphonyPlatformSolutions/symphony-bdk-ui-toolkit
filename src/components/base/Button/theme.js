@@ -1,5 +1,5 @@
 import { darken } from 'polished';
-import { THEME_TYPES, colors } from '../../../styles/colors';
+import { THEME_TYPES } from '../../../styles/colors';
 
 export const FILL_TYPES = {
   FILLED: 'filled',
@@ -34,11 +34,11 @@ export const BUTTON_THEME = (theme, type, fill) => {
   }
   const selectedTheme = {
     [THEME_TYPES.LIGHT]: {
-      TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
+      TEXT_COLOR: isFilled ? theme.theme.colors.white : theme.theme[type],
       BG_COLOR: isFilled ? theme.theme[type] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
-      TEXT_COLOR: isFilled ? colors.white : theme.theme[type],
+      TEXT_COLOR: isFilled ? theme.theme.colors.white : theme.theme[type],
       BG_COLOR: isFilled ? theme.theme[type] : 'transparent',
     },
   };
@@ -54,7 +54,7 @@ export const getColor = ({
   theme, type, fill, disabled,
 }) => {
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  return disabled ? theme.theme.grey : selectedTheme.TEXT_COLOR;
+  return disabled ? theme.theme.colors.grey : selectedTheme.TEXT_COLOR;
 };
 
 export const getHoverActiveColor = ({
@@ -62,7 +62,7 @@ export const getHoverActiveColor = ({
 }) => {
   const isOutlined = fill === FILL_TYPES.OUTLINED;
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  return disabled ? theme.theme.grey : isOutlined ? colors.white : selectedTheme.TEXT_COLOR;
+  return disabled ? theme.theme.colors.grey : isOutlined ? theme.theme.colors.white : selectedTheme.TEXT_COLOR;
 };
 
 export const getHoverBgColor = ({
@@ -79,7 +79,7 @@ export const getBgColor = ({
   theme, type, fill, disabled,
 }) => {
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  const disabledBg = fill === FILL_TYPES.FILLED ? theme.theme.darkgrey : 'transparent';
+  const disabledBg = fill === FILL_TYPES.FILLED ? theme.theme.colors.darkgrey : 'transparent';
   return disabled ? disabledBg : selectedTheme.BG_COLOR;
 };
 
@@ -87,7 +87,7 @@ export const getSpinnerColor = ({
   theme, type, fill, isMouseOver
 }) => {
   const isOutlined = fill === FILL_TYPES.OUTLINED;
-  return isOutlined && !isMouseOver ? getColor({ theme, type, fill }) : colors.white;
+  return isOutlined && !isMouseOver ? getColor({ theme, type, fill }) : theme.theme.colors.white;
 };
 export const getBorderStyle = (props) => {
   const isOutlined = props.fill === FILL_TYPES.OUTLINED;
