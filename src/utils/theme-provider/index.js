@@ -12,7 +12,7 @@ const ThemeToggleContext = React.createContext({
 
 export const useTheme = () => React.useContext(ThemeToggleContext);
 
-export const MSThemeProvider = ({ children, themeMap = null }) => {
+const MSThemeProvider = ({ children, themeMap = null }) => {
   const hasCustomTheme = themeMap && themeMap.length;
 
   const [themeState, setThemeState] = React.useState(
