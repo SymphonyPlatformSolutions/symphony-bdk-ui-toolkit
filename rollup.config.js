@@ -61,7 +61,7 @@ export default [
       esModule: false,
       file: pkg.unpkg,
       format: 'umd',
-      name: 'sms-sdk-toolkit-ui',
+      name: 'sms-sdk-toolbox-ui',
       exports: 'named',
       globals: {
         react: 'React',
