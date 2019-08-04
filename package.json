@@ -2,15 +2,16 @@
   "name": "sms-sdk-toolbox-ui",
   "version": "1.0.0",
   "description": "Package with component-based development of SMS",
+  "source": "src/index.js",
   "main": "dist/index.js",
-  "module": "dist/esm/index.js",
-  "jsnext:main": "dist/esm/index.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "NODE_ENV=production rollup -c rollup.config.js -w",
-    "build:prod": "NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build": " microbundle --jsx React.createElement --external styled-components",
+    "dev": " microbundle --jsx React.createElement --external styled-components --watch --compress false"
   },
   "files": [
     "dist"
@@ -59,7 +60,6 @@
     "react-modal": "^3.8.1",
     "react-select": "^2.4.3",
     "react-spinners": "^0.5.4",
-    "styled-components": "^4.2.0",
     "rollup": "^1.16.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",
@@ -71,15 +71,20 @@
     "storybook-addon-jsx": "^7.1.2",
     "storybook-addon-styled-component-theme": "^1.2.3",
     "style-loader": "^0.23.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "microbundle": "^0.11.0"
+  },
   "peerDependencies": {
+    "axios": "^0.19.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "prop-types": "^15.7.2",
-    "styled-components": "^4.2.0",
-    "axios": "^0.19.0"
+    "styled-components": "^4.2.0"
   }
 }

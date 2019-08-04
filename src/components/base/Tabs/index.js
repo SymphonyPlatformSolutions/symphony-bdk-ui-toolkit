@@ -71,7 +71,6 @@ export default function Tabs(props) {
     children,
     ...rest
   } = props;
-
   return (
     <BaseTabs {...rest}>
       <Box horizontal>
