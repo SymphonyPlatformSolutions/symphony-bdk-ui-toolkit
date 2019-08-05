@@ -1,3 +1,10 @@
+#Themes
+
+Whenever you want to override your themes on your extension app, make sure to describe them like so:
+
+## Theme Object
+
+```jsx
 export const THEME_TYPES = {
   LIGHT: 'LIGHT',
   DARK: 'DARK',
@@ -39,5 +46,24 @@ const THEMES = [
     },
   },
 ];
+```
 
-export { THEMES };
+#Setting themes
+On your project, use `ThemeProvider' from styled components in order to have your components
+using the defined themes, like so:
+
+```jsx
+import Styled, { ThemeProvider } from 'styled-components';
+
+const currentTheme = Themes[0];
+
+<ContainerWrapper>
+    <ThemeProvider theme={currentTheme}>
+      <BrowserRouter>
+        <Switch>
+         ...
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
+</ContainerWrapper>
+```
