@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+  useState, useEffect, createRef, useRef,
+} from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Box from '../Box';
@@ -6,6 +8,7 @@ import {
   getHeaderIndicatorBackground,
   getTabHeaderBorder,
   getTabHeaderIndicatorMarginLeft,
+  getHeaderIndicatorWidth,
   getTabItemAlign,
   getTabItemColor,
   getTabItemFontWeight,
@@ -34,7 +37,6 @@ const TabHeaderLabel = styled.span`
 
 const TabHeaderItem = styled.li`
   display: inline-block;
-  width: 150px;
   list-style: none;
   margin-bottom: -1px;
   padding: 0 0.75rem 17px 0.75rem;
@@ -43,23 +45,26 @@ const TabHeaderItem = styled.li`
   float: ${props => getTabItemAlign(props)};
 `;
 
+
 const TabHeaderIndicator = styled.div`
-  max-width: 150px;
+  width: ${props => getHeaderIndicatorWidth(props)};
   height: 3px;
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
   margin-top: 38px;
   margin-left: ${props => getTabHeaderIndicatorMarginLeft(props)};
-
-  -webkit-transition: margin 0.5s ease;
-  transition: margin 0.5s ease;
+  transition-property: margin, width;
+  transition-duration: .5s;
+  transition-timing-function: ease;
 `;
 
 
-export default function Tabs(props) {
-  const [activeTab, setActiveTab] = useState(props.children[props.activeTab].props.label);
-  const [activeTabIndex, setActiveTabIndex] = useState(props.activeTab);
-  const [activeTabAlign, setActiveTabAlign] = useState(props.children[props.activeTab].props.align);
+export default function Tabs({ children, activeTab, ...rest }) {
+  const elRef = useRef([...Array(children.length)].map(() => createRef()));
+  const [currentRef, setCurrentRef] = useState(null);
+  const [selectedTab, setActiveTab] = useState(children[activeTab].props.label);
+  const [activeTabIndex, setActiveTabIndex] = useState(activeTab);
+  const [activeTabAlign, setActiveTabAlign] = useState(children[activeTab].props.align);
 
   const onClickTabItem = (label, index, align) => {
     setActiveTab(label);
@@ -67,10 +72,13 @@ export default function Tabs(props) {
     setActiveTabAlign(align);
   };
 
-  const {
-    children,
-    ...rest
-  } = props;
+  useEffect(() => {
+    const hasRefs = elRef.current.reduce((prev, next) => prev && next.current !== null, true);
+
+    if (!hasRefs) return;
+    setCurrentRef(elRef.current[activeTabIndex]);
+  }, [elRef.current]);
+
   return (
     <BaseTabs {...rest}>
       <Box horizontal>
@@ -81,20 +89,27 @@ export default function Tabs(props) {
               <TabHeaderItem
                 key={label}
                 label={label}
-                activeTab={activeTab}
+                activeTab={selectedTab}
+                ref={elRef.current[index]}
                 align={align}
                 onClick={() => onClickTabItem(label, index, align)}
               >
-                <TabHeaderLabel label={label} activeTab={activeTab}>{label}</TabHeaderLabel>
+                <TabHeaderLabel label={label} activeTab={selectedTab}>{label}</TabHeaderLabel>
               </TabHeaderItem>
             );
           })}
-          <TabHeaderIndicator activeTabIndex={activeTabIndex} activeTabAlign={activeTabAlign} />
+          {currentRef && (
+          <TabHeaderIndicator
+            tabs={elRef.current}
+            activeTabIndex={activeTabIndex}
+            activeTabAlign={activeTabAlign}
+          />
+          )}
         </TabHeader>
       </Box>
       <Box horizontal>
         {children.map((child) => {
-          if (child.props.label !== activeTab) return undefined;
+          if (child.props.label !== selectedTab) return undefined;
           return child.props.children;
         })}
       </Box>

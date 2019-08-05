@@ -91,8 +91,8 @@ const Button = ({
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'grey']),
-  size: PropTypes.string,
-  fill: PropTypes.string,
+  size: PropTypes.oneOf(['tiny', 'small', 'large']),
+  fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
