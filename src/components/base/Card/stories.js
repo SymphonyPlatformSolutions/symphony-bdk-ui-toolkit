@@ -6,6 +6,7 @@ import Card from '.';
 import Box from '../Box';
 import Text from '../Text';
 import { StoryWrapper } from '../Wrappers';
+import Info from './info.md';
 
 
 storiesOf('Base', module)
@@ -21,4 +22,8 @@ storiesOf('Base', module)
         </Card>
       </Box>
     </StoryWrapper>
-  ));
+  ), {
+    notes: {
+      markdown: Info,
+    }
+  });

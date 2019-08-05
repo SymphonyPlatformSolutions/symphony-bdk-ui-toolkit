@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Box from '../Box';
 import Text from '.';
+import Info from './info.md';
 
 import { StoryWrapper } from '../Wrappers';
 
@@ -22,4 +23,8 @@ storiesOf('Base', module)
         </Box>
       </Box>
     </StoryWrapper>
-  ));
+  ), {
+    notes: {
+      markdown: Info,
+    }
+  });

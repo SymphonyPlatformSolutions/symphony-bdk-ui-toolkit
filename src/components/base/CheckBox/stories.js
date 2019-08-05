@@ -6,6 +6,7 @@ import Box from '../Box';
 import Text from '../Text';
 import { NoOp } from '../../../utils/helpers';
 import { StoryWrapper } from '../Wrappers';
+import Info from './info.md';
 
 const CheckBoxComponent = () => {
   const [isChecked, setCheckMark] = useState(true);
@@ -56,4 +57,8 @@ storiesOf('Base', module)
         <Checkbox onChange={NoOp} isChecked disabled label="Disabled Checked" />
       </Box>
     </StoryWrapper>
-  ));
+  ), {
+    notes: {
+      markdown: Info,
+    }
+  });

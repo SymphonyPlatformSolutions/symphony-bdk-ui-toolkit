@@ -5,6 +5,7 @@ import Modal from '.';
 import Box from '../Box';
 import Button from '../Button';
 import Text from '../Text';
+import Info from './info.md';
 
 import { StoryWrapper } from '../Wrappers';
 
@@ -74,4 +75,8 @@ storiesOf('Base', module)
         </Box>
       </StoryWrapper>
     );
-  }));
+  }), {
+    notes: {
+      markdown: Info,
+    }
+  });

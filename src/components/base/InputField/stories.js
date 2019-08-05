@@ -4,6 +4,7 @@ import Box from '../Box';
 import InputField from '.';
 import Text from '../Text';
 import { StoryWrapper } from '../Wrappers';
+import Info from './info.md';
 
 const styles = {
   width: '24rem',
@@ -97,4 +98,8 @@ storiesOf('Base', module)
       </Box>
       <InputFieldWithErrorStory />
     </StoryWrapper>
-  ));
+  ), {
+    notes: {
+      markdown: Info,
+    }
+  });

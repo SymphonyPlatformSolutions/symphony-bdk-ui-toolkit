@@ -5,8 +5,8 @@ import { action } from '@storybook/addon-actions';
 import {
   withKnobs, text, boolean, select,
 } from '@storybook/addon-knobs';
-import { jsxDecorator } from 'storybook-addon-jsx/lib';
 
+import Info from './info.md';
 import Button from '.';
 import Box from '../Box';
 import Text from '../Text';
@@ -47,7 +47,6 @@ const EditableComponent = () => {
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
-  .addDecorator(jsxDecorator)
   .add('Button', () => (
     <StoryWrapper p={15}>
       <Box>
@@ -131,4 +130,8 @@ storiesOf('Base', module)
         </Box>
       </Box>
     </StoryWrapper>
-  ));
+  ), {
+    notes: {
+      markdown: Info,
+    },
+  });

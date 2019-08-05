@@ -44,7 +44,7 @@ const TabHeaderItem = styled.li`
 `;
 
 const TabHeaderIndicator = styled.div`
-  width: 150px;
+  max-width: 150px;
   height: 3px;
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};

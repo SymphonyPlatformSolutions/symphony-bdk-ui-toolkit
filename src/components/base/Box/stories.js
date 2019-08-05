@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import Box from '.';
 import Text from '../Text';
 import { StoryWrapper } from '../Wrappers';
-
+import Info from './info.md';
 
 const boxStyle = {
   width: '100px',
@@ -93,4 +93,6 @@ storiesOf('Base', module)
         </Box>
       </Box>
     </StoryWrapper>
-  ));
+  ), {
+     notes: { markdown: Info },
+  });
