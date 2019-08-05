@@ -73,11 +73,13 @@ export default function Tabs({ children, activeTab, ...rest }) {
   };
 
   useEffect(() => {
-    const hasRefs = elRef.current.reduce((prev, next) => prev && next.current !== null, true);
-
+    let hasRefs = true;
+    for (let i = 0; i < elRef.current.length; i++) {
+      hasRefs = hasRefs && (elRef.current[i] !== undefined);
+    }
     if (!hasRefs) return;
     setCurrentRef(elRef.current[activeTabIndex]);
-  }, [elRef.current]);
+  }, [elRef, elRef.current, activeTabIndex]);
 
   return (
     <BaseTabs {...rest}>
@@ -90,7 +92,7 @@ export default function Tabs({ children, activeTab, ...rest }) {
                 key={label}
                 label={label}
                 activeTab={selectedTab}
-                ref={elRef.current[index]}
+                ref={(ref) => elRef.current[index] = ref}
                 align={align}
                 onClick={() => onClickTabItem(label, index, align)}
               >

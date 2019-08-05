@@ -24,10 +24,10 @@ storiesOf('Base', module)
             <div label={text('Tab 2 title', 'Manage Notification')}>
               <Text small>This is a content for Settings</Text>
             </div>
-            <div label={text('Tab 3 title', 'Manage Notification2')}>
+            <div label={text('Tab 3 title', 'Manage Messanges')}>
               <Text small>This is a content for Settings</Text>
             </div>
-            <div label={text('Tab 4 title', 'Manage Notification33')}>
+            <div label={text('Tab 4 title', 'Send Invites')}>
               <Text small>This is a content for Settings</Text>
             </div>
             <div label={text('Tab 5 title', 'Admin')} align="right">

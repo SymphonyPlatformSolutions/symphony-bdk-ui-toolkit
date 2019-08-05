@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": " microbundle --jsx React.createElement --external styled-components",
-    "dev": " microbundle --jsx React.createElement --external styled-components --watch --compress false"
+    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components && rm dist/index.module.js dist/index.module.js.map",
+    "dev": " microbundle --jsx React.createElement --external styled-components --watch --compress false --raw  true"
   },
   "files": [
     "dist"
