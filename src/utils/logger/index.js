@@ -26,7 +26,7 @@ const COLOR_WARNING = 'color: #e7910e';
 const COLOR_ERROR = 'color: #ec4d5c';
 
 class Logger {
-  env = null;
+  environment = null;
 
   apiUrl = null;
 
@@ -35,15 +35,15 @@ class Logger {
   appTitle = null;
 
   constructor({
-    appTitle, env, apiUrl, debugLevel,
+    appTitle, environment, apiUrl, debugLevel,
   }) {
     this.appTitle = appTitle;
-    this.env = env;
+    this.environment = environment;
     this.apiUrl = apiUrl;
     this.level = debugLevel;
 
     if (!this.level) {
-      switch (this.env) {
+      switch (this.environment) {
         case envs.MOCK:
         case envs.DEV:
         case envs.TEST:

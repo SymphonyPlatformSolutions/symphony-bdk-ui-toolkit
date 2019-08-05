@@ -45,4 +45,4 @@ export const getFontStyle = ({ title, size }) => (title || size !== 'tiny' ? 'no
 export const getFontSize = ({ title, size }) => (title ? FONTSIZETITLE[size] : FONTSIZE[size]);
 export const getLineHeight = ({ title, size }) => (title ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 export const getFontWeight = ({ title }) => (title ? '900' : '400');
-export const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.theme.colors.grey} solid` : '0px');
+export const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.theme.grey} solid` : '0px');

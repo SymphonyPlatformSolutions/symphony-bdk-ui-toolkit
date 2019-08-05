@@ -1,2 +1,1 @@
-export { default as MSThemeProvider } from './theme-provider';
-export { default as MSLogger } from './logger';
+export { default as Logger } from './logger';

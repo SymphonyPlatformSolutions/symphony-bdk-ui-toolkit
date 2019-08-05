@@ -22,7 +22,7 @@ configure(loadStories, module);
 
 window.appConfig = {
   appTitle: 'MS Storybook',
-  env: 'DEV',
+  environment: 'DEV',
   apiUrl: null,
   debugLevel: 1,
 };

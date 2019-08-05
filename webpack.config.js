@@ -4,17 +4,9 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist/'),
-    filename: 'bundle.js',
+    filename: 'index.js',
     library: 'sms-sdk-toolbox-ui',
-    libraryTarget: 'umd',
-    publicPath: '/dist/',
-    umdNamedDefine: true,
-  },
-  resolve: {
-    alias: {
-      'react': path.resolve(__dirname, './node_modules/react'),
-      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
-    },
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -24,23 +16,14 @@ module.exports = {
         exclude: /node_modules/,
         query: {
           presets: ['@babel/react', '@babel/preset-env'],
+          plugins: [
+            '@babel/plugin-proposal-class-properties',
+            'transform-react-remove-prop-types',
+          ],
         },
       },
     ],
   },
-  externals: {
-    // Don't bundle react or react-dom
-    react: {
-      commonjs: 'react',
-      commonjs2: 'react',
-      amd: 'react',
-      root: 'React',
-    },
-    'react-dom': {
-      commonjs: 'react-dom',
-      commonjs2: 'react-dom',
-      amd: 'ReactDOM',
-      root: 'ReactDOM',
-    },
-  },
+  devtool: 'source-map',
+  mode: 'production',
 };

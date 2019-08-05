@@ -10,5 +10,5 @@ export default function Separator() {
 
 const BaseSeparator = styled.div`
   width: 100%;
-  border-bottom: ${({ theme }) => `1px ${theme.theme.colors.lightgrey} solid`};
+  border-bottom: ${({ theme }) => `1px ${theme.theme.lightgrey} solid`};
 `;
