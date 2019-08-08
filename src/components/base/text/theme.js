@@ -35,8 +35,7 @@ const TEXT_THEME = (theme) => {
       TEXT_COLOR: '#ffffff',
     },
   };
-
-  return selectedTheme[theme.mode];
+  return (!theme || !theme.mode) ? selectedTheme[THEME_TYPES.LIGHT] : selectedTheme[theme.mode];
 };
 
 export const getTextColor = ({ title, size, theme }) => (title || size !== 'tiny' ? TEXT_THEME(theme).TEXT_COLOR : TEXT_THEME(theme).TEXT_COLOR);

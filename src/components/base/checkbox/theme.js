@@ -5,7 +5,7 @@ export const getBackgroundColor = ({ theme, isChecked, disabled }) => (
   isChecked
     ? disabled
       ? theme.theme.darkgrey
-      : theme.theme.secondary
+      : theme.theme.primary
     : disabled
       ? theme.theme.grey
       : theme.mode === THEME_TYPES.LIGHT

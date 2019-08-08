@@ -1,6 +1,14 @@
 import { addParameters, configure, addDecorator } from '@storybook/react';
 import {withThemesProvider} from 'storybook-addon-styled-component-theme';
 import {THEMES} from "../src/styles/colors";
+import {Logger} from "../src/utils";
+
+Logger.setEnv({
+  appTitle: 'MS Storybook',
+  environment: 'DEV',
+  apiUrl: null,
+  debugLevel: 1,
+});
 
 function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);
@@ -19,10 +27,3 @@ addDecorator(withThemesProvider(decoratedThemes));
 addParameters({ viewport: { defaultViewport: 'responsive' } });
 
 configure(loadStories, module);
-
-window.appConfig = {
-  appTitle: 'MS Storybook',
-  environment: 'DEV',
-  apiUrl: null,
-  debugLevel: 1,
-};

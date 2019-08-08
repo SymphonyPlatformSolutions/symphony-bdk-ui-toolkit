@@ -43,6 +43,13 @@ export const BUTTON_THEME = (theme, type, fill) => {
     },
   };
 
+  if (!theme || !theme.mode) {
+    return {
+      TEXT_COLOR: '#fff',
+      BG_COLOR: '#fff',
+    };
+  }
+
   return selectedTheme[theme.mode];
 };
 
@@ -84,7 +91,7 @@ export const getBgColor = ({
 };
 
 export const getSpinnerColor = ({
-  theme, type, fill, isMouseOver
+  theme, type, fill, isMouseOver,
 }) => {
   const isOutlined = fill === FILL_TYPES.OUTLINED;
   return isOutlined && !isMouseOver ? getColor({ theme, type, fill }) : theme.theme.white;
@@ -95,7 +102,5 @@ export const getBorderStyle = (props) => {
 };
 
 
-export const getPadding = props => {
-  return PADDING[props.size];
-}
+export const getPadding = props => PADDING[props.size];
 export const getFontSize = props => FONTSIZE[props.size];

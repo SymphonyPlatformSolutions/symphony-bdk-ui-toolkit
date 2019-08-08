@@ -34,7 +34,7 @@ class Logger {
 
   appTitle = null;
 
-  constructor({
+  setEnv({
     appTitle, environment, apiUrl, debugLevel,
   }) {
     this.appTitle = appTitle;
@@ -120,5 +120,5 @@ class Logger {
 }
 
 // Singleton instance
-const instance = new Logger(window.appConfig);
+const instance = new Logger();
 export default instance;
