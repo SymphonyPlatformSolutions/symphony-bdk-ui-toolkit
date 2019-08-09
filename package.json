@@ -11,7 +11,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components && rm dist/index.module.js dist/index.module.js.map",
-    "dev": " microbundle --jsx React.createElement --external styled-components --watch --compress false --raw  true"
+    "dev": "microbundle --jsx React.createElement --external styled-components --watch --compress false --raw  true"
   },
   "files": [
     "dist"
