@@ -7,3 +7,4 @@ export { default as Tabs } from './base/tabs';
 export { default as Text } from './base/text';
 export { default as InputField } from './base/input-field';
 export { default as Checkbox } from './base/checkbox';
+export { default as PhoneInputField } from './base/phone-input-field';
