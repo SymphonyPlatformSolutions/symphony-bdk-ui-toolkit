@@ -105,13 +105,8 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       border-radius: 0;
     }
   }
-  
-  .${overrides.flag} {
-    transform: scale(1.1);
-  }
 
   .${overrides.selectedFlag} {
-    margin-left: 7px;
     border-radius: none;
     background-color: none;
     .arrow {

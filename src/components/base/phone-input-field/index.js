@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactPhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css';
+import './assets/flags.css';
 
 import {
   PhoneInputWrapper,
@@ -12,6 +12,7 @@ import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
+  disableAreaCodes,
 }, ...rest) => {
   const [hasRef, setRef] = useState(null);
   const elRef = createRef();
@@ -28,6 +29,7 @@ const PhoneInputField = ({
       inputState={inputState}
     >
       <ReactPhoneInput
+        disableAreaCodes={disableAreaCodes}
         disabled={disabled}
         defaultCountry={defaultValue}
         value={value}
@@ -46,6 +48,7 @@ PhoneInputField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   defaultValue: PropTypes.string,
+  disableAreaCodes: PropTypes.bool,
 };
 
 PhoneInputField.defaultProps = {
@@ -56,6 +59,7 @@ PhoneInputField.defaultProps = {
   value: '',
   onChange: NoOp,
   defaultValue: 'us',
+  disableAreaCodes: true,
 };
 
 export default PhoneInputField;
