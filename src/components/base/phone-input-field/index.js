@@ -12,7 +12,7 @@ import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
-  disableAreaCodes,
+  disableAreaCodes, id, onBlur,
 }, ...rest) => {
   const [hasRef, setRef] = useState(null);
   const elRef = createRef();
@@ -34,6 +34,10 @@ const PhoneInputField = ({
         defaultCountry={defaultValue}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
+        inputExtraProps={{
+          id,
+        }}
         {...rest}
       />
     </PhoneInputWrapper>
@@ -47,6 +51,7 @@ PhoneInputField.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   disableAreaCodes: PropTypes.bool,
 };
@@ -58,6 +63,7 @@ PhoneInputField.defaultProps = {
   placeholder: 'Input here...',
   value: '',
   onChange: NoOp,
+  onBlur: NoOp,
   defaultValue: 'us',
   disableAreaCodes: true,
 };

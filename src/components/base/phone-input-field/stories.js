@@ -36,6 +36,7 @@ const PhoneInputFieldLiveSample = () => {
       <Text title size="large">Live Sample (Knobs)</Text>
       <div style={styles}>
         <PhoneInputField
+          id="test"
           inputState={inputStates}
           disabled={isDisabled}
           value={input}
