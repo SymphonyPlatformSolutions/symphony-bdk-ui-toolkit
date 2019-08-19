@@ -9,3 +9,4 @@ export { default as InputField } from './base/input-field';
 export { default as Checkbox } from './base/checkbox';
 export { default as PhoneInputField } from './base/phone-input-field';
 export { default as Modal } from './base/modal';
+export { default as Flag } from './base/flags';
