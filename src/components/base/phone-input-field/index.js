@@ -12,7 +12,7 @@ import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
-  disableAreaCodes,
+  disableAreaCodes, id,
 }, ...rest) => {
   const [hasRef, setRef] = useState(null);
   const elRef = createRef();
@@ -34,6 +34,10 @@ const PhoneInputField = ({
         defaultCountry={defaultValue}
         value={value}
         onChange={onChange}
+        label="12412"
+        inputExtraProps={{
+          id,
+        }}
         {...rest}
       />
     </PhoneInputWrapper>
