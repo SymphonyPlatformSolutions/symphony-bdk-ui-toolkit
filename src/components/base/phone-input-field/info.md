@@ -46,6 +46,7 @@ PhoneInputField.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   disableAreaCodes: PropTypes.bool,
 };
@@ -57,8 +58,8 @@ PhoneInputField.defaultProps = {
   placeholder: 'Input here...',
   value: '',
   onChange: NoOp,
+  onBlur: NoOp,
   defaultValue: 'us',
   disableAreaCodes: true,
 };
-
 ```
