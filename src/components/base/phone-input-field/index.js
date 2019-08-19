@@ -34,7 +34,6 @@ const PhoneInputField = ({
         defaultCountry={defaultValue}
         value={value}
         onChange={onChange}
-        label="12412"
         inputExtraProps={{
           id,
         }}
