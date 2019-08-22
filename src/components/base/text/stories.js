@@ -22,6 +22,14 @@ const TEXT_SIZES = {
   Large: 'large',
 };
 
+
+const TEXT_TYPES = {
+  Primary: 'primary',
+  Secondary: 'secondary',
+  Danger: 'danger',
+  Info: 'info',
+};
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('Text', () => (
@@ -31,7 +39,12 @@ storiesOf('Base', module)
         <Text
           underline={boolean('Has underline', false)}
           title={boolean('Is Title', false)}
+          type={select('Text Types', TEXT_TYPES, 'primary')}
           size={select('Text Sizes', TEXT_SIZES, 'large')}
+          px={text('Padding vertical', '10px')}
+          py={text('Padding horizontal', '3px')}
+          mx={text('Margin Vertical', '10px')}
+          my={text('Margin Horizontal', '0px')}
         >
           {text('Label', sampleText)}
         </Text>
@@ -39,13 +52,13 @@ storiesOf('Base', module)
       <Box space={20}>
         <Text title>Title</Text>
         <Box>
-          <Text title size="large" underline>Large Title Underline</Text>
-          <Text title size="small">Small Title</Text>
-          <Text title size="tiny">Tiny Title</Text>
-          <Text size="large">Large Text</Text>
-          <Text size="small">Small Text</Text>
-          <Text size="small" underline>Small Text Underline</Text>
-          <Text size="tiny">Tiny Text</Text>
+          <Text type="secondary" title size="large" underline>Large Title Underline</Text>
+          <Text type="secondary" title size="small">Small Title</Text>
+          <Text type="secondary" title size="tiny">Tiny Title</Text>
+          <Text type="secondary" size="large">Large Text</Text>
+          <Text type="secondary" size="small">Small Text</Text>
+          <Text type="secondary" size="small" underline>Small Text Underline</Text>
+          <Text type="secondary" size="tiny">Tiny Text</Text>
         </Box>
       </Box>
     </StoryWrapper>

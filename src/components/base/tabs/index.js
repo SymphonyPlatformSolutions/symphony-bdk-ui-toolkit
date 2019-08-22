@@ -11,6 +11,7 @@ import {
   getHeaderIndicatorWidth,
   getTabItemAlign,
   getTabItemColor,
+  getTabItemWeight,
 } from './theme';
 
 const BaseTabs = styled.div`
@@ -27,8 +28,8 @@ const TabHeader = styled.ol`
 
 const TabHeaderLabel = styled.span`
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
-  font-weight: 100;
+  font-size: 1.25rem;
+  font-weight: ${props => getTabItemWeight(props)};
   line-height: 22px;
   cursor: pointer;
   color: ${props => getTabItemColor(props)};

@@ -14,6 +14,7 @@ const boxStyle = {
   textAlign: 'center',
   fontFamily: '"Lato", sans-serif',
 };
+
 const boxCTA = {
   background: '#006CAF',
   color: '#fff',

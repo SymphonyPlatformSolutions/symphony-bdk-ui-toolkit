@@ -35,7 +35,7 @@ const BaseInputField = styled.input`
   width: ${props => getWidth(props)};
   padding: .6rem ${props => (getPadding(props))} .6rem .75rem;
   cursor: ${p => (p.disabled ? 'inherit' : 'text')};
-  transition: border 1s cubic-bezier(.25,.8,.25,1);
+  transition: border .4s cubic-bezier(.25,.8,.25,1);
   background: ${props => getBackgroundColor(props)};
   color: ${props => getColor(props)};
   &:disabled {

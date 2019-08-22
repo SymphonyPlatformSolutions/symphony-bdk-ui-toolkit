@@ -4,6 +4,10 @@ export const getTabItemColor = ({ activeTab, label, theme }) => (
     ? theme.theme.primary
     : theme.theme.darkgrey
 );
+export const getTabItemWeight = ({ activeTab, label }) => (
+  activeTab === label ? '800' : '100'
+);
+
 export const getTabItemAlign = ({ align }) => (align === 'right' ? 'right' : 'left');
 export const getHeaderIndicatorBackground = ({ theme }) => theme.theme.primary;
 export const getHeaderIndicatorWidth = ({ activeTabIndex, tabs }) => {

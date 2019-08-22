@@ -75,10 +75,10 @@ storiesOf('Base', module)
         <Text title size="large">Button Fill types</Text>
         <Box horizontal space={20}>
           <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
-            <span>Filled</span>
+            Filled
           </Button>
           <Button size="large" type="secondary" fill="outlined" onClick={action('clicked')}>
-            <span>Outlined</span>
+            Outlined
           </Button>
           <Button size="large" type="danger" fill="ghost" onClick={action('clicked')}>
             <span>GHOST</span>
