@@ -36,6 +36,8 @@ Box.propTypes = {
   space: PropTypes.number,
   bg: PropTypes.string,
   p: PropTypes.number,
+  mx: PropTypes.string,
+  my: PropTypes.string,
 };
 Box.defaultProps = {
   display: 'flex',
@@ -46,5 +48,7 @@ Box.defaultProps = {
   space: 0,
   bg: 'inherit',
   p: 0,
+  mx: null,
+  my: null,
 };
 ```

@@ -45,7 +45,7 @@ Button.defaultProps = {
   size: 'large',
   fill: 'filled',
   disabled: false,
-  onClick: () => {},
-  loading: false,
+  onClick: NoOp,
+  loading: null,
 };
 ```

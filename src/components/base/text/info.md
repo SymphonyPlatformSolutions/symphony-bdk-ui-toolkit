@@ -4,13 +4,13 @@ Text Component, supports multiple sizes and theme changes
 ##Sample
 
 ```jsx　
-<Text title size="large" underline>Large Title Underline</Text>
-<Text title size="small">Small Title</Text>
-<Text title size="tiny">Tiny Title</Text>
-<Text size="large">Large Text</Text>
-<Text size="small">Small Text</Text>
-<Text size="small" underline>Small Text Underline</Text>
-<Text size="tiny">Tiny Text</Text>
+<Text type="secondary" title size="large" underline>Large Title Underline</Text>
+<Text type="secondary" title size="small">Small Title</Text>
+<Text type="secondary" title size="tiny">Tiny Title</Text>
+<Text type="secondary" size="large">Large Text</Text>
+<Text type="secondary" size="small">Small Text</Text>
+<Text type="secondary" size="small" underline>Small Text Underline</Text>
+<Text type="secondary" size="tiny">Tiny Text</Text>
 ```
 
 ##Overriding styles
@@ -24,12 +24,26 @@ const MyCustomButton = styled(Text)`
 
 ##Proptypes
 ```jsx
-Tabs.propTypes = {
-  activeTab: PropTypes.number,
+Text.propTypes = {
+  type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'info']),
+  title: PropTypes.bool,
+  size: PropTypes.string,
+  px: PropTypes.string,
+  py: PropTypes.string,
+  mx: PropTypes.string,
+  my: PropTypes.string,
+  underline: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 
-Tabs.defaultProps = {
-  activeTab: 0,
+Text.defaultProps = {
+  title: false,
+  px: null,
+  py: null,
+  mx: null,
+  my: null,
+  size: 'large',
+  underline: false,
+  type: 'secondary',
 };
 ```
