@@ -13,6 +13,17 @@ const styles = {
   width: '24rem',
 };
 
+const INPUT_STATES = {
+  Initial: 'INITIAL',
+  Modified: 'modified',
+  Error: 'error',
+};
+
+const INPUT_TYPES = {
+  Text: 'text',
+  Password: 'password',
+};
+
 const InputFieldWithErrorStory = () => {
   const [input, setInput] = useState('');
   const inputState = 'error';
@@ -88,6 +99,27 @@ const InputFieldCopyOptionStory = () => {
   );
 };
 
+
+const InputFieldPasswordStory = () => {
+  const [input, setInput] = useState('This is a password');
+
+  function handleInput(e) {
+    setInput(e.target.value);
+  }
+  return (
+    <Box vertical space={20}>
+      <Text title size="large">Password Input Field</Text>
+      <div style={styles}>
+        <InputField
+          value={input}
+          onChange={handleInput}
+          type="password"
+        />
+      </div>
+    </Box>
+  );
+};
+
 const InputFieldLiveSample = () => {
   const [input, setInput] = useState('');
 
@@ -96,8 +128,10 @@ const InputFieldLiveSample = () => {
   }
   const placeHolder = text('Placeholder', 'placeholder');
   const inputStates = select('States', INPUT_STATES, 'initial');
+  const inputTypes = select('Type', INPUT_TYPES, 'text');
   const isDisabled = boolean('Disabled', false);
   const hasCopy = boolean('Has copy input', false);
+  const showPassword = boolean('Has show password', true);
 
   return (
     <Box vertical space={20}>
@@ -106,20 +140,16 @@ const InputFieldLiveSample = () => {
         <InputField
           placeholder={placeHolder}
           inputState={inputStates}
+          type={inputTypes}
           disabled={isDisabled}
           copyInput={hasCopy}
           value={input}
+          hasPasswordShow={showPassword}
           onChange={handleInput}
         />
       </div>
     </Box>
   );
-};
-
-const INPUT_STATES = {
-  Initial: 'INITIAL',
-  Modified: 'modified',
-  Error: 'error',
 };
 
 storiesOf('Base', module)
@@ -129,6 +159,7 @@ storiesOf('Base', module)
       <InputFieldLiveSample />
       <InputFieldStory />
       <InputFieldCopyOptionStory />
+      <InputFieldPasswordStory />
       <Box vertical space={20}>
         <Text title size="large">Disabled input field</Text>
         <div style={styles}>

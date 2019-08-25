@@ -25,6 +25,8 @@ const MyCustomButton = styled(InputField)`
 InputField.propTypes = {
   copyInput: PropTypes.bool,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
+  hasPasswordShow: PropTypes.bool,
   id: PropTypes.string,
   inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
   placeholder: PropTypes.string,
@@ -36,7 +38,9 @@ InputField.propTypes = {
 InputField.defaultProps = {
   copyInput: false,
   disabled: false,
-  inputState: 'INITIAL',
+  hasPasswordShow: true,
+  inputState: 'initial',
+  type: 'text',
   id: '',
   onChange: undefined,
   onBlur: undefined,

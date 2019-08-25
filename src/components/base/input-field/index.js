@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -12,11 +12,11 @@ import {
 } from './theme';
 
 
-const CopyLinkInputWrapper = styled.div`
+const InputWrapper = styled.div`
   position: relative;
 `;
 
-const CopyInput = styled.div`
+const FloatInput = styled.div`
   position: absolute;
   top: 10px;
   right: 18px;
@@ -55,6 +55,7 @@ const BaseInputField = styled.input`
 
 const InputField = (props) => {
   const inputRef = useRef(null);
+  const [showPassord, setShowPassword] = useState(false);
 
   function copyToClipBoard() {
     inputRef.current.select();
@@ -70,15 +71,19 @@ const InputField = (props) => {
     value,
     inputState,
     copyInput,
+    hasPasswordShow,
+    type,
     ...rest
   } = props;
+
+  const hasPassword = type === 'password';
 
   return (
     <div>
       {
         copyInput
           ? (
-            <CopyLinkInputWrapper>
+            <InputWrapper>
               <BaseInputField
                 {...rest}
                 disabled={disabled}
@@ -86,35 +91,60 @@ const InputField = (props) => {
                 onChange={onChange}
                 onBlur={onBlur}
                 placeholder={placeholder}
-                type="text"
+                type={type}
                 value={value}
                 inputState={inputState}
                 ref={inputRef}
                 copyInput={copyInput}
               />
-              <CopyInput
+              <FloatInput
                 disabled={disabled}
                 copyInput={copyInput}
                 onClick={copyToClipBoard}
               >
                 copy
-              </CopyInput>
-            </CopyLinkInputWrapper>
+              </FloatInput>
+            </InputWrapper>
           )
-          : (
-            <BaseInputField
-              {...rest}
-              disabled={disabled}
-              id={id}
-              onChange={onChange}
-              onBlur={onBlur}
-              placeholder={placeholder}
-              type="text"
-              value={value}
-              inputState={inputState}
-              ref={inputRef}
-            />
+          : hasPassword ? (
+            <InputWrapper>
+              <BaseInputField
+                {...rest}
+                disabled={disabled}
+                id={id}
+                onChange={onChange}
+                onBlur={onBlur}
+                placeholder={placeholder}
+                type={showPassord ? 'text' : type}
+                value={value}
+                inputState={inputState}
+                ref={inputRef}
+                copyInput={copyInput}
+              />
+              {hasPasswordShow && (
+              <FloatInput
+                disabled={disabled}
+                onClick={() => setShowPassword(!showPassord)}
+              >
+                { showPassord ? 'hide' : 'show' }
+              </FloatInput>
+              )}
+            </InputWrapper>
           )
+            : (
+              <BaseInputField
+                {...rest}
+                disabled={disabled}
+                id={id}
+                onChange={onChange}
+                onBlur={onBlur}
+                placeholder={placeholder}
+                type={type}
+                value={value}
+                inputState={inputState}
+                ref={inputRef}
+              />
+            )
       }
     </div>
   );
@@ -123,6 +153,8 @@ const InputField = (props) => {
 InputField.propTypes = {
   copyInput: PropTypes.bool,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
+  hasPasswordShow: PropTypes.bool,
   id: PropTypes.string,
   inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
   placeholder: PropTypes.string,
@@ -134,7 +166,9 @@ InputField.propTypes = {
 InputField.defaultProps = {
   copyInput: false,
   disabled: false,
+  hasPasswordShow: true,
   inputState: 'initial',
+  type: 'text',
   id: '',
   onChange: undefined,
   onBlur: undefined,
