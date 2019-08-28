@@ -6,7 +6,7 @@ import {
 import Table from '.';
 import Box from '../box';
 import { StoryWrapper } from '../wrappers';
-// import Info from './info.md';
+import Info from './info.md';
 import Text from '../text';
 
 const DATA = [{
@@ -76,10 +76,9 @@ storiesOf('Base', module)
         </Box>
       </Box>
     </StoryWrapper>
-  ));
-// {
-//   notes: {
-//     markdown: Info,
-//   },
-// }
-// );
+  ),
+  {
+    notes: {
+      markdown: Info,
+    },
+  });
