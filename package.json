@@ -71,7 +71,8 @@
     "styled-components": "^4.2.0"
   },
   "dependencies": {
-    "microbundle": "^0.11.0"
+    "microbundle": "^0.11.0",
+    "react-data-table-component": "^3.3.0"
   },
   "peerDependencies": {
     "axios": "^0.19.0",
