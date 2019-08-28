@@ -9,7 +9,6 @@ import {
 
 import { NoOp } from '../../../utils/helpers';
 
-
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
   disableAreaCodes, id, onBlur,

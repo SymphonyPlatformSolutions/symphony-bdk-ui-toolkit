@@ -23,11 +23,10 @@ const EmptyTable = styled.div`
 const CustomTable = styled(DataTable)`
   .rdt_TableHeadRow {
     background-color: ${({ theme }) => getBorderColor(theme)};
-    /* border: 1px solid #e8ebf1; */
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     border-radius: 2px;
   }
-  
+
   .rdt_TableHeader {
     display: none;
   }
@@ -35,7 +34,7 @@ const CustomTable = styled(DataTable)`
   .rdt_TableCol .rdt_TableCol_Sortable {
     font-weight: bold;
     font-size: 14px;
-    color: ${({ theme }) => getHeaderFontColor(theme)}
+    color: ${({ theme }) => getHeaderFontColor(theme)};
   }
 
   .rdt_TableRow {
@@ -55,11 +54,9 @@ const LoaderContainer = styled.div`
   height: 30px;
 `;
 
-const Table = (props) => {
-  const {
-    data, columns, theme, loading, emptyMessage,
-  } = props;
-
+const Table = ({
+  data, columns, theme, loading, emptyMessage,
+}, ...rest) => {
   if (loading) {
     return (
       <EmptyTable>
@@ -70,19 +67,26 @@ const Table = (props) => {
     );
   }
 
-
   if (!data || !data.length) {
-    return <EmptyTable><EmptyText>{emptyMessage}</EmptyText></EmptyTable>;
+    return (
+      <EmptyTable>
+        <EmptyText>{emptyMessage}</EmptyText>
+      </EmptyTable>
+    );
   }
 
   const textColumns = columns.map((el) => {
-    if (el.cell) { return el; }
+    if (el.cell) {
+      return el;
+    }
     return {
       ...el,
-      cell: row => <NoPaddingText size="small">{row[el.selector]}</NoPaddingText>,
+      cell: row => (
+        <NoPaddingText size="small">{row[el.selector]}</NoPaddingText>
+      ),
     };
   });
-  return (<CustomTable theme={theme} data={data} columns={textColumns} />);
+  return <CustomTable theme={theme} data={data} columns={textColumns} {...rest} />;
 };
 
 Table.propTypes = {

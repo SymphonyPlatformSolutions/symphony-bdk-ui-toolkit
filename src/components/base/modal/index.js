@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import ModalHeaderTitle from './modal-header-title';
 import ModalHeaderClose from './modal-header-close';
-import {getBackgroundColor, getBoxShadow} from './theme';
+import { getBackgroundColor, getBoxShadow } from './theme';
 
 const Modal = (props) => {
   const {
@@ -33,7 +33,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: false,
+  title: undefined,
   isOpened: false,
   width: '80%',
   height: '80%',

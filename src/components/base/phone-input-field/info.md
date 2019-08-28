@@ -1,5 +1,5 @@
-#Phone Input Field
-This is a International Phone number Input, with the hability to choose a particular
+# Phone Input Field
+This is an International Phone number Input, with the ability to choose a particular
 country from a list, providing a country code for it.
 It wraps this component:
 https://github.com/bl00mber/react-phone-input-2
@@ -7,7 +7,7 @@ https://github.com/bl00mber/react-phone-input-2
 Please for further customization please follow the above documentation,
 everything passed to PhoneInputField will be propagated and **override** any prop.
 
-##Sample
+## Sample
 ```jsx
  <PhoneInputField
   inputState={inputStates}
@@ -16,7 +16,7 @@ everything passed to PhoneInputField will be propagated and **override** any pro
   onChange={handleInput}
  />
 ```
-##Overriding styles
+## Overriding styles
 ```jsx
 const overrides = {
   container: 'react-tel-input',
@@ -37,7 +37,7 @@ const MyCustomButton = styled(PhoneInputField).attrs(overrides)`
 `;  
 ```
 
-##Proptypes
+## Proptypes
 ```jsx
 PhoneInputField.propTypes = {
   disabled: PropTypes.bool,
