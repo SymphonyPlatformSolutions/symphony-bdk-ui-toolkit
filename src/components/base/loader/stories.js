@@ -29,11 +29,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={15}
-            color={'#D50935'}
+            color="#D50935"
           />
           <Loader
             size={35}
-            color={'#D50935'}
+            color="#D50935"
           />
         </Box>
       </Box>
@@ -42,11 +42,11 @@ storiesOf('Base', module)
         <Box horizontal space={60} align="center">
           <Loader
             size={25}
-            color={'#006CAF'}
+            color="#006CAF"
           />
           <Loader
             size={25}
-            color={'#006CAF'}
+            color="#006CAF"
           />
         </Box>
       </Box>
@@ -54,5 +54,5 @@ storiesOf('Base', module)
   ), {
     notes: {
       markdown: Info,
-    }
+    },
   });

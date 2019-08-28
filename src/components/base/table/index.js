@@ -11,22 +11,24 @@ import {
 import Loader from '../loader';
 
 const EmptyTable = styled.div`
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 9.5rem;
+  border-radius: 3px;
   background-color: ${({ theme }) => getEmptyTableColor(theme)};
 `;
 
 const CustomTable = styled(DataTable)`
   .rdt_TableHeadRow {
     background-color: ${({ theme }) => getBorderColor(theme)};
-    font-family: "Lato", sans-serif;
-    border-radius: 2px;
+    font-family: 'Lato', sans-serif;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-height: 36px;
   }
-
+  
   .rdt_TableHeader {
     display: none;
   }
@@ -34,59 +36,48 @@ const CustomTable = styled(DataTable)`
   .rdt_TableCol .rdt_TableCol_Sortable {
     font-weight: bold;
     font-size: 14px;
-    color: ${({ theme }) => getHeaderFontColor(theme)};
+    color: ${({ theme }) => getHeaderFontColor(theme)}
   }
 
   .rdt_TableRow {
-    border-bottom: 2px solid ${({ theme }) => getBorderColor(theme)};
+    border: 2px solid ${({ theme }) => getBorderColor(theme)};
     border-top: none;
     min-height: 36px;
   }
 `;
 
-const NoPaddingText = styled(Text)`
-  padding: 0;
-`;
 const EmptyText = styled(Text)`
   color: #676a70;
 `;
-const LoaderContainer = styled.div`
-  height: 30px;
-`;
+// const LoaderContainer = styled.div`
+//   height: 30px;
+// `;
 
-const Table = ({
-  data, columns, theme, loading, emptyMessage,
-}, ...rest) => {
+const Table = (props) => {
+  const {
+    data, columns, theme, loading, emptyMessage,
+  } = props;
+
   if (loading) {
     return (
       <EmptyTable>
-        <LoaderContainer>
-          <Loader />
-        </LoaderContainer>
+        <Loader type="v2" />
       </EmptyTable>
     );
   }
 
   if (!data || !data.length) {
-    return (
-      <EmptyTable>
-        <EmptyText>{emptyMessage}</EmptyText>
-      </EmptyTable>
-    );
+    return <EmptyTable><EmptyText>{emptyMessage}</EmptyText></EmptyTable>;
   }
 
   const textColumns = columns.map((el) => {
-    if (el.cell) {
-      return el;
-    }
+    if (el.cell) { return el; }
     return {
       ...el,
-      cell: row => (
-        <NoPaddingText size="small">{row[el.selector]}</NoPaddingText>
-      ),
+      cell: row => <Text px="0px" py="0px" type="primary" size="small">{row[el.selector]}</Text>,
     };
   });
-  return <CustomTable theme={theme} data={data} columns={textColumns} {...rest} />;
+  return (<CustomTable theme={theme} data={data} columns={textColumns} />);
 };
 
 Table.propTypes = {
