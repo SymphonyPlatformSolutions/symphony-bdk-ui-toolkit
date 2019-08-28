@@ -22,9 +22,9 @@ const FloatInput = styled.div`
   right: 18px;
   font-family: 'Lato', sans-serif;
   font-size: .875rem;
-  color: ${props => getInputColor(props)}
+  color: ${props => getInputColor(props)};
   cursor: ${p => (p.disabled ? 'default' : 'pointer')};
-  pointer-events: ${p => (p.disabled ? 'none' : '')}
+  pointer-events: ${p => (p.disabled ? 'none' : '')};
 `;
 
 const BaseInputField = styled.input`

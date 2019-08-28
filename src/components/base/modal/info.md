@@ -43,7 +43,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: false,
+  title: undefined,
   isOpened: false,
   width: '80%',
   height: '80%',

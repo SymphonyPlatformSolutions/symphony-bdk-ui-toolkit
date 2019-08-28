@@ -58,7 +58,7 @@ const getDropdownWidth = ({ hasRef }) => (hasRef ? `${hasRef.clientWidth}px` : '
 export const PhoneInputWrapper = styled.div.attrs(overrides)`
   .${overrides.container} {
      width: 100%;
-     borderRadius: 0;
+     border-radius: 0;
   }
   
   .${overrides.formControl} {

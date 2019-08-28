@@ -37,7 +37,7 @@ Text.propTypes = {
 };
 
 Text.defaultProps = {
-  title: false,
+  title: undefined,
   px: null,
   py: null,
   mx: null,
