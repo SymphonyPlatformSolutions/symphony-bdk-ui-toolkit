@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import '../phone-input-field/assets/flags.css';
 
@@ -12,7 +12,7 @@ export default function Flag({ countryCode }) {
   const classes = `flag ${countryCode.toLowerCase()}`;
   return (
     <FlagContainer className="react-tel-input">
-      <div className={classes}></div>
+      <div className={classes} />
     </FlagContainer>
   );
 }

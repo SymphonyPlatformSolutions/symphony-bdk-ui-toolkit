@@ -11,8 +11,8 @@ import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
-  disableAreaCodes, id, onBlur,
-}, ...rest) => {
+  disableAreaCodes, id, onBlur, ...rest
+}) => {
   const [hasRef, setRef] = useState(null);
   const elRef = createRef();
 

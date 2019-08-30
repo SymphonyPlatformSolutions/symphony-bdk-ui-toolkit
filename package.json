@@ -58,6 +58,7 @@
     "polished": "^3.4.1",
     "react": "^16.8.6",
     "react-copy-to-clipboard": "^5.0.1",
+    "react-data-grid": "^6.1.0",
     "react-data-table-component": "^3.3.1",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",

@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, createRef, useRef,
 } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Box from '../box';
 import {
@@ -95,7 +95,7 @@ export default function Tabs({ children, activeTab, ...rest }) {
                 key={label}
                 label={label}
                 activeTab={selectedTab}
-                ref={(ref) => elRef.current[index] = ref}
+                ref={ref => elRef.current[index] = ref}
                 align={align}
                 onClick={() => onClickTabItem(label, index, align)}
               >

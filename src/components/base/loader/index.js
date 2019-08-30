@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes, withTheme } from 'styled-components';
 import { ClipLoader } from 'react-spinners';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   getBackgroundColor, getTileColor,
 } from './theme';
