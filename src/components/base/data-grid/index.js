@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import ReactDataGrid from 'react-data-grid';
+import PropTypes from 'prop-types';
 import Text from '../text';
 import {
   getBorderColor,
@@ -92,7 +93,7 @@ const CellContainer = styled.div`
 
 const DataGrid = (
   {
-    rowGetter, data, columns, rowsCount, onGridRowsUpdated,
+    rowGetter, data, columns, rowsCount,
     ...rest
   },
 ) => {
@@ -134,11 +135,23 @@ const DataGrid = (
         columns={internalColumns}
         rowGetter={internalRowGetter}
         rowsCount={rowsCount || data.length}
-        onGridRowsUpdated={onGridRowsUpdated}
         {...rest}
       />
     </GridStyleWrapper>
   );
+};
+
+DataGrid.propTypes = {
+  rowGetter: PropTypes.func,
+  data: PropTypes.array,
+  columns: PropTypes.array.isRequired,
+  rowsCount: PropTypes.number,
+};
+
+DataGrid.defaultProps = {
+  rowsCount: null,
+  data: null,
+  rowGetter: null,
 };
 
 export default withTheme(DataGrid);

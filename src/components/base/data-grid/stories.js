@@ -6,7 +6,7 @@ import {
 import DataGrid from '.';
 import Box from '../box';
 import { StoryWrapper } from '../wrappers';
-// import Info from './info.md';
+import Info from './info.md';
 import Text from '../text';
 
 const DATA = [{
@@ -82,16 +82,16 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box p={15}>
         <Box>
-          <Text title size="large">Filled DataGrid</Text>
+          <Text title size="large">DataGrid</Text>
           <Box horizontal space={60}>
             <GridHandler />
           </Box>
         </Box>
       </Box>
     </StoryWrapper>
-  ));
-// {
-//   notes: {
-//     markdown: Info,
-//   },
-// });
+  ),
+  {
+    notes: {
+      markdown: Info,
+    },
+  });
