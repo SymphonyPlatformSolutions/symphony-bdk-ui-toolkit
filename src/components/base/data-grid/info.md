@@ -12,12 +12,10 @@ everything passed to DataGrid will be propagated and **override** any prop.
 const columns = [{
   name: 'Name',
   key: 'name',
-  sortable: true,
   editable: true,
 }, {
   name: 'Email',
   key: 'email',
-  sortable: true,
   editable: true,
 }, {
   name: 'Link',
@@ -33,20 +31,22 @@ return (<DataGrid
 
 ## ```data``` Sample
 ```jsx
-const columns = [{
-  name: 'Name',
-  key: 'name',
-  sortable: true,
-  editable: true,
+const data = [{
+  email: '4@domain.com',
+  name: 'A',
+  link: 'http://a.com',
+  rowId: 1,
 }, {
-  name: 'Email',
-  key: 'email',
-  sortable: true,
-  editable: true,
+   email: '4@domain.com',
+  name: 'A',
+  error: { email: true },
+  link: 'http://a.com',
+  rowId: 2,
 }, {
-  name: 'Link',
-  key: 'link',
-  editable: true,
+  email: '4@domain.com',
+  name: 'A',
+  link: 'http://a.com',
+  rowId: 3,
 }];
 
 return (<DataGrid
@@ -60,12 +60,10 @@ return (<DataGrid
 const columns = [{
   name: 'Name',
   key: 'name',
-  sortable: true,
   editable: true,
 }, {
   name: 'Email',
   key: 'email',
-  sortable: true,
   editable: true,
 }, {
   name: 'Link',

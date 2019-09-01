@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
+import Box from '../box';
 
 const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? '#2F3237' : '#f6f6f6');
 const getHeaderFontColor = theme => (theme.mode === THEME_TYPES.DARK ? '#fff ' : '#4d4d4d');
 const getHoverBackgroundColor = theme => (theme.mode === THEME_TYPES.DARK ? '#32363b' : '#f9f9f9');
-
+const getErrorBarColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(247, 74, 111, 0.62)' : 'rgba(213, 9, 53, 0.4)');
 
 const overrides = {
   header: 'react-grid-Header',
@@ -24,6 +25,7 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
     font-family: 'Lato', sans-serif;
     background-color: rgba(0,0,0,0);
     border: 0;
+    padding: 0;
   }
 
   .${overrides.headerRow} {
@@ -65,6 +67,7 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
   .${overrides.cell} {
     background-color: rgba(0,0,0,0) !important;
     border: 0;
+    padding: 0;
 
     &__value {
       overflow: inherit !important;
@@ -84,6 +87,10 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
   width: 100%;
 `;
 
-export const CellContainer = styled.div`
+export const CellContainer = styled(Box)`
+  background-color: ${({ error, theme }) => (error ? `${getErrorBarColor(theme)} !important` : undefined)};
   display: flex;
+  height: 100%;
+  justify-content: center;
+  padding-left: 10px;
 `;

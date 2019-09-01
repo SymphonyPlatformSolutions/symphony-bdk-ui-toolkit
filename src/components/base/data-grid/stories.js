@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import {
-  withKnobs, text,
+  withKnobs,
 } from '@storybook/addon-knobs';
 import DataGrid from '.';
 import Box from '../box';
@@ -31,15 +31,38 @@ const DATA = [{
   rowId: 4,
 }];
 
+const ERROR_DATA = [{
+  email: '4@domain.com',
+  name: 'A',
+  error: {email: true},
+  link: 'http://a.com',
+  rowId: 1,
+}, {
+  email: '3@domain.com',
+  name: 'B',
+  link: 'http://b.com',
+  error: {link: true},
+  rowId: 2,
+}, {
+  email: '2@domain.com',
+  name: 'C',
+  link: 'http://c.com',
+  error: {name: true},
+  rowId: 3,
+}, {
+  email: '1@domain.com',
+  name: 'D',
+  link: 'http://d.com',
+  rowId: 4,
+}];
+
 const COLUMNS = [{
   name: 'Name',
   key: 'name',
-  sortable: true,
   editable: true,
 }, {
   name: 'Email',
   key: 'email',
-  sortable: true,
   editable: true,
 }, {
   name: 'Link',
@@ -76,6 +99,35 @@ const GridHandler = () => {
 };
 
 
+const GridWithError = () => {
+  const [list, setList] = useState(ERROR_DATA);
+  const onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
+    // update based on invite list
+    const updatedList = [...list];
+
+    for (let row = fromRow; row <= toRow; row++) {
+      // get rowId from row at "display list"
+      const { rowId } = list[row];
+
+      // update using rowId
+      const index = updatedList.findIndex(row => row.rowId === rowId);
+      updatedList[index] = { ...list[index], ...updated };
+    }
+    setList(updatedList);
+  };
+
+  return (
+    <DataGrid
+      columns={COLUMNS}
+      data={list}
+      enableCellSelect
+      rowGetter={row => list[row]}
+      onGridRowsUpdated={onGridRowsUpdated}
+    />
+  );
+};
+
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('DataGrid', () => (
@@ -85,6 +137,14 @@ storiesOf('Base', module)
           <Text title size="large">DataGrid</Text>
           <Box horizontal space={60}>
             <GridHandler />
+          </Box>
+        </Box>
+      </Box>
+      <Box>
+        <Box>
+          <Text title size="large">DataGrid with cell highlight</Text>
+          <Box horizontal space={60}>
+            <GridWithError />
           </Box>
         </Box>
       </Box>
