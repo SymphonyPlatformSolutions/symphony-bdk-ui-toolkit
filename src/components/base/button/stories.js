@@ -22,7 +22,7 @@ const EditableComponent = () => {
     Primary: 'primary',
     Secondary: 'secondary',
     Grey: 'grey',
-    Submit: 'submit'
+    Submit: 'submit',
   };
 
   const BUTTON_SIZES = {

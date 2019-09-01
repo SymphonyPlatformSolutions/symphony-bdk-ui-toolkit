@@ -1,16 +1,16 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   BaseText,
 } from './theme';
 
 export default function Text(props) {
   const {
-    children, title, size, underline, ...rest
+    children, title, size, underline, htmlTitle, ...rest
   } = props;
 
   return (
-    <BaseText title={title} size={size} underline={underline} {...rest}>
+    <BaseText isTitle={title} title={htmlTitle} size={size} underline={underline} {...rest}>
       {children}
     </BaseText>
   );
@@ -29,7 +29,7 @@ Text.propTypes = {
 };
 
 Text.defaultProps = {
-  title: undefined,
+  title: false,
   px: null,
   py: null,
   mx: null,

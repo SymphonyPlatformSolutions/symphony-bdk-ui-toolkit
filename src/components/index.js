@@ -11,3 +11,4 @@ export { default as PhoneInputField } from './base/phone-input-field';
 export { default as Modal } from './base/modal';
 export { default as Flag } from './base/flags';
 export { default as Table } from './base/table';
+export { default as DataGrid } from './base/data-grid';

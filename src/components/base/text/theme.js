@@ -58,10 +58,10 @@ const getMargin = ({ mx, my }) => {
   const providedMy = my || '10px';
   return `${providedMy} ${providedMx}`;
 };
-const getFontStyle = ({ title, size }) => (title || size !== 'tiny' ? 'normal' : 'italic');
-const getFontSize = ({ title, size }) => (title ? FONTSIZETITLE[size] : FONTSIZE[size]);
-const getLineHeight = ({ title, size }) => (title ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
-const getFontWeight = ({ title }) => (title ? '900' : '400');
+const getFontStyle = ({ isTitle, size }) => (isTitle || size !== 'tiny' ? 'normal' : 'italic');
+const getFontSize = ({ isTitle, size }) => (isTitle ? FONTSIZETITLE[size] : FONTSIZE[size]);
+const getLineHeight = ({ isTitle, size }) => (isTitle ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
+const getFontWeight = ({ isTitle }) => (isTitle ? '900' : '400');
 const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.theme.grey} solid` : '0px');
 
 export const BaseText = styled.div`

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import DataTable from 'react-data-table-component';
 import Text from '../text';

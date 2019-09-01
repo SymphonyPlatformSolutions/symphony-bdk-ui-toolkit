@@ -60,5 +60,5 @@ storiesOf('Base', module)
   ), {
     notes: {
       markdown: Info,
-    }
+    },
   });
