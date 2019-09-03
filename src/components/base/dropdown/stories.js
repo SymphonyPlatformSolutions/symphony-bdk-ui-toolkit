@@ -9,16 +9,28 @@ import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-const OPTIONS = [{
-  value: 'option1',
-  label: 'Option 1',
-}, {
-  value: 'option2',
-  label: 'Option 2',
-}, {
-  value: 'option3',
-  label: 'Option 3',
-}];
+const OPTIONS = [
+  {
+    value: 'option1',
+    label: 'Option 1',
+  },
+  {
+    value: 'option2',
+    label: 'Option 2',
+  },
+  {
+    value: 'option3',
+    label: 'Option 3',
+  },
+  {
+    value: 'option4',
+    label: 'Option 4',
+  },
+  {
+    value: 'option5',
+    label: 'Option 5',
+  },
+];
 
 const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
@@ -26,6 +38,33 @@ const DropdownHandler = (props) => {
   return (
     <Box style={{ width: '300px' }}>
       <Dropdown {...props} value={chosen} onChange={changeChosen} />
+    </Box>
+  );
+};
+
+const AsyncDropdownHandler = (props) => {
+  const { options, ...rest } = props;
+  const [chosen, changeChosen] = useState(null);
+  const [isLoading, toggleIsLoading] = useState(false);
+  const [loadedOptions, changeLoadedOptions] = useState([]);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown
+        {...rest}
+        value={chosen}
+        onChange={changeChosen}
+        isLoading={isLoading}
+        clickHandler={() => {
+          toggleIsLoading(true);
+          changeLoadedOptions([]);
+          setTimeout(() => {
+            changeLoadedOptions(options.slice(Math.floor(Math.random() * 3) + 2));
+            toggleIsLoading(false);
+          }, 1000);
+        }}
+        options={loadedOptions}
+      />
     </Box>
   );
 };
@@ -57,6 +96,18 @@ storiesOf('Base', module)
           <Text title size="large">Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown options={[]} />
+          </Box>
+        </div>
+        <div>
+          <Text title size="large">Dropdown with Loading</Text>
+          <Box style={{ width: '300px' }}>
+            <AsyncDropdownHandler options={OPTIONS} />
+          </Box>
+        </div>
+        <div>
+          <Text title size="large">Empty Dropdown with Loading</Text>
+          <Box style={{ width: '300px' }}>
+            <AsyncDropdownHandler options={[]} />
           </Box>
         </div>
       </Box>

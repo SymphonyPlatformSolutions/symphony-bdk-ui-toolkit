@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import Select from 'react-select';
+import Loader from '../loader';
 import {
   customStyles,
   DropdownIndicator,
@@ -10,6 +11,16 @@ import {
   Option,
   NoOptionsMessage,
 } from './theme';
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  margin: 8px 0;
+  overflow: hidden;
+`;
+
+const LoaderComponent = () => <LoaderContainer><Loader presetSize="small" type="v2" /></LoaderContainer>;
 
 const Dropdown = (props) => {
   const {
@@ -21,6 +32,9 @@ const Dropdown = (props) => {
     noOptionsMessage,
     components,
     theme,
+    clickHandler,
+    isLoading,
+    placeholder,
     ...rest
   } = props;
 
@@ -33,24 +47,42 @@ const Dropdown = (props) => {
     }
   }
 
+  const [isFocused, toggleFocus] = useState(false);
+
   return (
-    <Select
-      styles={customStyles(theme)}
-      isDisabled={disabled}
-      isClearable={false}
-      options={options}
-      onChange={data => onChange(data)}
-      components={{
-        DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
-        SingleValue,
-        Placeholder,
-        Option,
-        NoOptionsMessage,
-        ...components,
+    <div
+      onFocus={() => {
+        if (!clickHandler) { return; }
+        if (!isFocused) {
+          toggleFocus(true);
+          clickHandler();
+        }
       }}
-      value={placeValue}
-      {...rest}
-    />
+      onBlur={() => {
+        if (!clickHandler) { return; }
+        toggleFocus(false);
+      }}
+    >
+      <Select
+        styles={customStyles(theme)}
+        isDisabled={disabled}
+        isClearable={false}
+        options={options}
+        onChange={data => onChange(data)}
+        components={{
+          DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
+          SingleValue,
+          Placeholder,
+          Option,
+          NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
+          ...components,
+        }}
+        value={placeValue}
+        placeholder={isLoading ? 'Loading...' : placeholder}
+        {...rest}
+        noOptionsMessage={() => (isLoading ? 'Loading...' : 'No options')}
+      />
+    </div>
   );
 };
 
@@ -63,6 +95,9 @@ Dropdown.propTypes = {
   noOptionsMessage: PropTypes.string,
   theme: PropTypes.object.isRequired,
   components: PropTypes.object,
+  clickHandler: PropTypes.func,
+  isLoading: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -71,8 +106,11 @@ Dropdown.defaultProps = {
   onChange: null,
   value: null,
   chosenValue: null,
-  noOptionsMessage: 'No options',
+  noOptionsMessage: undefined,
   components: null,
+  placeholder: undefined,
+  isLoading: false,
+  clickHandler: null,
 };
 
 export default withTheme(Dropdown);

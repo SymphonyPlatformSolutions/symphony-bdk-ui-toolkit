@@ -9,6 +9,8 @@ Do keep in mind that there are two ways to pass in a value: Both through the ```
 
 The ```value``` prop is the direct prop to React Select, and expects an object with *value* and *label*. The ```chosenValue``` expects only the value as a string.
 
+The Dropdown also incorporates loading functionality, that takes in a handler to execute every time the Dropdown is focused. This is built to be used with Asynchronous fecthing, and dynamically load the Dropdown with options.
+
 ## Sample
 ```jsx
 const [value, changeValue] = useState(null);
@@ -30,6 +32,23 @@ return (<Dropdown
 />);
 ```
 
+## Async Sample
+```jsx
+const [value, changeValue] = useState(null);
+const [isLoading, toggleIsLoading] = useState(null);
+
+return (<Dropdown
+  options={options}
+  onChange={changeValue}
+  value={value}
+  clickHandler={() => {
+    toggleIsLoading(true);
+    fetchOptions();
+  }}
+  loading={isLoading}
+/>);
+```
+
 ## Proptypes
 ```jsx
 Dropdown.propTypes = {
@@ -41,6 +60,9 @@ Dropdown.propTypes = {
   noOptionsMessage: PropTypes.string,
   theme: PropTypes.object.isRequired,
   components: PropTypes.object,
+  clickHandler: PropTypes.func,
+  isLoading: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -49,7 +71,10 @@ Dropdown.defaultProps = {
   onChange: null,
   value: null,
   chosenValue: null,
-  noOptionsMessage: 'No options',
+  noOptionsMessage: undefined,
   components: null,
+  placeholder: undefined,
+  isLoading: false,
+  clickHandler: null,
 };
 ```
