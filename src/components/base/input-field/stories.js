@@ -21,6 +21,7 @@ const INPUT_STATES = {
 
 const INPUT_TYPES = {
   Text: 'text',
+  TextArea: 'textarea',
   Password: 'password',
 };
 
@@ -99,7 +100,6 @@ const InputFieldCopyOptionStory = () => {
   );
 };
 
-
 const InputFieldPasswordStory = () => {
   const [input, setInput] = useState('This is a password');
 
@@ -152,6 +152,28 @@ const InputFieldLiveSample = () => {
   );
 };
 
+const TextAreaStory = () => {
+  const [input, setInput] = useState('');
+
+  function handleInput(e) {
+    setInput(e.target.value);
+  }
+  return (
+    <Box vertical space={20}>
+      <Text title size="large">Text Area</Text>
+      <div style={styles}>
+
+        <InputField
+          value={input}
+          onChange={handleInput}
+          placeholder="Input here..."
+          type="textarea"
+        />
+      </div>
+    </Box>
+  );
+};
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('InputField', () => (
@@ -167,6 +189,7 @@ storiesOf('Base', module)
         </div>
       </Box>
       <InputFieldWithErrorStory />
+      <TextAreaStory />
     </StoryWrapper>
   ), {
     notes: {

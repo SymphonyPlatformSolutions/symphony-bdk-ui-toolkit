@@ -53,6 +53,8 @@ const BaseInputField = styled.input`
   }
 `;
 
+const TextArea = BaseInputField.withComponent('textarea');
+
 const InputField = (props) => {
   const inputRef = useRef(null);
   const [showPassord, setShowPassword] = useState(false);
@@ -77,75 +79,102 @@ const InputField = (props) => {
   } = props;
 
   const hasPassword = type === 'password';
+  const textArea = type === 'textarea';
+
+  if (copyInput) {
+    return (
+      <div>
+        <InputWrapper>
+          <BaseInputField
+            {...rest}
+            disabled={disabled}
+            id={id}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder={placeholder}
+            type={type}
+            value={value}
+            inputState={inputState}
+            ref={inputRef}
+            copyInput={copyInput}
+          />
+          <FloatInput
+            disabled={disabled}
+            copyInput={copyInput}
+            onClick={copyToClipBoard}
+          >
+          copy
+          </FloatInput>
+        </InputWrapper>
+      </div>
+    );
+  }
+
+  if (hasPassword) {
+    return (
+      <div>
+
+        <InputWrapper>
+          <BaseInputField
+            {...rest}
+            disabled={disabled}
+            id={id}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder={placeholder}
+            type={showPassord ? 'text' : type}
+            value={value}
+            inputState={inputState}
+            ref={inputRef}
+            copyInput={copyInput}
+          />
+          {hasPasswordShow && (
+          <FloatInput
+            disabled={disabled}
+            onClick={() => setShowPassword(!showPassord)}
+          >
+            { showPassord ? 'hide' : 'show' }
+          </FloatInput>
+          )}
+        </InputWrapper>
+      </div>
+    );
+  }
+
+  if (textArea) {
+    return (
+      <div>
+        <TextArea
+          {...rest}
+          disabled={disabled}
+          id={id}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          inputState={inputState}
+          ref={inputRef}
+          rows="4"
+        />
+      </div>
+    );
+  }
 
   return (
     <div>
-      {
-        copyInput
-          ? (
-            <InputWrapper>
-              <BaseInputField
-                {...rest}
-                disabled={disabled}
-                id={id}
-                onChange={onChange}
-                onBlur={onBlur}
-                placeholder={placeholder}
-                type={type}
-                value={value}
-                inputState={inputState}
-                ref={inputRef}
-                copyInput={copyInput}
-              />
-              <FloatInput
-                disabled={disabled}
-                copyInput={copyInput}
-                onClick={copyToClipBoard}
-              >
-                copy
-              </FloatInput>
-            </InputWrapper>
-          )
-          : hasPassword ? (
-            <InputWrapper>
-              <BaseInputField
-                {...rest}
-                disabled={disabled}
-                id={id}
-                onChange={onChange}
-                onBlur={onBlur}
-                placeholder={placeholder}
-                type={showPassord ? 'text' : type}
-                value={value}
-                inputState={inputState}
-                ref={inputRef}
-                copyInput={copyInput}
-              />
-              {hasPasswordShow && (
-              <FloatInput
-                disabled={disabled}
-                onClick={() => setShowPassword(!showPassord)}
-              >
-                { showPassord ? 'hide' : 'show' }
-              </FloatInput>
-              )}
-            </InputWrapper>
-          )
-            : (
-              <BaseInputField
-                {...rest}
-                disabled={disabled}
-                id={id}
-                onChange={onChange}
-                onBlur={onBlur}
-                placeholder={placeholder}
-                type={type}
-                value={value}
-                inputState={inputState}
-                ref={inputRef}
-              />
-            )
-      }
+      <BaseInputField
+        {...rest}
+        disabled={disabled}
+        id={id}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        inputState={inputState}
+        ref={inputRef}
+      />
     </div>
   );
 };
