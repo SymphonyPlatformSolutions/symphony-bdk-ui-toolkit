@@ -67,7 +67,7 @@ const Dropdown = (props) => {
         styles={customStyles(theme)}
         isDisabled={disabled}
         isClearable={false}
-        options={options}
+        options={options || []}
         onChange={data => onChange(data)}
         components={{
           DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),

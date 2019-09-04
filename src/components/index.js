@@ -12,3 +12,5 @@ export { default as Modal } from './base/modal';
 export { default as Flag } from './base/flags';
 export { default as Table } from './base/table';
 export { default as DataGrid } from './base/data-grid';
+export { default as RadioButton } from './base/radio-button';
+export { default as Dropdown } from './base/dropdown';

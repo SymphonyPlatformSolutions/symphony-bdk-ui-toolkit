@@ -152,7 +152,7 @@ const InputFieldLiveSample = () => {
   );
 };
 
-const TextAreaStory = () => {
+const TextAreaStory = ({ disabled }) => {
   const [input, setInput] = useState('');
 
   function handleInput(e) {
@@ -162,12 +162,12 @@ const TextAreaStory = () => {
     <Box vertical space={20}>
       <Text title size="large">Text Area</Text>
       <div style={styles}>
-
         <InputField
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
           type="textarea"
+          disabled={disabled}
         />
       </div>
     </Box>
@@ -190,6 +190,7 @@ storiesOf('Base', module)
       </Box>
       <InputFieldWithErrorStory />
       <TextAreaStory />
+      <TextAreaStory disabled />
     </StoryWrapper>
   ), {
     notes: {
