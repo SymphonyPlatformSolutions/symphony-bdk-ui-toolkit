@@ -34,20 +34,20 @@ const DATA = [{
 const ERROR_DATA = [{
   email: '4@domain.com',
   name: 'A',
-  error: {email: true},
+  error: { email: true },
   link: 'http://a.com',
   rowId: 1,
 }, {
   email: '3@domain.com',
   name: 'B',
   link: 'http://b.com',
-  error: {link: true},
+  error: { link: true },
   rowId: 2,
 }, {
   email: '2@domain.com',
   name: 'C',
   link: 'http://c.com',
-  error: {name: true},
+  error: { name: true },
   rowId: 3,
 }, {
   email: '1@domain.com',
