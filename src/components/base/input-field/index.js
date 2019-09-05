@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Text from '../text';
 import {
   getBackgroundColor,
   getBorderColor,
@@ -15,6 +16,15 @@ import {
 const InputWrapper = styled.div`
   position: relative;
 `;
+
+export const ErrorWrapper = ({
+  children, error, errorMessage,
+}) => (
+  <div>
+    {children}
+    {error && <Text type="danger" my="0" size="tiny">{errorMessage}</Text>}
+  </div>
+);
 
 const FloatInput = styled.div`
   position: absolute;
@@ -33,14 +43,17 @@ const BaseInputField = styled.input`
   border-radius: .2rem;
   border: 1px solid ${props => getBorderColor(props)};
   width: ${props => getWidth(props)};
-  padding: .6rem ${props => (getPadding(props))} .6rem .75rem;
+  min-height: 35px;
+  padding: ${props => (getPadding(props))} 0 10px;
   cursor: ${p => (p.disabled ? 'inherit' : 'text')};
   transition: border .4s cubic-bezier(.25,.8,.25,1);
   background: ${props => getBackgroundColor(props)};
   color: ${props => getColor(props)};
+
   &:disabled {
     opacity: .8;
     cursor: not-allowed;
+    font-style: italic;
   }
   
   &::placeholder {
@@ -75,15 +88,17 @@ const InputField = (props) => {
     copyInput,
     hasPasswordShow,
     type,
+    errorMessage,
     ...rest
   } = props;
 
   const hasPassword = type === 'password';
   const textArea = type === 'textarea';
 
+
   if (copyInput) {
     return (
-      <div>
+      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
         <InputWrapper>
           <BaseInputField
             {...rest}
@@ -106,14 +121,13 @@ const InputField = (props) => {
           copy
           </FloatInput>
         </InputWrapper>
-      </div>
+      </ErrorWrapper>
     );
   }
 
   if (hasPassword) {
     return (
-      <div>
-
+      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
         <InputWrapper>
           <BaseInputField
             {...rest}
@@ -137,14 +151,37 @@ const InputField = (props) => {
           </FloatInput>
           )}
         </InputWrapper>
-      </div>
+      </ErrorWrapper>
     );
   }
 
   if (textArea) {
     return (
-      <div>
-        <TextArea
+      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
+        <InputWrapper>
+          <TextArea
+            {...rest}
+            textArea
+            disabled={disabled}
+            id={id}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder={placeholder}
+            type={type}
+            value={value}
+            inputState={inputState}
+            ref={inputRef}
+            rows="4"
+          />
+        </InputWrapper>
+      </ErrorWrapper>
+    );
+  }
+
+  return (
+    <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
+      <InputWrapper>
+        <BaseInputField
           {...rest}
           disabled={disabled}
           id={id}
@@ -155,27 +192,9 @@ const InputField = (props) => {
           value={value}
           inputState={inputState}
           ref={inputRef}
-          rows="4"
         />
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <BaseInputField
-        {...rest}
-        disabled={disabled}
-        id={id}
-        onChange={onChange}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-        inputState={inputState}
-        ref={inputRef}
-      />
-    </div>
+      </InputWrapper>
+    </ErrorWrapper>
   );
 };
 
@@ -190,6 +209,7 @@ InputField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 InputField.defaultProps = {
@@ -202,6 +222,7 @@ InputField.defaultProps = {
   onChange: undefined,
   onBlur: undefined,
   placeholder: 'Input here...',
+  errorMessage: 'Something went wrong!',
   value: '',
 };
 

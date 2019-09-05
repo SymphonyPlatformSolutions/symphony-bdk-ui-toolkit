@@ -33,6 +33,7 @@ InputField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 InputField.defaultProps = {
@@ -45,6 +46,7 @@ InputField.defaultProps = {
   onChange: undefined,
   onBlur: undefined,
   placeholder: 'Input here...',
+  errorMessage: 'Something went wrong!',
   value: '',
 };
 ```

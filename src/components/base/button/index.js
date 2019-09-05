@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { darken, lighten } from 'polished';
+import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
+
 import Loader from '../loader';
 import {
   SPINNER_SIZE,
@@ -11,8 +13,17 @@ import {
 } from './theme';
 import { NoOp } from '../../../utils/helpers';
 
+const LoaderContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: -2px;
+`;
+
 const Button = ({
-  children, size, type, fill, theme, loading, ...rest
+  children, size, type, fill, theme, loading, disabled, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMouseOver, setMouseOver] = useState(false);
@@ -42,6 +53,8 @@ const Button = ({
       fill={fill}
       {...rest}
       onClick={handleClick}
+      isLoading={isLoading}
+      disabled={isLoading || disabled}
       onMouseEnter={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
@@ -50,12 +63,13 @@ const Button = ({
           {children}
         </ChildrenContainer>
         {isLoading && (
-        <Loader
-          size={SPINNER_SIZE[size]}
-          color={getSpinnerColor({
-            theme, type, fill, isMouseOver,
-          })}
-        />
+          <LoaderContainer>
+            <Loader
+              color={getSpinnerColor(({ type, fill, theme }))}
+              type="v2"
+              presetSize="small"
+            />
+          </LoaderContainer>
         )}
       </Container>
     </BaseButton>

@@ -44,14 +44,15 @@ const CustomTable = styled(DataTable)`
     border-top: none;
     min-height: 36px;
   }
+
+  .rdt_TableCell div:first-child {
+    overflow: inherit;
+  }
 `;
 
 const EmptyText = styled(Text)`
   color: #676a70;
 `;
-// const LoaderContainer = styled.div`
-//   height: 30px;
-// `;
 
 const Table = (props) => {
   const {

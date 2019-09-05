@@ -37,18 +37,15 @@ const InputFieldWithErrorStory = () => {
     <Box vertical space={20}>
       <Text title size="large">Input Field with error</Text>
       <div style={styles}>
-
         <InputField
           inputState={inputState}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
+          errorMessage="Something's not right!"
         />
-
+        {/* {inputState === 'error' && <Text size="tiny">Error message here.</Text>} */}
       </div>
-      {
-        inputState === 'error' && <Text size="tiny">Error message here.</Text>
-      }
     </Box>
   );
 };
@@ -160,7 +157,7 @@ const TextAreaStory = ({ disabled }) => {
   }
   return (
     <Box vertical space={20}>
-      <Text title size="large">Text Area</Text>
+      <Text title size="large">{disabled && 'Disabled '} Text Area</Text>
       <div style={styles}>
         <InputField
           value={input}

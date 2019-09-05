@@ -5,7 +5,8 @@ import Box from '../box';
 const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? '#2F3237' : '#f6f6f6');
 const getHeaderFontColor = theme => (theme.mode === THEME_TYPES.DARK ? '#fff ' : '#4d4d4d');
 const getHoverBackgroundColor = theme => (theme.mode === THEME_TYPES.DARK ? '#32363b' : '#f9f9f9');
-const getErrorBarColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(247, 74, 111, 0.62)' : 'rgba(213, 9, 53, 0.4)');
+// const getErrorBarColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(247, 74, 111, 0.62)' : 'rgba(213, 9, 53, 0.4)');
+const getErrorBarColor = theme => (theme.theme.danger);
 
 const overrides = {
   header: 'react-grid-Header',
@@ -38,6 +39,9 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
     }
+  }
+  .rdg-editor-container input.editor-main, select.editor-main {
+    padding: 0;
   }
 
   .${overrides.main} {
@@ -89,6 +93,7 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
 
 export const CellContainer = styled(Box)`
   background-color: ${({ error, theme }) => (error ? `${getErrorBarColor(theme)} !important` : undefined)};
+  color: ${({ error }) => (error ? '#fff' : 'inherit')};
   display: flex;
   height: 100%;
   justify-content: center;

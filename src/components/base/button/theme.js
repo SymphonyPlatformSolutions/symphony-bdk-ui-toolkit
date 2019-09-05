@@ -75,7 +75,11 @@ const getColor = ({
   theme, type, fill, disabled,
 }) => {
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  return disabled ? theme.theme.grey : selectedTheme.TEXT_COLOR;
+  return disabled
+    ? fill === FILL_TYPES.FILLED
+      ? theme.theme.grey
+      : theme.theme.darkgrey
+    : selectedTheme.TEXT_COLOR;
 };
 
 const getHoverActiveColor = ({
@@ -83,7 +87,13 @@ const getHoverActiveColor = ({
 }) => {
   const isOutlined = fill === FILL_TYPES.OUTLINED;
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  return disabled ? theme.theme.grey : isOutlined ? theme.theme.white : selectedTheme.TEXT_COLOR;
+  return disabled
+    ? getColor({
+      theme, fill, disabled, type,
+    })
+    : isOutlined
+      ? theme.theme.white
+      : selectedTheme.TEXT_COLOR;
 };
 
 const getHoverBgColor = ({
@@ -93,7 +103,11 @@ const getHoverBgColor = ({
   const isGhost = fill === FILL_TYPES.GHOST;
   const buttonBg = theme.theme[type];
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  return disabled || isGhost ? null : isFilled ? darken(0.1, buttonBg) : selectedTheme.TEXT_COLOR;
+  return disabled || isGhost
+    ? null
+    : isFilled
+      ? darken(0.1, buttonBg)
+      : selectedTheme.TEXT_COLOR;
 };
 
 const getBgColor = ({
@@ -109,17 +123,37 @@ const getBorderStyle = (props) => {
   return isOutlined ? `2px solid ${getColor(props)}` : 'inherit';
 };
 
-
 const getPadding = props => PADDING[props.size];
 const getFontSize = props => FONTSIZE[props.size];
 const getButtonMinHeight = props => BUTTON_MIN_HEIGHT[props.size];
 const getButtonMinWidth = props => BUTTON_MIN_WIDTH[props.size];
+const getLineHeight = ({ size, fill }) => {
+  switch (size) {
+    case 'tiny':
+      return '1rem';
+    case 'small':
+      if (fill === FILL_TYPES.OUTLINED) {
+        return '1.1rem';
+      }
+      return '1.3rem';
+    default:
+      return 'inherit';
+  }
+};
 
 export const getSpinnerColor = ({
-  theme, type, fill, isMouseOver,
+  theme, fill,
 }) => {
-  const isOutlined = fill === FILL_TYPES.OUTLINED;
-  return isOutlined && !isMouseOver ? getColor({ theme, type, fill }) : theme.theme.white;
+  if (fill === FILL_TYPES.OUTLINED) {
+    return {
+      tile: theme.theme.white,
+      background: theme.theme.darkgrey,
+    };
+  }
+  return {
+    tile: theme.theme.darkgrey,
+    background: theme.theme.white,
+  };
 };
 
 export const Container = styled(Box)`
@@ -130,8 +164,8 @@ export const Container = styled(Box)`
 
 export const ChildrenContainer = styled(Box)`
   opacity: ${p => (p.isLoading ? 0.3 : 1)};
-  cursor: ${p => (p.isLoading ? 'none' : 'inherit')};`;
-
+  cursor: ${p => (p.isLoading ? 'none' : 'inherit')};
+`;
 
 export const BaseButton = styled.button.attrs({
   fontFamily: 'Lato, sans-serif',
@@ -139,20 +173,21 @@ export const BaseButton = styled.button.attrs({
   color: ${props => getColor(props)};
   font-size: ${props => getFontSize(props)};
   margin: 0;
-  transition: all .3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${props => getButtonMinHeight(props)};
   min-width: ${props => getButtonMinWidth(props)};
   padding: ${props => getPadding(props)};
   background-color: ${props => getBgColor(props)};
   border: ${props => getBorderStyle(props)};
   border-radius: 22px;
+  line-height: ${props => getLineHeight(props)};
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   &:focus {
-    outline: 0
+    outline: 0;
   }
   &:hover {
     background: ${props => getHoverBgColor(props)};
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-    color: ${props => getHoverActiveColor(props)}
+    color: ${props => getHoverActiveColor(props)};
   }
 `;

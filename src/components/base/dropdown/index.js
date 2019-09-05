@@ -11,6 +11,7 @@ import {
   Option,
   NoOptionsMessage,
 } from './theme';
+import { ErrorWrapper } from '../input-field';
 
 const LoaderContainer = styled.div`
   width: 100%;
@@ -35,6 +36,8 @@ const Dropdown = (props) => {
     clickHandler,
     isLoading,
     placeholder,
+    error,
+    errorMessage,
     ...rest
   } = props;
 
@@ -63,25 +66,27 @@ const Dropdown = (props) => {
         toggleFocus(false);
       }}
     >
-      <Select
-        styles={customStyles(theme)}
-        isDisabled={disabled}
-        isClearable={false}
-        options={options || []}
-        onChange={data => onChange(data)}
-        components={{
-          DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
-          SingleValue,
-          Placeholder,
-          Option,
-          NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
-          ...components,
-        }}
-        value={placeValue}
-        placeholder={isLoading ? 'Loading...' : placeholder}
-        {...rest}
-        noOptionsMessage={() => (isLoading ? 'Loading...' : 'No options')}
-      />
+      <ErrorWrapper error={error} errorMessage={errorMessage}>
+        <Select
+          styles={customStyles({ theme, error })}
+          isDisabled={disabled}
+          isClearable={false}
+          options={options || []}
+          onChange={data => onChange(data)}
+          components={{
+            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
+            SingleValue,
+            Placeholder,
+            Option,
+            NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
+            ...components,
+          }}
+          value={placeValue}
+          placeholder={isLoading ? 'Loading...' : placeholder}
+          {...rest}
+          noOptionsMessage={() => (isLoading ? 'Loading...' : 'No options')}
+        />
+      </ErrorWrapper>
     </div>
   );
 };
@@ -98,6 +103,8 @@ Dropdown.propTypes = {
   clickHandler: PropTypes.func,
   isLoading: PropTypes.bool,
   placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -111,6 +118,8 @@ Dropdown.defaultProps = {
   placeholder: undefined,
   isLoading: false,
   clickHandler: null,
+  error: false,
+  errorMessage: 'Something went wrong!',
 };
 
 export default withTheme(Dropdown);
