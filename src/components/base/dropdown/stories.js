@@ -75,43 +75,43 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box vertical space={20}>
         <div>
-          <Text title size="large">Dropdown</Text>
+          <Text isTitle size="large">Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <DropdownHandler options={OPTIONS} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Dropdown with Error</Text>
+          <Text isTitle size="large">Dropdown with Error</Text>
           <Box style={{ width: '300px' }}>
             <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" />
           </Box>
         </div>
         <div>
-          <Text title size="large">Disabled Dropdown</Text>
+          <Text isTitle size="large">Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled options={OPTIONS} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Filled disabled Dropdown</Text>
+          <Text isTitle size="large">Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled chosenValue="option2" options={OPTIONS} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Empty Dropdown</Text>
+          <Text isTitle size="large">Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown options={[]} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Dropdown with Loading</Text>
+          <Text isTitle size="large">Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
             <AsyncDropdownHandler options={OPTIONS} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Empty Dropdown with Loading</Text>
+          <Text isTitle size="large">Empty Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
             <AsyncDropdownHandler options={[]} />
           </Box>

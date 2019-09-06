@@ -4,7 +4,7 @@ Basic card with hover properties
 ##Sample
 
 ```jsx　
-<Card title="Card with title">
+<Card titleText="Card with title">
   <Text size="small">Lorem ipsum dolor</Text>
 </Card>
 <Card>
@@ -23,12 +23,12 @@ const MyCustomButton = styled(Card)`
 ##Proptypes
 ```jsx
 Card.propTypes = {
-  title: PropTypes.string,
+  titleText: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 Card.defaultProps = {
-  title: '',
+  titleText: '',
 };
 
 ```

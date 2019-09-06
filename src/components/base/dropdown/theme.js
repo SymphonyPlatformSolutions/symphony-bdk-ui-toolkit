@@ -6,19 +6,15 @@ import { THEME_TYPES } from '../../../styles/colors';
 import Text from '../text';
 
 export const getColor = theme => (theme.mode === THEME_TYPES.DARK
-  ? theme.theme.basegrey
-  : theme.theme.darkaccent);
+  ? theme.colors.basegrey
+  : theme.colors.darkaccent);
 
 const getBorderColor = (theme, error = false) => {
   if (error) {
-    return theme.theme.danger;
+    return theme.colors.danger;
   }
 
-  if (theme.mode === THEME_TYPES.DARK) {
-    return '#6f747c';
-  }
-
-  return theme.theme.darkgrey;
+  return theme.colors.bordergrey;
 };
 
 export const customStyles = ({ theme, error }) => ({
@@ -32,28 +28,28 @@ export const customStyles = ({ theme, error }) => ({
     boxShadow: 'none',
     border:
       state.menuIsOpen
-        ? `1px solid ${theme.theme.primary}`
+        ? `1px solid ${theme.colors.primary}`
         : `1px solid ${getBorderColor(theme, error)}`,
     borderBottomLeftRadius: state.menuIsOpen ? 0 : '3px',
     borderBottomRightRadius: state.menuIsOpen ? 0 : '3px',
     borderColor: state.menuIsOpen
-      ? theme.theme.primary
+      ? theme.colors.primary
       : getBorderColor(theme, error),
     color: getColor(theme),
     minHeight: '35px',
     backgroundColor:
     theme.mode === THEME_TYPES.DARK
-      ? '#2F3237'
+      ? theme.colors.inputgrey
       : (state.isDisabled
-        ? theme.theme.grey
-        : '#fff'),
+        ? theme.colors.grey
+        : theme.colors.white),
     margin: '0',
     borderRadius: '3px',
     transition: 'all 0.3s',
     '&:hover': {
       border: `1px solid ${
         state.menuIsOpen
-          ? theme.theme.primary
+          ? theme.colors.primary
           : getBorderColor(theme, error)
       }`,
     },
@@ -66,15 +62,15 @@ export const customStyles = ({ theme, error }) => ({
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
     color: state.isDisabled
-      ? theme.theme.lightgrey
+      ? theme.colors.lightgrey
       : theme.mode === THEME_TYPES.DARK
-        ? '#fff'
-        : '#000',
+        ? theme.colors.white
+        : theme.colors.black,
     backgroundColor: state.isDisabled
-      ? theme.theme.lightgrey
+      ? theme.colors.lightgrey
       : theme.mode === THEME_TYPES.DARK
-        ? '#2F3237'
-        : '#fff',
+        ? theme.colors.inputgrey
+        : theme.colors.white,
     border: `1px solid ${getBorderColor(theme)}`,
     borderTop: 'none',
   }),
@@ -82,32 +78,32 @@ export const customStyles = ({ theme, error }) => ({
     ...provided,
     color: 'inherit',
     backgroundColor: state.selectProps.isDisabled
-      ? theme.theme.lightgrey
+      ? theme.colors.lightgrey
       : theme.mode === THEME_TYPES.DARK
-        ? '#2F3237'
-        : '#fff',
+        ? theme.colors.inputgrey
+        : theme.colors.white,
     ':active': {
       ...state[':active'],
-      backgroundColor: theme.theme.primary,
+      backgroundColor: theme.colors.primary,
     },
     '&:focus': {
       background: 'none',
     },
     '&:hover': {
-      color: '#fff',
-      backgroundColor: theme.theme.secondary,
+      color: theme.colors.white,
+      backgroundColor: theme.colors.secondary,
     },
   }),
   singleValue: provided => ({
     ...provided,
     transition: 'all 0.3s',
     backgroundColor: 'rgba(0,0,0,0)',
-    color: error ? `${theme.theme.danger} !important` : undefined,
+    color: error ? `${theme.colors.danger} !important` : undefined,
   }),
   placeholder: provided => ({
     ...provided,
     transition: 'all 0.3s',
-    color: theme.theme.darkgrey,
+    color: theme.colors.darkgrey,
   }),
 });
 

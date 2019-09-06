@@ -4,7 +4,7 @@ Modal component, supports header and bottom.
 ##Sample
 
 ```jsx　
-<Modal title="Confirmation"
+<Modal titleText="Confirmation"
        isOpened={isConfirmOpened}
        onClose={onConfirmClose}
        width="600px"
@@ -34,7 +34,7 @@ const MyCustomButton = styled(Modal)`
 ##Proptypes
 ```jsx
 Modal.propTypes = {
-  title: PropTypes.string,
+  titleText: PropTypes.string,
   isOpened: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -43,7 +43,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: undefined,
+  titleText: undefined,
   isOpened: false,
   width: '80%',
   height: '80%',

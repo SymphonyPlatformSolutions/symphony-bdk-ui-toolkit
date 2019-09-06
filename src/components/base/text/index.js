@@ -6,11 +6,11 @@ import {
 
 export default function Text(props) {
   const {
-    children, title, size, underline, htmlTitle, ...rest
+    children, isTitle, size, underline, ...rest
   } = props;
 
   return (
-    <BaseText isTitle={title} title={htmlTitle} size={size} underline={underline} {...rest}>
+    <BaseText isTitle={isTitle} size={size} underline={underline} {...rest}>
       {children}
     </BaseText>
   );
@@ -18,7 +18,7 @@ export default function Text(props) {
 
 Text.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'info']),
-  title: PropTypes.bool,
+  isTitle: PropTypes.bool,
   size: PropTypes.string,
   px: PropTypes.string,
   py: PropTypes.string,
@@ -29,7 +29,7 @@ Text.propTypes = {
 };
 
 Text.defaultProps = {
-  title: false,
+  isTitle: false,
   px: null,
   py: null,
   mx: null,

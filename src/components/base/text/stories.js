@@ -35,10 +35,10 @@ storiesOf('Base', module)
   .add('Text', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text title>Live Example (Knobs)</Text>
+        <Text isTitle>Live Example (Knobs)</Text>
         <Text
           underline={boolean('Has underline', false)}
-          title={boolean('Is Title', false)}
+          isTitle={boolean('Is Title', false)}
           type={select('Text Types', TEXT_TYPES, 'primary')}
           size={select('Text Sizes', TEXT_SIZES, 'large')}
           px={text('Padding vertical', '10px')}
@@ -50,11 +50,11 @@ storiesOf('Base', module)
         </Text>
       </Box>
       <Box space={20}>
-        <Text title>Title</Text>
+        <Text isTitle>Title</Text>
         <Box>
-          <Text type="secondary" title size="large" underline>Large Title Underline</Text>
-          <Text type="secondary" title size="small">Small Title</Text>
-          <Text type="secondary" title size="tiny">Tiny Title</Text>
+          <Text type="secondary" isTitle size="large" underline>Large Title Underline</Text>
+          <Text type="secondary" isTitle size="small">Small Title</Text>
+          <Text type="secondary" isTitle size="tiny">Tiny Title</Text>
           <Text type="secondary" size="large">Large Text</Text>
           <Text type="secondary" size="small">Small Text</Text>
           <Text type="secondary" size="small" underline>Small Text Underline</Text>

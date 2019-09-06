@@ -35,7 +35,7 @@ const InputFieldWithErrorStory = () => {
 
   return (
     <Box vertical space={20}>
-      <Text title size="large">Input Field with error</Text>
+      <Text isisTitle size="large">Input Field with error</Text>
       <div style={styles}>
         <InputField
           inputState={inputState}
@@ -59,7 +59,7 @@ const InputFieldStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text title size="large">Input Field</Text>
+      <Text isisTitle size="large">Input Field</Text>
       <div style={styles}>
 
         <InputField
@@ -82,7 +82,7 @@ const InputFieldCopyOptionStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text title size="large">Input Field with copy option</Text>
+      <Text isisTitle size="large">Input Field with copy option</Text>
       <div style={styles}>
 
         <InputField
@@ -105,7 +105,7 @@ const InputFieldPasswordStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text title size="large">Password Input Field</Text>
+      <Text isTitle size="large">Password Input Field</Text>
       <div style={styles}>
         <InputField
           value={input}
@@ -132,7 +132,7 @@ const InputFieldLiveSample = () => {
 
   return (
     <Box vertical space={20}>
-      <Text title size="large">Live Sample (Knobs)</Text>
+      <Text isTitle size="large">Live Sample (Knobs)</Text>
       <div style={styles}>
         <InputField
           placeholder={placeHolder}
@@ -157,7 +157,7 @@ const TextAreaStory = ({ disabled }) => {
   }
   return (
     <Box vertical space={20}>
-      <Text title size="large">{disabled && 'Disabled '} Text Area</Text>
+      <Text isTitle size="large">{disabled && 'Disabled '} Text Area</Text>
       <div style={styles}>
         <InputField
           value={input}
@@ -180,7 +180,7 @@ storiesOf('Base', module)
       <InputFieldCopyOptionStory />
       <InputFieldPasswordStory />
       <Box vertical space={20}>
-        <Text title size="large">Disabled input field</Text>
+        <Text isTitle size="large">Disabled input field</Text>
         <div style={styles}>
           <InputField disabled />
         </div>

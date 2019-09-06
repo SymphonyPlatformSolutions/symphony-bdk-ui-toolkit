@@ -4,9 +4,9 @@ Text Component, supports multiple sizes and theme changes
 ##Sample
 
 ```jsx　
-<Text type="secondary" title size="large" underline>Large Title Underline</Text>
-<Text type="secondary" title size="small">Small Title</Text>
-<Text type="secondary" title size="tiny">Tiny Title</Text>
+<Text type="secondary" isTitle size="large" underline>Large Title Underline</Text>
+<Text type="secondary" isTitle size="small">Small Title</Text>
+<Text type="secondary" isTitle size="tiny">Tiny Title</Text>
 <Text type="secondary" size="large">Large Text</Text>
 <Text type="secondary" size="small">Small Text</Text>
 <Text type="secondary" size="small" underline>Small Text Underline</Text>
@@ -26,7 +26,7 @@ const MyCustomButton = styled(Text)`
 ```jsx
 Text.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'info']),
-  title: PropTypes.bool,
+  isTitle: PropTypes.bool,
   size: PropTypes.string,
   px: PropTypes.string,
   py: PropTypes.string,
@@ -37,7 +37,7 @@ Text.propTypes = {
 };
 
 Text.defaultProps = {
-  title: undefined,
+  isTitle: false,
   px: null,
   py: null,
   mx: null,

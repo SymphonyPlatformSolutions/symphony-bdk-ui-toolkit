@@ -45,22 +45,22 @@ storiesOf('Base', module)
     return (
       <StoryWrapper p={15}>
         <Box space={20}>
-          <Text title size="large">Modal</Text>
+          <Text isTitle size="large">Modal</Text>
           <Box align="flex-start">
             <Button type="primary" onClick={handleModalClick}>Open Modal...</Button>
           </Box>
-          <Modal title="This is a Modal" isOpened={isModalOpened} onClose={onModalClose}>
+          <Modal titleText="This is a Modal" isOpened={isModalOpened} onClose={onModalClose}>
             <Box horizontal>
               <Text>Content of the Modal</Text>
             </Box>
           </Modal>
         </Box>
         <Box space={20}>
-          <Text title size="large">Confirmation</Text>
+          <Text isTitle size="large">Confirmation</Text>
           <Box type="primary" align="flex-start">
             <Button onClick={handleConfirmClick}>Open Confirmation...</Button>
           </Box>
-          <Modal title="Confirmation" isOpened={isConfirmOpened} onClose={onConfirmClose} width="600px" height="185px">
+          <Modal titleText="Confirmation" isOpened={isConfirmOpened} onClose={onConfirmClose} width="600px" height="185px">
             <Box vertical>
               <Box horizontal align="center">
                 <GoAlert style={iconStyle} />

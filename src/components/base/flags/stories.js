@@ -29,12 +29,12 @@ storiesOf('Base', module)
   .add('Flag', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text title size="large">Country flags</Text>
+        <Text isTitle size="large">Country flags</Text>
         { DATA.map(row => (
           <Box horizontal space={20}>
             { row.map(flag => (
               <Box vertical align="center" style={{ width: '35px' }}>
-                <Text title size="tiny">
+                <Text isTitle size="tiny">
                   {flag}
                 </Text>
                 <Flag countryCode={flag} />

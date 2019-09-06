@@ -32,7 +32,7 @@ storiesOf('Base', module)
   .add('Box', () => (
     <StoryWrapper p={15}>
       <Box>
-        <Text title size="large">Box Horizontal</Text>
+        <Text isTitle size="large">Box Horizontal</Text>
         <Box horizontal space={20}>
           <Box style={Object.assign({}, boxStyle, boxCTA)}>
             <span>Child</span>
@@ -44,7 +44,7 @@ storiesOf('Base', module)
             <span>Child</span>
           </Box>
         </Box>
-        <Text title size="large">Box Vertical</Text>
+        <Text isTitle size="large">Box Vertical</Text>
         <Box vertical space={20}>
           <Box style={Object.assign({}, boxStyle, boxCTA)}>
             <span>Child</span>
@@ -56,7 +56,7 @@ storiesOf('Base', module)
             <span>Child</span>
           </Box>
         </Box>
-        <Text title size="large">Box Justify</Text>
+        <Text isTitle size="large">Box Justify</Text>
         <Box space={10}>
           <Box horizontal justify="flex-start" space={20}>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>

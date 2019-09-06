@@ -11,6 +11,7 @@ import {
 const DataGrid = (
   {
     rowGetter, data, columns, rowsCount,
+    theme,
     ...rest
   },
 ) => {
@@ -28,7 +29,7 @@ const DataGrid = (
           py="0"
           mx="0"
           my="0"
-          title
+          isTitle
           size="small"
         >
           {args.column.name}
@@ -49,7 +50,7 @@ const DataGrid = (
             style={{
               textOverflow: 'ellipsis',
               overflow: 'hidden',
-              color: error ? '#fff' : undefined,
+              color: error ? theme.colors.white : undefined,
             }}
           >
             {args.value}
@@ -77,6 +78,7 @@ DataGrid.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array.isRequired,
   rowsCount: PropTypes.number,
+  theme: PropTypes.object.isRequired,
 };
 
 DataGrid.defaultProps = {

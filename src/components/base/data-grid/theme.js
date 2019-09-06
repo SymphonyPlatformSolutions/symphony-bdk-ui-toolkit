@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 
-const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? '#2F3237' : '#f6f6f6');
-const getHeaderFontColor = theme => (theme.mode === THEME_TYPES.DARK ? '#fff ' : '#4d4d4d');
-const getHoverBackgroundColor = theme => (theme.mode === THEME_TYPES.DARK ? '#32363b' : '#f9f9f9');
-// const getErrorBarColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(247, 74, 111, 0.62)' : 'rgba(213, 9, 53, 0.4)');
-const getErrorBarColor = theme => (theme.theme.danger);
+const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.lightgrey);
+const getHeaderFontColor = theme => (theme.colors.textcolor);
+const getHoverBackgroundColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(256, 256, 256, 0.1)' : 'rgba(0, 0, 0, 0.04)');
+
+const getErrorBarColor = theme => (theme.colors.danger);
 
 const overrides = {
   header: 'react-grid-Header',
@@ -34,7 +35,7 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
     border: 0;
 
     & > div {
-      color: ${({ theme }) => getHeaderFontColor(theme)};;
+      color: ${({ theme }) => getHeaderFontColor(theme)};
       background-color: ${({ theme }) => getBorderColor(theme)};
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
@@ -93,7 +94,7 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
 
 export const CellContainer = styled(Box)`
   background-color: ${({ error, theme }) => (error ? `${getErrorBarColor(theme)} !important` : undefined)};
-  color: ${({ error }) => (error ? '#fff' : 'inherit')};
+  color: ${({ error, theme }) => (error ? theme.colors.white : 'inherit')};
   display: flex;
   height: 100%;
   justify-content: center;

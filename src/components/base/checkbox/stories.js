@@ -30,13 +30,13 @@ storiesOf('Base', module)
   .add('Checkbox', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>
-        <Text title size="large">Default CheckBox</Text>
+        <Text isTitle size="large">Default CheckBox</Text>
         <div>
           <CheckBoxComponent />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text title size="large">Disabled CheckBox</Text>
+        <Text isTitle size="large">Disabled CheckBox</Text>
         <div>
           <Checkbox onChange={NoOp} disabled label="Disabled Unchecked" />
           <Checkbox onChange={NoOp} isChecked disabled label="Disabled Checked" />

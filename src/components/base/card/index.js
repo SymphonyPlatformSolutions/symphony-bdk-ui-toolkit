@@ -27,15 +27,15 @@ const CardTitle = styled.span`
 
 export default function Card(props) {
   const {
-    children, title, ...rest
+    children, titleText, ...rest
   } = props;
 
   return (
     <BaseCard {...rest}>
       <Box>
-        <CardTitle title={title}>
+        <CardTitle titleText={titleText}>
           <Box>
-            <Text title size="large" underline>{title}</Text>
+            <Text isTitle size="large" underline>{titleText}</Text>
           </Box>
         </CardTitle>
         <Box>{children}</Box>
@@ -45,10 +45,10 @@ export default function Card(props) {
 }
 
 Card.propTypes = {
-  title: PropTypes.string,
+  titleText: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 Card.defaultProps = {
-  title: '',
+  titleText: '',
 };

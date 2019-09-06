@@ -11,7 +11,7 @@ storiesOf('Base', module)
   .add('Separator', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text title size="large">Separator</Text>
+        <Text isTitle size="large">Separator</Text>
         <Box horizontal space={60} align="center">
           <Separator />
         </Box>

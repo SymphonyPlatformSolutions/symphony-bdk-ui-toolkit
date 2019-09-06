@@ -13,8 +13,8 @@ storiesOf('Base', module)
   .add('Card', () => (
     <StoryWrapper p={15}>
       <Box>
-        <Text title size="large">Cards</Text>
-        <Card title="Card with title">
+        <Text isTitle size="large">Cards</Text>
+        <Card titleText="Card with title">
           <Text size="small">Lorem ipsum dolor</Text>
         </Card>
         <Card>

@@ -7,15 +7,15 @@ import { getBackgroundColor, getBoxShadow } from './theme';
 
 const Modal = (props) => {
   const {
-    children, title, isOpened, onClose, width, height, ...rest
+    children, titleText, isOpened, onClose, width, height, ...rest
   } = props;
 
 
   return (
     <span>
       <ModalOverlay isOpened={isOpened} />
-      <BaseModal ModalTitle={title} isOpened={isOpened} width={width} height={height} {...rest}>
-        <ModalHeaderTitle modalTitle={title} />
+      <BaseModal modalTitle={titleText} isOpened={isOpened} width={width} height={height} {...rest}>
+        <ModalHeaderTitle modalTitle={titleText} />
         <ModalHeaderClose onClose={onClose} />
         <ModalBody isOpened={isOpened}>{children}</ModalBody>
       </BaseModal>
@@ -24,7 +24,7 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-  title: PropTypes.string,
+  titleText: PropTypes.string,
   isOpened: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -33,7 +33,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: undefined,
+  titleText: undefined,
   isOpened: false,
   width: '80%',
   height: '80%',
@@ -49,7 +49,7 @@ const ModalOverlay = styled.span`
   right: 0;
   background: #000;
   opacity: 0.35;
-  display: ${p => (p.isOpened ? 'flex' : 'none')}
+  display: ${p => (p.isOpened ? 'flex' : 'none')};
   z-index: 999;
   transition: all .35s ease;
 `;

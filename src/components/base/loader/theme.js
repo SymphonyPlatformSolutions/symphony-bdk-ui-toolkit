@@ -8,7 +8,7 @@ export const getBackgroundColor = ({ theme, colorObject }) => {
 };
 export const getTileColor = ({ theme, colorObject }) => {
   if (!colorObject) {
-    return (theme.mode === THEME_TYPES.DARK ? '#e3e5e8' : '#2f3237');
+    return (theme.mode === THEME_TYPES.DARK ? '#e3e5e8' : '#2F3237');
   }
   return colorObject.tile;
 };

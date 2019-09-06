@@ -16,7 +16,7 @@ storiesOf('Base', module)
   .add('Loader', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text title size="large">Live Example (Knobs)</Text>
+        <Text isTitle size="large">Live Example (Knobs)</Text>
         <Box horizontal space={60} align="center">
           <Loader
             size={number('Size: ', 15)}
@@ -25,7 +25,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box space={20}>
-        <Text title size="large">Loader sizes</Text>
+        <Text isTitle size="large">Loader sizes</Text>
         <Box horizontal space={60} align="center">
           <Loader
             size={15}
@@ -38,7 +38,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box space={20}>
-        <Text title size="large">Loader colors</Text>
+        <Text isTitle size="large">Loader colors</Text>
         <Box horizontal space={60} align="center">
           <Loader
             size={25}

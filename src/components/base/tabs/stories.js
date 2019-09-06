@@ -15,7 +15,7 @@ storiesOf('Base', module)
   .add('Tabs', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text title size="large">Tabs</Text>
+        <Text isTitle size="large">Tabs</Text>
         <Box horizontal space={60}>
           <Tabs activeTab={0}>
             <div label={text('Tab 1 title', 'Set Up')}>
