@@ -9,7 +9,11 @@ export const getColor = theme => (theme.mode === THEME_TYPES.DARK
   ? theme.theme.basegrey
   : theme.theme.darkaccent);
 
-const getBorderColor = (theme) => {
+const getBorderColor = (theme, error = false) => {
+  if (error) {
+    return theme.theme.danger;
+  }
+
   if (theme.mode === THEME_TYPES.DARK) {
     return '#6f747c';
   }
@@ -17,27 +21,32 @@ const getBorderColor = (theme) => {
   return theme.theme.darkgrey;
 };
 
-const getOpacity = (disabled, theme) => (disabled ? (theme.mode === THEME_TYPES.DARK ? 0.42 : 0.6) : 1);
-
-export const customStyles = theme => ({
+export const customStyles = ({ theme, error }) => ({
+  container: provided => ({
+    ...provided,
+    pointerEvents: 'auto',
+  }),
   control: (provided, state) => ({
     ...provided,
     width: '100%',
     boxShadow: 'none',
-    border: `1px solid ${
+    border:
       state.menuIsOpen
-        ? theme.theme.primary
-        : getBorderColor(theme, state.isDisabled)
-    }`,
+        ? `1px solid ${theme.theme.primary}`
+        : `1px solid ${getBorderColor(theme, error)}`,
+    borderBottomLeftRadius: state.menuIsOpen ? 0 : '3px',
+    borderBottomRightRadius: state.menuIsOpen ? 0 : '3px',
     borderColor: state.menuIsOpen
       ? theme.theme.primary
-      : getBorderColor(theme, state.isDisabled),
+      : getBorderColor(theme, error),
     color: getColor(theme),
+    minHeight: '35px',
     backgroundColor:
     theme.mode === THEME_TYPES.DARK
       ? '#2F3237'
       : (state.isDisabled
-        ? theme.theme.lightgrey : '#fff'),
+        ? theme.theme.grey
+        : '#fff'),
     margin: '0',
     borderRadius: '3px',
     transition: 'all 0.3s',
@@ -45,15 +54,17 @@ export const customStyles = theme => ({
       border: `1px solid ${
         state.menuIsOpen
           ? theme.theme.primary
-          : getBorderColor(theme, state.isDisabled)
+          : getBorderColor(theme, error)
       }`,
     },
-    cursor: state.isDisabled ? 'default' : 'pointer',
+    cursor: state.isDisabled ? 'not-allowed' : 'pointer',
   }),
   indicatorSeparator: provided => ({ ...provided, display: 'none' }),
   menu: (provided, state) => ({
     ...provided,
-    marginTop: '1px',
+    marginTop: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
     color: state.isDisabled
       ? theme.theme.lightgrey
       : theme.mode === THEME_TYPES.DARK
@@ -64,6 +75,8 @@ export const customStyles = theme => ({
       : theme.mode === THEME_TYPES.DARK
         ? '#2F3237'
         : '#fff',
+    border: `1px solid ${getBorderColor(theme)}`,
+    borderTop: 'none',
   }),
   option: (provided, state) => ({
     ...provided,
@@ -85,22 +98,16 @@ export const customStyles = theme => ({
       backgroundColor: theme.theme.secondary,
     },
   }),
-  singleValue: (provided, state) => ({
+  singleValue: provided => ({
     ...provided,
     transition: 'all 0.3s',
-    color: state.selectProps.isDisabled
-      ? theme.theme.darkgrey
-      : theme.mode === THEME_TYPES.DARK
-        ? '#fff'
-        : '#000',
     backgroundColor: 'rgba(0,0,0,0)',
-    opacity: getOpacity(state.selectProps.isDisabled, theme),
+    color: error ? `${theme.theme.danger} !important` : undefined,
   }),
-  placeholder: (provided, state) => ({
+  placeholder: provided => ({
     ...provided,
     transition: 'all 0.3s',
     color: theme.theme.darkgrey,
-    opacity: getOpacity(state.selectProps.isDisabled, theme),
   }),
 });
 
@@ -115,7 +122,6 @@ const SmallArrow = styled.div`
   border-right: 4px solid transparent;
   border-top: 4px solid ${({ theme }) => getBorderColor(theme)};
   transform: ${({ turn }) => (turn ? 'rotate(180deg)' : null)};
-  opacity: ${({ isDisabled, theme }) => getOpacity(isDisabled, theme)};
   transition: all 0.4s;
 `;
 
@@ -138,9 +144,11 @@ export const SingleValue = ({ children, isDisabled, ...props }) => (
       type="primary"
       py="0"
       px="0"
+      size="small"
       style={{
+        color: 'inherit',
         fontStyle: isDisabled ? 'italic' : 'normal',
-        color: isDisabled ? '#9399a2' : 'inherit',
+        lineHeight: 'inherit',
       }}
     >
       {children}
@@ -156,7 +164,8 @@ export const Option = ({ children, ...props }) => (
       px="0"
       mx="0"
       my="0"
-      style={{ color: 'inherit' }}
+      size="small"
+      style={{ color: 'inherit', lineHeight: 'inherit' }}
     >
       {children}
     </Text>
@@ -169,7 +178,8 @@ export const Placeholder = ({ children, isDisabled, ...props }) => (
       type="primary"
       py="0"
       px="0"
-      style={{ color: 'inherit', fontStyle: isDisabled ? 'italic' : 'normal' }}
+      size="small"
+      style={{ color: 'inherit', fontStyle: isDisabled ? 'italic' : 'normal', lineHeight: 'inherit' }}
     >
       {children}
     </Text>
@@ -184,7 +194,8 @@ export const NoOptionsMessage = ({ children, ...props }) => (
       px="0"
       mx="0"
       my="0"
-      style={{ color: 'inherit' }}
+      size="small"
+      style={{ color: 'inherit', lineHeight: 'inherit' }}
     >
       {children}
     </Text>

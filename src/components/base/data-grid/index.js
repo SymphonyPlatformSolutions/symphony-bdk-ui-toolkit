@@ -49,6 +49,7 @@ const DataGrid = (
             style={{
               textOverflow: 'ellipsis',
               overflow: 'hidden',
+              color: error ? '#fff' : undefined,
             }}
           >
             {args.value}

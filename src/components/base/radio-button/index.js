@@ -2,7 +2,9 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Text from '../text';
-import { RadioContainer, Radio, RadioLabel } from './theme';
+import {
+  RadioContainer, Radio, RadioLabel,
+} from './theme';
 
 const RadioButton = (props) => {
   const {
@@ -31,6 +33,7 @@ const RadioButton = (props) => {
 RadioButton.propTypes = {
   id: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
+  theme: PropTypes.object.isRequired,
   checked: PropTypes.bool,
   children: PropTypes.string,
   onChange: PropTypes.func,

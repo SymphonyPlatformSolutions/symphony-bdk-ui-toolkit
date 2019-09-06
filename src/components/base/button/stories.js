@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import {
@@ -43,6 +42,26 @@ const EditableComponent = () => {
         <span>{text('Button Label', 'Sample')}</span>
       </Button>
     </Box>
+  );
+};
+
+const LoadingContainer = () => {
+  const [isLoading, changeLoading] = useState(false);
+  return (
+    <Button
+      loading={isLoading}
+      disabled={isLoading}
+      size="small"
+      type="danger"
+      data-testid="Instance action"
+      onClick={() => {
+        changeLoading(true);
+        setTimeout(() => changeLoading(false), 2000);
+      }}
+    >
+      Disconnect
+    </Button>
+
   );
 };
 
@@ -111,6 +130,7 @@ storiesOf('Base', module)
           <Button size="small" fill="filled" type="secondary" onClick={asyncAction}>
             <span>Submit</span>
           </Button>
+          <LoadingContainer />
           <Button size="large" type="primary" fill="filled" loading onClick={asyncAction}>
             <span>Next</span>
           </Button>

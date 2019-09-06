@@ -53,9 +53,10 @@ const InnerRing = styled.div`
   width: ${spinnerSize};
   height: ${spinnerSize};
   border-radius: 50%;
-  border: ${borderWidth} solid ${({ theme }) => getBackgroundColor(theme)};
-  border-color: ${({ theme }) => getBackgroundColor(theme)};
-  
+  border: ${borderWidth} solid ${props => getBackgroundColor(props)};
+  border-color: ${props => getBackgroundColor(props)};
+  overflow: visible;
+
   &:after {
     content: " ";
     display: block;
@@ -63,8 +64,8 @@ const InnerRing = styled.div`
     height: ${spinnerSize};
     margin: -${borderWidth};
     border-radius: 50%;
-    border: ${borderWidth} solid ${({ theme }) => getTileColor(theme)};
-    border-color: ${({ theme }) => getTileColor(theme)} transparent transparent transparent;
+    border: ${borderWidth} solid ${props => getTileColor(props)};
+    border-color: ${props => getTileColor(props)} transparent transparent transparent;
     animation: ${spin} 0.7s linear infinite;
   }
 `;
@@ -75,7 +76,7 @@ const Loader = (props) => {
   } = props;
 
   if (type === 'v2') {
-    return <InnerRing size={presetSize} theme={theme} />;
+    return <InnerRing size={presetSize} theme={theme} colorObject={color} />;
   }
 
   return (
@@ -90,7 +91,6 @@ const Loader = (props) => {
 };
 
 Loader.propTypes = {
-  color: PropTypes.string.isRequired,
   size: PropTypes.number,
   type: PropTypes.string,
   presetSize: PropTypes.string,

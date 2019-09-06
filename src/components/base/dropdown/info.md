@@ -63,6 +63,8 @@ Dropdown.propTypes = {
   clickHandler: PropTypes.func,
   isLoading: PropTypes.bool,
   placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -76,5 +78,7 @@ Dropdown.defaultProps = {
   placeholder: undefined,
   isLoading: false,
   clickHandler: null,
+  error: false,
+  errorMessage: 'Something went wrong!',
 };
 ```

@@ -81,13 +81,19 @@ storiesOf('Base', module)
           </Box>
         </div>
         <div>
-          <Text title size="large">Disabled dropdown</Text>
+          <Text title size="large">Dropdown with Error</Text>
+          <Box style={{ width: '300px' }}>
+            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" />
+          </Box>
+        </div>
+        <div>
+          <Text title size="large">Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled options={OPTIONS} />
           </Box>
         </div>
         <div>
-          <Text title size="large">Filled disabled dropdown</Text>
+          <Text title size="large">Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled chosenValue="option2" options={OPTIONS} />
           </Box>
