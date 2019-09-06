@@ -50,7 +50,7 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box p={15}>
         <Box>
-          <Text title size="large">Filled Table</Text>
+          <Text isTitle size="large">Filled Table</Text>
           <Box horizontal space={60}>
             <Table
               data={DATA}
@@ -59,7 +59,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text title size="large">Empty Table</Text>
+          <Text isTitle size="large">Empty Table</Text>
           <Box horizontal space={60}>
             <Table
               data={[]}
@@ -67,7 +67,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text title size="large">Loading Table</Text>
+          <Text isTitle size="large">Loading Table</Text>
           <Box horizontal space={60}>
             <Table
               loading

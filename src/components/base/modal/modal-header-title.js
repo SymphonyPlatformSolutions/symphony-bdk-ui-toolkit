@@ -13,7 +13,7 @@ export default function ModalHeaderTitle(props) {
 
   return (
     <ModalTitleBase>
-      <Text title small style={titleStyle}>{modalTitle}</Text>
+      <Text isTitle small style={titleStyle}>{modalTitle}</Text>
     </ModalTitleBase>
   );
 }

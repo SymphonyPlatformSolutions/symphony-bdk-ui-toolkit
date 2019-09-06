@@ -28,7 +28,7 @@ const DataGrid = (
           py="0"
           mx="0"
           my="0"
-          title
+          isTitle
           size="small"
         >
           {args.column.name}

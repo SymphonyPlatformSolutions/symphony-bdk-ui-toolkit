@@ -33,7 +33,7 @@ const PhoneInputFieldLiveSample = () => {
 
   return (
     <Box vertical space={20}>
-      <Text title size="large">Live Sample (Knobs)</Text>
+      <Text isTitle size="large">Live Sample (Knobs)</Text>
       <div style={styles}>
         <PhoneInputField
           id="test"
@@ -53,19 +53,19 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <PhoneInputFieldLiveSample />
       <Box vertical space={20}>
-        <Text title size="small">Default Phone Input field</Text>
+        <Text isTitle size="small">Default Phone Input field</Text>
         <div style={styles}>
           <PhoneInputField value="+1" />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text title size="small">Disabled InputField</Text>
+        <Text isTitle size="small">Disabled InputField</Text>
         <div style={styles}>
           <PhoneInputField value="+1" disabled />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text title size="small">Error Phone Input Field</Text>
+        <Text isTitle size="small">Error Phone Input Field</Text>
         <div style={styles}>
           <PhoneInputField value="+1" inputState="error" />
         </div>

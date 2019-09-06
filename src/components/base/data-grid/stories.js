@@ -134,7 +134,7 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box p={15}>
         <Box>
-          <Text title size="large">DataGrid</Text>
+          <Text isTitle size="large">DataGrid</Text>
           <Box horizontal space={60}>
             <GridHandler />
           </Box>
@@ -142,7 +142,7 @@ storiesOf('Base', module)
       </Box>
       <Box>
         <Box>
-          <Text title size="large">DataGrid with cell highlight</Text>
+          <Text isTitle size="large">DataGrid with cell highlight</Text>
           <Box horizontal space={60}>
             <GridWithError />
           </Box>

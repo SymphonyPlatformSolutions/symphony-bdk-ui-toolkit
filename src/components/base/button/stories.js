@@ -70,11 +70,11 @@ storiesOf('Base', module)
   .add('Button', () => (
     <StoryWrapper p={15}>
       <Box>
-        <Text title size="large">Live Example (Knobs)</Text>
+        <Text isTitle size="large">Live Example (Knobs)</Text>
         { EditableComponent() }
       </Box>
       <Box>
-        <Text title size="large">Button types</Text>
+        <Text isTitle size="large">Button types</Text>
         <Box horizontal space={20}>
           <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
             <span>Primary</span>
@@ -91,7 +91,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box>
-        <Text title size="large">Button Fill types</Text>
+        <Text isTitle size="large">Button Fill types</Text>
         <Box horizontal space={20}>
           <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
             Filled
@@ -104,7 +104,7 @@ storiesOf('Base', module)
           </Button>
         </Box>
         <Box>
-          <Text title size="large">Button size</Text>
+          <Text isTitle size="large">Button size</Text>
           <Box horizontal space={20} align="center">
             <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
               <span>Large</span>
@@ -119,7 +119,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box>
-        <Text title size="large">Async loader</Text>
+        <Text isTitle size="large">Async loader</Text>
         <Box horizontal space={20} align="center">
           <Button size="large" type="primary" fill="filled" onClick={asyncAction}>
             <span>Next</span>
@@ -137,7 +137,7 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box>
-        <Text title size="large">Disabled buttons</Text>
+        <Text isTitle size="large">Disabled buttons</Text>
         <Box horizontal space={20} align="center">
           <Button size="large" type="primary" fill="filled" disabled onClick={asyncAction}>
             <span>Disabled</span>
