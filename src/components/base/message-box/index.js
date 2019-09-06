@@ -3,6 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withTheme } from 'styled-components';
 import {
   MdClose,
 } from 'react-icons/md';
@@ -20,13 +21,14 @@ import Text from '../text';
 const MessageBox = (props) => {
   const {
     type, children, hasButton, buttonHandler, style,
+    theme,
   } = props;
 
   return (
     <StyledMessageBox type={type} style={style}>
-      <MessageBoxLogo>
+      <MessageBoxLogo type={type}>
         <MessageBoxIconContainer>
-          {getIcon(type)}
+          {getIcon({ type, theme })}
         </MessageBoxIconContainer>
       </MessageBoxLogo>
       <MessageBoxText>
@@ -47,7 +49,7 @@ const MessageBox = (props) => {
             type="button"
             onClick={buttonHandler}
           >
-            <MdClose color="#fff" size="1.2rem" />
+            <MdClose color="#4d4d4d" size="1.2rem" />
           </MessageBoxButton>
         </MessageBoxButtonContainer>
         )
@@ -71,4 +73,4 @@ MessageBox.defaultProps = {
   style: undefined,
 };
 
-export default MessageBox;
+export default withTheme(MessageBox);

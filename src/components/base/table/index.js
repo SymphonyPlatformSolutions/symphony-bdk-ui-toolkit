@@ -51,7 +51,7 @@ const CustomTable = styled(DataTable)`
 `;
 
 const EmptyText = styled(Text)`
-  color: #676a70;
+  color: ${({ theme }) => theme.colors.darkgrey};
 `;
 
 const Table = (props) => {
@@ -68,7 +68,7 @@ const Table = (props) => {
   }
 
   if (!data || !data.length) {
-    return <EmptyTable><EmptyText>{emptyMessage}</EmptyText></EmptyTable>;
+    return <EmptyTable><EmptyText theme={theme}>{emptyMessage}</EmptyText></EmptyTable>;
   }
 
   const textColumns = columns.map((el) => {

@@ -30,13 +30,13 @@ const LINEHEIGHTTITLE = {
 
 const getTextColor = ({ type, theme }) => {
   const colorMap = {
-    primary: theme.mode === THEME_TYPES.DARK ? theme.theme.white : '#4d4d4d',
-    secondary: theme.mode === THEME_TYPES.DARK ? theme.theme.white : '#000000',
-    danger: theme.theme.danger,
-    info: theme.theme.darkgrey,
+    primary: theme.colors.textcolor,
+    secondary: theme.mode === THEME_TYPES.DARK ? theme.colors.white : theme.colors.black,
+    danger: theme.colors.danger,
+    info: theme.colors.darkgrey,
   };
 
-  return colorMap[type] ? colorMap[type] : '#000000';
+  return colorMap[type] ? colorMap[type] : theme.colors.black;
 };
 
 const getPadding = ({ size, px, py }) => {
@@ -62,7 +62,7 @@ const getFontStyle = ({ isTitle, size }) => (isTitle || size !== 'tiny' ? 'norma
 const getFontSize = ({ isTitle, size }) => (isTitle ? FONTSIZETITLE[size] : FONTSIZE[size]);
 const getLineHeight = ({ isTitle, size }) => (isTitle ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = ({ isTitle }) => (isTitle ? '900' : '400');
-const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.theme.grey} solid` : '0px');
+const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.colors.grey} solid` : '0px');
 
 export const BaseText = styled.div`
   color: ${props => getTextColor(props)};

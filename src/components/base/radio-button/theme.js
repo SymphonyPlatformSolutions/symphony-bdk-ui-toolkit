@@ -21,12 +21,12 @@ export const Radio = styled.input`
     top: -4px;
     width: 14px;
     height: 14px;
-    border: 2px solid ${({ theme }) => theme.theme.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
     border-radius: 100%;
   } 
 
   &:disabled:checked:before {
-    border: 2px solid ${({ theme }) => theme.theme.grey};
+    border: 2px solid ${({ theme }) => theme.colors.grey};
   }
 
   &:not(:checked):before {
@@ -38,13 +38,13 @@ export const Radio = styled.input`
     width: 0.9rem;
     height: 0.9rem;
     border: 2px solid ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT
-    ? darken(0.1, theme.theme.grey)
-    : lighten(0.1, theme.theme.grey))};
+    ? darken(0.1, theme.colors.grey)
+    : lighten(0.1, theme.colors.grey))};
     border-radius: 100%;
   }
 
   &:disabled:not(:checked):before {
-    border: 2px solid ${({ theme }) => theme.theme.grey};
+    border: 2px solid ${({ theme }) => theme.colors.grey};
   }
 
   &:checked:after,
@@ -55,7 +55,7 @@ export const Radio = styled.input`
     top: 1px;
     width: 8px;
     height: 8px;
-    background: ${({ theme }) => theme.theme.primary};
+    background: ${({ theme }) => theme.colors.primary};
     position: absolute;
     border-radius: 100%;
     -webkit-transition: all 0.2s ease;
@@ -64,7 +64,7 @@ export const Radio = styled.input`
 
   &:disabled:checked:after,
   &:disabled:not(:checked):after {
-    background: ${({ theme }) => theme.theme.grey};
+    background: ${({ theme }) => theme.colors.grey};
   }
 
   &:not(:checked):after {

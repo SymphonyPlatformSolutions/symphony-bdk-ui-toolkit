@@ -53,7 +53,6 @@ const LoadingContainer = () => {
       disabled={isLoading}
       size="small"
       type="danger"
-      data-testid="Instance action"
       onClick={() => {
         changeLoading(true);
         setTimeout(() => changeLoading(false), 2000);

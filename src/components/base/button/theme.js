@@ -48,19 +48,19 @@ const BUTTON_THEME = (theme, type, fill) => {
   }
   const selectedTheme = {
     [THEME_TYPES.LIGHT]: {
-      TEXT_COLOR: isFilled ? theme.theme.white : theme.theme[type],
-      BG_COLOR: isFilled ? theme.theme[type] : 'inherit',
+      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[type],
+      BG_COLOR: isFilled ? theme.colors[type] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
-      TEXT_COLOR: isFilled ? theme.theme.white : theme.theme[type],
-      BG_COLOR: isFilled ? theme.theme[type] : 'transparent',
+      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[type],
+      BG_COLOR: isFilled ? theme.colors[type] : 'transparent',
     },
   };
 
   if (!theme || !theme.mode) {
     return {
-      TEXT_COLOR: '#fff',
-      BG_COLOR: '#fff',
+      TEXT_COLOR: theme.colors.white,
+      BG_COLOR: theme.colors.white,
     };
   }
 
@@ -77,8 +77,8 @@ const getColor = ({
   const selectedTheme = BUTTON_THEME(theme, type, fill);
   return disabled
     ? fill === FILL_TYPES.FILLED
-      ? theme.theme.grey
-      : theme.theme.darkgrey
+      ? theme.colors.grey
+      : theme.colors.darkgrey
     : selectedTheme.TEXT_COLOR;
 };
 
@@ -92,7 +92,7 @@ const getHoverActiveColor = ({
       theme, fill, disabled, type,
     })
     : isOutlined
-      ? theme.theme.white
+      ? theme.colors.white
       : selectedTheme.TEXT_COLOR;
 };
 
@@ -101,7 +101,7 @@ const getHoverBgColor = ({
 }) => {
   const isFilled = fill === FILL_TYPES.FILLED;
   const isGhost = fill === FILL_TYPES.GHOST;
-  const buttonBg = theme.theme[type];
+  const buttonBg = theme.colors[type];
   const selectedTheme = BUTTON_THEME(theme, type, fill);
   return disabled || isGhost
     ? null
@@ -114,7 +114,7 @@ const getBgColor = ({
   theme, type, fill, disabled,
 }) => {
   const selectedTheme = BUTTON_THEME(theme, type, fill);
-  const disabledBg = fill === FILL_TYPES.FILLED ? theme.theme.darkgrey : 'transparent';
+  const disabledBg = fill === FILL_TYPES.FILLED ? theme.colors.darkgrey : 'transparent';
   return disabled ? disabledBg : selectedTheme.BG_COLOR;
 };
 
@@ -146,13 +146,13 @@ export const getSpinnerColor = ({
 }) => {
   if (fill === FILL_TYPES.OUTLINED) {
     return {
-      tile: theme.theme.white,
-      background: theme.theme.darkgrey,
+      tile: theme.colors.white,
+      background: theme.colors.darkgrey,
     };
   }
   return {
-    tile: theme.theme.darkgrey,
-    background: theme.theme.white,
+    tile: theme.colors.darkgrey,
+    background: theme.colors.white,
   };
 };
 

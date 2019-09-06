@@ -44,7 +44,7 @@ const TabHeaderItem = styled.li`
   text-align: ${props => getTabItemAlign(props)};
   float: ${props => getTabItemAlign(props)};
   &:hover {
-    color: ${props => props.theme.theme.primary}
+    color: ${props => props.theme.colors.primary}
   }
 `;
 

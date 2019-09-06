@@ -3,42 +3,40 @@ import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
 
 
-const getThemedBorderColor = ({ theme, inputState, disabled }) => {
-  const border = {
-    initial: darken(0.1, theme.theme.grey),
-    modified: theme.theme.darkgrey,
-    error: theme.theme.danger,
-  };
-  return disabled ? theme.theme.grey : border[inputState];
+const getThemedBorderColor = ({ theme, inputState }) => {
+  if (inputState === 'error') {
+    return theme.colors.danger;
+  }
+
+  return theme.colors.bordergrey;
 };
 
-
 const getColor = ({ theme, inputState }) => (inputState === 'error'
-  ? theme.theme.danger
+  ? theme.colors.danger
   : (theme.mode === THEME_TYPES.DARK
-    ? theme.theme.basegrey
-    : theme.theme.darkaccent)
+    ? theme.colors.basegrey
+    : theme.colors.darkaccent)
 );
 
 const getDropdownColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
-  ? theme.theme.basegrey
-  : theme.theme.darkaccent);
+  ? theme.colors.basegrey
+  : theme.colors.darkaccent);
 
 const getPlaceholderColor = ({ theme, inputState }) => (
   inputState === 'error'
-    ? theme.theme.danger
-    : theme.theme.darkgrey
+    ? theme.colors.danger
+    : theme.colors.darkgrey
 );
 
 const getBackgroundColor = ({ theme }) => (
   theme.mode === THEME_TYPES.DARK
-    ? '#2F3237'
+    ? theme.colors.inputgrey
     : 'transparent'
 );
 
 const getInputFocusBorderColor = ({ theme, inputState }) => (inputState === 'error'
-  ? theme.theme.danger
-  : theme.theme.primary
+  ? theme.colors.danger
+  : theme.colors.primary
 );
 
 const overrides = {
@@ -51,7 +49,7 @@ const overrides = {
   flagDropdownMenu: 'country-list',
 };
 
-const getDropdownBackgroundColor = ({ theme, disabled }) => (disabled ? theme.theme.lightgrey : theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.theme.white);
+const getDropdownBackgroundColor = ({ theme, disabled }) => (disabled ? theme.colors.lightgrey : theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.white);
 
 const getDropdownWidth = ({ hasRef }) => (hasRef ? `${hasRef.clientWidth}px` : 'auto');
 
@@ -128,25 +126,25 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     border: 1px solid ${props => getThemedBorderColor(props)} !important;
     width: ${props => getDropdownWidth(props)} !important;
     .dial-code {
-      color: ${({ theme }) => darken(0.5, theme.theme.lightgrey)} !important;
+      color: ${({ theme }) => darken(0.5, theme.colors.lightgrey)} !important;
     }
     .country {
       height: 40px !important;
     }
     .country:hover {
-      color: ${({ theme }) => theme.theme.lightgrey} !important;
-      background-color: ${({ theme }) => theme.theme.secondary} !important;
+      color: ${({ theme }) => theme.colors.lightgrey} !important;
+      background-color: ${({ theme }) => theme.colors.secondary} !important;
      .dial-code {
-        color: ${({ theme }) => theme.theme.lightgrey} !important;
+        color: ${({ theme }) => theme.colors.lightgrey} !important;
       }
     }
 
     .highlight {
-      color: ${({ theme }) => theme.theme.lightgrey} !important;
+      color: ${({ theme }) => theme.colors.lightgrey} !important;
       .dial-code {
-        color: ${({ theme }) => theme.theme.lightgrey} !important;
+        color: ${({ theme }) => theme.colors.lightgrey} !important;
       }
-      background-color: ${({ theme }) => theme.theme.primary} !important;
+      background-color: ${({ theme }) => theme.colors.primary} !important;
     }
   }
  }

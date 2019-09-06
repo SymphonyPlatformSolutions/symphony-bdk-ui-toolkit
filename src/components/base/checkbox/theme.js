@@ -4,11 +4,11 @@ import { THEME_TYPES } from '../../../styles/colors';
 export const getBackgroundColor = ({ theme, isChecked, disabled }) => (
   isChecked
     ? disabled
-      ? theme.theme.darkgrey
-      : theme.theme.primary
+      ? theme.colors.darkgrey
+      : theme.colors.primary
     : disabled
-      ? theme.theme.grey
+      ? theme.colors.grey
       : theme.mode === THEME_TYPES.LIGHT
-        ? darken(0.1, theme.theme.grey)
-        : lighten(0.1, theme.theme.grey)
+        ? darken(0.1, theme.colors.grey)
+        : lighten(0.1, theme.colors.grey)
 );

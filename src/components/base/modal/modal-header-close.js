@@ -28,8 +28,8 @@ const ModalCloseBase = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${({ theme }) => theme.theme.darkgrey};
+  color: ${({ theme }) => theme.colors.darkgrey};
   &:hover {
-    color: ${({ theme }) => lighten(0.1, theme.theme.darkgrey)};
+    color: ${({ theme }) => lighten(0.1, theme.colors.darkgrey)};
   }
 `;
