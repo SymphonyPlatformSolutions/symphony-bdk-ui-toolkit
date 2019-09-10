@@ -51,45 +51,46 @@ const BaseCheckBox = styled.div`
 
 const CheckBox = (props) => {
   const {
-    disabled, isChecked, onChange, label,
+    disabled, checked, onChange, children, ...rest
   } = props;
 
 
   return (
     <CheckBoxLabel
-      key={`checkbox_${label}`}
-      htmlFor={`checkbox-${label}`}
+      key={`checkbox_${children}`}
+      htmlFor={`checkbox-${children}`}
       disabled={disabled}
     >
       <CheckBoxInput
-        key={`checkbox_${label}`}
-        id={`checkbox-${label}`}
-        checked={isChecked}
+        {...rest}
+        key={`checkbox_${children}`}
+        id={`checkbox-${children}`}
+        checked={checked}
         disabled={disabled}
         type="checkbox"
         onChange={onChange}
       />
-      <BaseCheckBox isChecked={isChecked} disabled={disabled}>
-        <Checkmark isChecked={isChecked} viewBox="0 0 24 24">
+      <BaseCheckBox isChecked={checked} disabled={disabled}>
+        <Checkmark isChecked={checked} viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
         </Checkmark>
       </BaseCheckBox>
-      <Text style={{ position: 'relative', top: '2px' }} size="small" px="7px" my="0">{label}</Text>
+      <Text style={{ position: 'relative', top: '2px' }} size="small" px="7px">{children}</Text>
     </CheckBoxLabel>
   );
 };
 
 CheckBox.propTypes = {
   disabled: PropTypes.bool,
-  isChecked: PropTypes.bool,
-  label: PropTypes.string,
+  checked: PropTypes.bool,
+  children: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 CheckBox.defaultProps = {
   disabled: false,
-  isChecked: false,
-  label: '',
+  checked: false,
+  children: '',
 };
 
 export default CheckBox;

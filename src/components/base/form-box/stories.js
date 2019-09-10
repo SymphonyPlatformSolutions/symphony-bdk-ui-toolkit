@@ -140,26 +140,26 @@ storiesOf('Base', module)
             Normal input
             <InputController />
           </div>
-          <label>
+          <div>
             Input with Email Validation
             <EmailController />
-          </label>
-          <label>
+          </div>
+          <div>
             Text area input
             <InputController type="textarea" />
-          </label>
-          <label>
+          </div>
+          <div>
             Dropdown input
             <DropdownHandler />
-          </label>
-          <label>
+          </div>
+          <div>
             Pick a few
             <CheckboxController />
-          </label>
-          <label>
+          </div>
+          <div>
             And for this, pick just one
             <RadioController />
-          </label>
+          </div>
         </FormBox>
       </StoryWrapper>
     ),

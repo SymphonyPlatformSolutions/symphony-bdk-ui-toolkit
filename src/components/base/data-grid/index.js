@@ -25,10 +25,6 @@ const DataGrid = (
     headerRenderer: args => (
       <CellContainer>
         <Text
-          px="0"
-          py="0"
-          mx="0"
-          my="0"
           isTitle
           size="small"
         >
@@ -43,8 +39,6 @@ const DataGrid = (
       return (
         <CellContainer error={error}>
           <Text
-            px="0px"
-            py="0px"
             type="primary"
             size="small"
             style={{

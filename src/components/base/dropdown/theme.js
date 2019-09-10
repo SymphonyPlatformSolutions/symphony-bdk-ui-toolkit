@@ -138,8 +138,6 @@ export const SingleValue = ({ children, isDisabled, ...props }) => (
   <components.SingleValue {...props}>
     <Text
       type="primary"
-      py="0"
-      px="0"
       size="small"
       style={{
         color: 'inherit',
@@ -156,10 +154,6 @@ export const Option = ({ children, ...props }) => (
   <components.Option {...props}>
     <Text
       type="primary"
-      py="0"
-      px="0"
-      mx="0"
-      my="0"
       size="small"
       style={{ color: 'inherit', lineHeight: 'inherit' }}
     >
@@ -172,8 +166,6 @@ export const Placeholder = ({ children, isDisabled, ...props }) => (
   <components.Placeholder {...props}>
     <Text
       type="primary"
-      py="0"
-      px="0"
       size="small"
       style={{ color: 'inherit', fontStyle: isDisabled ? 'italic' : 'normal', lineHeight: 'inherit' }}
     >
@@ -186,10 +178,6 @@ export const NoOptionsMessage = ({ children, ...props }) => (
   <components.NoOptionsMessage {...props}>
     <Text
       type="primary"
-      py="0"
-      px="0"
-      mx="0"
-      my="0"
       size="small"
       style={{ color: 'inherit', lineHeight: 'inherit' }}
     >

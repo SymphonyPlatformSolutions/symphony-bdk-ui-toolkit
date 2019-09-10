@@ -75,7 +75,7 @@ const Table = (props) => {
     if (el.cell) { return el; }
     return {
       ...el,
-      cell: row => <Text px="0px" py="0px" type="primary" size="small">{row[el.selector]}</Text>,
+      cell: row => <Text type="primary" size="small">{row[el.selector]}</Text>,
     };
   });
   return (<CustomTable theme={theme} data={data} columns={textColumns} />);

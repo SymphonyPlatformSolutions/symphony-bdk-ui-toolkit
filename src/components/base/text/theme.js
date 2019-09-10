@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
 
-const PADDING = {
-  tiny: '3px 10px',
-  small: '5px 10px',
-  large: '8px 10px',
-};
-
 const FONTSIZE = {
   tiny: '.75rem',
   small: '.87rem',
@@ -39,8 +33,8 @@ const getTextColor = ({ type, theme }) => {
   return colorMap[type] ? colorMap[type] : theme.colors.black;
 };
 
-const getPadding = ({ size, px, py }) => {
-  let defaultPadding = PADDING[size];
+const getPadding = ({ px, py }) => {
+  let defaultPadding = '0 0';
   if (px) {
     const split = defaultPadding.split(' ');
     split[1] = px;
@@ -54,8 +48,8 @@ const getPadding = ({ size, px, py }) => {
   return defaultPadding;
 };
 const getMargin = ({ mx, my }) => {
-  const providedMx = mx || '0px';
-  const providedMy = my || '10px';
+  const providedMx = mx || '0';
+  const providedMy = my || '0';
   return `${providedMy} ${providedMx}`;
 };
 const getFontStyle = ({ isTitle, size }) => (isTitle || size !== 'tiny' ? 'normal' : 'italic');

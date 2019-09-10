@@ -17,7 +17,7 @@ const FormBox = (props) => {
           const [firstChild, ...stuff] = child.props.children;
           if (typeof firstChild === 'string') {
             return (
-              <div><TextLabel mx="0" my="0" px="0" py="0">{firstChild}</TextLabel>{stuff}</div>
+              <div><TextLabel>{firstChild}</TextLabel>{stuff}</div>
             );
           }
         }

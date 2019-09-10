@@ -17,11 +17,11 @@ const CheckBoxComponent = () => {
 
   return (
     <Checkbox
-      isChecked={isChecked}
+      checked={isChecked}
       onChange={handleCheckMark}
       disabled={false}
-      label="Checkbox Label"
-    />
+    >Checkbox Label
+    </Checkbox>
   );
 };
 
@@ -37,10 +37,10 @@ storiesOf('Base', module)
       </Box>
       <Box vertical space={20}>
         <Text isTitle size="large">Disabled CheckBox</Text>
-        <div>
-          <Checkbox onChange={NoOp} disabled label="Disabled Unchecked" />
-          <Checkbox onChange={NoOp} isChecked disabled label="Disabled Checked" />
-        </div>
+        <Box type="secondary">
+          <Checkbox onChange={NoOp} disabled>Disabled Unchecked</Checkbox>
+          <Checkbox onChange={NoOp} checked disabled>Disabled Checked</Checkbox>
+        </Box>
       </Box>
     </StoryWrapper>
   ), {

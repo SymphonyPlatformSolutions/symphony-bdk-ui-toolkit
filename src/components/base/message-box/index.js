@@ -37,7 +37,7 @@ const MessageBox = (props) => {
             ? children
               .split('\n')
               .map((item, i) => (
-                <div key={`MessageBox_text_line_${i}`}><Text style={{ color: 'inherit' }} px="0" py="0" my="0">{item}</Text></div>
+                <div key={`MessageBox_text_line_${i}`}><Text style={{ color: 'inherit' }}>{item}</Text></div>
               ))
             : ''}
         </span>
