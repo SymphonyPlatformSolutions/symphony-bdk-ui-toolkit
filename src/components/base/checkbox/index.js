@@ -12,12 +12,7 @@ const CheckBoxLabel = styled.label`
   user-select: none;
   cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
   width: fit-content;
-/* 
-  position: relative;
-  padding-left: 1.4rem;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  line-height: 0.9rem;
-  display: inline-block; */
+  margin: 5px 0;
 `;
 
 const Checkmark = styled.svg`

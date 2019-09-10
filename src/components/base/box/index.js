@@ -73,7 +73,7 @@ Box.propTypes = {
   p: PropTypes.number,
   mx: PropTypes.string,
   my: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.oneOf(['primary', 'secondary', 'flat']),
 };
 Box.defaultProps = {
   display: 'flex',

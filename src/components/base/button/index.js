@@ -20,6 +20,7 @@ const LoaderContainer = styled.div`
   align-items: center;
   width: 100%;
   top: -2px;
+  margin-top: 0 !important;
 `;
 
 const Button = ({

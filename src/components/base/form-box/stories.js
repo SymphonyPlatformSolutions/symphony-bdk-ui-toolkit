@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import FormBox from '.';
+import FormBox, { FormGroup, Label, LabelText } from '.';
 import Checkbox from '../checkbox';
 import InputField from '../input-field';
 import RadioButton from '../radio-button';
 import Dropdown from '../dropdown';
-import { NoOp } from '../../../utils/helpers';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-const InputController = ({ type }) => {
+const InputController = ({ type, ...rest }) => {
   const [value, changeValue] = useState('');
 
   return (
     <InputField
+      {...rest}
       type={type}
       value={value}
       onChange={({ target: { value } }) => changeValue(value)}
@@ -64,25 +64,25 @@ const CheckboxController = () => {
   return (
     <div>
       <Checkbox
-        isChecked={chosen.a}
+        checked={chosen.a}
         onChange={() => changeChosen({ ...chosen, a: !chosen.a })}
-        label="Whoa dude 1"
-      />
+      >Option 1
+      </Checkbox>
       <Checkbox
-        isChecked={chosen.b}
+        checked={chosen.b}
         onChange={() => changeChosen({ ...chosen, b: !chosen.b })}
-        label="Whoa dude 2"
-      />
+      >Option 2
+      </Checkbox>
       <Checkbox
-        isChecked={chosen.c}
+        checked={chosen.c}
         onChange={() => changeChosen({ ...chosen, c: !chosen.c })}
-        label="Whoa dude 3"
-      />
+      >Option 3
+      </Checkbox>
     </div>
   );
 };
 
-const EmailController = () => {
+const EmailController = (rest) => {
   const [value, changeValue] = useState('');
   const checkEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
     value,
@@ -90,6 +90,7 @@ const EmailController = () => {
   const inputState = !checkEmail && value ? 'error' : null;
   return (
     <InputField
+      {...rest}
       placeholder="Email"
       value={value}
       inputState={inputState}
@@ -99,7 +100,7 @@ const EmailController = () => {
   );
 };
 
-const RadioController = () => {
+const RadioController = ({ disabled }) => {
   const [chosen, changeChosen] = useState('a');
 
   return (
@@ -108,6 +109,7 @@ const RadioController = () => {
         checked={chosen === 'a'}
         groupname="radiogroup"
         onChange={() => changeChosen('a')}
+        disabled={disabled}
       >
         This one
       </RadioButton>
@@ -115,6 +117,7 @@ const RadioController = () => {
         checked={chosen === 'b'}
         groupname="radiogroup"
         onChange={() => changeChosen('b')}
+        disabled={disabled}
       >
         This other one
       </RadioButton>
@@ -122,6 +125,7 @@ const RadioController = () => {
         checked={chosen === 'c'}
         groupname="radiogroup"
         onChange={() => changeChosen('c')}
+        disabled={disabled}
       >
         Actually this one
       </RadioButton>
@@ -135,31 +139,37 @@ storiesOf('Base', module)
     'Form Box',
     () => (
       <StoryWrapper p={15}>
-        <FormBox>
-          <div>
-            Normal input
-            <InputController />
-          </div>
-          <div>
-            Input with Email Validation
-            <EmailController />
-          </div>
-          <div>
-            Text area input
-            <InputController type="textarea" />
-          </div>
-          <div>
-            Dropdown input
+        <FormBox style={{ width: '32rem' }}>
+          <FormGroup>
+            <Label htmlFor="normal-input">Normal input</Label>
+            <InputController id="normal-input" />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="normal-input-2">
+              <LabelText>Normal input 2 <i>(but now, with custom label!)</i></LabelText>
+            </label>
+            <InputController id="normal-input-2" />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="email-input">Input with Email Validation</Label>
+            <EmailController id="email-input" />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="textarea">Text area input</Label>
+            <InputController type="textarea" id="textarea" />
+          </FormGroup>
+          <FormGroup>
+            <Label>Dropdown input</Label>
             <DropdownHandler />
-          </div>
-          <div>
-            Pick a few
+          </FormGroup>
+          <FormGroup>
+            <Label>Pick a few</Label>
             <CheckboxController />
-          </div>
-          <div>
-            And for this, pick just one
+          </FormGroup>
+          <FormGroup disabled>
+            <Label>And for this, pick just one</Label>
             <RadioController />
-          </div>
+          </FormGroup>
         </FormBox>
       </StoryWrapper>
     ),
