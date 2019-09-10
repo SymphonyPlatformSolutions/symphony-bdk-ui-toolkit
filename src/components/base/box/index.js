@@ -11,17 +11,32 @@ const getMargin = ({ mx, my }) => {
 };
 
 const space = (props) => {
-  if (!props.space) return;
+  let innerSpace;
+  if (props.space) {
+    innerSpace = props.space;
+  } else {
+    switch (props.type) {
+      case 'secondary':
+        innerSpace = 16;
+        break;
+      case 'flat':
+        return '';
+      case 'primary':
+      default:
+        innerSpace = 24;
+    }
+  }
+
   if (props.horizontal) {
     return `
     > * + * {
-      margin-left: ${px(props.space)} !important
+      margin-left: ${px(innerSpace)} !important
     }
     `;
   }
   return `
     > * + * {
-      margin-top: ${px(props.space)} !important
+      margin-top: ${px(innerSpace)} !important
     }
   `;
 };
@@ -58,6 +73,7 @@ Box.propTypes = {
   p: PropTypes.number,
   mx: PropTypes.string,
   my: PropTypes.string,
+  type: PropTypes.string,
 };
 Box.defaultProps = {
   display: 'flex',
@@ -70,4 +86,5 @@ Box.defaultProps = {
   p: 0,
   mx: null,
   my: null,
+  type: 'primary',
 };
