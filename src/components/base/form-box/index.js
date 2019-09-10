@@ -32,7 +32,7 @@ Label.propTypes = {
 
 export const FormGroup = ({ children, disabled, ...rest }) => (
   <FieldSet disabled={disabled} {...rest}>
-    {disabled ? children.map(child => React.cloneElement(child, { disabled: true, what: 'what' })) : children}
+    {disabled ? children.map(child => React.cloneElement(child, { disabled: true })) : children}
   </FieldSet>
 );
 FormGroup.propTypes = {

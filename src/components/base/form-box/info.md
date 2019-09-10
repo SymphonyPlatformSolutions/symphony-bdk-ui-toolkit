@@ -49,22 +49,22 @@ Label.propTypes = {
 <FormBox style={{ width: '32rem' }}>
   <FormGroup>
     <Label htmlFor="normal-input">Normal input</Label>
-    <InputController id="normal-input" />
+    <InputField />
   </FormGroup>
   <FormGroup>
     <label htmlFor="normal-input-2">
       <LabelText>Normal input 2 <i>(but now, with custom label!)</i></LabelText>
     </label>
-    <InputController id="normal-input-2" />
+    <InputField id="normal-input-2" />
   </FormGroup>
   <FormGroup>
-  <FormGroup>
     <Label>Dropdown input</Label>
-    <DropdownHandler />
+    <Dropdown option={OPTIONS} />
   </FormGroup>
   <FormGroup disabled>
     <Label>Disabled input</Label>
-    <CheckboxController /> {/* disabled is propagated inside the FormGroup */}
+    <Checkbox>Checkbox 1</Checkbox> {/* disabled is propagated inside the FormGroup */}
+    <Checkbox>Checkbox 2</Checkbox>
   </FormGroup>
 </FormBox>
 ```

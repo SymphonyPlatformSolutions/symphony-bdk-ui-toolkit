@@ -33,6 +33,44 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box>
         <div>
+          <Text isTitle size="large">Box Justify</Text>
+          <Box space={10}>
+            <Box horizontal justify="flex-start" space={20}>
+              <Box style={Object.assign({}, boxStyle, boxCTA)}>
+                <span>flex-start</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxCaution)}>
+                <span>flex-start</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxSystem)}>
+                <span>flex-start</span>
+              </Box>
+            </Box>
+            <Box horizontal justify="center" space={20}>
+              <Box style={Object.assign({}, boxStyle, boxCTA)}>
+                <span>center</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxCaution)}>
+                <span>center</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxSystem)}>
+                <span>center</span>
+              </Box>
+            </Box>
+            <Box horizontal justify="flex-end" space={20}>
+              <Box style={Object.assign({}, boxStyle, boxCTA)}>
+                <span>flex-end</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxCaution)}>
+                <span>flex-end</span>
+              </Box>
+              <Box style={Object.assign({}, boxStyle, boxSystem)}>
+                <span>flex-end</span>
+              </Box>
+            </Box>
+          </Box>
+        </div>
+        <div>
           <Text isTitle size="large">Box Primary Horizontal</Text>
           <Box horizontal>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -113,44 +151,6 @@ storiesOf('Base', module)
             </Box>
             <Box style={Object.assign({}, boxStyle, boxSystem)}>
               <span>Child</span>
-            </Box>
-          </Box>
-        </div>
-        <div>
-          <Text isTitle size="large">Box Justify</Text>
-          <Box space={10}>
-            <Box horizontal justify="flex-start" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>flex-start</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>flex-start</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>flex-start</span>
-              </Box>
-            </Box>
-            <Box horizontal justify="center" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>center</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>center</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>center</span>
-              </Box>
-            </Box>
-            <Box horizontal justify="flex-end" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>flex-end</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>flex-end</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>flex-end</span>
-              </Box>
             </Box>
           </Box>
         </div>
