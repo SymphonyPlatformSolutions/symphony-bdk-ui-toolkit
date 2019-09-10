@@ -1,7 +1,9 @@
-#Box
-This component is meant to be used as a layout helper.
+# Box
+This component is meant to be used as a layout helper. It contains 3 types: ```primary```, ```secondary``` and ```flat```, each of which implies default spacing between the objects inside the Box.
+This can be overridden with the ```space``` prop.
 
-##Sample
+
+## Sample
 
 ```jsx　
 const boxStyle = {
@@ -16,7 +18,7 @@ const boxStyle = {
     <span>Child</span>
 </Box>
 ```
-##Overriding styles
+## Overriding styles
 ```jsx
 import styled from 'styled-components';
 
@@ -25,7 +27,7 @@ const MyCustomButton = styled(Box)`
 `
 ```
 
-##Proptypes
+## Proptypes
 ```jsx
 Box.propTypes = {
   display: PropTypes.string,
@@ -38,6 +40,7 @@ Box.propTypes = {
   p: PropTypes.number,
   mx: PropTypes.string,
   my: PropTypes.string,
+  type: PropTypes.oneOf(['primary', 'secondary', 'flat']),
 };
 Box.defaultProps = {
   display: 'flex',
@@ -50,5 +53,6 @@ Box.defaultProps = {
   p: 0,
   mx: null,
   my: null,
+  type: 'primary',
 };
 ```

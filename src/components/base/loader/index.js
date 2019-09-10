@@ -72,11 +72,11 @@ const InnerRing = styled.div`
 
 const Loader = (props) => {
   const {
-    size, color, type, theme, presetSize,
+    size, color, type, theme, presetSize, ...rest
   } = props;
 
   if (type === 'v2') {
-    return <InnerRing size={presetSize} theme={theme} colorObject={color} />;
+    return <InnerRing {...rest} size={presetSize} theme={theme} colorObject={color} />;
   }
 
   return (

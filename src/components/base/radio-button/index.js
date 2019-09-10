@@ -9,13 +9,14 @@ import {
 const RadioButton = (props) => {
   const {
     id, groupName, checked, onChange, children, disabled,
-    theme,
+    theme, ...rest
   } = props;
 
   return (
     <RadioContainer disabled={disabled} theme={theme}>
       <RadioLabel disabled={disabled} htmlFor={id} theme={theme}>
         <Radio
+          {...rest}
           disabled={disabled}
           type="radio"
           id={id}
@@ -24,7 +25,7 @@ const RadioButton = (props) => {
           onChange={onChange}
           theme={theme}
         />
-        <Text size="small" px="0" py="0" mx="0" my="0">{children}</Text>
+        <Text size="small">{children}</Text>
       </RadioLabel>
     </RadioContainer>
   );

@@ -10,18 +10,39 @@ const getMargin = ({ mx, my }) => {
   return `${providedMy} ${providedMx}`;
 };
 
+const BOX_TYPES = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  FLAT: 'flat',
+};
+
 const space = (props) => {
-  if (!props.space) return;
+  let innerSpace;
+  if (props.space) {
+    innerSpace = props.space;
+  } else {
+    switch (props.type) {
+      case BOX_TYPES.SECONDARY:
+        innerSpace = 16;
+        break;
+      case BOX_TYPES.FLAT:
+        return '';
+      case BOX_TYPES.PRIMARY:
+      default:
+        innerSpace = 24;
+    }
+  }
+
   if (props.horizontal) {
     return `
     > * + * {
-      margin-left: ${px(props.space)} !important
+      margin-left: ${px(innerSpace)} !important
     }
     `;
   }
   return `
     > * + * {
-      margin-top: ${px(props.space)} !important
+      margin-top: ${px(innerSpace)} !important
     }
   `;
 };
@@ -58,6 +79,7 @@ Box.propTypes = {
   p: PropTypes.number,
   mx: PropTypes.string,
   my: PropTypes.string,
+  type: PropTypes.oneOf([BOX_TYPES.PRIMARY, BOX_TYPES.SECONDARY, BOX_TYPES.FLAT]),
 };
 Box.defaultProps = {
   display: 'flex',
@@ -70,4 +92,5 @@ Box.defaultProps = {
   p: 0,
   mx: null,
   my: null,
+  type: BOX_TYPES.PRIMARY,
 };

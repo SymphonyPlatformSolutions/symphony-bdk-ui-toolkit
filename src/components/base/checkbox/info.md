@@ -5,8 +5,9 @@ Basic checkbox
 
 ```jsx　
 <Checkbox onChange={myCallBack}
+          checked
           disabled
-          label="Disabled Unchecked" />
+>My checkbox</Checkbox>
 ```
 ##Overriding styles
 ```jsx
@@ -21,14 +22,14 @@ const MyCustomButton = styled(Checkbox)`
 ```jsx
 CheckBox.propTypes = {
   disabled: PropTypes.bool,
-  isChecked: PropTypes.bool,
-  label: PropTypes.string,
+  checked: PropTypes.bool,
+  children: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 CheckBox.defaultProps = {
   disabled: false,
-  isChecked: false,
-  label: '',
+  checked: false,
+  children: '',
 };
 ```

@@ -22,7 +22,7 @@ export const ErrorWrapper = ({
 }) => (
   <div>
     {children}
-    {error && <Text type="danger" my="0" size="tiny">{errorMessage}</Text>}
+    {error && <Text type="danger" style={{ marginTop: '5px' }} size="tiny">{errorMessage}</Text>}
   </div>
 );
 
@@ -46,7 +46,7 @@ const BaseInputField = styled.input`
   min-height: 35px;
   padding: ${props => (getPadding(props))} 0 10px;
   cursor: ${p => (p.disabled ? 'inherit' : 'text')};
-  transition: border .4s cubic-bezier(.25,.8,.25,1);
+  transition: all .4s cubic-bezier(.25,.8,.25,1);
   background: ${props => getBackgroundColor(props)};
   color: ${props => getColor(props)};
 
