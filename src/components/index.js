@@ -19,4 +19,5 @@ export {
   default as FormBox, FormGroup, Label, LabelText,
 } from './base/form-box';
 export { ToasterProvider, ToasterConsumer } from './base/toaster/toaster-context';
+export { default as Tooltip } from './base/tooltip';
 export { THEMES, THEME_TYPES } from '../styles/colors';
