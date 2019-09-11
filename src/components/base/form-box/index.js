@@ -20,14 +20,19 @@ LabelText.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const Label = ({ children, ...rest }) => {
+export const Label = ({ children, htmlFor, ...rest }) => {
   if (typeof children === 'string') {
-    return <label><LabelText {...rest}>{children}</LabelText></label>;
+    return <label htmlFor={htmlFor}><LabelText {...rest}>{children}</LabelText></label>;
   }
+
   return <label {...rest}>{children}</label>;
 };
 Label.propTypes = {
   children: PropTypes.any.isRequired,
+  htmlFor: PropTypes.string,
+};
+Label.defaultProps = {
+  htmlFor: null,
 };
 
 export const FormGroup = ({ children, disabled, ...rest }) => (
