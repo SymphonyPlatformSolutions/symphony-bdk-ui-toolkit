@@ -36,10 +36,10 @@ const Bubble = styled.div`
   left: 38%;
   border-radius: 0.23rem;
   transform: translate(-50%, 0);
-  ${({ bottom }) => (bottom ? 'top: 0' : 'bottom: 0')};
-  transition: opacity 0.15s, bottom 0.4s, top 0.4s, visibility 0.2s;
+  /* ${({ bottom }) => (bottom ? 'top: 0' : 'bottom: 0')}; */
+  /* transition: opacity 0.15s, bottom 0.4s, top 0.4s, visibility 0.2s; */
+  /* opacity: 0; */
   z-index: 0;
-  opacity: 0;
 
   &::after {
     content: " ";
