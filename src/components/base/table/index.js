@@ -1,43 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
-import Text from '../text';
 import 'react-table/react-table.css';
+import 'react-contexify/dist/ReactContexify.min.css';
+import {
+  contextMenu,
+} from 'react-contexify';
+import Text from '../text';
 
 import {
-  ContextMenu,
-  getEmptyTableColor,
   getStyleProps,
+  generateContextMenu,
+  EmptyTable,
+  EmptyText,
+  CellWrapper,
+  MoreActionsIcon,
 } from './theme';
 import Loader from '../loader';
-import Box from '../box';
-
-const EmptyTable = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 9.5rem;
-  border-radius: 3px;
-  background-color: ${({ theme }) => getEmptyTableColor(theme)};
-`;
-
-const EmptyText = styled(Text)`
-  color: ${({ theme }) => theme.colors.darkgrey};
-`;
-
-const CellWrapper = styled(Box)`
-  margin: 0px 19px;
-  align-items: start;
-  justify-content: center;
-  height: 100%;
-`;
-
 
 const Table = ({
   data, columns, theme, loading, emptyMessage,
-  hasActions,
+  hasActions, onEdit, onDelete,
   ...rest
 }) => {
   if (loading) {
@@ -52,50 +36,59 @@ const Table = ({
     return <EmptyTable><EmptyText theme={theme}>{emptyMessage}</EmptyText></EmptyTable>;
   }
 
+  const openContextMenu = menuId => (e) => {
+    contextMenu.show({ id: menuId, event: e });
+  };
+
   const customColumns = columns.map((el) => {
-    if (typeof el.Header === 'string') {
-      el.Header = (
+    const parsedEl = Object.assign({}, el);
+
+    if (typeof parsedEl.Header === 'string') {
+      parsedEl.Header = (
         <CellWrapper type="flat">
-          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>
+          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
         </CellWrapper>
       );
     }
-    // console.log(el.Cell);
+    // console.log(parsedEl.Cell);
 
-    if (!el.Cell) {
-      el.Cell = props => (
+    if (!parsedEl.Cell) {
+      parsedEl.Cell = props => (
         <CellWrapper type="flat">
           <Text type="primary" size="small">{props.value}</Text>
         </CellWrapper>
       );
     } else {
-      const OldCell = el.Cell;
-      el.Cell = args => (
+      const OldCell = parsedEl.Cell;
+      parsedEl.Cell = args => (
         <CellWrapper type="flat">
           { OldCell(args) }
         </CellWrapper>
       );
     }
-    el.sortable = false;
 
-    return el;
+    parsedEl.sortable = false;
+
+    return parsedEl;
   });
 
-  if (hasActions) {
+  if (hasActions && (onEdit || onDelete)) {
     customColumns.push({
       accessor: null,
       sortable: false,
-      Header: (<Text type="primary" size="small" style={{ fontWeight: 'bold' }}>Actions</Text>),
-      Cell: (
-        <ContextMenu>
-          <Box vertical>
-            <div>A</div>
-            <div>B</div>
-          </Box>
-        </ContextMenu>),
+      Header: (
+        <CellWrapper type="flat">
+          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>Actions</Text>
+        </CellWrapper>
+      ),
+      Cell: ({ index, original }) => (
+        <CellWrapper type="flat" align="end">
+          <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
+          { generateContextMenu(theme, `menu_${index}`, onEdit, onDelete, original) }
+        </CellWrapper>
+      ),
     });
   }
-
 
   return (
     <ReactTable
@@ -117,8 +110,9 @@ Table.propTypes = {
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
   hasActions: PropTypes.bool,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
   theme: PropTypes.object.isRequired,
-
 };
 
 Table.defaultProps = {
@@ -126,6 +120,8 @@ Table.defaultProps = {
   columns: null,
   loading: false,
   hasActions: false,
+  onEdit: null,
+  onDelete: null,
   emptyMessage: 'You have no content to display!',
 };
 

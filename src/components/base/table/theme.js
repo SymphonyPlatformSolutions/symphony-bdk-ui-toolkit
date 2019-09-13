@@ -1,9 +1,24 @@
+import React from 'react';
 import styled from 'styled-components';
+import { MoreVert } from 'styled-icons/material';
+import {
+  Menu,
+} from 'react-contexify';
 import { THEME_TYPES } from '../../../styles/colors';
+import Box from '../box';
+import Text from '../text';
 
-export const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.lightgrey);
-export const getHeaderFontColor = theme => (theme.colors.textcolor);
-export const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.lightgrey);
+const getBorderColor = theme => (
+  theme.mode === THEME_TYPES.DARK
+    ? theme.colors.inputgrey
+    : theme.colors.lightgrey
+);
+
+const getEmptyTableColor = theme => (
+  theme.mode === THEME_TYPES.DARK
+    ? theme.colors.inputgrey
+    : theme.colors.lightgrey
+);
 
 export const getStyleProps = theme => ({
   getProps: () => ({
@@ -41,9 +56,66 @@ export const getStyleProps = theme => ({
   }),
 });
 
-export const ContextMenu = styled.div`
-  width: 100px;
-  border:  ${({ theme }) => `1px solid ${getBorderColor(theme)}`};
-  background: white;
-  position: absolute;
+export const getMenuBackgroundColor = theme => ({
+  style: {
+    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : theme.colors.white,
+    boxShadow: theme.mode === THEME_TYPES.DARK ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929' : null,
+  },
+});
+
+export const EmptyTable = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 9.5rem;
+  border-radius: 3px;
+  background-color: ${({ theme }) => getEmptyTableColor(theme)};
 `;
+
+export const MoreActionsIcon = styled(MoreVert)`
+  width: 24px;
+  height: 24px;
+  color: ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT ? '#006CAF' : 'white')};
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const EmptyText = styled(Text)`
+  color: ${({ theme }) => theme.colors.darkgrey};
+`;
+
+export const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const MenuItem = styled(Box)`
+  height: 35px;
+  padding-left: 15px;
+  &:hover {
+    & > div {
+    color: ${({ theme }) => theme.colors.white} !important;
+    }
+   
+    background-color: ${props => props.accent};
+  }
+`;
+
+export const generateContextMenu = (theme, id, onEdit, onDelete, item) => (
+  <Menu animation="zoom" id={id} {...getMenuBackgroundColor(theme)}>
+    {onEdit && (
+    <MenuItem type="flat" align="start" justify="center" accent={theme.colors.primary} onClick={() => onDelete(item)}>
+      <Text type="primary" size="small">Edit</Text>
+    </MenuItem>
+    )}
+    {onDelete && (
+    <MenuItem type="flat" align="start" justify="center" accent={theme.colors.danger} onClick={() => onDelete(item)}>
+      <Text type="primary" size="small">Delete</Text>
+    </MenuItem>
+    )}
+  </Menu>
+);

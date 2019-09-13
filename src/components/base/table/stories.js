@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import {
-  withKnobs, text,
+  withKnobs,
 } from '@storybook/addon-knobs';
 import Table from '.';
 import Box from '../box';
@@ -9,6 +9,13 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
 
+const handleTestEdit = (item) => {
+  console.log(item);
+};
+
+const handleTestDelete = (item) => {
+  console.log(item);
+};
 const DATA = [{
   email: '4@domain.com',
   name: 'A',
@@ -44,7 +51,9 @@ const COLUMNS = [{
     </a>
   ),
   width: undefined,
-}];
+},
+];
+
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -57,6 +66,18 @@ storiesOf('Base', module)
             <Table
               data={DATA}
               columns={COLUMNS}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle size="large">Filled Table</Text>
+          <Box horizontal space={60}>
+            <Table
+              data={DATA}
+              columns={COLUMNS}
+              hasActions
+              onEdit={handleTestEdit}
+              onDelete={handleTestDelete}
             />
           </Box>
         </Box>
