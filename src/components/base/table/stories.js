@@ -34,7 +34,7 @@ const COLUMNS = [{
 }, {
   Header: 'Email',
   accessor: 'email',
-width: undefined,
+  width: undefined,
 }, {
   Header: 'Link',
   accessor: 'link',

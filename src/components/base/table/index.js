@@ -27,6 +27,13 @@ const EmptyText = styled(Text)`
   color: ${({ theme }) => theme.colors.darkgrey};
 `;
 
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
+
 
 const Table = ({
   data, columns, theme, loading, emptyMessage,
@@ -47,13 +54,29 @@ const Table = ({
 
   const customColumns = columns.map((el) => {
     if (typeof el.Header === 'string') {
-      el.Header = (<Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>);
+      el.Header = (
+        <CellWrapper type="flat">
+          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>
+        </CellWrapper>
+      );
     }
     // console.log(el.Cell);
 
     if (!el.Cell) {
-      el.Cell = props => (<Text type="primary" size="small">{props.value}</Text>);
+      el.Cell = props => (
+        <CellWrapper type="flat">
+          <Text type="primary" size="small">{props.value}</Text>
+        </CellWrapper>
+      );
+    } else {
+      const OldCell = el.Cell;
+      el.Cell = args => (
+        <CellWrapper type="flat">
+          { OldCell(args) }
+        </CellWrapper>
+      );
     }
+    el.sortable = false;
 
     return el;
   });

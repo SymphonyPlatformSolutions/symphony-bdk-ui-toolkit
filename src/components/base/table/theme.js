@@ -1,5 +1,5 @@
-import { THEME_TYPES } from '../../../styles/colors';
 import styled from 'styled-components';
+import { THEME_TYPES } from '../../../styles/colors';
 
 export const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.lightgrey);
 export const getHeaderFontColor = theme => (theme.colors.textcolor);
@@ -30,7 +30,8 @@ export const getStyleProps = theme => ({
   }),
   getTrProps: () => ({
     style: {
-    borderBottom: `1px solid ${getBorderColor(theme)}`,
+      borderBottom: `2px solid ${getBorderColor(theme)}`,
+      height: '40px',
     },
   }),
   getTdProps: () => ({
@@ -45,4 +46,4 @@ export const ContextMenu = styled.div`
   border:  ${({ theme }) => `1px solid ${getBorderColor(theme)}`};
   background: white;
   position: absolute;
-`
+`;
