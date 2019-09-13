@@ -28,20 +28,22 @@ const DATA = [{
 }];
 
 const COLUMNS = [{
-  name: 'Name',
-  selector: 'name',
-  sortable: true,
+  Header: 'Name',
+  accessor: 'name',
+  width: undefined,
 }, {
-  name: 'Email',
-  selector: 'email',
-  sortable: true,
+  Header: 'Email',
+  accessor: 'email',
+width: undefined,
 }, {
-  name: 'Link',
-  cell: row => (
-    <a href={row.link} target="_blank" rel="noopener noreferrer">
-      {row.link}
+  Header: 'Link',
+  accessor: 'link',
+  Cell: row => (
+    <a href={row.value} target="_blank" rel="noopener noreferrer">
+      {row.value}
     </a>
   ),
+  width: undefined,
 }];
 
 storiesOf('Base', module)
@@ -63,6 +65,7 @@ storiesOf('Base', module)
           <Box horizontal space={60}>
             <Table
               data={[]}
+              columns={[]}
             />
           </Box>
         </Box>
@@ -70,6 +73,8 @@ storiesOf('Base', module)
           <Text isTitle size="large">Loading Table</Text>
           <Box horizontal space={60}>
             <Table
+              data={[]}
+              columns={[]}
               loading
             />
           </Box>

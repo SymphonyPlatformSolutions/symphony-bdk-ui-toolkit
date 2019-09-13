@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
-import DataTable from 'react-data-table-component';
+import ReactTable from 'react-table';
 import Text from '../text';
+import 'react-table/react-table.css';
+
 import {
-  getBorderColor,
-  getHeaderFontColor,
+  ContextMenu,
   getEmptyTableColor,
+  getStyleProps,
 } from './theme';
 import Loader from '../loader';
+import Box from '../box';
 
 const EmptyTable = styled.div`
   display: flex;
@@ -20,45 +23,16 @@ const EmptyTable = styled.div`
   background-color: ${({ theme }) => getEmptyTableColor(theme)};
 `;
 
-const CustomTable = styled(DataTable)`
-  .rdt_TableHeadRow {
-    background-color: ${({ theme }) => getBorderColor(theme)};
-    font-family: 'Lato', sans-serif;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    min-height: 36px;
-  }
-  
-  .rdt_TableHeader {
-    display: none;
-  }
-
-  .rdt_TableCol .rdt_TableCol_Sortable {
-    font-weight: bold;
-    font-size: 14px;
-    color: ${({ theme }) => getHeaderFontColor(theme)}
-  }
-
-  .rdt_TableRow {
-    border: 2px solid ${({ theme }) => getBorderColor(theme)};
-    border-top: none;
-    min-height: 36px;
-  }
-
-  .rdt_TableCell div:first-child {
-    overflow: inherit;
-  }
-`;
-
 const EmptyText = styled(Text)`
   color: ${({ theme }) => theme.colors.darkgrey};
 `;
 
-const Table = (props) => {
-  const {
-    data, columns, theme, loading, emptyMessage,
-  } = props;
 
+const Table = ({
+  data, columns, theme, loading, emptyMessage,
+  hasActions,
+  ...rest
+}) => {
   if (loading) {
     return (
       <EmptyTable>
@@ -71,14 +45,47 @@ const Table = (props) => {
     return <EmptyTable><EmptyText theme={theme}>{emptyMessage}</EmptyText></EmptyTable>;
   }
 
-  const textColumns = columns.map((el) => {
-    if (el.cell) { return el; }
-    return {
-      ...el,
-      cell: row => <Text type="primary" size="small">{row[el.selector]}</Text>,
-    };
+  const customColumns = columns.map((el) => {
+    if (typeof el.Header === 'string') {
+      el.Header = (<Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>);
+    }
+    // console.log(el.Cell);
+
+    if (!el.Cell) {
+      el.Cell = props => (<Text type="primary" size="small">{props.value}</Text>);
+    }
+
+    return el;
   });
-  return (<CustomTable theme={theme} data={data} columns={textColumns} />);
+
+  if (hasActions) {
+    customColumns.push({
+      accessor: null,
+      sortable: false,
+      Header: (<Text type="primary" size="small" style={{ fontWeight: 'bold' }}>Actions</Text>),
+      Cell: (
+        <ContextMenu>
+          <Box vertical>
+            <div>A</div>
+            <div>B</div>
+          </Box>
+        </ContextMenu>),
+    });
+  }
+
+
+  return (
+    <ReactTable
+      data={data}
+      width={100}
+      minRows={1}
+      columns={customColumns}
+      loading={loading}
+      showPagination={false}
+      {...getStyleProps(theme)}
+      {...rest}
+    />
+  );
 };
 
 Table.propTypes = {
@@ -86,13 +93,16 @@ Table.propTypes = {
   columns: PropTypes.array,
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
+  hasActions: PropTypes.bool,
   theme: PropTypes.object.isRequired,
+
 };
 
 Table.defaultProps = {
   data: null,
   columns: null,
   loading: false,
+  hasActions: false,
   emptyMessage: 'You have no content to display!',
 };
 
