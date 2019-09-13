@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Text from '../text';
 import Box from '../box';
+import Tooltip from '../tooltip';
 
 const FieldSet = styled.fieldset`
   margin: 0;
@@ -20,14 +21,37 @@ LabelText.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const Label = ({ children, ...rest }) => {
+export const Label = ({ children, tooltip, ...rest }) => {
   if (typeof children === 'string') {
+    if (tooltip) {
+      return (
+        <label>
+          <Box horizontal space={5}>
+            <LabelText {...rest}>{children}</LabelText>
+            <Tooltip style={{ alignSelf: 'center', marginBottom: '5px' }}>{tooltip}</Tooltip>
+          </Box>
+        </label>
+      );
+    }
     return <label><LabelText {...rest}>{children}</LabelText></label>;
   }
-  return <label {...rest}>{children}</label>;
+  if (tooltip) {
+    return (
+      <label>
+        <Box horizontal space={5}>
+          <label {...rest}>{children}</label>
+          <Tooltip style={{ alignSelf: 'center', marginBottom: '5px' }}>{tooltip}</Tooltip>
+        </Box>
+      </label>
+    );
+  }
 };
 Label.propTypes = {
   children: PropTypes.any.isRequired,
+  tooltip: PropTypes.string,
+};
+Label.defaultProps = {
+  tooltip: null,
 };
 
 export const FormGroup = ({ children, disabled, ...rest }) => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import {
-  withKnobs, text,
+  withKnobs,
 } from '@storybook/addon-knobs';
 import Table from '.';
 import Box from '../box';
