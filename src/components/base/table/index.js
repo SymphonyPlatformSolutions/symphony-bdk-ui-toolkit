@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import DataTable from 'react-data-table-component';
+import Tooltip from '../tooltip';
 import Text from '../text';
 import {
   getBorderColor,
@@ -29,10 +30,6 @@ const CustomTable = styled(DataTable)`
     min-height: 36px;
   }
   
-  .rdt_TableHeader {
-    display: none;
-  }
-
   .rdt_TableCol .rdt_TableCol_Sortable {
     font-weight: bold;
     font-size: 14px;
@@ -78,7 +75,9 @@ const Table = (props) => {
       cell: row => <Text type="primary" size="small">{row[el.selector]}</Text>,
     };
   });
-  return (<CustomTable theme={theme} data={data} columns={textColumns} />);
+  return (
+    <CustomTable theme={theme} noHeader data={data} columns={textColumns} />
+  );
 };
 
 Table.propTypes = {
