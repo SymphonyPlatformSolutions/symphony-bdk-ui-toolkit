@@ -41,19 +41,19 @@ export const SPINNER_SIZE = {
 /**
  * Theme Definition
  */
-const BUTTON_THEME = (theme, type, fill) => {
+const BUTTON_THEME = (theme, buttonType, fill) => {
   const isFilled = fill === FILL_TYPES.FILLED;
   if (!theme) {
     return {};
   }
   const selectedTheme = {
     [THEME_TYPES.LIGHT]: {
-      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[type],
-      BG_COLOR: isFilled ? theme.colors[type] : 'inherit',
+      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[buttonType],
+      BG_COLOR: isFilled ? theme.colors[buttonType] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
-      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[type],
-      BG_COLOR: isFilled ? theme.colors[type] : 'transparent',
+      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[buttonType],
+      BG_COLOR: isFilled ? theme.colors[buttonType] : 'transparent',
     },
   };
 
@@ -72,9 +72,9 @@ const BUTTON_THEME = (theme, type, fill) => {
  */
 
 const getColor = ({
-  theme, type, fill, disabled,
+  theme, buttonType, fill, disabled,
 }) => {
-  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  const selectedTheme = BUTTON_THEME(theme, buttonType, fill);
   return disabled
     ? fill === FILL_TYPES.FILLED
       ? theme.colors.grey
@@ -83,13 +83,13 @@ const getColor = ({
 };
 
 const getHoverActiveColor = ({
-  theme, fill, disabled, type,
+  theme, fill, disabled, buttonType,
 }) => {
   const isOutlined = fill === FILL_TYPES.OUTLINED;
-  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  const selectedTheme = BUTTON_THEME(theme, buttonType, fill);
   return disabled
     ? getColor({
-      theme, fill, disabled, type,
+      theme, fill, disabled, buttonType,
     })
     : isOutlined
       ? theme.colors.white
@@ -97,12 +97,12 @@ const getHoverActiveColor = ({
 };
 
 const getHoverBgColor = ({
-  theme, type, fill, disabled,
+  theme, buttonType, fill, disabled,
 }) => {
   const isFilled = fill === FILL_TYPES.FILLED;
   const isGhost = fill === FILL_TYPES.GHOST;
-  const buttonBg = theme.colors[type];
-  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  const buttonBg = theme.colors[buttonType];
+  const selectedTheme = BUTTON_THEME(theme, buttonType, fill);
   return disabled || isGhost
     ? null
     : isFilled
@@ -111,9 +111,9 @@ const getHoverBgColor = ({
 };
 
 const getBgColor = ({
-  theme, type, fill, disabled,
+  theme, buttonType, fill, disabled,
 }) => {
-  const selectedTheme = BUTTON_THEME(theme, type, fill);
+  const selectedTheme = BUTTON_THEME(theme, buttonType, fill);
   const disabledBg = fill === FILL_TYPES.FILLED ? theme.colors.darkgrey : 'transparent';
   return disabled ? disabledBg : selectedTheme.BG_COLOR;
 };
