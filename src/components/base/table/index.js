@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
+import Tooltip from '../tooltip';
 import Text from '../text';
 import 'react-table/react-table.css';
 
@@ -54,13 +55,23 @@ const Table = ({
 
   const customColumns = columns.map((el) => {
     if (typeof el.Header === 'string') {
-      el.Header = (
-        <CellWrapper type="flat">
-          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>
-        </CellWrapper>
-      );
+      if (el.tooltip) {
+        el.Header = (
+          <CellWrapper type="flat">
+            <Box horizontal space={5}>
+              <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>
+              <Tooltip>{el.tooltip}</Tooltip>
+            </Box>
+          </CellWrapper>
+        );
+      } else {
+        el.Header = (
+          <CellWrapper type="flat">
+            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{el.Header}</Text>
+          </CellWrapper>
+        );
+      }
     }
-    // console.log(el.Cell);
 
     if (!el.Cell) {
       el.Cell = props => (
