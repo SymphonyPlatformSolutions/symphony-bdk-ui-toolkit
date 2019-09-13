@@ -82,6 +82,9 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
       &:first-child {
         height: 100%;
       }
+      & > div {
+        height: 100% !important;
+      }
     }
 
     &:hover {

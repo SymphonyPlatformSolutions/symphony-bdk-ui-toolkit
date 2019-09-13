@@ -36,12 +36,14 @@ const DATA = [{
 
 const COLUMNS = [{
   Header: 'Name',
+  tooltip: 'The name',
   accessor: 'name',
   width: undefined,
 }, {
   Header: 'Email',
   accessor: 'email',
   width: undefined,
+  tooltip: 'Or some other non-obvious descriptor for your table',
 }, {
   Header: 'Link',
   accessor: 'link',

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { darken, lighten } from 'polished';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-
 import Loader from '../loader';
 import {
-  SPINNER_SIZE,
   BaseButton,
   Container,
   ChildrenContainer,
@@ -23,8 +20,16 @@ const LoaderContainer = styled.div`
   margin-top: 0 !important;
 `;
 
+const BUTTON_TYPES = {
+  SUBMIT: 'submit',
+  PRIMARY: 'primary',
+  DANGER: 'danger',
+  GREY: 'grey',
+  SECONDARY: 'secondary',
+};
+
 const Button = ({
-  children, size, type, fill, theme, loading, disabled, ...rest
+  children, size, type, fill, theme, loading, disabled, htmlType, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMouseOver, setMouseOver] = useState(false);
@@ -50,7 +55,8 @@ const Button = ({
   return (
     <BaseButton
       size={size}
-      type={type}
+      type={type === BUTTON_TYPES.SUBMIT ? BUTTON_TYPES.SUBMIT : htmlType}
+      buttonType={type}
       fill={fill}
       {...rest}
       onClick={handleClick}
@@ -79,13 +85,14 @@ const Button = ({
 
 Button.propTypes = {
   onClick: PropTypes.func,
-  type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'grey', 'submit']),
+  type: PropTypes.oneOf(Object.keys(BUTTON_TYPES).map(e => BUTTON_TYPES[e])),
   size: PropTypes.oneOf(['tiny', 'small', 'large']),
   fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
+  htmlType: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -95,6 +102,7 @@ Button.defaultProps = {
   disabled: false,
   onClick: NoOp,
   loading: null,
+  htmlType: 'button',
 };
 
 export default withTheme(Button);

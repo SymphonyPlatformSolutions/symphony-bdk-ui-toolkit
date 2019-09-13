@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
+import Tooltip from '../tooltip';
 import 'react-table/react-table.css';
 import 'react-contexify/dist/ReactContexify.min.css';
 import {
   contextMenu,
 } from 'react-contexify';
 import Text from '../text';
+import Box from '../box';
 
 import {
   getStyleProps,
@@ -44,13 +46,23 @@ const Table = ({
     const parsedEl = Object.assign({}, el);
 
     if (typeof parsedEl.Header === 'string') {
-      parsedEl.Header = (
-        <CellWrapper type="flat">
-          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
-        </CellWrapper>
-      );
+      if (parsedEl.tooltip) {
+        parsedEl.Header = (
+          <CellWrapper type="flat">
+            <Box horizontal space={5}>
+              <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
+              <Tooltip>{parsedEl.tooltip}</Tooltip>
+            </Box>
+          </CellWrapper>
+        );
+      } else {
+        parsedEl.Header = (
+          <CellWrapper type="flat">
+            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
+          </CellWrapper>
+        );
+      }
     }
-    // console.log(parsedEl.Cell);
 
     if (!parsedEl.Cell) {
       parsedEl.Cell = props => (

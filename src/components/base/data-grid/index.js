@@ -3,6 +3,8 @@ import { withTheme } from 'styled-components';
 import ReactDataGrid from 'react-data-grid';
 import PropTypes from 'prop-types';
 import Text from '../text';
+import Tooltip from '../tooltip';
+import Box from '../box';
 import {
   CellContainer,
   GridStyleWrapper,
@@ -22,16 +24,33 @@ const DataGrid = (
   }
 
   const internalColumns = columns.map(el => ({
-    headerRenderer: args => (
-      <CellContainer>
-        <Text
-          isTitle
-          size="small"
-        >
-          {args.column.name}
-        </Text>
-      </CellContainer>
-    ),
+    headerRenderer: (args) => {
+      if (args.column.tooltip) {
+        return (
+          <CellContainer>
+            <Box horizontal space={5}>
+              <Text
+                isTitle
+                size="small"
+              >
+                {args.column.name}
+              </Text>
+              <Tooltip>{el.tooltip}</Tooltip>
+            </Box>
+          </CellContainer>
+        );
+      }
+      return (
+        <CellContainer>
+          <Text
+            isTitle
+            size="small"
+          >
+            {args.column.name}
+          </Text>
+        </CellContainer>
+      );
+    },
     formatter: (args) => {
       const currentColumn = Object.keys(args.row)
         .find(key => args.row[key] === args.value);

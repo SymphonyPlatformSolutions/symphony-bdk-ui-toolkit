@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Text from '../text';
 import Box from '../box';
+import Tooltip from '../tooltip';
 
 const FieldSet = styled.fieldset`
   margin: 0;
@@ -20,18 +21,42 @@ LabelText.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const Label = ({ children, htmlFor, ...rest }) => {
+export const Label = ({
+  children, tooltip, htmlFor, ...rest
+}) => {
   if (typeof children === 'string') {
+    if (tooltip) {
+      return (
+        <label htmlFor={htmlFor}>
+          <Box horizontal space={5}>
+            <LabelText {...rest}>{children}</LabelText>
+            <Tooltip style={{ alignSelf: 'center', marginBottom: '5px' }}>{tooltip}</Tooltip>
+          </Box>
+        </label>
+      );
+    }
     return <label htmlFor={htmlFor}><LabelText {...rest}>{children}</LabelText></label>;
   }
+  if (tooltip) {
+    return (
+      <label htmlFor={htmlFor}>
+        <Box horizontal space={5}>
+          {children}
+          <Tooltip style={{ alignSelf: 'center', marginBottom: '5px' }}>{tooltip}</Tooltip>
+        </Box>
+      </label>
+    );
+  }
 
-  return <label {...rest}>{children}</label>;
+  return <label htmlFor={htmlFor} {...rest}>{children}</label>;
 };
 Label.propTypes = {
   children: PropTypes.any.isRequired,
+  tooltip: PropTypes.string,
   htmlFor: PropTypes.string,
 };
 Label.defaultProps = {
+  tooltip: null,
   htmlFor: null,
 };
 
