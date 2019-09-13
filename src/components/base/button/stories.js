@@ -87,6 +87,9 @@ storiesOf('Base', module)
           <Button size="large" type="grey" fill="filled" onClick={action('clicked')}>
             <span>Grey</span>
           </Button>
+          <Button size="large" type="submit" fill="filled" onClick={action('clicked')}>
+            <span>Submit</span>
+          </Button>
         </Box>
       </Box>
       <Box>
