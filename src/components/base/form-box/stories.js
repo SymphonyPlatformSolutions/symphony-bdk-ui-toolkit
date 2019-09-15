@@ -145,6 +145,10 @@ storiesOf('Base', module)
             <InputController id="normal-input" />
           </FormGroup>
           <FormGroup>
+            <Label htmlFor="normal-input" tooltip="Some piece of relevant info!">Input with tooltip</Label>
+            <InputController id="normal-input" />
+          </FormGroup>
+          <FormGroup>
             <label htmlFor="normal-input-2">
               <LabelText>Normal input 2 <i>(but now, with custom label!)</i></LabelText>
             </label>

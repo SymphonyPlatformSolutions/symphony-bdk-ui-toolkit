@@ -17,6 +17,7 @@ const overrides = {
   grid: 'react-grid-Grid',
   row: 'react-grid-Row',
   cell: 'react-grid-Cell',
+  cellValue: 'react-grid-Cell__value',
   canvas: 'react-grid-Canvas',
 };
 
@@ -73,9 +74,17 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
     background-color: rgba(0,0,0,0) !important;
     border: 0;
     padding: 0;
-
+    &-Cell:not(.editing) {
+      color: red;
+    }
     &__value {
       overflow: inherit !important;
+      &:first-child {
+        height: 100%;
+      }
+      & > div {
+        height: 100% !important;
+      }
     }
 
     &:hover {

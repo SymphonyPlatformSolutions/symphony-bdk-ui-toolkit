@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import {
-  withKnobs, text,
+  withKnobs,
 } from '@storybook/addon-knobs';
 import Table from '.';
 import Box from '../box';
@@ -9,6 +9,13 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
 
+const handleTestEdit = (item) => {
+  console.log(item);
+};
+
+const handleTestDelete = (item) => {
+  console.log(item);
+};
 const DATA = [{
   email: '4@domain.com',
   name: 'A',
@@ -28,21 +35,27 @@ const DATA = [{
 }];
 
 const COLUMNS = [{
-  name: 'Name',
-  selector: 'name',
-  sortable: true,
+  Header: 'Name',
+  tooltip: 'The name',
+  accessor: 'name',
+  width: undefined,
 }, {
-  name: 'Email',
-  selector: 'email',
-  sortable: true,
+  Header: 'Email',
+  accessor: 'email',
+  width: undefined,
+  tooltip: 'Or some other non-obvious descriptor for your table',
 }, {
-  name: 'Link',
-  cell: row => (
-    <a href={row.link} target="_blank" rel="noopener noreferrer">
-      {row.link}
+  Header: 'Link',
+  accessor: 'link',
+  Cell: row => (
+    <a href={row.value} target="_blank" rel="noopener noreferrer">
+      {row.value}
     </a>
   ),
-}];
+  width: undefined,
+},
+];
+
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -59,10 +72,23 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
+          <Text isTitle size="large">Tooltips and Actions</Text>
+          <Box horizontal space={60}>
+            <Table
+              data={DATA}
+              columns={COLUMNS}
+              hasActions
+              onEdit={handleTestEdit}
+              onDelete={handleTestDelete}
+            />
+          </Box>
+        </Box>
+        <Box>
           <Text isTitle size="large">Empty Table</Text>
           <Box horizontal space={60}>
             <Table
               data={[]}
+              columns={[]}
             />
           </Box>
         </Box>
@@ -70,6 +96,8 @@ storiesOf('Base', module)
           <Text isTitle size="large">Loading Table</Text>
           <Box horizontal space={60}>
             <Table
+              data={[]}
+              columns={[]}
               loading
             />
           </Box>

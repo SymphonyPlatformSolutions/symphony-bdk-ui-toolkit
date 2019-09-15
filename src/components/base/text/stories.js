@@ -59,6 +59,7 @@ storiesOf('Base', module)
           <Text type="secondary" size="small">Small Text</Text>
           <Text type="secondary" size="small" underline>Small Text Underline</Text>
           <Text type="secondary" size="tiny">Tiny Text</Text>
+          <Text tooltip="Some additional info that's needed!">Text with tooltip</Text>
         </Box>
       </Box>
     </StoryWrapper>

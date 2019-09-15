@@ -1,64 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
-import DataTable from 'react-data-table-component';
-import Text from '../text';
+import { withTheme } from 'styled-components';
+import ReactTable from 'react-table';
+import Tooltip from '../tooltip';
+import 'react-table/react-table.css';
+import 'react-contexify/dist/ReactContexify.min.css';
 import {
-  getBorderColor,
-  getHeaderFontColor,
-  getEmptyTableColor,
+  contextMenu,
+} from 'react-contexify';
+import Text from '../text';
+import Box from '../box';
+
+import {
+  getStyleProps,
+  generateContextMenu,
+  EmptyTable,
+  EmptyText,
+  CellWrapper,
+  MoreActionsIcon, MenuWrapper,
 } from './theme';
 import Loader from '../loader';
 
-const EmptyTable = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 9.5rem;
-  border-radius: 3px;
-  background-color: ${({ theme }) => getEmptyTableColor(theme)};
-`;
-
-const CustomTable = styled(DataTable)`
-  .rdt_TableHeadRow {
-    background-color: ${({ theme }) => getBorderColor(theme)};
-    font-family: 'Lato', sans-serif;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    min-height: 36px;
-  }
-  
-  .rdt_TableHeader {
-    display: none;
-  }
-
-  .rdt_TableCol .rdt_TableCol_Sortable {
-    font-weight: bold;
-    font-size: 14px;
-    color: ${({ theme }) => getHeaderFontColor(theme)}
-  }
-
-  .rdt_TableRow {
-    border: 2px solid ${({ theme }) => getBorderColor(theme)};
-    border-top: none;
-    min-height: 36px;
-  }
-
-  .rdt_TableCell div:first-child {
-    overflow: inherit;
-  }
-`;
-
-const EmptyText = styled(Text)`
-  color: ${({ theme }) => theme.colors.darkgrey};
-`;
-
-const Table = (props) => {
-  const {
-    data, columns, theme, loading, emptyMessage,
-  } = props;
-
+const Table = ({
+  data, columns, theme, loading, emptyMessage,
+  hasActions, onEdit, onDelete,
+  ...rest
+}) => {
   if (loading) {
     return (
       <EmptyTable>
@@ -71,14 +38,78 @@ const Table = (props) => {
     return <EmptyTable><EmptyText theme={theme}>{emptyMessage}</EmptyText></EmptyTable>;
   }
 
-  const textColumns = columns.map((el) => {
-    if (el.cell) { return el; }
-    return {
-      ...el,
-      cell: row => <Text type="primary" size="small">{row[el.selector]}</Text>,
-    };
+  const openContextMenu = menuId => (e) => {
+    contextMenu.show({ id: menuId, event: e });
+  };
+
+  const customColumns = columns.map((el) => {
+    const parsedEl = Object.assign({}, el);
+
+    if (typeof parsedEl.Header === 'string') {
+      if (parsedEl.tooltip) {
+        parsedEl.Header = (
+          <CellWrapper type="flat">
+            <Box horizontal space={5}>
+              <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
+              <Tooltip>{parsedEl.tooltip}</Tooltip>
+            </Box>
+          </CellWrapper>
+        );
+      } else {
+        parsedEl.Header = (
+          <CellWrapper type="flat">
+            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
+          </CellWrapper>
+        );
+      }
+    }
+
+    if (!parsedEl.Cell) {
+      parsedEl.Cell = props => (
+        <CellWrapper type="flat">
+          <Text type="primary" size="small">{props.value}</Text>
+        </CellWrapper>
+      );
+    } else {
+      const OldCell = parsedEl.Cell;
+      parsedEl.Cell = args => (
+        <CellWrapper type="flat">
+          { OldCell(args) }
+        </CellWrapper>
+      );
+    }
+
+    parsedEl.sortable = false;
+
+    return parsedEl;
   });
-  return (<CustomTable theme={theme} data={data} columns={textColumns} />);
+
+  if (hasActions && (onEdit || onDelete)) {
+    customColumns.push({
+      accessor: null,
+      sortable: false,
+      width: 50,
+      Cell: ({ index, original }) => (
+        <MenuWrapper type="flat">
+          <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
+          { generateContextMenu(theme, `menu_${index}`, onEdit, onDelete, original) }
+        </MenuWrapper>
+      ),
+    });
+  }
+
+  return (
+    <ReactTable
+      data={data}
+      width={100}
+      minRows={1}
+      columns={customColumns}
+      loading={loading}
+      showPagination={false}
+      {...getStyleProps(theme)}
+      {...rest}
+    />
+  );
 };
 
 Table.propTypes = {
@@ -86,6 +117,9 @@ Table.propTypes = {
   columns: PropTypes.array,
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
+  hasActions: PropTypes.bool,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
   theme: PropTypes.object.isRequired,
 };
 
@@ -93,6 +127,9 @@ Table.defaultProps = {
   data: null,
   columns: null,
   loading: false,
+  hasActions: false,
+  onEdit: null,
+  onDelete: null,
   emptyMessage: 'You have no content to display!',
 };
 

@@ -64,6 +64,7 @@ const COLUMNS = [{
   name: 'Email',
   key: 'email',
   editable: true,
+  tooltip: 'A grand set of details about this column. You can edit it too!',
 }, {
   name: 'Link',
   key: 'link',
