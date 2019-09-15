@@ -109,21 +109,16 @@ export const MenuItem = styled(Box)`
     color: ${({ theme }) => theme.colors.white} !important;
     }
    
-    background-color: ${props => props.accent};
+    background-color: ${({ theme, accent }) => theme.colors[accent]};
   }
 `;
 
-export const generateContextMenu = (theme, id, onEdit, onDelete, item) => (
+export const generateContextMenu = (theme, id, item) => (
   <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
-    {onEdit && (
-    <MenuItem type="flat" align="start" justify="center" accent={theme.colors.primary} onClick={() => onDelete(item)}>
-      <Text type="primary" size="small">Edit</Text>
-    </MenuItem>
-    )}
-    {onDelete && (
-    <MenuItem type="flat" align="start" justify="center" accent={theme.colors.danger} onClick={() => onDelete(item)}>
-      <Text type="primary" size="small">Delete</Text>
-    </MenuItem>
-    )}
+    {item.actionsMenu.map(menuItem => (
+      <MenuItem type="flat" align="start" justify="center" accent={menuItem.type} onClick={() => menuItem.callback(item)}>
+        <Text type="primary" size="small">{menuItem.label}</Text>
+      </MenuItem>
+    ))}
   </Menu>
 );
