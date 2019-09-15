@@ -56,6 +56,76 @@ const COLUMNS = [{
 },
 ];
 
+const DATA_WITH_ACTIONS = [{
+  email: '4@domain.com',
+  name: 'A',
+  link: 'http://a.com',
+}, {
+  email: '3@domain.com',
+  name: 'B',
+  link: 'http://b.com',
+  actionsMenu: [
+    {
+      label: 'Edit',
+      callback: handleTestEdit,
+      type: 'primary',
+    },
+    {
+      label: 'Delete',
+      callback: handleTestDelete,
+      type: 'danger',
+    },
+  ],
+}, {
+  email: '2@domain.com',
+  name: 'C',
+  link: 'http://c.com',
+}, {
+  email: '1@domain.com',
+  name: 'D',
+  link: 'http://d.com',
+  actionsMenu: [
+    {
+      label: 'Edit',
+      callback: handleTestEdit,
+      type: 'primary',
+    },
+    {
+      label: 'Delete',
+      callback: handleTestDelete,
+      type: 'danger',
+    },
+  ],
+}];
+
+const COLUMNS_WITH_ACTIONS = [{
+  Header: 'Name',
+  tooltip: 'The name',
+  accessor: 'name',
+  width: undefined,
+}, {
+  Header: 'Email',
+  accessor: 'email',
+  width: undefined,
+  tooltip: 'Or some other non-obvious descriptor for your table',
+}, {
+  Header: 'Link',
+  accessor: 'link',
+  Cell: row => (
+    <a href={row.value} target="_blank" rel="noopener noreferrer">
+      {row.value}
+    </a>
+  ),
+  width: undefined,
+},
+{
+  sortable: false,
+  acessor: null,
+  width: 50,
+  hasActions: true,
+},
+];
+
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -72,14 +142,20 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Tooltips and Actions</Text>
+          <Text isTitle size="large">Actions</Text>
+          <Box horizontal space={60}>
+            <Table
+              data={DATA_WITH_ACTIONS}
+              columns={COLUMNS_WITH_ACTIONS}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle size="large">Tooltips</Text>
           <Box horizontal space={60}>
             <Table
               data={DATA}
               columns={COLUMNS}
-              hasActions
-              onEdit={handleTestEdit}
-              onDelete={handleTestDelete}
             />
           </Box>
         </Box>

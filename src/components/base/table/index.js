@@ -21,9 +21,9 @@ import {
 } from './theme';
 import Loader from '../loader';
 
+
 const Table = ({
   data, columns, theme, loading, emptyMessage,
-  hasActions, onEdit, onDelete,
   ...rest
 }) => {
   if (loading) {
@@ -44,6 +44,23 @@ const Table = ({
 
   const customColumns = columns.map((el) => {
     const parsedEl = Object.assign({}, el);
+
+    if (parsedEl.hasActions) {
+      parsedEl.Cell = ({ index, original }) => {
+        const hasActions = original.actionsMenu && original.actionsMenu.length;
+
+        return hasActions
+          ? (
+            <MenuWrapper type="flat">
+              <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
+              { generateContextMenu(theme, `menu_${index}`, original) }
+            </MenuWrapper>
+          ) : null;
+      };
+
+      return parsedEl;
+    }
+
 
     if (typeof parsedEl.Header === 'string') {
       if (parsedEl.tooltip) {
@@ -84,20 +101,6 @@ const Table = ({
     return parsedEl;
   });
 
-  if (hasActions && (onEdit || onDelete)) {
-    customColumns.push({
-      accessor: null,
-      sortable: false,
-      width: 50,
-      Cell: ({ index, original }) => (
-        <MenuWrapper type="flat">
-          <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
-          { generateContextMenu(theme, `menu_${index}`, onEdit, onDelete, original) }
-        </MenuWrapper>
-      ),
-    });
-  }
-
   return (
     <ReactTable
       data={data}
@@ -117,9 +120,6 @@ Table.propTypes = {
   columns: PropTypes.array,
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
-  hasActions: PropTypes.bool,
-  onEdit: PropTypes.func,
-  onDelete: PropTypes.func,
   theme: PropTypes.object.isRequired,
 };
 
@@ -127,9 +127,6 @@ Table.defaultProps = {
   data: null,
   columns: null,
   loading: false,
-  hasActions: false,
-  onEdit: null,
-  onDelete: null,
   emptyMessage: 'You have no content to display!',
 };
 
