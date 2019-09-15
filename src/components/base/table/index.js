@@ -17,7 +17,7 @@ import {
   EmptyTable,
   EmptyText,
   CellWrapper,
-  MoreActionsIcon,
+  MoreActionsIcon, MenuWrapper,
 } from './theme';
 import Loader from '../loader';
 
@@ -88,16 +88,17 @@ const Table = ({
     customColumns.push({
       accessor: null,
       sortable: false,
+      width: 50,
       Header: (
-        <CellWrapper type="flat">
-          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>Actions</Text>
+        <CellWrapper type="flat" align="end">
+          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}></Text>
         </CellWrapper>
       ),
       Cell: ({ index, original }) => (
-        <CellWrapper type="flat" align="end">
+        <MenuWrapper type="flat">
           <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
           { generateContextMenu(theme, `menu_${index}`, onEdit, onDelete, original) }
-        </CellWrapper>
+        </MenuWrapper>
       ),
     });
   }

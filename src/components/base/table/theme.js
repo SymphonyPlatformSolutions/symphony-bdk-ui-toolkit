@@ -58,6 +58,7 @@ export const getStyleProps = theme => ({
 
 export const getMenuBackgroundColor = theme => ({
   style: {
+    transform: 'translateX(-47px)',
     backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : theme.colors.white,
     boxShadow: theme.mode === THEME_TYPES.DARK ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929' : null,
   },
@@ -93,6 +94,13 @@ export const CellWrapper = styled(Box)`
   height: 100%;
 `;
 
+export const MenuWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 export const MenuItem = styled(Box)`
   height: 35px;
   padding-left: 15px;
@@ -106,7 +114,7 @@ export const MenuItem = styled(Box)`
 `;
 
 export const generateContextMenu = (theme, id, onEdit, onDelete, item) => (
-  <Menu animation="zoom" id={id} {...getMenuBackgroundColor(theme)}>
+  <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
     {onEdit && (
     <MenuItem type="flat" align="start" justify="center" accent={theme.colors.primary} onClick={() => onDelete(item)}>
       <Text type="primary" size="small">Edit</Text>
