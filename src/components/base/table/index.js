@@ -89,11 +89,6 @@ const Table = ({
       accessor: null,
       sortable: false,
       width: 50,
-      Header: (
-        <CellWrapper type="flat" align="end">
-          <Text type="primary" size="small" style={{ fontWeight: 'bold' }}></Text>
-        </CellWrapper>
-      ),
       Cell: ({ index, original }) => (
         <MenuWrapper type="flat">
           <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />

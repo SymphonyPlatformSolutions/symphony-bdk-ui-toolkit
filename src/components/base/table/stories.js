@@ -72,7 +72,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Filled Table</Text>
+          <Text isTitle size="large">Tooltips and Actions</Text>
           <Box horizontal space={60}>
             <Table
               data={DATA}
