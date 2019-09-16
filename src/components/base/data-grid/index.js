@@ -28,7 +28,7 @@ const DataGrid = (
       if (args.column.tooltip) {
         return (
           <CellContainer>
-            <Box horizontal space={5}>
+            <Box horizontal align="center" space={5}>
               <Text
                 isTitle
                 size="small"

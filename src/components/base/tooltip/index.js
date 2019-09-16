@@ -45,7 +45,7 @@ const Bubble = styled.div`
     position: absolute;
     ${({ bottom }) => (bottom ? 'bottom' : 'top')}:
       ${({ addPercentage }) => `${94 + addPercentage}%`};
-    left: calc(50% - 2px); 
+    left: calc(50% - 2px);
     margin-left: -0.4rem;
     border-width: 0.5rem;
     border-style: solid;
@@ -53,7 +53,6 @@ const Bubble = styled.div`
     ? `transparent transparent ${theme.colors.primary} transparent`
     : `${theme.colors.primary} transparent transparent transparent`)};
   }
-
 `;
 
 const BubbleText = styled.div`
@@ -71,8 +70,16 @@ const TooltipBubble = (props) => {
       show={show}
       bottom={bottom}
       addPercentage={Math.floor(children.length / 20)}
-      xPosition={tooltipRef.current ? tooltipRef.current.getBoundingClientRect().x : 0}
-      yPosition={tooltipRef.current ? tooltipRef.current.getBoundingClientRect().y : 0}
+      xPosition={
+        tooltipRef.current
+          ? tooltipRef.current.getBoundingClientRect().x + window.scrollX
+          : 0
+      }
+      yPosition={
+        tooltipRef.current
+          ? tooltipRef.current.getBoundingClientRect().y + window.scrollY
+          : 0
+      }
     >
       <BubbleText>
         <Text
