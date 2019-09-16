@@ -8,6 +8,8 @@ import RadioButton from '../radio-button';
 import Dropdown from '../dropdown';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
+import Box from '../box';
+import Text from '../text';
 
 const InputController = ({ type, ...rest }) => {
   const [value, changeValue] = useState('');
@@ -62,7 +64,7 @@ const CheckboxController = () => {
   });
 
   return (
-    <div>
+    <Box type="flat">
       <Checkbox
         checked={chosen.a}
         onChange={() => changeChosen({ ...chosen, a: !chosen.a })}
@@ -78,7 +80,7 @@ const CheckboxController = () => {
         onChange={() => changeChosen({ ...chosen, c: !chosen.c })}
       >Option 3
       </Checkbox>
-    </div>
+    </Box>
   );
 };
 
@@ -104,7 +106,7 @@ const RadioController = ({ disabled }) => {
   const [chosen, changeChosen] = useState('a');
 
   return (
-    <div>
+    <Box type="flat">
       <RadioButton
         checked={chosen === 'a'}
         groupname="radiogroup"
@@ -129,7 +131,7 @@ const RadioController = ({ disabled }) => {
       >
         Actually this one
       </RadioButton>
-    </div>
+    </Box>
   );
 };
 
@@ -139,6 +141,9 @@ storiesOf('Base', module)
     'Form Box',
     () => (
       <StoryWrapper p={15}>
+        <Box>
+          <Text size="large" isTitle>Form Box</Text>
+        </Box>
         <FormBox style={{ width: '32rem' }}>
           <FormGroup>
             <Label htmlFor="normal-input">Normal input</Label>

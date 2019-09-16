@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Box from '../box';
 import Text from '../text';
 import { getBackgroundColor, getBorderColor, getBoxShadowColor } from './theme';
+import { Separator } from '../../index';
 
 const BaseCard = styled.div`
   margin-top: 10px;
@@ -20,7 +21,7 @@ const BaseCard = styled.div`
   width: 100%;
 `;
 
-const CardTitle = styled.span`
+const CardTitle = styled.span`;
   display: ${p => (p.title === '' ? 'none' : 'inline-block')};
 `;
 
@@ -32,13 +33,17 @@ export default function Card(props) {
 
   return (
     <BaseCard {...rest}>
-      <Box>
+      <Box space={10}>
+        {titleText && (
         <CardTitle titleText={titleText}>
-          <Box>
-            <Text isTitle size="large" underline>{titleText}</Text>
+          <Box style={{ padding: '10px' }}>
+            <Text isTitle size="large">{titleText}</Text>
           </Box>
+          <Separator />
         </CardTitle>
-        <Box>{children}</Box>
+        )
+        }
+        <Box style={{ padding: '10px' }}>{children}</Box>
       </Box>
     </BaseCard>
   );

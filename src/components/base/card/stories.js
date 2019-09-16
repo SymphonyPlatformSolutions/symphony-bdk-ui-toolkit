@@ -12,7 +12,7 @@ import Info from './info.md';
 storiesOf('Base', module)
   .add('Card', () => (
     <StoryWrapper p={15}>
-      <Box>
+      <Box type="primary">
         <Text isTitle size="large">Cards</Text>
         <Card titleText="Card with title">
           <Text size="small">Lorem ipsum dolor</Text>

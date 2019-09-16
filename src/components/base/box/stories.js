@@ -31,46 +31,44 @@ const boxSystem = {
 storiesOf('Base', module)
   .add('Box', () => (
     <StoryWrapper p={15}>
-      <Box>
-        <div>
-          <Text isTitle size="large">Box Justify</Text>
-          <Box space={10}>
-            <Box horizontal justify="flex-start" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>flex-start</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>flex-start</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>flex-start</span>
-              </Box>
+      <Box type="primary">
+        <Text isTitle size="large">Box Justify</Text>
+        <Box space={10}>
+          <Box horizontal justify="flex-start" space={20}>
+            <Box style={Object.assign({}, boxStyle, boxCTA)}>
+              <span>flex-start</span>
             </Box>
-            <Box horizontal justify="center" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>center</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>center</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>center</span>
-              </Box>
+            <Box style={Object.assign({}, boxStyle, boxCaution)}>
+              <span>flex-start</span>
             </Box>
-            <Box horizontal justify="flex-end" space={20}>
-              <Box style={Object.assign({}, boxStyle, boxCTA)}>
-                <span>flex-end</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxCaution)}>
-                <span>flex-end</span>
-              </Box>
-              <Box style={Object.assign({}, boxStyle, boxSystem)}>
-                <span>flex-end</span>
-              </Box>
+            <Box style={Object.assign({}, boxStyle, boxSystem)}>
+              <span>flex-start</span>
             </Box>
           </Box>
-        </div>
-        <div>
+          <Box horizontal justify="center" space={20}>
+            <Box style={Object.assign({}, boxStyle, boxCTA)}>
+              <span>center</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxCaution)}>
+              <span>center</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxSystem)}>
+              <span>center</span>
+            </Box>
+          </Box>
+          <Box horizontal justify="flex-end" space={20}>
+            <Box style={Object.assign({}, boxStyle, boxCTA)}>
+              <span>flex-end</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxCaution)}>
+              <span>flex-end</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxSystem)}>
+              <span>flex-end</span>
+            </Box>
+          </Box>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Primary Horizontal</Text>
           <Box horizontal>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -83,8 +81,8 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Secondary Horizontal</Text>
           <Box horizontal type="secondary">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -97,8 +95,8 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Flat Horizontal</Text>
           <Box horizontal type="flat">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -111,8 +109,8 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Primary Vertical</Text>
           <Box vertical>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -125,8 +123,8 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Secondary Vertical</Text>
           <Box vertical type="secondary">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -139,8 +137,22 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box space={10}>
+          <Text isTitle size="large">Box Flat Horizontal</Text>
+          <Box horizontal type="flat">
+            <Box style={Object.assign({}, boxStyle, boxCTA)}>
+              <span>Child</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxCaution)}>
+              <span>Child</span>
+            </Box>
+            <Box style={Object.assign({}, boxStyle, boxSystem)}>
+              <span>Child</span>
+            </Box>
+          </Box>
+        </Box>
+        <Box space={10}>
           <Text isTitle size="large">Box Flat Vertical</Text>
           <Box vertical type="flat">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -153,7 +165,7 @@ storiesOf('Base', module)
               <span>Child</span>
             </Box>
           </Box>
-        </div>
+        </Box>
       </Box>
     </StoryWrapper>
   ), {
