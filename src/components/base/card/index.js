@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Box from '../box';
 import Text from '../text';
 import { getBackgroundColor, getBorderColor, getBoxShadowColor } from './theme';
-import { Separator } from '../../index';
+import Separator from '../separator';
 
 const BaseCard = styled.div`
   margin-top: 10px;
