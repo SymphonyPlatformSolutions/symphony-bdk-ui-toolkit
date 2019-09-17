@@ -25,7 +25,6 @@ export const GridStyleWrapper = styled.div.attrs(overrides)`
   .${overrides.headerCell} {
     display: flex;
     overflow: auto;
-    font-family: 'Lato', sans-serif;
     background-color: rgba(0,0,0,0);
     border: 0;
     padding: 0;

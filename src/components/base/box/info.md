@@ -11,7 +11,6 @@ const boxStyle = {
   height: '40px',
   lineHeight: '40px',
   textAlign: 'center',
-  fontFamily: '"Lato", sans-serif',
 };
 
 <Box style={Object.assign({}, boxStyle)}>

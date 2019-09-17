@@ -60,7 +60,6 @@ const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.colo
 
 export const BaseText = styled.div`
   color: ${props => getTextColor(props)};
-  font-family: 'Lato', sans-serif;
   font-style: ${props => getFontStyle(props)};
   font-size: ${props => getFontSize(props)};
   font-weight: ${props => getFontWeight(props)};

@@ -130,12 +130,12 @@ const getButtonMinWidth = props => BUTTON_MIN_WIDTH[props.size];
 const getLineHeight = ({ size, fill }) => {
   switch (size) {
     case 'tiny':
-      return '1rem';
+      return '.625rem';
     case 'small':
       if (fill === FILL_TYPES.OUTLINED) {
-        return '1.1rem';
+        return '0.8rem';
       }
-      return '1.3rem';
+      return 'inherit';
     default:
       return 'inherit';
   }
@@ -168,7 +168,6 @@ export const ChildrenContainer = styled(Box)`
 `;
 
 export const BaseButton = styled.button.attrs({
-  fontFamily: 'Lato, sans-serif',
 })`
   color: ${props => getColor(props)};
   font-size: ${props => getFontSize(props)};

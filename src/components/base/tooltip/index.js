@@ -83,7 +83,6 @@ const TooltipBubble = (props) => {
     >
       <BubbleText>
         <Text
-          size="tiny"
           style={{ color: theme.colors.white, fontStyle: 'normal' }}
         >
           {children}

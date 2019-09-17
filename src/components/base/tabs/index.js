@@ -27,7 +27,6 @@ const TabHeader = styled.ol`
 `;
 
 const TabHeaderLabel = styled.span`
-  font-family: 'Lato', sans-serif;
   font-size: 1.25rem;
   font-weight: ${props => getTabItemWeight(props)};
   line-height: 22px;
