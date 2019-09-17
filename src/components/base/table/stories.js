@@ -141,7 +141,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        <Box style={{width: '600px'}}>
+        <Box>
           <Text isTitle size="large">Actions</Text>
           <Box horizontal space={60}>
             <Table

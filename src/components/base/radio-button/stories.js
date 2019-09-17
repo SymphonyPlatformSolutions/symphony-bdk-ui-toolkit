@@ -11,7 +11,7 @@ const RadioGroup = ({ disabled, groupNumber }) => {
   const [checkedId, setChecked] = useState(1);
 
   return (
-    <div>
+    <Box type="flat">
       <RadioButton
         checked={checkedId === 1}
         id={`radio1${groupNumber}`}
@@ -36,7 +36,7 @@ const RadioGroup = ({ disabled, groupNumber }) => {
         disabled={disabled}
       >Option 3
       </RadioButton>
-    </div>
+    </Box>
   );
 };
 
@@ -45,14 +45,14 @@ storiesOf('Base', module)
   .add('Radio Button', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>
-        <div>
+        <Box>
           <Text isTitle size="large">Radio Button</Text>
           <RadioGroup groupNumber={1} />
-        </div>
-        <div>
+        </Box>
+        <Box>
           <Text isTitle size="large">Disabled Radio Button</Text>
           <RadioGroup groupNumber={2} disabled />
-        </div>
+        </Box>
       </Box>
     </StoryWrapper>
   ),

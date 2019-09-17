@@ -23,7 +23,7 @@ const getBackgroundColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
   : theme.colors.white);
 
 export const Modal = styled.div`
-  min-width: 420px;
+  width: 420px;
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   overflow: visible;
   border-radius: 4px;
