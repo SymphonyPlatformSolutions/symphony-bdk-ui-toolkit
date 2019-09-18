@@ -58,8 +58,9 @@ export const getStyleProps = theme => ({
 
 export const getMenuBackgroundColor = theme => ({
   style: {
-    transform: 'translateX(-47px)',
-    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : theme.colors.white,
+    padding: '0px',
+    borderRadius: '4px',
+    backgroundColor: theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.colors.white,
     boxShadow: theme.mode === THEME_TYPES.DARK ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929' : null,
   },
 });
@@ -95,6 +96,7 @@ export const CellWrapper = styled(Box)`
 `;
 
 export const MenuWrapper = styled(Box)`
+  padding: 0;
   margin: 0px 19px;
   align-items: center;
   justify-content: center;
@@ -104,19 +106,27 @@ export const MenuWrapper = styled(Box)`
 export const MenuItem = styled(Box)`
   height: 35px;
   padding-left: 15px;
+  border-left: 4px solid transparent;
   &:hover {
-    & > div {
-    color: ${({ theme }) => theme.colors.white} !important;
-    }
-   
-    background-color: ${({ theme, accent }) => theme.colors[accent]};
+    background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#464B53' : '#F1F2F4')};
+    border-top-left-radius: ${props => (props.isFirst ? '4px' : null)};
+    border-bottom-left-radius: ${props => (props.isLast ? '4px' : null)};
+    border-left: ${({ theme, accent }) => `4px solid ${theme.colors[accent]}`};
   }
 `;
 
 export const generateContextMenu = (theme, id, item) => (
   <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
-    {item.actionsMenu.map(menuItem => (
-      <MenuItem type="flat" align="start" justify="center" accent={menuItem.type} onClick={() => menuItem.callback(item)}>
+    {item.actionsMenu.map((menuItem, index, arr) => (
+      <MenuItem
+        type="flat"
+        align="start"
+        justify="center"
+        accent={menuItem.type}
+        isFirst={index === 0}
+        isLast={index === arr.length - 1}
+        onClick={() => menuItem.callback(item)}
+      >
         <Text type="primary" size="small">{menuItem.label}</Text>
       </MenuItem>
     ))}

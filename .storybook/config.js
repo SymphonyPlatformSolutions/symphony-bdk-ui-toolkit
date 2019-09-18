@@ -2,6 +2,7 @@ import { addParameters, configure, addDecorator } from '@storybook/react';
 import {withThemesProvider} from 'storybook-addon-styled-component-theme';
 import {THEMES} from "../src/styles/colors";
 import {Logger} from "../src/utils";
+import './config.css';
 
 Logger.setEnv({
   appTitle: 'MS Storybook',

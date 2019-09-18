@@ -1,82 +1,89 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { GoAlert } from 'react-icons/go';
-import Modal from '.';
+import { action } from '@storybook/addon-actions';
+import ModalRoot, { DangerConfirmationModal } from '.';
 import Box from '../box';
 import Button from '../button';
 import Text from '../text';
 import Info from './info.md';
-
 import { StoryWrapper } from '../wrappers';
+import { ModalConsumer, ModalProvider } from './modal-context';
 
+const SampleModal = ({ hideModal }) => (
+  <Box align="center">
+    <Text isTitle>My brand new library-powered modal</Text>
+    <Text>
+      This Modal is used to show that you can call a modal from everywhere in
+      your application! It uses React Provider and React Consumer to able to so.
+      <br />
+      Really handy tools indeed...!
+    </Text>
+    <Box horizontal justify="center">
+      <Button onClick={hideModal}>Close Modal</Button>
+    </Box>
+  </Box>
+);
 
-storiesOf('Base', module)
-  .add('Modal', () => React.createElement(() => {
-    const [isModalOpened, setIsModalOpened] = useState(false);
-    const handleModalClick = () => {
-      setIsModalOpened(true);
-    };
-    const onModalClose = () => {
-      setIsModalOpened(false);
-    };
-    const [isConfirmOpened, setIsConfirmOpened] = useState(false);
-    const handleConfirmClick = () => {
-      setIsConfirmOpened(true);
-    };
-    const onConfirmClose = () => {
-      setIsConfirmOpened(false);
-    };
-    const onConfirmOK = () => {
-      setIsConfirmOpened(false);
-    };
-    const onConfirmCancel = () => {
-      setIsConfirmOpened(false);
-    };
-    const commandBarStyle = {
-      marginTop: '20px',
-      marginLeft: '5px',
-    };
-    const iconStyle = {
-      lineHeight: '32px',
-      fontSize: '32px',
-      color: '#f58b3a',
-      marginLeft: '10px',
-    };
-    return (
+const Confirmation = props => (
+  <DangerConfirmationModal
+    {...props}
+    confirmButtonText="Yes, I'm sure"
+    message="Doing this action will permanetly change the way you perceive the universe around you."
+    modalTitle="Are you sure?"
+    confirmationHandler={action('Confirmed')}
+  />
+);
+
+storiesOf('Base', module).add(
+  'Modal',
+  () => React.createElement(() => (
+    <ModalProvider>
+      <ModalRoot />
       <StoryWrapper p={15}>
-        <Box space={20}>
-          <Text isTitle size="large">Modal</Text>
-          <Box align="flex-start">
-            <Button type="primary" onClick={handleModalClick}>Open Modal...</Button>
-          </Box>
-          <Modal titleText="This is a Modal" isOpened={isModalOpened} onClose={onModalClose}>
+        <Box>
+          <Box type="secondary">
+            <Text isTitle>Custom Modal</Text>
             <Box horizontal>
-              <Text>Content of the Modal</Text>
+              <ModalConsumer>
+                {context => (
+                  <Button onClick={() => context.showModal(SampleModal)}>
+                    Show Modal!
+                  </Button>
+                )}
+              </ModalConsumer>
             </Box>
-          </Modal>
-        </Box>
-        <Box space={20}>
-          <Text isTitle size="large">Confirmation</Text>
-          <Box type="primary" align="flex-start">
-            <Button onClick={handleConfirmClick}>Open Confirmation...</Button>
           </Box>
-          <Modal titleText="Confirmation" isOpened={isConfirmOpened} onClose={onConfirmClose} width="600px" height="185px">
-            <Box vertical>
-              <Box horizontal align="center">
-                <GoAlert style={iconStyle} />
-                <Text>Do you confirm your action?</Text>
-              </Box>
-              <Box horizontal align="flex-start" style={commandBarStyle}>
-                <Button type="secondary" fill="filled" onClick={onConfirmOK}>OK</Button>
-                <Button type="danger" fill="ghost" onClick={onConfirmCancel}>Cancel</Button>
-              </Box>
+          <Box type="secondary">
+            <Text isTitle>Custom Modal without Close</Text>
+            <Box horizontal>
+              <ModalConsumer>
+                {context => (
+                  <Button onClick={() => context.showModal(SampleModal, {}, { hasClose: false })}>
+                    Show Modal!
+                  </Button>
+                )}
+              </ModalConsumer>
             </Box>
-          </Modal>
+          </Box>
+          <Box type="secondary">
+            <Text isTitle>Danger Modal</Text>
+            <Box horizontal>
+              <ModalConsumer>
+                {context => (
+                  <Button onClick={() => context.showModal(Confirmation)}>
+                    Show Danger Modal!
+                  </Button>
+                )}
+              </ModalConsumer>
+            </Box>
+          </Box>
         </Box>
       </StoryWrapper>
-    );
-  }), {
+    </ModalProvider>
+  )),
+  {
     notes: {
       markdown: Info,
     },
-  });
+  },
+);

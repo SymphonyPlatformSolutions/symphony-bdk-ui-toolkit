@@ -10,6 +10,7 @@ import {
 } from 'react-contexify';
 import Text from '../text';
 import Box from '../box';
+import uuid from 'uuid';
 
 import {
   getStyleProps,
@@ -39,21 +40,33 @@ const Table = ({
   }
 
   const openContextMenu = menuId => (e) => {
-    contextMenu.show({ id: menuId, event: e });
+    const rtlEvent = Object.assign(
+      {},
+      {
+        x: e.x - 180,
+        y: e.y,
+        clientX: e.clientX - 180,
+        clientY: e.clientY,
+        stopPropagation: () => {
+          e.stopPropagation();
+        },
+      },
+    );
+    contextMenu.show({ id: menuId, event: rtlEvent });
   };
 
   const customColumns = columns.map((el) => {
     const parsedEl = Object.assign({}, el);
 
     if (parsedEl.hasActions) {
-      parsedEl.Cell = ({ index, original }) => {
+      parsedEl.Cell = ({ original }) => {
         const hasActions = original.actionsMenu && original.actionsMenu.length;
-
+        const menuId = uuid.v1();
         return hasActions
           ? (
             <MenuWrapper type="flat">
-              <MoreActionsIcon onClick={openContextMenu(`menu_${index}`)} />
-              { generateContextMenu(theme, `menu_${index}`, original) }
+              <MoreActionsIcon onClick={openContextMenu(menuId)} />
+              { generateContextMenu(theme, menuId, original) }
             </MenuWrapper>
           ) : null;
       };

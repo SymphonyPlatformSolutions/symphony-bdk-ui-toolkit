@@ -30,7 +30,6 @@ const FloatInput = styled.div`
   position: absolute;
   top: 10px;
   right: 18px;
-  font-family: 'Lato', sans-serif;
   font-size: .875rem;
   color: ${props => getInputColor(props)};
   cursor: ${p => (p.disabled ? 'default' : 'pointer')};
@@ -38,7 +37,6 @@ const FloatInput = styled.div`
 `;
 
 const BaseInputField = styled.input`
-  font-family: 'Lato', sans-serif;
   font-size: .875rem;
   border-radius: .2rem;
   border: 1px solid ${props => getBorderColor(props)};

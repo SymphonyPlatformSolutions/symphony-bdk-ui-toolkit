@@ -9,20 +9,16 @@ export const FILL_TYPES = {
   OUTLINED: 'outlined',
 };
 
-const PADDING = {
-  tiny: '.09rem .625rem',
-  small: '.3rem .9375rem',
-  large: '.3rem 1.25rem',
-};
+
 const FONTSIZE = {
-  tiny: '.625rem',
-  small: '.75rem',
+  tiny: 'x-small',
+  small: 'small',
   large: '1rem',
 };
 
 const BUTTON_MIN_HEIGHT = {
   tiny: '1rem',
-  small: '1.666rem',
+  small: '1.5rem',
   large: '2rem',
 };
 
@@ -123,23 +119,10 @@ const getBorderStyle = (props) => {
   return isOutlined ? `2px solid ${getColor(props)}` : 'inherit';
 };
 
-const getPadding = props => PADDING[props.size];
+
 const getFontSize = props => FONTSIZE[props.size];
 const getButtonMinHeight = props => BUTTON_MIN_HEIGHT[props.size];
 const getButtonMinWidth = props => BUTTON_MIN_WIDTH[props.size];
-const getLineHeight = ({ size, fill }) => {
-  switch (size) {
-    case 'tiny':
-      return '1rem';
-    case 'small':
-      if (fill === FILL_TYPES.OUTLINED) {
-        return '1.1rem';
-      }
-      return '1.3rem';
-    default:
-      return 'inherit';
-  }
-};
 
 export const getSpinnerColor = ({
   theme, fill,
@@ -165,10 +148,10 @@ export const Container = styled(Box)`
 export const ChildrenContainer = styled(Box)`
   opacity: ${p => (p.isLoading ? 0.3 : 1)};
   cursor: ${p => (p.isLoading ? 'none' : 'inherit')};
+  padding: 0px 20px;
 `;
 
 export const BaseButton = styled.button.attrs({
-  fontFamily: 'Lato, sans-serif',
 })`
   color: ${props => getColor(props)};
   font-size: ${props => getFontSize(props)};
@@ -176,11 +159,10 @@ export const BaseButton = styled.button.attrs({
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${props => getButtonMinHeight(props)};
   min-width: ${props => getButtonMinWidth(props)};
-  padding: ${props => getPadding(props)};
+
   background-color: ${props => getBgColor(props)};
   border: ${props => getBorderStyle(props)};
   border-radius: 22px;
-  line-height: ${props => getLineHeight(props)};
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   &:focus {
     outline: 0;

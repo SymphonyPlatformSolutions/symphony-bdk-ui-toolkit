@@ -13,5 +13,5 @@ export const getBoxShadowColor = ({ theme }) => (
 );
 
 export const getBorderColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT ? theme.colors.grey : null
+  theme.mode === THEME_TYPES.LIGHT ? theme.colors.grey : '#9197A1'
 );
