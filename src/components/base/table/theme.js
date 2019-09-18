@@ -60,7 +60,6 @@ export const getMenuBackgroundColor = theme => ({
   style: {
     padding: '0px',
     borderRadius: '4px',
-    transform: 'translateX(-47px)',
     backgroundColor: theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.colors.white,
     boxShadow: theme.mode === THEME_TYPES.DARK ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929' : null,
   },

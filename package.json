@@ -72,7 +72,8 @@
     "storybook-addon-styled-component-theme": "^1.2.3",
     "style-loader": "^0.23.1",
     "styled-components": "^4.3.2",
-    "styled-icons": "^8.4.2"
+    "styled-icons": "^8.4.2",
+    "uuid": "^3.3.3"
   },
   "dependencies": {
     "microbundle": "0.11.0"
