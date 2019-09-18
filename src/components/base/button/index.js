@@ -32,7 +32,6 @@ const Button = ({
   children, size, type, fill, theme, loading, disabled, htmlType, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isMouseOver, setMouseOver] = useState(false);
 
   useEffect(() => {
     setIsLoading(loading);
@@ -62,10 +61,8 @@ const Button = ({
       onClick={handleClick}
       isLoading={isLoading}
       disabled={isLoading || disabled}
-      onMouseEnter={() => setMouseOver(true)}
-      onMouseLeave={() => setMouseOver(false)}
     >
-      <Container>
+      <Container justify="center" align="center" type="flat">
         <ChildrenContainer isLoading={isLoading}>
           {children}
         </ChildrenContainer>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import { MdInfo } from 'react-icons/md';
+// eslint-disable-next-line import/no-cycle
 import Text from '../text';
 
 const Container = styled.div`
@@ -55,11 +56,6 @@ const Bubble = styled.div`
   }
 `;
 
-const BubbleText = styled.div`
-  font-size: 0.7rem;
-  font-weight: 300;
-`;
-
 const TooltipBubble = (props) => {
   const {
     show, children, bottom, theme, tooltipRef,
@@ -81,13 +77,13 @@ const TooltipBubble = (props) => {
           : 0
       }
     >
-      <BubbleText>
-        <Text
-          style={{ color: theme.colors.white, fontStyle: 'normal' }}
-        >
-          {children}
-        </Text>
-      </BubbleText>
+
+      <Text
+        size="small"
+        style={{ color: theme.colors.white, fontStyle: 'normal' }}
+      >
+        {children}
+      </Text>
     </Bubble>,
     document.body,
   );
