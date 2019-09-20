@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
-import Tooltip from '../tooltip';
 import 'react-table/react-table.css';
 import 'react-contexify/dist/ReactContexify.min.css';
-import {
-  contextMenu,
-} from 'react-contexify';
+import { contextMenu } from 'react-contexify';
+import uuid from 'uuid';
+import Tooltip from '../tooltip';
 import Text from '../text';
 import Box from '../box';
-import uuid from 'uuid';
 
 import {
   getStyleProps,
@@ -18,15 +16,18 @@ import {
   EmptyTable,
   EmptyText,
   CellWrapper,
-  MoreActionsIcon, MenuWrapper,
+  MoreActionsIcon,
+  MenuWrapper,
+  getTheadStyle,
+  SortingIcon,
 } from './theme';
 import Loader from '../loader';
 
 
 const Table = ({
-  data, columns, theme, loading, emptyMessage,
-  ...rest
+  data, columns, theme, loading, emptyMessage, ...rest
 }) => {
+  const [sorting, changeSorting] = useState([]);
   if (loading) {
     return (
       <EmptyTable>
@@ -36,7 +37,11 @@ const Table = ({
   }
 
   if (!data || !data.length) {
-    return <EmptyTable><EmptyText theme={theme}>{emptyMessage}</EmptyText></EmptyTable>;
+    return (
+      <EmptyTable>
+        <EmptyText theme={theme}>{emptyMessage}</EmptyText>
+      </EmptyTable>
+    );
   }
 
   const openContextMenu = menuId => (e) => {
@@ -62,54 +67,46 @@ const Table = ({
       parsedEl.Cell = ({ original }) => {
         const hasActions = original.actionsMenu && original.actionsMenu.length;
         const menuId = uuid.v1();
-        return hasActions
-          ? (
-            <MenuWrapper type="flat">
-              <MoreActionsIcon onClick={openContextMenu(menuId)} />
-              { generateContextMenu(theme, menuId, original) }
-            </MenuWrapper>
-          ) : null;
+        return hasActions ? (
+          <MenuWrapper type="flat">
+            <MoreActionsIcon onClick={openContextMenu(menuId)} />
+            {generateContextMenu(theme, menuId, original)}
+          </MenuWrapper>
+        ) : null;
       };
 
       return parsedEl;
     }
 
-
     if (typeof parsedEl.Header === 'string') {
-      if (parsedEl.tooltip) {
-        parsedEl.Header = (
-          <CellWrapper type="flat">
-            <Box horizontal space={5}>
-              <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
-              <Tooltip>{parsedEl.tooltip}</Tooltip>
-            </Box>
-          </CellWrapper>
-        );
-      } else {
-        parsedEl.Header = (
-          <CellWrapper type="flat">
-            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>{parsedEl.Header}</Text>
-          </CellWrapper>
-        );
-      }
+      const stringHeader = parsedEl.Header.slice();
+      parsedEl.Header = ({ column }) => (
+        <CellWrapper type="flat">
+          <Box horizontal space={5}>
+            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>
+              {stringHeader}
+            </Text>
+            {parsedEl.tooltip && <Tooltip>{parsedEl.tooltip}</Tooltip>}
+            <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />
+          </Box>
+        </CellWrapper>
+      );
     }
 
     if (!parsedEl.Cell) {
       parsedEl.Cell = props => (
         <CellWrapper type="flat">
-          <Text type="primary" size="small">{props.value}</Text>
+          <Text type="primary" size="small">
+            {props.value}
+          </Text>
         </CellWrapper>
       );
     } else {
       const OldCell = parsedEl.Cell;
       parsedEl.Cell = args => (
-        <CellWrapper type="flat">
-          { OldCell(args) }
-        </CellWrapper>
+        <CellWrapper type="flat">{OldCell(args)}</CellWrapper>
       );
     }
-
-    parsedEl.sortable = false;
 
     return parsedEl;
   });
@@ -122,6 +119,14 @@ const Table = ({
       columns={customColumns}
       loading={loading}
       showPagination={false}
+      getTheadProps={
+        (a) => {
+          if (a.sorted !== sorting) {
+            changeSorting(a.sorted);
+          }
+          return getTheadStyle(theme);
+        }
+      }
       {...getStyleProps(theme)}
       {...rest}
     />

@@ -141,7 +141,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        <Box>
+        {/* <Box>
           <Text isTitle size="large">Actions</Text>
           <Box horizontal space={60}>
             <Table
@@ -177,7 +177,7 @@ storiesOf('Base', module)
               loading
             />
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </StoryWrapper>
   ),

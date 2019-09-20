@@ -1,24 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MoreVert } from 'styled-icons/material';
-import {
-  Menu,
-} from 'react-contexify';
+import { Menu } from 'react-contexify';
+import { MdPlayArrow } from 'react-icons/md';
 import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
-const getBorderColor = theme => (
-  theme.mode === THEME_TYPES.DARK
-    ? theme.colors.inputgrey
-    : theme.colors.lightgrey
-);
+const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK
+  ? theme.colors.inputgrey
+  : theme.colors.lightgrey);
 
-const getEmptyTableColor = theme => (
-  theme.mode === THEME_TYPES.DARK
-    ? theme.colors.inputgrey
-    : theme.colors.lightgrey
-);
+const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK
+  ? theme.colors.inputgrey
+  : theme.colors.lightgrey);
+
+export const getTheadStyle = theme => ({
+  style: {
+    backgroundColor: getBorderColor(theme),
+    boxShadow: 'none',
+    minHeight: '36px',
+    padding: '5px 0px',
+  },
+});
 
 export const getStyleProps = theme => ({
   getProps: () => ({
@@ -30,17 +34,12 @@ export const getStyleProps = theme => ({
       borderTopRightRadius: '4px',
     },
   }),
-  getTheadProps: () => ({
-    style: {
-      backgroundColor: getBorderColor(theme),
-      boxShadow: 'none',
-      minHeight: '36px',
-      padding: '5px 0px',
-    },
-  }),
   getTheadThProps: () => ({
     style: {
       borderRight: 'none',
+      boxShadow: 'none',
+      display: 'flex',
+      alignItems: 'center',
     },
   }),
   getTrProps: () => ({
@@ -60,10 +59,33 @@ export const getMenuBackgroundColor = theme => ({
   style: {
     padding: '0px',
     borderRadius: '4px',
-    backgroundColor: theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.colors.white,
-    boxShadow: theme.mode === THEME_TYPES.DARK ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929' : null,
+    backgroundColor:
+      theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.colors.white,
+    boxShadow:
+      theme.mode === THEME_TYPES.DARK
+        ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929'
+        : null,
   },
 });
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  transform: rotate(${({ desc }) => (desc ? '90' : '270')}deg);
+`;
+export const SortingIcon = ({ sorting, columnId, theme }) => {
+  if (!sorting || !sorting.length) {
+    return null;
+  }
+  if (sorting[0].id !== columnId) {
+    return null;
+  }
+  return (
+    <IconWrapper desc={sorting[0].desc}>
+      <MdPlayArrow color={theme.colors.textcolor} />
+    </IconWrapper>
+  );
+};
 
 export const EmptyTable = styled.div`
   display: flex;
@@ -127,7 +149,9 @@ export const generateContextMenu = (theme, id, item) => (
         isLast={index === arr.length - 1}
         onClick={() => menuItem.callback(item)}
       >
-        <Text type="primary" size="small">{menuItem.label}</Text>
+        <Text type="primary" size="small">
+          {menuItem.label}
+        </Text>
       </MenuItem>
     ))}
   </Menu>
