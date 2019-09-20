@@ -36,14 +36,15 @@ const DATA = [{
 
 const COLUMNS = [{
   Header: 'Name',
-  tooltip: 'The name',
+  tooltip: 'This column is not sortable',
   accessor: 'name',
   width: undefined,
+  sortable: false,
 }, {
   Header: 'Email',
   accessor: 'email',
   width: undefined,
-  tooltip: 'Or some other non-obvious descriptor for your table',
+  tooltip: 'This column is sortable!',
 }, {
   Header: 'Link',
   accessor: 'link',
@@ -134,16 +135,26 @@ storiesOf('Base', module)
       <Box p={15}>
         <Box>
           <Text isTitle size="large">Filled Table</Text>
-          <Box horizontal space={60}>
+          <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA}
               columns={COLUMNS}
             />
           </Box>
         </Box>
-        {/* <Box>
+        <Box>
+          <Text isTitle size="large">Searchable Table</Text>
+          <Box space={60} p="0 16px 0 0">
+            <Table
+              searchable
+              data={DATA}
+              columns={COLUMNS}
+            />
+          </Box>
+        </Box>
+        <Box>
           <Text isTitle size="large">Actions</Text>
-          <Box horizontal space={60}>
+          <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA_WITH_ACTIONS}
               columns={COLUMNS_WITH_ACTIONS}
@@ -152,7 +163,7 @@ storiesOf('Base', module)
         </Box>
         <Box>
           <Text isTitle size="large">Tooltips</Text>
-          <Box horizontal space={60}>
+          <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA}
               columns={COLUMNS}
@@ -161,7 +172,7 @@ storiesOf('Base', module)
         </Box>
         <Box>
           <Text isTitle size="large">Empty Table</Text>
-          <Box horizontal space={60}>
+          <Box space={60} p="0 16px 0 0">
             <Table
               data={[]}
               columns={[]}
@@ -170,14 +181,14 @@ storiesOf('Base', module)
         </Box>
         <Box>
           <Text isTitle size="large">Loading Table</Text>
-          <Box horizontal space={60}>
+          <Box space={60} p="0 16px 0 0">
             <Table
               data={[]}
               columns={[]}
               loading
             />
           </Box>
-        </Box> */}
+        </Box>
       </Box>
     </StoryWrapper>
   ),

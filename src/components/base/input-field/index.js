@@ -93,7 +93,6 @@ const InputField = (props) => {
   const hasPassword = type === 'password';
   const textArea = type === 'textarea';
 
-
   if (copyInput) {
     return (
       <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>

@@ -7,7 +7,7 @@ import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
-const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK
+export const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK
   ? theme.colors.inputgrey
   : theme.colors.lightgrey);
 
@@ -24,16 +24,17 @@ export const getTheadStyle = theme => ({
   },
 });
 
+export const getPropsStyle = (theme, hasSearch) => ({
+  style: {
+    width: '100%',
+    border: `2px solid ${getBorderColor(theme)}`,
+    borderWidth: '2px 2px 0px 2px',
+    borderTopLeftRadius: hasSearch ? '0' : '4px',
+    borderTopRightRadius: hasSearch ? '0' : '4px',
+  },
+});
+
 export const getStyleProps = theme => ({
-  getProps: () => ({
-    style: {
-      width: '100%',
-      border: `2px solid ${getBorderColor(theme)}`,
-      borderWidth: '2px 2px 0px 2px',
-      borderTopLeftRadius: '4px',
-      borderTopRightRadius: '4px',
-    },
-  }),
   getTheadThProps: () => ({
     style: {
       borderRight: 'none',

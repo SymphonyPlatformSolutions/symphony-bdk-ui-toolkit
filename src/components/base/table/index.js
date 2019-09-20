@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import 'react-contexify/dist/ReactContexify.min.css';
 import { contextMenu } from 'react-contexify';
 import uuid from 'uuid';
+import { MdSearch } from 'react-icons/md';
+import InputField from '../input-field';
 import Tooltip from '../tooltip';
 import Text from '../text';
 import Box from '../box';
@@ -20,14 +22,85 @@ import {
   MenuWrapper,
   getTheadStyle,
   SortingIcon,
+  getBorderColor,
+  getPropsStyle,
 } from './theme';
 import Loader from '../loader';
 
+const SearchWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.darkgrey};
+  width: calc(100% + 4px);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  justify-content: flex-end;
+`;
+const InputWrapper = styled.div`
+  position: relative;
+  padding: 8px;
+  width: 280px;
+`;
+const SearchIconWrapper = styled.div`
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  top: 12px;
+`;
+const SearchBar = withTheme((props) => {
+  const { theme, value, onChange } = props;
+  return (
+    <SearchWrapper theme={theme}>
+      <InputWrapper>
+        <SearchIconWrapper>
+          <MdSearch color={theme.colors.darkgrey} />
+        </SearchIconWrapper>
+        <InputField
+          placeholder="Search value"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          type="text"
+          style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
+        />
+      </InputWrapper>
+    </SearchWrapper>
+  );
+});
+
+function filterSearchData(data, rowKeys, searchTerm) {
+  return data.filter((row) => {
+    for (let i = 0; i < rowKeys.length; i++) {
+      if (row[rowKeys[i]].includes(searchTerm)) {
+        return true;
+      }
+    }
+    return false;
+  });
+}
 
 const Table = ({
-  data, columns, theme, loading, emptyMessage, ...rest
+  data,
+  columns,
+  theme,
+  loading,
+  emptyMessage,
+  searchable,
+  ...rest
 }) => {
   const [sorting, changeSorting] = useState([]);
+  const [searchTerm, changeSearchTerm] = useState('');
+  const [filteredData, changeData] = useState(data);
+  // Search debouncing
+  useEffect(() => {
+    if (!searchTerm) {
+      changeData(data);
+      return () => {};
+    }
+    const handler = setTimeout(() => {
+      changeData(filterSearchData(data, Object.keys(data[0]), searchTerm));
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
   if (loading) {
     return (
       <EmptyTable>
@@ -112,24 +185,29 @@ const Table = ({
   });
 
   return (
-    <ReactTable
-      data={data}
-      width={100}
-      minRows={1}
-      columns={customColumns}
-      loading={loading}
-      showPagination={false}
-      getTheadProps={
-        (a) => {
+    <div>
+      {searchable && (
+        <SearchBar value={searchTerm} onChange={changeSearchTerm} />
+      )}
+      <ReactTable
+        data={filteredData}
+        width={100}
+        minRows={1}
+        columns={customColumns}
+        loading={loading}
+        // filterable={searchable} // This is cool though
+        showPagination={false}
+        getTheadProps={(a) => {
           if (a.sorted !== sorting) {
             changeSorting(a.sorted);
           }
           return getTheadStyle(theme);
-        }
-      }
-      {...getStyleProps(theme)}
-      {...rest}
-    />
+        }}
+        getProps={() => getPropsStyle(theme, searchable)}
+        {...getStyleProps(theme)}
+        {...rest}
+      />
+    </div>
   );
 };
 
@@ -139,12 +217,14 @@ Table.propTypes = {
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
   theme: PropTypes.object.isRequired,
+  searchable: PropTypes.bool,
 };
 
 Table.defaultProps = {
   data: null,
   columns: null,
   loading: false,
+  searchable: false,
   emptyMessage: 'You have no content to display!',
 };
 
