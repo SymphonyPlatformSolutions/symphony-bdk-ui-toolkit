@@ -47,6 +47,7 @@ const overrides = {
   flag: 'flag',
   selectedFlag: 'selected-flag',
   flagDropdownMenu: 'country-list',
+  search: 'search',
 };
 
 const getDropdownBackgroundColor = ({ theme, disabled }) => (disabled ? theme.colors.lightgrey : theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.white);
@@ -125,6 +126,19 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     background-color: ${props => getDropdownBackgroundColor(props)} !important;
     border: 1px solid ${props => getThemedBorderColor(props)} !important;
     width: ${props => getDropdownWidth(props)} !important;
+    .search {
+      position: relative !important;
+      padding: 5px 4px !important;
+    }
+    .search-box {
+      font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif !important;
+      font-size: 16px !important;
+      line-height: 16px !important;
+      margin-left: 6px !important;
+      padding: 4px 4px !important;
+      width: -webkit-fill-available !important;
+      border-radius: 4px !important;
+    }
     .dial-code {
       color: ${({ theme }) => darken(0.5, theme.colors.lightgrey)} !important;
     }
