@@ -43,6 +43,7 @@ const Table = ({
   loading,
   emptyMessage,
   searchable,
+  resizable,
   ...rest
 }) => {
   const [sorting, changeSorting] = useState([]);
@@ -155,7 +156,7 @@ const Table = ({
           minRows={1}
           columns={customColumns}
           loading={loading}
-        // filterable={searchable} // This is cool though
+          resizable={resizable || false}
           showPagination={false}
           getTheadProps={(a) => {
             if (a.sorted !== sorting) {
