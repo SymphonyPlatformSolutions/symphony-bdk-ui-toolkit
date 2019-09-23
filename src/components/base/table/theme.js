@@ -1,9 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
-import { MdPlayArrow } from 'react-icons/md';
-import { THEME_TYPES } from '../../../styles/colors';
+import { MdPlayArrow, MdSearch } from 'react-icons/md';
+import { transparentize } from 'polished';
+import InputField from '../input-field';
+import { THEME_TYPES, THEMES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
@@ -43,10 +45,23 @@ export const getStyleProps = theme => ({
       alignItems: 'center',
     },
   }),
+  getTrGroupProps: ah => ({
+    style: {
+      borderBottom: 0,
+    },
+  }),
   getTrProps: () => ({
     style: {
       borderBottom: `2px solid ${getBorderColor(theme)}`,
       height: '40px',
+    },
+  }),
+  getNoDataProps: () => ({
+    style: {
+      background: 'none',
+      top: '75%',
+      padding: '4px 25px',
+      color: theme.colors.textcolor,
     },
   }),
   getTdProps: () => ({
@@ -55,6 +70,29 @@ export const getStyleProps = theme => ({
     },
   }),
 });
+
+const overrides = {
+  trGroup: 'rt-tr-group',
+};
+function getHover(props) {
+  const { children: { props: { data } }, theme } = props;
+  if (!data || !data.length) {
+    return 'none';
+  }
+  if (theme.mode === THEME_TYPES.DARK) {
+    return '#4489f8';
+  }
+  return '#e6efff';
+}
+
+export const TableWrapper = styled.div.attrs(overrides)`
+  .ReactTable .${overrides.trGroup} {
+    transition: background-color 0.3s;
+    :hover {
+      background-color: ${props => getHover(props)};
+    }
+  }
+`;
 
 export const getMenuBackgroundColor = theme => ({
   style: {
@@ -70,20 +108,72 @@ export const getMenuBackgroundColor = theme => ({
 });
 
 const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  transform: rotate(${({ desc }) => (desc ? '90' : '270')}deg);
+  position: absolute;
+  left: 3px;
+  top: 3px;
 `;
-export const SortingIcon = ({ sorting, columnId, theme }) => {
-  if (!sorting || !sorting.length) {
-    return null;
-  }
-  if (sorting[0].id !== columnId) {
-    return null;
-  }
+const IconSpinner = styled.div`
+  transform: ${({ desc }) => (desc
+    ? 'rotate(90deg) translateY(4px)'
+    : 'rotate(270deg) translateY(1px)')};
+`;
+
+const SearchWrapper = styled.div`
+  background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#464b52' : theme.colors.darkgrey)};
+  width: calc(100% + 4px);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  justify-content: flex-end;
+`;
+const InputWrapper = styled.div`
+  position: relative;
+  padding: 8px;
+  width: 280px;
+`;
+const SearchIconWrapper = styled.div`
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  top: 12px;
+`;
+export const SearchBar = withTheme((props) => {
+  const { theme, value, onChange } = props;
   return (
-    <IconWrapper desc={sorting[0].desc}>
-      <MdPlayArrow color={theme.colors.textcolor} />
+    <SearchWrapper theme={theme}>
+      <InputWrapper>
+        <SearchIconWrapper>
+          <MdSearch color={theme.colors.darkgrey} />
+        </SearchIconWrapper>
+        <InputField
+          theme={THEMES[0]}
+          placeholder="Search value"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          type="text"
+          style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
+        />
+      </InputWrapper>
+    </SearchWrapper>
+  );
+});
+
+export const SortingIcon = ({ sorting, columnId, theme }) => {
+  if (!sorting || !sorting.length || sorting[0].id !== columnId) {
+    return (
+      <IconWrapper>
+        <IconSpinner>
+          <MdPlayArrow color={transparentize(0.6, theme.colors.textcolor)} />
+        </IconSpinner>
+      </IconWrapper>
+    );
+  }
+
+  return (
+    <IconWrapper>
+      <IconSpinner desc={sorting[0].desc}>
+        <MdPlayArrow color={theme.colors.primary} />
+      </IconSpinner>
     </IconWrapper>
   );
 };

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import 'react-contexify/dist/ReactContexify.min.css';
 import { contextMenu } from 'react-contexify';
 import uuid from 'uuid';
-import { MdSearch } from 'react-icons/md';
-import InputField from '../input-field';
 import Tooltip from '../tooltip';
 import Text from '../text';
 import Box from '../box';
-
 import {
   getStyleProps,
   generateContextMenu,
@@ -22,49 +19,11 @@ import {
   MenuWrapper,
   getTheadStyle,
   SortingIcon,
-  getBorderColor,
   getPropsStyle,
+  SearchBar,
+  TableWrapper,
 } from './theme';
 import Loader from '../loader';
-
-const SearchWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.darkgrey};
-  width: calc(100% + 4px);
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  display: flex;
-  justify-content: flex-end;
-`;
-const InputWrapper = styled.div`
-  position: relative;
-  padding: 8px;
-  width: 280px;
-`;
-const SearchIconWrapper = styled.div`
-  position: absolute;
-  z-index: 4;
-  left: 14px;
-  top: 12px;
-`;
-const SearchBar = withTheme((props) => {
-  const { theme, value, onChange } = props;
-  return (
-    <SearchWrapper theme={theme}>
-      <InputWrapper>
-        <SearchIconWrapper>
-          <MdSearch color={theme.colors.darkgrey} />
-        </SearchIconWrapper>
-        <InputField
-          placeholder="Search value"
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          type="text"
-          style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
-        />
-      </InputWrapper>
-    </SearchWrapper>
-  );
-});
 
 function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {
@@ -160,7 +119,7 @@ const Table = ({
               {stringHeader}
             </Text>
             {parsedEl.tooltip && <Tooltip>{parsedEl.tooltip}</Tooltip>}
-            <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />
+            {el.sortable !== false && <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />}
           </Box>
         </CellWrapper>
       );
@@ -189,24 +148,26 @@ const Table = ({
       {searchable && (
         <SearchBar value={searchTerm} onChange={changeSearchTerm} />
       )}
-      <ReactTable
-        data={filteredData}
-        width={100}
-        minRows={1}
-        columns={customColumns}
-        loading={loading}
+      <TableWrapper>
+        <ReactTable
+          data={filteredData}
+          width={100}
+          minRows={1}
+          columns={customColumns}
+          loading={loading}
         // filterable={searchable} // This is cool though
-        showPagination={false}
-        getTheadProps={(a) => {
-          if (a.sorted !== sorting) {
-            changeSorting(a.sorted);
-          }
-          return getTheadStyle(theme);
-        }}
-        getProps={() => getPropsStyle(theme, searchable)}
-        {...getStyleProps(theme)}
-        {...rest}
-      />
+          showPagination={false}
+          getTheadProps={(a) => {
+            if (a.sorted !== sorting) {
+              changeSorting(a.sorted);
+            }
+            return getTheadStyle(theme);
+          }}
+          getProps={() => getPropsStyle(theme, searchable)}
+          {...getStyleProps(theme)}
+          {...rest}
+        />
+      </TableWrapper>
     </div>
   );
 };
