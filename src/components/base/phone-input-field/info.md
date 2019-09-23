@@ -49,6 +49,8 @@ PhoneInputField.propTypes = {
   onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   disableAreaCodes: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  hasSearchField: PropTypes.bool,
 };
 
 PhoneInputField.defaultProps = {
@@ -61,5 +63,7 @@ PhoneInputField.defaultProps = {
   onBlur: NoOp,
   defaultValue: 'us',
   disableAreaCodes: true,
+  errorMessage: 'Something went wrong!',
+  hasSearchField: false,
 };
 ```

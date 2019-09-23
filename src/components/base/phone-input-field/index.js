@@ -12,7 +12,8 @@ import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
-  disableAreaCodes, id, onBlur, errorMessage, ...rest
+  disableAreaCodes, id, onBlur, errorMessage, hasSearchField,
+  ...rest
 }) => {
   const [hasRef, setRef] = useState(null);
   const elRef = createRef();
@@ -32,10 +33,13 @@ const PhoneInputField = ({
         <ReactPhoneInput
           disableAreaCodes={disableAreaCodes}
           disabled={disabled}
-          defaultCountry={defaultValue}
+          defaultCountry={hasSearchField ? null : defaultValue}
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          enableSearchField={hasSearchField}
+          disableSearchIcon
+          searchPlaceholder="Type country name"
           inputExtraProps={{
             id,
           }}
@@ -57,6 +61,7 @@ PhoneInputField.propTypes = {
   defaultValue: PropTypes.string,
   disableAreaCodes: PropTypes.bool,
   errorMessage: PropTypes.string,
+  hasSearchField: PropTypes.bool,
 };
 
 PhoneInputField.defaultProps = {
@@ -70,6 +75,7 @@ PhoneInputField.defaultProps = {
   defaultValue: 'us',
   disableAreaCodes: true,
   errorMessage: 'Something went wrong!',
+  hasSearchField: false,
 };
 
 export default PhoneInputField;

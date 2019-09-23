@@ -65,6 +65,12 @@ storiesOf('Base', module)
         </div>
       </Box>
       <Box vertical space={20}>
+        <Text isTitle size="small">Search on Country list dropdown</Text>
+        <div style={styles}>
+          <PhoneInputField hasSearchField value="+1" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
         <Text isTitle size="small">Error Phone Input Field</Text>
         <div style={styles}>
           <PhoneInputField value="+1" inputState="error" />
