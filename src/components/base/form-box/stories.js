@@ -11,7 +11,7 @@ import Info from './info.md';
 import Box from '../box';
 import Text from '../text';
 
-const InputController = ({ type, ...rest }) => {
+export const InputController = ({ type, ...rest }) => {
   const [value, changeValue] = useState('');
 
   return (
@@ -47,7 +47,7 @@ const OPTIONS = [
   },
 ];
 
-const DropdownHandler = (props) => {
+export const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
 
   return (
@@ -56,7 +56,7 @@ const DropdownHandler = (props) => {
 };
 
 
-const CheckboxController = () => {
+export const CheckboxController = () => {
   const [chosen, changeChosen] = useState({
     a: false,
     b: false,
@@ -84,7 +84,7 @@ const CheckboxController = () => {
   );
 };
 
-const EmailController = (rest) => {
+export const EmailController = (rest) => {
   const [value, changeValue] = useState('');
   const checkEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
     value,
@@ -102,7 +102,7 @@ const EmailController = (rest) => {
   );
 };
 
-const RadioController = ({ disabled }) => {
+export const RadioController = ({ disabled }) => {
   const [chosen, changeChosen] = useState('a');
 
   return (

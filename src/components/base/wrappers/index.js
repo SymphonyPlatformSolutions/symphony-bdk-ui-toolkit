@@ -3,8 +3,8 @@ import Box from '../box';
 import { THEME_TYPES } from '../../../styles/colors';
 
 export const StoryWrapper = styled(Box)`
-  margin-top: 20px;
-  margin-left: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
   background-color: ${({ theme }) => (
     theme.mode === THEME_TYPES.LIGHT
       ? theme.colors.white

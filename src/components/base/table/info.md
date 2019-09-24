@@ -156,8 +156,9 @@ Table.propTypes = {
   columns: PropTypes.array,
   loading: PropTypes.bool,
   emptyMessage: PropTypes.string,
-  searchable: PropTypes.bool,
   theme: PropTypes.object.isRequired,
+  searchable: PropTypes.bool,
+  maxHeight: PropTypes.string,
 };
 
 Table.defaultProps = {
@@ -166,5 +167,6 @@ Table.defaultProps = {
   loading: false,
   searchable: false,
   emptyMessage: 'You have no content to display!',
+  maxHeight: null,
 };
 ```
