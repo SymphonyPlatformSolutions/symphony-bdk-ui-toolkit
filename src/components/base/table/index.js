@@ -24,6 +24,7 @@ import {
   TableWrapper,
 } from './theme';
 import Loader from '../loader';
+import Card from '../card';
 
 function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {
@@ -44,6 +45,7 @@ const Table = ({
   emptyMessage,
   searchable,
   resizable,
+  maxHeight,
   ...rest
 }) => {
   const [sorting, changeSorting] = useState([]);
@@ -145,10 +147,12 @@ const Table = ({
   });
 
   return (
-    <div>
-      {searchable && (
+    <Card p={0}>
+      <Box type="flat">
+        {searchable && (
         <SearchBar value={searchTerm} onChange={changeSearchTerm} />
-      )}
+        )}
+      </Box>
       <TableWrapper>
         <ReactTable
           data={filteredData}
@@ -164,12 +168,12 @@ const Table = ({
             }
             return getTheadStyle(theme);
           }}
-          getProps={() => getPropsStyle(theme, searchable)}
+          getProps={() => getPropsStyle(maxHeight)}
           {...getStyleProps(theme)}
           {...rest}
         />
       </TableWrapper>
-    </div>
+    </Card>
   );
 };
 
@@ -180,6 +184,7 @@ Table.propTypes = {
   emptyMessage: PropTypes.string,
   theme: PropTypes.object.isRequired,
   searchable: PropTypes.bool,
+  maxHeight: PropTypes.string,
 };
 
 Table.defaultProps = {
@@ -188,6 +193,7 @@ Table.defaultProps = {
   loading: false,
   searchable: false,
   emptyMessage: 'You have no content to display!',
+  maxHeight: null,
 };
 
 export default withTheme(Table);

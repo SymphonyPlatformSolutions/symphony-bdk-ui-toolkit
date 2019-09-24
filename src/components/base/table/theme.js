@@ -27,13 +27,10 @@ export const getTheadStyle = theme => ({
   },
 });
 
-export const getPropsStyle = (theme, hasSearch) => ({
+export const getPropsStyle = (maxHeight) => ({
   style: {
     width: '100%',
-    border: `2px solid ${getBorderColor(theme)}`,
-    borderWidth: '2px 2px 0px 2px',
-    borderTopLeftRadius: hasSearch ? '0' : '4px',
-    borderTopRightRadius: hasSearch ? '0' : '4px',
+    maxHeight: maxHeight,
   },
 });
 
@@ -122,6 +119,7 @@ const IconSpinner = styled.div`
 const SearchWrapper = styled.div`
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#464b52' : theme.colors.darkgrey)};
   width: calc(100% + 4px);
+  transform: translateX(-2px);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
