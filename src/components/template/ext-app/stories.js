@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs, text,
@@ -109,8 +109,8 @@ const PageOne = () => {
         However unreal it may seem, we are connected, you and I. We're on the same curve,
         just on opposite ends.
       </Text>
-      <Box>
-        <Button style={{ width: '150px' }}>
+      <Box horizontal>
+        <Button>
           Setup Form
         </Button>
       </Box>
@@ -163,8 +163,8 @@ const PageTwo = () => {
         Some don't, become nothing. She starred in one of the ones that
         became nothing.
       </Text>
-      <Box>
-        <Button style={{ width: '150px' }}>
+      <Box horizontal>
+        <Button>
           Add notification
         </Button>
       </Box>
@@ -192,7 +192,6 @@ const ExtApp = () => (
     </Box>
   </Box>
 );
-
 
 storiesOf('Templates', module)
   .addDecorator(withKnobs)
