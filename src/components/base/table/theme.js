@@ -4,14 +4,14 @@ import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
 import uuid from 'uuid';
 import { MdPlayArrow, MdSearch } from 'react-icons/md';
-import { transparentize } from 'polished';
+import { darken, transparentize } from 'polished';
 import InputField from '../input-field';
 import { THEME_TYPES, THEMES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
 export const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK
-  ? theme.colors.inputgrey
+  ? 'theme.colors.inputgrey'
   : theme.colors.lightgrey);
 
 const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK
@@ -20,17 +20,26 @@ const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK
 
 export const getTheadStyle = theme => ({
   style: {
-    backgroundColor: getBorderColor(theme),
-    boxShadow: 'none',
-    minHeight: '36px',
+    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : 'white',
+    boxShadow: '0px 1px 3px rgb(0,0,0,0.1)',
+    minHeight: '48px',
     padding: '5px 0px',
   },
 });
+// '#797979'
+export const getHeaderColumnTextStyle = theme => ({
+  fontSize: '1.2rem',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  lineHeight: '1.2rem',
+  color: theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.darkgrey),
+});
 
-export const getPropsStyle = (maxHeight) => ({
+export const getPropsStyle = maxHeight => ({
   style: {
     width: '100%',
-    maxHeight: maxHeight,
+    border: 'none',
+    maxHeight,
   },
 });
 
@@ -43,14 +52,14 @@ export const getStyleProps = theme => ({
       alignItems: 'center',
     },
   }),
-  getTrGroupProps: ah => ({
+  getTrGroupProps: () => ({
     style: {
       borderBottom: 0,
     },
   }),
   getTrProps: () => ({
     style: {
-      borderBottom: `2px solid ${getBorderColor(theme)}`,
+      borderTop: `1px solid ${getBorderColor(theme)}`,
       height: '40px',
     },
   }),
@@ -108,7 +117,7 @@ export const getMenuBackgroundColor = theme => ({
 const IconWrapper = styled.div`
   position: absolute;
   left: 3px;
-  top: 3px;
+  top: 8px;
 `;
 const IconSpinner = styled.div`
   transform: ${({ desc }) => (desc
@@ -117,13 +126,13 @@ const IconSpinner = styled.div`
 `;
 
 const SearchWrapper = styled.div`
-  background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#464b52' : theme.colors.darkgrey)};
-  width: calc(100% + 4px);
+  width: calc(100%);
   transform: translateX(-2px);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
   justify-content: flex-end;
+  background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : 'white')};
 `;
 const InputWrapper = styled.div`
   position: relative;

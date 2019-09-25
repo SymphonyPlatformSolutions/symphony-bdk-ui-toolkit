@@ -101,7 +101,7 @@ const PageOne = () => {
       <Text type="primary" size="large" isTitle>
         Setup Page
       </Text>
-      <Text type="primary" size="small">
+      <Text type="primary">
         Your bones don't break, mine do. That's clear.
         Your cells react to bacteria and viruses differently than mine.
         You don't get sick, I do. That's also clear.
@@ -155,7 +155,7 @@ const PageTwo = () => {
       <Text type="primary" size="large" isTitle>
         Manage Notifications
       </Text>
-      <Text type="primary" size="small">
+      <Text type="primary">
         Well, the way they make shows is,
         they make one show. That show's called a pilot.
         Then they show that show to the people who make shows,

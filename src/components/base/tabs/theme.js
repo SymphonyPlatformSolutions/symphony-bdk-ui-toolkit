@@ -4,8 +4,8 @@ export const getTabItemColor = ({ activeTab, label, theme }) => (
     ? theme.colors.primary
     : theme.colors.darkgrey
 );
-export const getTabItemWeight = ({ activeTab, label }) => (
-  activeTab === label ? '800' : '100'
+export const getTabItemOpacity = ({ activeTab, label }) => (
+  activeTab === label ? 1 : 0.6
 );
 
 export const getTabItemAlign = ({ align }) => (align === 'right' ? 'right' : 'left');

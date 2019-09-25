@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { transparentize } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 
@@ -13,5 +14,26 @@ export const getBoxShadowColor = ({ theme }) => (
 );
 
 export const getBorderColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT ? theme.colors.grey : '#9197A1'
+  theme.mode === THEME_TYPES.LIGHT ? `1px solid ${theme.colors.grey}` : '1px solid #494b4e7a'
 );
+
+
+export const BaseCard = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: ${getBorderColor};
+  padding: ${props => `${props.p}px`};
+  box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? 'none' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
+  overflow: hidden;
+  &:hover {
+    box-shadow: ${props => (props.hoverEffect ? '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)' : null)};
+    background-color: ${props => (props.hoverEffect ? getBackgroundColor(props) : null)};
+  }
+  width: 100%;
+`;
+
+export const CardTitle = styled.span`;
+  display: ${p => (p.title === '' ? 'none' : 'inline-block')};
+`;

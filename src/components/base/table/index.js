@@ -22,6 +22,7 @@ import {
   getPropsStyle,
   SearchBar,
   TableWrapper,
+  getHeaderColumnTextStyle,
 } from './theme';
 import Loader from '../loader';
 import Card from '../card';
@@ -118,7 +119,10 @@ const Table = ({
       parsedEl.Header = ({ column }) => (
         <CellWrapper type="flat">
           <Box horizontal space={5}>
-            <Text type="primary" size="small" style={{ fontWeight: 'bold' }}>
+            <Text
+              type="primary"
+              style={getHeaderColumnTextStyle(theme)}
+            >
               {stringHeader}
             </Text>
             {parsedEl.tooltip && <Tooltip>{parsedEl.tooltip}</Tooltip>}
