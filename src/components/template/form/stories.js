@@ -45,7 +45,7 @@ const FormPage = () => (
         </Label>
         <InputController id="normal-input" />
       </FormGroup>
-            <FormGroup>
+      <FormGroup>
         <Label htmlFor="normal-input" tooltip="This is the ID that is present in the integration page of the target service">
           Client ID
         </Label>
