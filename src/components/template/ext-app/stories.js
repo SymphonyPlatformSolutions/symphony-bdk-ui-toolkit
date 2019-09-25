@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import {
   withKnobs, text,
 } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import Faker from 'faker';
+import { linkTo } from '@storybook/addon-links';
 import Tabs from '../../base/tabs';
 import Box from '../../base/box';
 import { StoryWrapper } from '../../base/wrappers';
@@ -110,7 +111,7 @@ const PageOne = () => {
         just on opposite ends.
       </Text>
       <Box horizontal>
-        <Button>
+        <Button onClick={linkTo('templates', 'form')}>
           Setup Form
         </Button>
       </Box>
