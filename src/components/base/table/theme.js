@@ -143,7 +143,7 @@ const SearchIconWrapper = styled.div`
   position: absolute;
   z-index: 4;
   left: 14px;
-  top: 12px;
+  top: 14px;
 `;
 export const SearchBar = withTheme((props) => {
   const { theme, value, onChange } = props;
