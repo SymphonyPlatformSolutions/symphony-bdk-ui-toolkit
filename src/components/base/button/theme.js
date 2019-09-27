@@ -62,7 +62,7 @@ const BUTTON_THEME = (theme, buttonType, fill) => {
   }
   const selectedTheme = {
     [THEME_TYPES.LIGHT]: {
-      TEXT_COLOR: isFilled ? (buttonType==='primary' || buttonType==='danger' || buttonType==='submit' ? theme.colors.white : theme.colors.black) : theme.colors[buttonType],
+      TEXT_COLOR: isFilled ? (buttonType === 'primary' || buttonType === 'danger' || buttonType === 'submit' ? theme.colors.white : theme.colors.black) : theme.colors[buttonType],
       BG_COLOR: isFilled ? theme.colors[buttonType] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
@@ -137,21 +137,13 @@ const getBorderStyle = (props) => {
   return isOutlined ? `2px solid ${getColor(props)}` : 'inherit';
 };
 
-const getBorderRadius = (props) => {
-  return props.circular ? '72px' : '0px';
-};
+const getBorderRadius = props => (props.circular ? '72px' : '0px');
 
-const getFontSize = props => {
-  return props.circular ? FONTSIZE_CIRCULAR[props.size] : FONTSIZE[props.size];
-}
+const getFontSize = props => (props.circular ? FONTSIZE_CIRCULAR[props.size] : FONTSIZE[props.size]);
 
-const getButtonMinHeight = props => {
-  return props.circular ? BUTTON_MIN_HEIGHT_CIRCULAR[props.size] : BUTTON_MIN_HEIGHT[props.size];
-}
+const getButtonMinHeight = props => (props.circular ? BUTTON_MIN_HEIGHT_CIRCULAR[props.size] : BUTTON_MIN_HEIGHT[props.size]);
 
-const getButtonMinWidth = (props) => {
-  return props.circular ? BUTTON_MIN_WIDTH_CIRCULAR[props.size] : BUTTON_MIN_WIDTH[props.size];
-}
+const getButtonMinWidth = props => (props.circular ? BUTTON_MIN_WIDTH_CIRCULAR[props.size] : BUTTON_MIN_WIDTH[props.size]);
 
 export const getSpinnerColor = ({
   theme, fill,
@@ -167,6 +159,15 @@ export const getSpinnerColor = ({
     background: theme.colors.white,
   };
 };
+
+const getButtonBoxShadow = (({
+  theme, fill, disabled, circular,
+}) => {
+  const isGhost = fill === FILL_TYPES.GHOST;
+  const isDark = theme.mode === THEME_TYPES.DARK;
+  return disabled || isGhost ? null : isDark ? circular ? '0px 0px 4px 1px rgba(255,255,255,0.27)' : '0px 2px 4px 0px rgba(255, 255, 255, 0.27)' : '0px 3px 4px 0px rgba(0,0,0,.14)';
+});
+
 
 export const Container = styled(Box)`
   display: flex;
@@ -188,10 +189,11 @@ export const BaseButton = styled.button.attrs({
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${props => getButtonMinHeight(props)};
   min-width: ${props => getButtonMinWidth(props)};
-  width: ${props => getButtonMinWidth(props)};
+  width: ${props => (props.circular ? getButtonMinWidth(props) : null)};
   background-color: ${props => getBgColor(props)};
   border: ${props => getBorderStyle(props)};
   border-radius: ${props => getBorderRadius(props)};
+  box-shadow: ${getButtonBoxShadow};
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   &:focus {
     outline: 0;
