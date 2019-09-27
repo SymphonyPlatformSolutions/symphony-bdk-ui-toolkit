@@ -66,7 +66,7 @@ const BUTTON_THEME = (theme, buttonType, fill) => {
       BG_COLOR: isFilled ? theme.colors[buttonType] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
-      TEXT_COLOR: isFilled ? theme.colors.black : theme.colors[buttonType],
+      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[buttonType],
       BG_COLOR: isFilled ? theme.colors[buttonType] : 'transparent',
     },
   };

@@ -24,12 +24,13 @@ const THEMES = [
       orange: '#f58b3a',
       dark: '#17191C',
       darkaccent: '#25272A',
+      link: '#0962F1',
     },
   },
   {
     mode: THEME_TYPES.DARK,
     colors: {
-      primary: '#90caf9',
+      primary: '#6ab8f6',
       secondary: '#33b1ff',
       danger: '#f74a6f',
       submit: '#006CAF',
@@ -46,6 +47,7 @@ const THEMES = [
       orange: '#f58b3a',
       dark: '#17191C',
       darkaccent: '#25272A',
+      link: '#4489F8',
     },
   },
 ];
