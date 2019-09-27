@@ -1,5 +1,5 @@
 #Button
-Button Supports four different types,as well custom ones.
+Button Supports four different types, as well as custom ones.
 
 ##Samples
 

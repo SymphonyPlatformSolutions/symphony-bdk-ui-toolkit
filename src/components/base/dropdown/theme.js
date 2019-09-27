@@ -30,8 +30,8 @@ export const customStyles = ({ theme, error }) => ({
       state.menuIsOpen
         ? `1px solid ${theme.colors.primary}`
         : `1px solid ${getBorderColor(theme, error)}`,
-    borderBottomLeftRadius: state.menuIsOpen ? 0 : '3px',
-    borderBottomRightRadius: state.menuIsOpen ? 0 : '3px',
+    borderBottomLeftRadius: state.menuIsOpen ? 0 : '0px',
+    borderBottomRightRadius: state.menuIsOpen ? 0 : '0px',
     borderColor: state.menuIsOpen
       ? theme.colors.primary
       : getBorderColor(theme, error),
@@ -44,7 +44,7 @@ export const customStyles = ({ theme, error }) => ({
         ? theme.colors.grey
         : theme.colors.white),
     margin: '0',
-    borderRadius: '3px',
+    borderRadius: '0px',
     transition: 'all 0.3s',
     '&:hover': {
       border: `1px solid ${
@@ -91,7 +91,7 @@ export const customStyles = ({ theme, error }) => ({
     },
     '&:hover': {
       color: theme.colors.white,
-      backgroundColor: theme.colors.secondary,
+      backgroundColor: theme.colors.primary,
     },
   }),
   singleValue: provided => ({

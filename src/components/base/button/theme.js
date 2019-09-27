@@ -16,6 +16,12 @@ const FONTSIZE = {
   large: '1rem',
 };
 
+const FONTSIZE_CIRCULAR = {
+  tiny: '1',
+  small: '1.2',
+  large: '1.4rem',
+};
+
 const BUTTON_MIN_HEIGHT = {
   tiny: '1rem',
   small: '1.5rem',
@@ -26,6 +32,18 @@ const BUTTON_MIN_WIDTH = {
   tiny: '2.625rem',
   small: '6.625rem',
   large: '6.625rem',
+};
+
+const BUTTON_MIN_WIDTH_CIRCULAR = {
+  tiny: '1rem',
+  small: '2rem',
+  large: '3rem',
+};
+
+const BUTTON_MIN_HEIGHT_CIRCULAR = {
+  tiny: '1rem',
+  small: '2rem',
+  large: '3rem',
 };
 
 export const SPINNER_SIZE = {
@@ -44,11 +62,11 @@ const BUTTON_THEME = (theme, buttonType, fill) => {
   }
   const selectedTheme = {
     [THEME_TYPES.LIGHT]: {
-      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[buttonType],
+      TEXT_COLOR: isFilled ? (buttonType==='primary' || buttonType==='danger' || buttonType==='submit' ? theme.colors.white : theme.colors.black) : theme.colors[buttonType],
       BG_COLOR: isFilled ? theme.colors[buttonType] : 'inherit',
     },
     [THEME_TYPES.DARK]: {
-      TEXT_COLOR: isFilled ? theme.colors.white : theme.colors[buttonType],
+      TEXT_COLOR: isFilled ? theme.colors.black : theme.colors[buttonType],
       BG_COLOR: isFilled ? theme.colors[buttonType] : 'transparent',
     },
   };
@@ -119,10 +137,21 @@ const getBorderStyle = (props) => {
   return isOutlined ? `2px solid ${getColor(props)}` : 'inherit';
 };
 
+const getBorderRadius = (props) => {
+  return props.circular ? '72px' : '0px';
+};
 
-const getFontSize = props => FONTSIZE[props.size];
-const getButtonMinHeight = props => BUTTON_MIN_HEIGHT[props.size];
-const getButtonMinWidth = props => BUTTON_MIN_WIDTH[props.size];
+const getFontSize = props => {
+  return props.circular ? FONTSIZE_CIRCULAR[props.size] : FONTSIZE[props.size];
+}
+
+const getButtonMinHeight = props => {
+  return props.circular ? BUTTON_MIN_HEIGHT_CIRCULAR[props.size] : BUTTON_MIN_HEIGHT[props.size];
+}
+
+const getButtonMinWidth = (props) => {
+  return props.circular ? BUTTON_MIN_WIDTH_CIRCULAR[props.size] : BUTTON_MIN_WIDTH[props.size];
+}
 
 export const getSpinnerColor = ({
   theme, fill,
@@ -159,10 +188,10 @@ export const BaseButton = styled.button.attrs({
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${props => getButtonMinHeight(props)};
   min-width: ${props => getButtonMinWidth(props)};
-
+  width: ${props => getButtonMinWidth(props)};
   background-color: ${props => getBgColor(props)};
   border: ${props => getBorderStyle(props)};
-  border-radius: 22px;
+  border-radius: ${props => getBorderRadius(props)};
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   &:focus {
     outline: 0;

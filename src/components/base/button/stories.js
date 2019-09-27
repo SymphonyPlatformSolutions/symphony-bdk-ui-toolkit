@@ -93,6 +93,26 @@ storiesOf('Base', module)
         </Box>
       </Box>
       <Box>
+        <Text isTitle size="large">Button Circular</Text>
+        <Box horizontal space={20}>
+          <Button size="large" type="primary" fill="filled" circular="circular" onClick={action('clicked')}>
+            <span>+</span>
+          </Button>
+          <Button size="large" type="secondary" fill="outlined" circular="circular" onClick={action('clicked')}>
+            <span>+</span>
+          </Button>
+          <Button size="large" type="danger" fill="filled" circular="circular" onClick={action('clicked')}>
+            <span>+</span>
+          </Button>
+          <Button size="large" type="grey" fill="filled" circular="circular" onClick={action('clicked')}>
+            <span>+</span>
+          </Button>
+          <Button size="large" type="submit" fill="filled" circular="circular" onClick={action('clicked')}>
+            <span>+</span>
+          </Button>
+        </Box>
+      </Box>
+      <Box>
         <Text isTitle size="large">Button Fill types</Text>
         <Box horizontal space={20}>
           <Button size="large" type="primary" fill="filled" onClick={action('clicked')}>
@@ -131,6 +151,9 @@ storiesOf('Base', module)
           </Button>
           <Button size="small" fill="filled" type="secondary" onClick={asyncAction}>
             <span>Submit</span>
+          </Button>
+          <Button size="large" fill="filled" type="primary" circular="circular" onClick={asyncAction}>
+            <span>+</span>
           </Button>
           <LoadingContainer />
           <Button size="large" type="primary" fill="filled" loading onClick={asyncAction}>
