@@ -27,7 +27,7 @@ const TabHeader = styled.ol`
 `;
 
 const TabHeaderLabel = styled.span`
-  font-size: 1.10rem;
+  font-size: 1.25rem;
   opacity: ${props => getTabItemOpacity(props)};
   line-height: 22px;
   cursor: pointer;

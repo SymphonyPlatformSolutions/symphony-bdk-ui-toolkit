@@ -6,6 +6,7 @@ import Text from '../text';
 import Box from '../box';
 import Card from '../card';
 import Button from '../button';
+import { Separator } from '../../index';
 
 const BreadCrumbs = ({ config, currentPage }) => (
   <Box>
@@ -140,6 +141,17 @@ const HelpPageBuilder = ({ config, theme }) => {
                 <img width={500} src={content.imageUrl} />
               </React.Fragment>
             ))}
+            <Box horizontal>
+              <Separator />
+            </Box>
+            <Box vertical>
+              <Text isTitle type="prinary">Related Subjects</Text>
+              { node.relatedContent && node.relatedContent.map(elem => (
+                <React.Fragment>
+                  <a url={elem.url}>{elem.title}</a>
+                </React.Fragment>
+              ))}
+            </Box>
             <Box horizontal justify="flex-end" type="flat">
               <Button onClick={handlePageClick(parent, config)}>Back</Button>
             </Box>
