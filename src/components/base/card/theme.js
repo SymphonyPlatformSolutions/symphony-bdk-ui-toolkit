@@ -23,7 +23,7 @@ export const BaseCard = styled.div`
   margin-bottom: 10px;
   border: ${getBorderColor};
   padding: ${props => `${props.p}px`};
-  box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? 'none' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
+  box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
   overflow: hidden;

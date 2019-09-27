@@ -24,7 +24,13 @@ storiesOf('Base', module)
             <Text size="small">Card without title</Text>
           </Box>
         </Card>
+        <Card hoverEffect>
+          <Box type="flat" p="10px">
+            <Text size="small">Card with Hover</Text>
+          </Box>
+        </Card>
       </Box>
+
     </StoryWrapper>
   ), {
     notes: {
