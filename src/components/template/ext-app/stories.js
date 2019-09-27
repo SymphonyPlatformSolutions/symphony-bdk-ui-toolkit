@@ -12,6 +12,8 @@ import Text from '../../base/text';
 import Button from '../../base/button';
 import Table from '../../base/table';
 import { NoOp } from '../../../utils/helpers';
+import HelpPageBuilder from '../../base/help-page-builder';
+import { PAGE_DATA_TWO_LEVELS } from '../../base/help-page-builder/stories';
 
 const getFullName = () => `${Faker.name.firstName()} ${Faker.name.lastName()}`;
 const mockData = [];
@@ -179,7 +181,7 @@ const PageTwo = () => {
 const ExtApp = () => (
   <Box space={20}>
     <Box horizontal space={60} style={{ maxWidth: '50rem' }}>
-      <Tabs activeTab={0}>
+      <Tabs activeTab={2}>
         <div label={text('Tab 1 title', 'Set Up')}>
           <PageOne />
         </div>
@@ -187,7 +189,7 @@ const ExtApp = () => (
           <PageTwo />
         </div>
         <div label={text('Tab 5 title', 'Help')} align="right">
-          <Text small>Help content here!</Text>
+          <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />
         </div>
       </Tabs>
     </Box>
