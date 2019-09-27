@@ -27,7 +27,7 @@ const TabHeader = styled.ol`
 `;
 
 const TabHeaderLabel = styled.span`
-  font-size: 1.25rem;
+  font-size: 1.10rem;
   opacity: ${props => getTabItemOpacity(props)};
   line-height: 22px;
   cursor: pointer;
@@ -50,7 +50,7 @@ const TabHeaderItem = styled.li`
 
 const TabHeaderIndicator = styled.div`
   width: ${props => getHeaderIndicatorWidth(props)};
-  height: 3px;
+  height: 1px;
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
   margin-top: 38px;

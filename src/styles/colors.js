@@ -7,13 +7,13 @@ const THEMES = [
   {
     mode: THEME_TYPES.LIGHT,
     colors: {
-      primary: '#006CAF',
-      secondary: '#006CAF',
-      danger: '#D50935',
-      submit: '#006CAF',
+      primary: '#52ABFC',
+      secondary: '#00bfa5',
+      danger: '#f44336',
+      submit: '#1976d2',
       grey: '#E3E5E8',
       white: '#fff',
-      black: '#000',
+      black: 'rgba(0, 0, 0, 0.87)',
       blue: '#1066F2',
       darkgrey: '#9197A1',
       bordergrey: '#9197A1',
@@ -29,7 +29,7 @@ const THEMES = [
   {
     mode: THEME_TYPES.DARK,
     colors: {
-      primary: '#006CAF',
+      primary: '#90caf9',
       secondary: '#33b1ff',
       danger: '#f74a6f',
       submit: '#006CAF',

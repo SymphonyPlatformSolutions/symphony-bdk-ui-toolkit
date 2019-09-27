@@ -59,7 +59,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
      width: 100%;
      border-radius: 0;
   }
-  
+
   .${overrides.formControl} {
     font-size: 1rem;
     transition: border 1s cubic-bezier(.25,.8,.25,1);
@@ -67,7 +67,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     padding-left: 57px !important;
     width: 100% !important;
     border: 1px solid ${props => getThemedBorderColor(props)} !important;
-    border-radius: 3px !important;
+    border-radius: 0px !important;
     color: ${props => getColor(props)};
     background-color: ${props => getBackgroundColor(props)} !important;
     cursor: ${props => (props.disabled ? 'inherit' : 'text')};
@@ -76,17 +76,17 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       opacity: .8;
       cursor: not-allowed;
     }
-    
+
     &::placeholder {
       color: ${props => getPlaceholderColor(props)};
     }
-    
+
     &:focus {
      outline: none;
      border-color: ${props => getInputFocusBorderColor(props)} !important;
     }
   }
-  
+
   .${overrides.flagDropdownButton} {
     background-color: transparent !important;
     border-radius: 0 !important;
@@ -94,7 +94,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     .selected-flag {
       background-color: transparent !important;
     }
-    
+
   }
 
   .${overrides.searchHover} {
@@ -112,16 +112,16 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       margin-left: 5px !important;
       transform: scale(1.5) !important;
       border-top: ${props => `3px solid ${getDropdownColor(props)} !important`};
-      
+
       &.up {
         border-top: none !important;
         border-bottom: ${props => `3px solid ${getDropdownColor(props)} !important`};
       }
     }
   }
-  
+
   .${overrides.flagDropdownMenu} {
-    border-radius: 3px !important;
+    border-radius: 0px !important;
     color: ${props => getDropdownColor(props)} !important;
     background-color: ${props => getDropdownBackgroundColor(props)} !important;
     border: 1px solid ${props => getThemedBorderColor(props)} !important;
@@ -137,7 +137,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       margin-left: 6px !important;
       padding: 4px 4px !important;
       width: -webkit-fill-available !important;
-      border-radius: 4px !important;
+      border-radius: 0px !important;
     }
     .dial-code {
       color: ${({ theme }) => darken(0.5, theme.colors.lightgrey)} !important;

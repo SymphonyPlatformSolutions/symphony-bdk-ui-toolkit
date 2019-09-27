@@ -38,7 +38,7 @@ const FloatInput = styled.div`
 
 const BaseInputField = styled.input`
   font-size: .875rem;
-  border-radius: .2rem;
+  border-radius: 0px;
   border: 1px solid ${props => getBorderColor(props)};
   width: ${props => getWidth(props)};
   min-height: 35px;
@@ -53,7 +53,7 @@ const BaseInputField = styled.input`
     cursor: not-allowed;
     font-style: italic;
   }
-  
+
   &::placeholder {
     color: ${props => getPlaceholderColor(props)};
   }

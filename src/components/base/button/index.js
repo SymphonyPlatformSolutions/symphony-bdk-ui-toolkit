@@ -16,7 +16,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  top: -2px;
+  top: ${p => (p.circular ? '2px' : '-2px')};
   margin-top: 0 !important;
 `;
 
@@ -29,7 +29,7 @@ const BUTTON_TYPES = {
 };
 
 const Button = ({
-  children, size, type, fill, theme, loading, disabled, htmlType, ...rest
+  children, size, type, fill, theme, loading, disabled, htmlType, circular, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +60,7 @@ const Button = ({
       {...rest}
       onClick={handleClick}
       isLoading={isLoading}
+      circular={circular}
       disabled={isLoading || disabled}
     >
       <Container justify="center" align="center" type="flat">
@@ -67,7 +68,7 @@ const Button = ({
           {children}
         </ChildrenContainer>
         {isLoading && (
-          <LoaderContainer>
+          <LoaderContainer circular={circular}>
             <Loader
               color={getSpinnerColor(({ type, fill, theme }))}
               type="v2"
@@ -90,6 +91,7 @@ Button.propTypes = {
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   htmlType: PropTypes.string,
+  circular: PropTypes.string
 };
 
 Button.defaultProps = {
@@ -100,6 +102,7 @@ Button.defaultProps = {
   onClick: NoOp,
   loading: null,
   htmlType: 'button',
+  circular: null
 };
 
 export default withTheme(Button);
