@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowRightCircle } from 'styled-icons/feather';
 import styled, { withTheme } from 'styled-components';
@@ -7,6 +7,16 @@ import Box from '../box';
 import Card from '../card';
 import Button from '../button';
 import { Separator } from '../../index';
+
+const HelperLink = styled.span`
+  width: fit-content;
+  color: ${({ theme }) => theme.colors.link};
+  text-decoration: none;
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
 
 const BreadCrumbs = ({ config, currentPage }) => (
   <Box>
@@ -50,7 +60,36 @@ const HELP_LEVELS = {
   CONTENT: 2,
 };
 
-const HelpPageBuilder = ({ config, theme }) => {
+const RecursiveSearch = (id, node, parent = null) => {
+  if (node && node.id === id) {
+    return [node, parent];
+  }
+  const hasTopics = !!node.topics;
+  const hasContent = !!node.contents;
+
+  let result = null;
+  if (hasTopics) {
+    for (let i = 0; i < node.topics.length; i++) {
+      const tmp = RecursiveSearch(id, node.topics[i], node);
+      if (tmp) {
+        result = tmp;
+        break;
+      }
+    }
+  } else if (hasContent) {
+    for (let i = 0; i < node.contents.length; i++) {
+      const tmp = RecursiveSearch(id, node.contents[i], node);
+      if (tmp) {
+        result = tmp;
+        break;
+      }
+    }
+  }
+
+  return result;
+};
+
+const HelpPageBuilder = ({ config }) => {
   const [currentTopics, setCurrentTopics] = useState({
     node: config,
     level: HELP_LEVELS.ROOT,
@@ -74,9 +113,15 @@ const HelpPageBuilder = ({ config, theme }) => {
         setCurrentTopics({ node, level: HELP_LEVELS.ROOT, parent: null });
     }
   };
+
   const { level, node, parent } = currentTopics;
 
-  console.log(level, node, parent);
+  const handleRelatedLink = relatedTopic => () => {
+    const [node, parent] = RecursiveSearch(relatedTopic.id, config);
+    setCurrentTopics({ node, level: HELP_LEVELS.CONTENT, parent });
+    window.scrollTo(0, 0);
+  };
+
   return (
     <HelpPageContainer>
       <Box vertical>
@@ -136,29 +181,27 @@ const HelpPageBuilder = ({ config, theme }) => {
             <Text isTitle>{node.title}</Text>
             {node && node.contents.map(content => (
               <React.Fragment>
-                <Text isTitle>{content.title}</Text>
-                <Text>{content.description}</Text>
-                <img width={500} src={content.imageUrl} />
+                <Text isTitle type="primary">{content.title}</Text>
+                <Text type="secondary">{content.description}</Text>
+                {content.imageUrl && (<img width={500} alt="image" src={content.imageUrl} />)}
               </React.Fragment>
             ))}
             <Box horizontal>
               <Separator />
             </Box>
-            <Box vertical>
-              <Text isTitle type="prinary">Related Subjects</Text>
-              { node.relatedContent && node.relatedContent.map(elem => (
-                <React.Fragment>
-                  <a url={elem.url}>{elem.title}</a>
-                </React.Fragment>
-              ))}
-            </Box>
+            <Text isTitle type="primary">Related Subjects</Text>
+
+            { node.relatedContent && node.relatedContent.map(elem => (
+              <React.Fragment>
+                <HelperLink onClick={handleRelatedLink(elem)}>{elem.title}</HelperLink>
+              </React.Fragment>
+            ))}
             <Box horizontal justify="flex-end" type="flat">
               <Button onClick={handlePageClick(parent, config)}>Back</Button>
             </Box>
           </Box>
         </React.Fragment>
         )}
-
       </Box>
     </HelpPageContainer>
   );

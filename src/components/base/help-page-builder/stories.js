@@ -35,36 +35,11 @@ for (let i = 0; i < 3; i++) {
   };
   for (let j = 0; j < 6; j++) {
     const subTopic = {
+      id: `${j}`,
       title: Faker.lorem.word(),
       description: Faker.lorem.sentences().slice(0, 50),
       icon: <StyledBookmarkIcon />,
       contents: [],
-      relatedContent: [
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-        {
-          title: Faker.lorem.words(),
-          url: Faker.internet.url(),
-        },
-      ],
     };
 
     for (let k = 0; k < 3; k++) {
@@ -78,6 +53,31 @@ for (let i = 0; i < 3; i++) {
 
     data.topics.push(subTopic);
   }
+  // relatedContent: [
+  //       {
+  //         id: '0',
+  //         title: Faker.lorem.words(),
+  //         url: Faker.internet.url(),
+  //       },
+  //       {
+  //         id: '1',
+  //         title: Faker.lorem.words(),
+  //         url: Faker.internet.url(),
+  //       },
+  //       {
+  //         id: '2',
+  //         title: Faker.lorem.words(),
+  //         url: Faker.internet.url(),
+  //       },
+  //     ],
+  data.topics.forEach((subTopic) => {
+    subTopic.relatedContent = data.topics.map(entry => ({
+      id: entry.id,
+      title: entry.title,
+      url: entry.url,
+    }));
+  });
+
   PAGE_DATA_TWO_LEVELS.topics.push(data);
 }
 
