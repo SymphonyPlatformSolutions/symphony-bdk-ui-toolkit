@@ -18,11 +18,30 @@ const HelperLink = styled.span`
   }
 `;
 
-const BreadCrumbs = ({ config, currentPage }) => (
-  <Box>
-    <Text>Place / holder</Text>
-  </Box>
-);
+const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
+  const hasTopics = !!currentPage.node.topics;
+  const hasContent = !!currentPage.node.contents;
+  const breadCrumbsMap = [];
+  if (hasTopics) {
+    breadCrumbsMap.push(config.title);
+    breadCrumbsMap.push(currentPage.node.title);
+  } else if (hasContent) {
+    breadCrumbsMap.push(config.title);
+    breadCrumbsMap.push(currentPage.parent.title);
+    breadCrumbsMap.push(currentPage.node.title);
+  }
+
+  return (
+    <Box type="flat" horizontal>
+      {breadCrumbsMap.map((item, index) => (
+        <React.Fragment>
+          <HelperLink onClick={() => handleNavigate(config, null)}>{item}</HelperLink>
+          { breadCrumbsMap.length !== (index + 1) && <Text px="5px"> > </Text> }
+        </React.Fragment>
+      ))}
+    </Box>
+  );
+};
 const StyledArrowRightCircle = styled(ArrowRightCircle)`
   width: 32px;
   height: 32px;
@@ -125,7 +144,7 @@ const HelpPageBuilder = ({ config }) => {
   return (
     <HelpPageContainer>
       <Box vertical>
-        <BreadCrumbs />
+        <BreadCrumbs config={config} currentPage={currentTopics} handleNavigate={handlePageClick} />
         { level === HELP_LEVELS.ROOT && (
           <React.Fragment>
             <Text isTitle size="large">{config.title}</Text>
