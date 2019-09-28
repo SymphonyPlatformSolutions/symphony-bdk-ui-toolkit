@@ -25,3 +25,8 @@ export const getPadding = ({ copyInput, textArea }) => (copyInput ? '0 3.75rem' 
 export const getWidth = ({ copyInput }) => '-webkit-fill-available';
 export const getInputColor = ({ theme, disabled }) => (disabled ? theme.colors.grey : theme.colors.primary);
 export const getInputFocusBorderColor = ({ theme, inputState }) => (inputState === 'error' ? theme.colors.danger : theme.colors.primary);
+export const getLineColor = ({ theme, disabled }) => (disabled
+  ? theme.mode === THEME_TYPES.DARK
+    ? theme.colors.white
+    : theme.colors.black
+  : theme.colors.darkgrey);
