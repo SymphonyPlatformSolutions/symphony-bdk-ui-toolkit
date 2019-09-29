@@ -31,7 +31,7 @@ const THEMES = [
     mode: THEME_TYPES.DARK,
     colors: {
       primary: '#33b1ff',
-      secondary: '#00bfa5',
+      secondary: '#3cb2d7',
       danger: '#f74a6f',
       submit: '#006CAF',
       grey: '#464B53',

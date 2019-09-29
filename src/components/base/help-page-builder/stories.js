@@ -9,6 +9,7 @@ import Info from './info.md';
 import { StoryWrapper } from '../wrappers';
 import HelpPageBuilder from './index';
 import { Separator } from '../../index';
+import { HelperLink } from './theme'
 
 const StyledBookBookmarkIcon = styled(BookBookmark)`
   width: 32px;
@@ -27,6 +28,12 @@ export const PAGE_DATA_ONE_LEVEL = {
   topics: [],
 };
 
+const SampleCustomnContentComponent = openArticleById => (
+  <React.Fragment>
+    <Text>This is a custom content with a <HelperLink onClick={openArticleById('1')}>Link</HelperLink></Text>
+  </React.Fragment>
+);
+
 for (let i = 0; i < 4; i++) {
   const topic = {
     id: `${i}`,
@@ -37,7 +44,7 @@ for (let i = 0; i < 4; i++) {
   for (let j = 0; j < 3; j++) {
     const content = {
       title: `STEP ${j + 1}`,
-      description: Faker.lorem.sentences(),
+      description: j === 0 ? SampleCustomnContentComponent : Faker.lorem.sentences(),
       imageUrl: Faker.image.imageUrl(),
     };
     topic.contents.push(content);
@@ -105,9 +112,9 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box space={20}>
         <Text isTitle size="small">1 Level helper</Text>
-        {/*<Box horizontal space={20}>*/}
-        {/*  <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />*/}
-        {/*</Box>*/}
+        <Box horizontal space={20}>
+          <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
+        </Box>
         <Separator />
         <Text isTitle size="large">Help Page Builder</Text>
         <Text isTitle size="small">2 Level helper</Text>
