@@ -11,7 +11,7 @@ export default function Card(props) {
   } = props;
 
   return (
-    <BaseCard {...rest} hoverEfffect={hoverEffect}>
+    <BaseCard {...rest} hoverEffect={hoverEffect}>
       <Box space={10}>
         {titleText && (
         <CardTitle titleText={titleText}>
