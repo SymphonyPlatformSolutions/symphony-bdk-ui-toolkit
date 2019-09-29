@@ -181,7 +181,7 @@ const PageTwo = () => {
 const ExtApp = () => (
   <Box space={20}>
     <Box horizontal space={60} style={{ maxWidth: '50rem' }}>
-      <Tabs activeTab={2}>
+      <Tabs activeTab={0}>
         <div label={text('Tab 1 title', 'Set Up')}>
           <PageOne />
         </div>

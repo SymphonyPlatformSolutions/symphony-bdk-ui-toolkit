@@ -5,6 +5,12 @@ This is a component that automatically builds a help page with up to 2 levels of
 ```jsx
 import Faker from 'faker';
 
+const SampleCustomnContentComponent = openArticleById => (
+  <React.Fragment>
+    <Text>This is a custom content with a <Link onClick={openArticleById('1')}>Link</Link></Text>
+  </React.Fragment>
+);
+
 const PAGE_DATA_TWO_LEVELS = {
   title: 'Help page',
   description: 'this is a two levels help Page, it has topics, sub-topic and contents',
@@ -23,6 +29,11 @@ const PAGE_DATA_TWO_LEVELS = {
       {
         title: 'Step 1',
         description: Faker.lorem.sentences(),
+        imageUrl: Faker.image.imageUrl(),
+      },
+      {
+        title: 'Step 2',
+        description: SampleCustomnContentComponent,
         imageUrl: Faker.image.imageUrl(),
       }
       ],
@@ -82,7 +93,7 @@ HelpPageBuilder.propTypes = {
       id: PropTypes.string,
       icon: PropTypes.string,
       title: PropTypes.string,
-      description: PropTypes.string,
+      description: PropTypes.string || PropTypes.Function,
       topics: PropTypes.array,
       contents: PropTypes.array,
     })),

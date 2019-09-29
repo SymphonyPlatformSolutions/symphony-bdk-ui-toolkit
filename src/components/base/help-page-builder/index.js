@@ -105,10 +105,21 @@ const HelpPageBuilder = ({ config }) => {
 
   const { level, node, parent } = currentTopics;
 
-  const handleRelatedLink = relatedTopic => () => {
-    const [node, parent] = RecursiveSearch(relatedTopic.id, config);
+  const handleRelatedLink = id => () => {
+    const [node, parent] = RecursiveSearch(id, config);
     setCurrentTopics({ node, level: HELP_LEVELS.CONTENT, parent });
     window.scrollTo(0, 0);
+  };
+
+  const renderContent = (description) => {
+
+    if (typeof description === 'string') {
+      return (
+        <Text type="secondary">{description}</Text>
+      );
+    } if (typeof description === 'function') {
+      return description(id => handleRelatedLink(id));
+    }
   };
 
   return (
@@ -147,15 +158,15 @@ const HelpPageBuilder = ({ config }) => {
                 hoverEffect
                 onClick={handlePageClick(subTopic, node)}
               >
-                <Box type="primary" horizontal align="center" style={{height: '128px'}}>
-                  <Box type="flat" style={{height: '128px'}}>
+                <Box type="primary" horizontal align="center" style={{ height: '128px' }}>
+                  <Box type="flat" style={{ height: '128px' }}>
                     { subTopic.icon }
                   </Box>
-                  <Box vertical style={{height: '128px'}}>
+                  <Box vertical style={{ height: '128px' }}>
                     <Text isTitle type="primary" size="small">{subTopic.title}</Text>
                     <Text type="primary">{subTopic.description}</Text>
                   </Box>
-                  <Box horizontal type="flat" style={{height: '128px'}}>
+                  <Box horizontal type="flat" style={{ height: '128px' }}>
                     <StyledArrowRightCircle />
                   </Box>
                 </Box>
@@ -175,7 +186,7 @@ const HelpPageBuilder = ({ config }) => {
             {node && node.contents.map((content, index) => (
               <React.Fragment key={index}>
                 <Text isTitle type="primary">{content.title}</Text>
-                <Text type="secondary">{content.description}</Text>
+                { renderContent(content.description) }
                 {content.imageUrl && (<img width={500} alt="image" src={content.imageUrl} />)}
               </React.Fragment>
             ))}
@@ -186,7 +197,7 @@ const HelpPageBuilder = ({ config }) => {
             <Box vertical type="secondary">
               { node.relatedContent && node.relatedContent.map((elem, index) => (
                 <React.Fragment key={index}>
-                  <HelperLink onClick={handleRelatedLink(elem)}>{elem.title}</HelperLink>
+                  <HelperLink onClick={handleRelatedLink(elem.id)}>{elem.title}</HelperLink>
                 </React.Fragment>
               ))}
             </Box>
