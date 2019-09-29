@@ -9,17 +9,13 @@ import { THEME_TYPES, THEMES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
-export const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK
-  ? 'theme.colors.inputgrey'
-  : theme.colors.lightgrey);
-
 const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK
   ? theme.colors.inputgrey
   : theme.colors.lightgrey);
 
 export const getTheadStyle = theme => ({
   style: {
-    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : 'white',
+    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : theme.colors.white,
     boxShadow: '0px 1px 3px rgb(0,0,0,0.1)',
     minHeight: '48px',
     padding: '5px 0px',
@@ -58,7 +54,7 @@ export const getStyleProps = theme => ({
   }),
   getTrProps: () => ({
     style: {
-      borderTop: `1px solid ${getBorderColor(theme)}`,
+      borderTop: `1px solid ${theme.colors.lightgrey}`,
       height: '40px',
     },
   }),

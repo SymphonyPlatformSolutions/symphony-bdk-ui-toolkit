@@ -83,9 +83,9 @@ const PageOne = () => {
       Cell: ({ original }) => (
         <Box style={{ width: '100%' }} horizontal justify="center">
           <Button
-            style={{ width: '116px' }}
+            style={{ width: '116px', color:'white' }}
             size="small"
-            type={original.connected ? 'danger' : 'primary'}
+            type={original.connected ? 'danger' : 'secondary'}
             onClick={() => handleButtonClick(original)}
           >
             <span>{ original.connected ? 'Disconnect' : 'Connect' }</span>
