@@ -24,12 +24,11 @@ export const BaseCard = styled.div`
   border: ${getBorderColor};
   padding: ${props => `${props.p}px`};
   box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.5s cubic-bezier(.25,.8,.25,1);
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
   overflow: hidden;
   &:hover {
-    box-shadow: ${props => (props.hoverEffect ? '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)' : null)};
-    background-color: ${props => (props.hoverEffect ? getBackgroundColor(props) : null)};
+    transform: ${props => props.hoverEffect ? 'scale(1.02)' : null }
   }
   width: 100%;
 `;
