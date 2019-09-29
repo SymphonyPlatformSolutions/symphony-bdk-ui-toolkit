@@ -22,20 +22,26 @@ const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
   const hasTopics = !!currentPage.node.topics;
   const hasContent = !!currentPage.node.contents;
   const breadCrumbsMap = [];
-  if (hasTopics) {
-    breadCrumbsMap.push(config.title);
-    breadCrumbsMap.push(currentPage.node.title);
+
+  if (config === currentPage.node) {
+    breadCrumbsMap.push({ node: config, label: config.title, link: false });
+  } else if (hasTopics) {
+    breadCrumbsMap.push({ node: config, label: config.title, link: true });
+    breadCrumbsMap.push({ node: currentPage.node, label: currentPage.node.title, link: false });
   } else if (hasContent) {
-    breadCrumbsMap.push(config.title);
-    breadCrumbsMap.push(currentPage.parent.title);
-    breadCrumbsMap.push(currentPage.node.title);
+    breadCrumbsMap.push({ node: config, label: config.title, link: true });
+    if (currentPage.parent !== config) {
+      breadCrumbsMap.push({ node: currentPage.parent, label: currentPage.parent.title, link: true });
+    }
+    breadCrumbsMap.push({ node: currentPage.node, label: currentPage.node.title, link: false });
   }
 
   return (
     <Box type="flat" horizontal>
       {breadCrumbsMap.map((item, index) => (
         <React.Fragment>
-          <HelperLink onClick={() => handleNavigate(config, null)}>{item}</HelperLink>
+          { !item.link && <Text>{item.label}</Text> }
+          {item.link && (<HelperLink onClick={handleNavigate(item.node)}>{item.label}</HelperLink>)}
           { breadCrumbsMap.length !== (index + 1) && <Text px="5px"> > </Text> }
         </React.Fragment>
       ))}
@@ -115,12 +121,10 @@ const HelpPageBuilder = ({ config }) => {
     parent: null,
   });
 
+
   const handlePageClick = (node, parent) => () => {
-    const level = node.icon && node.contents
-      ? HELP_LEVELS.CONTENT
-      : node.icon && node.topics
-        ? HELP_LEVELS.SUB_TOPIC
-        : HELP_LEVELS.ROOT;
+    const level = node === config ? HELP_LEVELS.ROOT
+      : node.contents ? HELP_LEVELS.CONTENT : HELP_LEVELS.SUB_TOPIC;
     switch (level) {
       case HELP_LEVELS.SUB_TOPIC:
         setCurrentTopics({ node, level: HELP_LEVELS.SUB_TOPIC, parent });
@@ -172,7 +176,11 @@ const HelpPageBuilder = ({ config }) => {
           <Text isTitle>{node.title}</Text>
           <StyledSubTopicContainer>
             {node && node.topics.map(subTopic => (
-              <StyledSubTopic key={subTopic.title} hoverEffect onClick={handlePageClick(subTopic, node)}>
+              <StyledSubTopic
+                key={subTopic.title}
+                hoverEffect
+                onClick={handlePageClick(subTopic, node)}
+              >
                 <Box type="primary" horizontal align="center">
                   <Box type="flat">
                     { subTopic.icon }
@@ -208,13 +216,14 @@ const HelpPageBuilder = ({ config }) => {
             <Box horizontal>
               <Separator />
             </Box>
-            <Text isTitle type="primary">Related Subjects</Text>
-
-            { node.relatedContent && node.relatedContent.map(elem => (
-              <React.Fragment>
-                <HelperLink onClick={handleRelatedLink(elem)}>{elem.title}</HelperLink>
-              </React.Fragment>
-            ))}
+            {node.relatedContent && node.relatedContent.length && (<Text isTitle type="primary">Related Subjects</Text>)}
+            <Box vertical type="secondary">
+              { node.relatedContent && node.relatedContent.map(elem => (
+                <React.Fragment>
+                  <HelperLink onClick={handleRelatedLink(elem)}>{elem.title}</HelperLink>
+                </React.Fragment>
+              ))}
+            </Box>
             <Box horizontal justify="flex-end" type="flat">
               <Button onClick={handlePageClick(parent, config)}>Back</Button>
             </Box>
@@ -227,7 +236,18 @@ const HelpPageBuilder = ({ config }) => {
 };
 
 HelpPageBuilder.propTypes = {
-  config: PropTypes.object,
+  config: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    topics: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      icon: PropTypes.string,
+      title: PropTypes.string,
+      description: PropTypes.string,
+      topics: PropTypes.array,
+      contents: PropTypes.array,
+    })),
+  }),
 };
 HelpPageBuilder.defaultProps = {
   config: null,

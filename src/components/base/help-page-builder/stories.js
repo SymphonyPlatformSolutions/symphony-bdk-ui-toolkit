@@ -8,6 +8,7 @@ import Text from '../text';
 import Info from './info.md';
 import { StoryWrapper } from '../wrappers';
 import HelpPageBuilder from './index';
+import { Separator } from '../../index';
 
 const StyledBookBookmarkIcon = styled(BookBookmark)`
   width: 32px;
@@ -20,9 +21,43 @@ const StyledBookmarkIcon = styled(Bookmark)`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
+export const PAGE_DATA_ONE_LEVEL = {
+  title: 'Help page',
+  description: 'this is a help Page, it has topics and content',
+  topics: [],
+};
+
+for (let i = 0; i < 4; i++) {
+  const topic = {
+    id: `${i}`,
+    title: Faker.lorem.word(),
+    description: Faker.lorem.words(),
+    contents: [],
+  };
+  for (let j = 0; j < 3; j++) {
+    const content = {
+      title: `STEP ${j + 1}`,
+      description: Faker.lorem.sentences(),
+      imageUrl: Faker.image.imageUrl(),
+    };
+    topic.contents.push(content);
+  }
+
+  PAGE_DATA_ONE_LEVEL.topics.push(topic);
+}
+
+PAGE_DATA_ONE_LEVEL.topics.forEach((topic) => {
+  topic.relatedContent = PAGE_DATA_ONE_LEVEL.topics.map(entry => ({
+    id: entry.id,
+    title: entry.title,
+    url: entry.url,
+  }));
+});
+
+
 export const PAGE_DATA_TWO_LEVELS = {
   title: 'Help page',
-  description: 'this is a help Page',
+  description: 'this is a two levels help Page, it has topics, sub-topic and contents',
   topics: [],
 };
 
@@ -53,23 +88,6 @@ for (let i = 0; i < 3; i++) {
 
     data.topics.push(subTopic);
   }
-  // relatedContent: [
-  //       {
-  //         id: '0',
-  //         title: Faker.lorem.words(),
-  //         url: Faker.internet.url(),
-  //       },
-  //       {
-  //         id: '1',
-  //         title: Faker.lorem.words(),
-  //         url: Faker.internet.url(),
-  //       },
-  //       {
-  //         id: '2',
-  //         title: Faker.lorem.words(),
-  //         url: Faker.internet.url(),
-  //       },
-  //     ],
   data.topics.forEach((subTopic) => {
     subTopic.relatedContent = data.topics.map(entry => ({
       id: entry.id,
@@ -86,6 +104,11 @@ storiesOf('Base', module)
   .add('Help Page Builder', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
+        <Text isTitle size="small">1 Level helper</Text>
+        <Box horizontal space={20}>
+          <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
+        </Box>
+        <Separator />
         <Text isTitle size="large">Help Page Builder</Text>
         <Text isTitle size="small">2 Level helper</Text>
         <Box horizontal space={20}>
