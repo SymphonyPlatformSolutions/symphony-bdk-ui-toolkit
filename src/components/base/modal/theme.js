@@ -26,7 +26,6 @@ export const Modal = styled.div`
   width: 420px;
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   overflow: visible;
-  border-radius: 4px;
   background: ${props => getBackgroundColor(props)};
   z-index: 9000;
   border: ${props => getBorderColor(props)};

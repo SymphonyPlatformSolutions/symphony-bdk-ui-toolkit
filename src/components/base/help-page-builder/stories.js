@@ -105,9 +105,9 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box space={20}>
         <Text isTitle size="small">1 Level helper</Text>
-        <Box horizontal space={20}>
-          <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
-        </Box>
+        {/*<Box horizontal space={20}>*/}
+        {/*  <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />*/}
+        {/*</Box>*/}
         <Separator />
         <Text isTitle size="large">Help Page Builder</Text>
         <Text isTitle size="small">2 Level helper</Text>

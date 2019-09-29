@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRightCircle } from 'styled-icons/feather';
-import styled, { withTheme } from 'styled-components';
 import Text from '../text';
 import Box from '../box';
-import Card from '../card';
 import Button from '../button';
 import { Separator } from '../../index';
+import {
+  HelpPageContainer,
+  HelperLink,
+  StyledArrowRightCircle,
+  StyledCard,
+  StyledSubTopic,
+  StyledSubTopicContainer,
+} from './theme';
 
-const HelperLink = styled.span`
-  width: fit-content;
-  color: ${({ theme }) => theme.colors.link};
-  text-decoration: none;
-  :hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
 
 const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
   const hasTopics = !!currentPage.node.topics;
@@ -39,7 +35,7 @@ const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
   return (
     <Box type="flat" horizontal>
       {breadCrumbsMap.map((item, index) => (
-        <React.Fragment>
+        <React.Fragment key={index}>
           { !item.link && <Text>{item.label}</Text> }
           {item.link && (<HelperLink onClick={handleNavigate(item.node)}>{item.label}</HelperLink>)}
           { breadCrumbsMap.length !== (index + 1) && <Text px="5px"> > </Text> }
@@ -48,36 +44,6 @@ const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
     </Box>
   );
 };
-const StyledArrowRightCircle = styled(ArrowRightCircle)`
-  width: 32px;
-  height: 32px;
-  color: ${({ theme }) => theme.colors.primary}
-  opacity: 0.7;
-  transition: ease opacity .2s;
-  &:hover {
-    opacity: 1;
-  }
-`;
-const StyledCard = styled(Card)`
-  height: 35px;
-  max-height: 150px;
-`;
-
-const StyledSubTopicContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const StyledSubTopic = styled(Card)`
-  width: 240px;
-  height: 128px;
-`;
-
-const HelpPageContainer = styled.div`
-  width: 42rem;
-`;
 
 const HELP_LEVELS = {
   ROOT: 0,
@@ -151,8 +117,8 @@ const HelpPageBuilder = ({ config }) => {
         <BreadCrumbs config={config} currentPage={currentTopics} handleNavigate={handlePageClick} />
         { level === HELP_LEVELS.ROOT && (
           <React.Fragment>
-            <Text isTitle size="large">{config.title}</Text>
-            <Text>{config.description}</Text>
+            <Text isTitle size="large" type="primary">{config.title}</Text>
+            <Text type="primary">{config.description}</Text>
             <Box type="secondary">
               {node && node.topics.map(topic => (
                 <StyledCard key={topic.title} hoverEffect onClick={handlePageClick(topic, config)}>
@@ -173,7 +139,7 @@ const HelpPageBuilder = ({ config }) => {
 
         { level === HELP_LEVELS.SUB_TOPIC && (
         <React.Fragment>
-          <Text isTitle>{node.title}</Text>
+          <Text isTitle type="primary">{node.title}</Text>
           <StyledSubTopicContainer>
             {node && node.topics.map(subTopic => (
               <StyledSubTopic
@@ -181,15 +147,15 @@ const HelpPageBuilder = ({ config }) => {
                 hoverEffect
                 onClick={handlePageClick(subTopic, node)}
               >
-                <Box type="primary" horizontal align="center">
-                  <Box type="flat">
+                <Box type="primary" horizontal align="center" style={{height: '128px'}}>
+                  <Box type="flat" style={{height: '128px'}}>
                     { subTopic.icon }
                   </Box>
-                  <Box vertical>
+                  <Box vertical style={{height: '128px'}}>
                     <Text isTitle type="primary" size="small">{subTopic.title}</Text>
                     <Text type="primary">{subTopic.description}</Text>
                   </Box>
-                  <Box horizontal type="flat">
+                  <Box horizontal type="flat" style={{height: '128px'}}>
                     <StyledArrowRightCircle />
                   </Box>
                 </Box>
@@ -206,8 +172,8 @@ const HelpPageBuilder = ({ config }) => {
         <React.Fragment>
           <Box vertical type="secondary">
             <Text isTitle>{node.title}</Text>
-            {node && node.contents.map(content => (
-              <React.Fragment>
+            {node && node.contents.map((content, index) => (
+              <React.Fragment key={index}>
                 <Text isTitle type="primary">{content.title}</Text>
                 <Text type="secondary">{content.description}</Text>
                 {content.imageUrl && (<img width={500} alt="image" src={content.imageUrl} />)}
@@ -218,8 +184,8 @@ const HelpPageBuilder = ({ config }) => {
             </Box>
             {node.relatedContent && node.relatedContent.length && (<Text isTitle type="primary">Related Subjects</Text>)}
             <Box vertical type="secondary">
-              { node.relatedContent && node.relatedContent.map(elem => (
-                <React.Fragment>
+              { node.relatedContent && node.relatedContent.map((elem, index) => (
+                <React.Fragment key={index}>
                   <HelperLink onClick={handleRelatedLink(elem)}>{elem.title}</HelperLink>
                 </React.Fragment>
               ))}
@@ -253,4 +219,4 @@ HelpPageBuilder.defaultProps = {
   config: null,
 };
 
-export default withTheme(HelpPageBuilder);
+export default HelpPageBuilder;
