@@ -23,7 +23,7 @@ const IconWrap = styled.div`
   cursor: pointer;
   width: 16px;
   height: 16px;
-  z-index: 2;
+  z-index: 12;
 `;
 
 const Bubble = styled.div`
@@ -38,7 +38,7 @@ const Bubble = styled.div`
   left: ${({ xPosition }) => `${xPosition + 8}px`};
   top: ${({ yPosition }) => `${yPosition}px`};
   display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index: 1;
+  z-index: 10;
   text-align: center;
 
   &::after {
@@ -91,7 +91,7 @@ const TooltipBubble = (props) => {
 
 const Tooltip = (props) => {
   const {
-    children, theme, bottom, ...rest
+    children, theme, bottom, size, ...rest
   } = props;
   const [isHover, changeHover] = useState(false);
   const tooltipRef = useRef(null);
@@ -104,7 +104,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <MdInfo color={theme.colors.darkgrey} />
+        <MdInfo size={size} color={theme.colors.darkgrey} />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}
