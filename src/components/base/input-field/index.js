@@ -34,34 +34,7 @@ const FloatInput = styled.div`
   color: ${props => getInputColor(props)};
   cursor: ${p => (p.disabled ? 'default' : 'pointer')};
   pointer-events: ${p => (p.disabled ? 'none' : '')};
-`;
-
-const BaseInputField = styled.input`
-  font-size: .875rem;
-  border-radius: 0px;
-  border: 1px solid ${props => getBorderColor(props)};
-  width: ${props => getWidth(props)};
-  min-height: 35px;
-  padding: ${props => (getPadding(props))} 0 10px;
-  cursor: ${p => (p.disabled ? 'inherit' : 'text')};
-  transition: all .4s cubic-bezier(.25,.8,.25,1);
-  background: ${props => getBackgroundColor(props)};
-  color: ${props => getColor(props)};
-
-  &:disabled {
-    opacity: .8;
-    cursor: not-allowed;
-    font-style: italic;
-  }
-
-  &::placeholder {
-    color: ${props => getPlaceholderColor(props)};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${props => getInputFocusBorderColor(props)};
-  }
+  z-index: 3;
 `;
 
 const OtherInputWrapper = styled.div`
@@ -82,6 +55,14 @@ const InputInput = styled.input`
   font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif !important;
   z-index: 2;
   position: relative;
+
+  ::placeholder {
+    transition: all 0.3s;
+  }
+
+  &:not(:focus)::placeholder { 
+    color: transparent;
+  }
 `;
 
 const NewTextArea = InputInput.withComponent('textarea');
@@ -123,9 +104,10 @@ const InputLabel = styled.label`
   position: absolute;
   left: 4px;
   font-size: 16px;
-  transition: all 0.3s;
+  transition: all 0.2s;
   top: 5px;
   color: ${props => getPlaceholderColor(props)};
+  font-style: ${({ disabled }) => (disabled ? 'italic' : 'none')};
   ${InputInput}:focus + &, ${InputInput}:valid + &,
   ${NewTextArea}:focus + &, ${NewTextArea}:valid + & {
     color: ${({ theme, error }) => (error ? theme.colors.danger : theme.colors.primary)};
@@ -147,6 +129,7 @@ const InputField = (props) => {
 
   const {
     id,
+    label,
     disabled,
     onChange,
     onBlur,
@@ -167,26 +150,31 @@ const InputField = (props) => {
     return (
       <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
         <InputWrapper>
-          <BaseInputField
-            {...rest}
-            disabled={disabled}
-            id={id}
-            onChange={onChange}
-            onBlur={onBlur}
-            placeholder={placeholder}
-            type={type}
-            value={value}
-            inputState={inputState}
-            ref={inputRef}
-            copyInput={copyInput}
-          />
-          <FloatInput
-            disabled={disabled}
-            copyInput={copyInput}
-            onClick={copyToClipBoard}
-          >
-          copy
-          </FloatInput>
+          <OtherInputWrapper>
+            <InputInput
+              {...rest}
+              placeholder={placeholder}
+              disabled={disabled}
+              id={id}
+              onChange={onChange}
+              onBlur={onBlur}
+              type={type}
+              value={value}
+              inputState={inputState}
+              ref={inputRef}
+              copyInput={copyInput}
+              required
+            />
+            <InputLabel error={inputState === 'error'}>{label}</InputLabel>
+            <InputLine error={inputState === 'error'} disabled={disabled} />
+            <FloatInput
+              disabled={disabled}
+              copyInput={copyInput}
+              onClick={copyToClipBoard}
+            >
+            copy
+            </FloatInput>
+          </OtherInputWrapper>
         </InputWrapper>
       </ErrorWrapper>
     );
@@ -199,18 +187,19 @@ const InputField = (props) => {
           <OtherInputWrapper>
             <InputInput
               {...rest}
+              placeholder={placeholder}
               disabled={disabled}
               id={id}
               onChange={onChange}
               onBlur={onBlur}
-              placeholder={placeholder}
               type={showPassord ? 'text' : type}
               value={value}
               inputState={inputState}
               ref={inputRef}
               copyInput={copyInput}
+              required
             />
-            <InputLabel error={inputState === 'error'}>{placeholder}</InputLabel>
+            <InputLabel error={inputState === 'error'}>{label}</InputLabel>
             <InputLine error={inputState === 'error'} disabled={disabled} />
             {hasPasswordShow && (
             <FloatInput
@@ -232,6 +221,7 @@ const InputField = (props) => {
         <OtherInputWrapper>
           <NewTextArea
             {...rest}
+            placeholder={placeholder}
             textArea
             disabled={disabled}
             id={id}
@@ -242,7 +232,7 @@ const InputField = (props) => {
             rows="2"
             required
           />
-          <InputLabel error={inputState === 'error'}>{placeholder}</InputLabel>
+          <InputLabel error={inputState === 'error'} disabled={disabled}>{label}</InputLabel>
           <InputLine disabled={disabled} error={inputState === 'error'} />
         </OtherInputWrapper>
       </ErrorWrapper>
@@ -261,9 +251,10 @@ const InputField = (props) => {
           value={value}
           ref={inputRef}
           type="text"
+          placeholder={placeholder}
           required
         />
-        <InputLabel error={inputState === 'error'}>{placeholder}</InputLabel>
+        <InputLabel error={inputState === 'error'} disabled={disabled}>{label}</InputLabel>
         <InputLine error={inputState === 'error'} disabled={disabled} />
       </OtherInputWrapper>
     </ErrorWrapper>
@@ -296,6 +287,7 @@ InputField.defaultProps = {
   placeholder: 'Input here...',
   errorMessage: 'Something went wrong!',
   value: '',
+  label: '',
 };
 
 export default InputField;
