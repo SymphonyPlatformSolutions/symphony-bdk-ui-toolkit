@@ -1,138 +1,84 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Text from '../text';
+import Tooltip from '../tooltip';
 import {
-  getBackgroundColor,
-  getBorderColor,
-  getColor, getInputColor,
-  getInputFocusBorderColor,
-  getPadding,
-  getPlaceholderColor,
-  getWidth,
-  getLineColor,
+  FloatInput,
+  InputLabel,
+  InputLine,
+  InputWrapper,
+  StyledInput,
+  TextArea,
+  ToggleButtonText,
+  Container,
 } from './theme';
 
-const InputWrapper = styled.div`
-  position: relative;
-`;
+const INPUT_TYPES = {
+  PASSWORD: 'password',
+  TEXTAREA: 'textarea',
+  COPY: 'copy',
+  TEXT: 'text',
+};
 
-export const ErrorWrapper = ({
-  children, error, errorMessage,
-}) => (
+export const ErrorWrapper = ({ children, error, errorMessage }) => (
   <div>
     {children}
-    {error && <Text type="danger" style={{ marginTop: '5px' }} size="tiny">{errorMessage}</Text>}
+    {error && (
+      <Text type="danger" style={{ marginTop: '5px' }} size="tiny">
+        {errorMessage}
+      </Text>
+    )}
   </div>
 );
 
-const FloatInput = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 3px;
-  font-size: .875rem;
-  color: ${props => getInputColor(props)};
-  cursor: ${p => (p.disabled ? 'default' : 'pointer')};
-  pointer-events: ${p => (p.disabled ? 'none' : '')};
-  z-index: 3;
-`;
+const InputAddons = (props) => {
+  const {
+    tooltip,
+    disabled,
+    showPassword,
+    copyToClipBoard,
+    setShowPassword,
+    type,
+  } = props;
 
-const OtherInputWrapper = styled.div`
-  position: relative;
-  width: 100%;
-`;
+  const hasPassword = type === INPUT_TYPES.PASSWORD;
+  const copyInput = type === INPUT_TYPES.COPY;
 
-const InputInput = styled.input`
-  padding: 6px 4px;
-  border: 0;
-  outline: none;
-  font-size: 16px;
-  transition: all 0.3s;
-  width: 100%;
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.textcolor};
-  resize: vertical;
-  font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif !important;
-  z-index: 2;
-  position: relative;
-
-  ::placeholder {
-    transition: all 0.3s;
+  if (!tooltip && !copyInput && !hasPassword) {
+    return null;
   }
 
-  &:not(:focus)::placeholder { 
-    color: transparent;
-  }
-`;
-
-const NewTextArea = InputInput.withComponent('textarea');
-
-const InputLine = styled.span`
-  width: 100%;
-  position: relative;
-  display: block;
-
-  &:before {
-    content:'';
-    height: 1px;
-    width: 100%;
-    bottom: 0;
-    position: absolute;
-    border-bottom: 1px ${({ disabled }) => (disabled ? 'dotted' : 'solid')} ${props => getLineColor(props)};
-  }
-
-  ${InputInput}:hover:not(:disabled) ~ &:before {
-    border-bottom: 2px solid ${props => getLineColor(props)};
-  }
-
-  &:after {
-    content: '';
-    height: 2px;
-    width: ${({ error }) => (error ? '100%' : 0)};
-    bottom: 0;
-    position: absolute;
-    background: ${({ error, theme }) => (error ? theme.colors.danger : theme.colors.primary)};
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
-  }
-
-  ${InputInput}:focus ~ &:after, ${NewTextArea}:focus ~ &:after {
-    width: 100%;
-  }
-`;
-
-const InputLabel = styled.label`
-  position: absolute;
-  left: 4px;
-  font-size: 16px;
-  transition: all 0.2s;
-  top: 5px;
-  color: ${props => getPlaceholderColor(props)};
-  font-style: ${({ disabled }) => (disabled ? 'italic' : 'none')};
-  ${InputInput}:focus + &, ${InputInput}:valid + &,
-  ${NewTextArea}:focus + &, ${NewTextArea}:valid + & {
-    color: ${({ theme, error }) => (error ? theme.colors.danger : theme.colors.primary)};
-    top: -13px;
-    font-size: 12px;
-  }
-  z-index: 1;
-`;
-
+  return (
+    <FloatInput>
+      {(copyInput || hasPassword) && (
+        <ToggleButtonText
+          disabled={disabled}
+          onClick={copyInput ? copyToClipBoard : setShowPassword}
+        >
+          {copyInput ? 'copy' : showPassword ? 'hide' : 'show'}
+        </ToggleButtonText>
+      )}
+      {tooltip && (
+        <Tooltip
+          style={{ paddingRight: '5px' }}
+          size="1.5rem"
+        >
+          {tooltip}
+        </Tooltip>
+      )}
+    </FloatInput>
+  );
+};
 
 const InputField = (props) => {
   const inputRef = useRef(null);
-  const [showPassord, setShowPassword] = useState(false);
-
-  function copyToClipBoard() {
-    inputRef.current.select();
-    document.execCommand('copy');
-  }
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     id,
     label,
     disabled,
     onChange,
-    onBlur,
     placeholder,
     value,
     inputState,
@@ -140,123 +86,70 @@ const InputField = (props) => {
     hasPasswordShow,
     type,
     errorMessage,
+    tooltip,
     ...rest
   } = props;
 
-  const hasPassword = type === 'password';
-  const textArea = type === 'textarea';
+  function copyToClipBoard() {
+    inputRef.current.select();
+    document.execCommand('copy');
+  }
 
-  if (copyInput) {
+  if (type === INPUT_TYPES.TEXTAREA) {
     return (
       <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-        <InputWrapper>
-          <OtherInputWrapper>
-            <InputInput
+        <Container disabled={disabled}>
+          <InputWrapper>
+            <TextArea
               {...rest}
               placeholder={placeholder}
+              textArea
               disabled={disabled}
               id={id}
               onChange={onChange}
-              onBlur={onBlur}
-              type={type}
               value={value}
-              inputState={inputState}
               ref={inputRef}
-              copyInput={copyInput}
+              rows="2"
               required
             />
-            <InputLabel error={inputState === 'error'}>{label}</InputLabel>
-            <InputLine error={inputState === 'error'} disabled={disabled} />
-            <FloatInput
-              disabled={disabled}
-              copyInput={copyInput}
-              onClick={copyToClipBoard}
-            >
-            copy
-            </FloatInput>
-          </OtherInputWrapper>
-        </InputWrapper>
-      </ErrorWrapper>
-    );
-  }
-
-  if (hasPassword) {
-    return (
-      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-        <InputWrapper>
-          <OtherInputWrapper>
-            <InputInput
-              {...rest}
-              placeholder={placeholder}
-              disabled={disabled}
-              id={id}
-              onChange={onChange}
-              onBlur={onBlur}
-              type={showPassord ? 'text' : type}
-              value={value}
-              inputState={inputState}
-              ref={inputRef}
-              copyInput={copyInput}
-              required
-            />
-            <InputLabel error={inputState === 'error'}>{label}</InputLabel>
-            <InputLine error={inputState === 'error'} disabled={disabled} />
-            {hasPasswordShow && (
-            <FloatInput
-              disabled={disabled}
-              onClick={() => setShowPassword(!showPassord)}
-            >
-              { showPassord ? 'hide' : 'show' }
-            </FloatInput>
-            )}
-          </OtherInputWrapper>
-        </InputWrapper>
-      </ErrorWrapper>
-    );
-  }
-
-  if (textArea) {
-    return (
-      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-        <OtherInputWrapper>
-          <NewTextArea
-            {...rest}
-            placeholder={placeholder}
-            textArea
-            disabled={disabled}
-            id={id}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            ref={inputRef}
-            rows="2"
-            required
-          />
-          <InputLabel error={inputState === 'error'} disabled={disabled}>{label}</InputLabel>
-          <InputLine disabled={disabled} error={inputState === 'error'} />
-        </OtherInputWrapper>
+            <InputLabel error={inputState === 'error'} disabled={disabled} className={disabled && value ? 'override-label' : null}>
+              {label}
+            </InputLabel>
+            <InputLine disabled={disabled} error={inputState === 'error'} />
+          </InputWrapper>
+        </Container>
       </ErrorWrapper>
     );
   }
 
   return (
     <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-      <OtherInputWrapper>
-        <InputInput
-          {...rest}
-          disabled={disabled}
-          id={id}
-          onChange={onChange}
-          onBlur={onBlur}
-          value={value}
-          ref={inputRef}
-          type="text"
-          placeholder={placeholder}
-          required
-        />
-        <InputLabel error={inputState === 'error'} disabled={disabled}>{label}</InputLabel>
-        <InputLine error={inputState === 'error'} disabled={disabled} />
-      </OtherInputWrapper>
+      <Container disabled={disabled}>
+        <InputWrapper>
+          <InputAddons
+            copyToClipBoard={copyToClipBoard}
+            setShowPassword={() => setShowPassword(!showPassword)}
+            showPassword={showPassword}
+            {...props}
+          />
+          <StyledInput
+            {...rest}
+            disabled={disabled}
+            id={id}
+            onChange={onChange}
+            value={value}
+            ref={inputRef}
+            type={showPassword ? INPUT_TYPES.TEXT : type}
+            placeholder={placeholder}
+            inputState={inputState}
+            required
+          />
+          <InputLabel error={inputState === 'error'} disabled={disabled} className={disabled && value ? 'override-label' : null}>
+            {label}
+          </InputLabel>
+          <InputLine error={inputState === 'error'} disabled={disabled} />
+        </InputWrapper>
+      </Container>
     </ErrorWrapper>
   );
 };
@@ -264,15 +157,16 @@ const InputField = (props) => {
 InputField.propTypes = {
   copyInput: PropTypes.bool,
   disabled: PropTypes.bool,
-  type: PropTypes.string,
   hasPasswordShow: PropTypes.bool,
   id: PropTypes.string,
   inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  onBlur: PropTypes.func,
   errorMessage: PropTypes.string,
+  label: PropTypes.string,
+  tooltip: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(INPUT_TYPES).map(l => INPUT_TYPES[l])),
 };
 
 InputField.defaultProps = {
@@ -280,14 +174,14 @@ InputField.defaultProps = {
   disabled: false,
   hasPasswordShow: true,
   inputState: 'initial',
-  type: 'text',
+  type: INPUT_TYPES.TEXT,
   id: '',
   onChange: undefined,
-  onBlur: undefined,
   placeholder: 'Input here...',
   errorMessage: 'Something went wrong!',
   value: '',
-  label: '',
+  label: null,
+  tooltip: null,
 };
 
 export default InputField;
