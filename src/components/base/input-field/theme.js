@@ -113,8 +113,6 @@ export const InputLabel = styled.label`
 export const Container = styled.div`
   margin-top: 16px;
   background: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK ? (disabled ? transparentize(0.6, theme.colors.inputgrey) : theme.colors.inputgrey) : 'transparent')};
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
   transition: background 0.3s;
 
   :hover {
