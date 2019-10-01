@@ -25,7 +25,7 @@ const RadioButton = (props) => {
           onChange={onChange}
           theme={theme}
         />
-        <Text size="small">{children}</Text>
+        <Text size="small" style={{ marginLeft: '4px' }}>{children}</Text>
       </RadioLabel>
     </RadioContainer>
   );
