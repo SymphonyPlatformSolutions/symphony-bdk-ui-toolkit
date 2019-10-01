@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { lighten, transparentize } from 'polished';
+import { lighten, transparentize, darken } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 
 const getPlaceholderColor = ({ theme, inputState }) => (inputState === 'error' ? theme.colors.danger : theme.colors.darkgrey);
@@ -28,10 +28,10 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  padding: 6px 5px;
+  padding: 9px 5px 9px 7px;
   border: 0;
   outline: none;
-  font-size: 16px;
+  font-size: 1rem;
   transition: all 0.3s;
   width: 100%;
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
@@ -92,10 +92,10 @@ export const InputLine = styled.span`
 
 export const InputLabel = styled.label`
   position: absolute;
-  left: 4px;
-  font-size: 16px;
+  left: 7px;
+  font-size: 1rem;
   transition: all 0.2s;
-  top: 7px;
+  top: 10px;
   color: ${props => getPlaceholderColor(props)};
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
   ${StyledInput}:focus + &,
@@ -112,16 +112,14 @@ export const InputLabel = styled.label`
 
 export const Container = styled.div`
   margin-top: 16px;
-  background: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK ? (disabled ? transparentize(0.6, theme.colors.inputgrey) : theme.colors.inputgrey) : 'transparent')};
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  background: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK ? (disabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white))) : 'transparent')};
   transition: background 0.3s;
 
   :hover {
     background: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK
     ? disabled
-      ? transparentize(0.6, theme.colors.inputgrey)
-      : lighten(0.1, theme.colors.inputgrey)
+      ? undefined
+      : transparentize(0.82, darken(0.15, theme.colors.white))
     : 'transparent')};
   }
 `;

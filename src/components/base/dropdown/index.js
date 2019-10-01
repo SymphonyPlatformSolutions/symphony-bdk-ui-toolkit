@@ -10,6 +10,7 @@ import {
   Placeholder,
   Option,
   NoOptionsMessage,
+  Control,
 } from './theme';
 import { ErrorWrapper } from '../input-field';
 
@@ -38,6 +39,7 @@ const Dropdown = (props) => {
     placeholder,
     error,
     errorMessage,
+    label,
     ...rest
   } = props;
 
@@ -78,6 +80,9 @@ const Dropdown = (props) => {
             SingleValue,
             Placeholder,
             Option,
+            Control: innerProps => Control({
+              ...innerProps, error, label, innerTheme: theme,
+            }),
             NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
             ...components,
           }}
@@ -105,6 +110,7 @@ Dropdown.propTypes = {
   placeholder: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
+  label: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -120,6 +126,7 @@ Dropdown.defaultProps = {
   clickHandler: null,
   error: false,
   errorMessage: 'Something went wrong!',
+  label: 'Dropdown input',
 };
 
 export default withTheme(Dropdown);

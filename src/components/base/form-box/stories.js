@@ -51,7 +51,7 @@ export const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
 
   return (
-    <Dropdown options={OPTIONS} value={chosen} onChange={changeChosen} />
+    <Dropdown label="Many options" options={OPTIONS} value={chosen} onChange={changeChosen} />
   );
 };
 

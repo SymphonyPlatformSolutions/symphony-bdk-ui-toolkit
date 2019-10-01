@@ -75,45 +75,38 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box vertical space={20}>
         <Box>
-          <Text isTitle size="large">Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler options={OPTIONS} />
+            <DropdownHandler options={OPTIONS} label="Simple dropdown" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Dropdown with Error</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" />
+            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" label="Dropdown with error" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown disabled options={OPTIONS} />
+            <Dropdown disabled options={OPTIONS} label="Disabled Dropdown" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown disabled chosenValue="option2" options={OPTIONS} />
+            <Dropdown disabled chosenValue="option2" options={OPTIONS} label="Filled disabled Dropdown" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown options={[]} />
+            <Dropdown options={[]} label="Empty Dropdown" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
-            <AsyncDropdownHandler options={OPTIONS} />
+            <AsyncDropdownHandler options={OPTIONS} label="Dropdown with Loading" />
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Empty Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
-            <AsyncDropdownHandler options={[]} />
+            <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
           </Box>
         </Box>
       </Box>
