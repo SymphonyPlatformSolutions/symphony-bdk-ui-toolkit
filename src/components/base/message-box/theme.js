@@ -4,13 +4,6 @@ import {
   MdCheckCircle, MdError, MdInfo, MdWarning,
 } from 'react-icons/md';
 
-// const COLORS = {
-//   success: '#56b68b',
-//   error: '#ec4d5c',
-//   info: '#767676',
-//   warning: '#d36535',
-// };
-
 const COLORS = {
   success: '#d8e1d0',
   error: '#ffc2c2',
@@ -53,7 +46,6 @@ export const StyledMessageBox = styled.div`
   max-width: 100%;
   min-width: 17rem;
   min-height: 2.2rem;
-  border-radius: 0.3rem;
   list-style-type: none;
   background-color: ${props => COLORS[props.type]};
 `;
@@ -62,8 +54,6 @@ export const MessageBoxLogo = styled.div`
   grid-area: logo;
   display: grid;
   font-weight: bold;
-  border-top-left-radius: 0.3rem;
-  border-bottom-left-radius: 0.3rem;
   justify-content: center;
   align-content: center;
   background-color: ${props => ICON_BACKGROUND_COLORS[props.type]};
