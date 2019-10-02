@@ -53,27 +53,23 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <PhoneInputFieldLiveSample />
       <Box vertical space={20}>
-        <Text isTitle size="small">Default Phone Input field</Text>
         <div style={styles}>
-          <PhoneInputField value="+1" />
+          <PhoneInputField value="+1" label="Default Phone Input field" />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text isTitle size="small">Disabled InputField</Text>
         <div style={styles}>
-          <PhoneInputField value="+1" disabled />
+          <PhoneInputField value="+1" disabled label="Disabled InputField" />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text isTitle size="small">Search on Country list dropdown</Text>
         <div style={styles}>
-          <PhoneInputField hasSearchField value="+1" />
+          <PhoneInputField hasSearchField value="+1" label="Search on Country list dropdown" />
         </div>
       </Box>
       <Box vertical space={20}>
-        <Text isTitle size="small">Error Phone Input Field</Text>
         <div style={styles}>
-          <PhoneInputField value="+1" inputState="error" />
+          <PhoneInputField value="+1" inputState="error" label="Error Phone Input Field" />
         </div>
       </Box>
     </StoryWrapper>
