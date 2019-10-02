@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPhoneInput from 'react-phone-input-2';
 import { ErrorWrapper } from '../input-field';
 import './assets/flags.css';
-
+import Tooltip from '../tooltip';
 import {
   PhoneInputWrapper,
   InputLine,
@@ -16,7 +16,7 @@ import { NoOp } from '../../../utils/helpers';
 const PhoneInputField = ({
   value, defaultValue, inputState, disabled, onChange,
   disableAreaCodes, id, onBlur, errorMessage, hasSearchField,
-  onFocus, label,
+  onFocus, label, tooltip,
   ...rest
 }) => {
   const [hasRef, setRef] = useState(null);
@@ -36,6 +36,7 @@ const PhoneInputField = ({
           disabled={disabled}
           inputState={inputState}
         >
+          {tooltip && <Tooltip style={{ marginRight: '5px' }} size="1.5rem">{tooltip}</Tooltip>}
           <ReactPhoneInput
             disableAreaCodes={disableAreaCodes}
             disabled={disabled}
@@ -52,7 +53,7 @@ const PhoneInputField = ({
             }}
             {...rest}
           />
-          <InputLabel disabled={disabled} error={error}>{label}</InputLabel>
+          <InputLabel disabled={disabled} focused={isFocused} error={error}>{label}</InputLabel>
           <InputLine focused={isFocused} disabled={disabled} error={error} />
         </PhoneInputWrapper>
       </ErrorWrapper>
@@ -74,6 +75,7 @@ PhoneInputField.propTypes = {
   hasSearchField: PropTypes.bool,
   onFocus: PropTypes.func,
   label: PropTypes.string,
+  tooltip: PropTypes.string,
 };
 
 PhoneInputField.defaultProps = {
@@ -90,6 +92,7 @@ PhoneInputField.defaultProps = {
   hasSearchField: false,
   onFocus: NoOp,
   label: 'Phone number',
+  tooltip: null,
 };
 
 export default PhoneInputField;

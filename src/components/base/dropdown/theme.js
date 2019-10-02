@@ -5,24 +5,29 @@ import { components } from 'react-select';
 import { transparentize, darken } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 import Text from '../text';
+import Tooltip from '../tooltip';
 
 export const getColor = theme => (theme.mode === THEME_TYPES.DARK
   ? theme.colors.basegrey
   : theme.colors.darkaccent);
 
-const getLabelColor = ({
-  theme, isFocused, disabled, error,
-}) => {
+function getLabelColor({
+  theme, error, disabled, menuIsOpen, hasValue,
+}) {
   if (disabled) {
     return theme.colors.darkgrey;
   }
+  if (error && (menuIsOpen || hasValue)) {
+    return theme.colors.danger;
+  }
 
-  return isFocused
-    ? error
-      ? theme.colors.danger
-      : theme.colors.primary
-    : theme.colors.darkgrey;
-};
+  if (menuIsOpen) {
+    return theme.colors.primary;
+  }
+
+  return theme.colors.textcolor;
+}
+
 const getLineColor = ({ theme, disabled }) => (disabled ? theme.colors.darkgrey : theme.colors.textcolor);
 
 const getBorderColor = (theme, error = false) => {
@@ -44,8 +49,7 @@ export const customStyles = ({ theme, error }) => ({
     width: '100%',
     boxShadow: 'none',
     border: 'none',
-    borderBottomLeftRadius: state.menuIsOpen ? 0 : '0px',
-    borderBottomRightRadius: state.menuIsOpen ? 0 : '0px',
+    borderRadius: 0,
     borderColor: state.menuIsOpen
       ? theme.colors.primary
       : getBorderColor(theme, error),
@@ -56,7 +60,6 @@ export const customStyles = ({ theme, error }) => ({
         ? (state.isDisabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white)))
         : 'transparent',
     margin: '0',
-    borderRadius: '0px',
     transition: 'all 0.3s',
     '&:hover': {
       backgroundColor:
@@ -71,8 +74,7 @@ export const customStyles = ({ theme, error }) => ({
   menu: (provided, state) => ({
     ...provided,
     marginTop: 0,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
+    borderRadius: 0,
     color: state.isDisabled
       ? theme.colors.lightgrey
       : theme.mode === THEME_TYPES.DARK
@@ -130,6 +132,11 @@ const ArrowContainer = styled.div`
   margin-right: 8px;
 `;
 
+const IconContainer = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
 const SmallArrow = styled.div`
   width: 0;
   height: 0;
@@ -143,13 +150,17 @@ const SmallArrow = styled.div`
 export const DropdownIndicator = (props) => {
   const {
     selectProps: { menuIsOpen, isDisabled },
+    tooltip,
     theme,
   } = props;
 
   return (
-    <ArrowContainer>
-      <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
-    </ArrowContainer>
+    <IconContainer>
+      <ArrowContainer>
+        <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
+      </ArrowContainer>
+      {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '5px' }}>{tooltip}</Tooltip>}
+    </IconContainer>
   );
 };
 
@@ -222,32 +233,27 @@ export const InputLine = styled.span`
     width: 100%;
     bottom: 0;
     position: absolute;
-    border-bottom: 1px ${({ disabled }) => (disabled ? 'dotted' : 'solid')}
-      ${({ theme, disabled }) => getLineColor({ theme, disabled })};
-  }
-
-  div:hover:not(:disabled) ~ &:before {
-    ${({ disabled, theme }) => (disabled ? '' : `border-bottom: 2px solid ${getLineColor({ theme, disabled })}`)}
+    border-bottom: 1px solid ${({ theme, disabled }) => getLineColor({ theme, disabled })};
   }
 
   &:after {
     content: "";
-    height: 2px;
+    height: 1px;
     width: ${({ error }) => (error ? '100%' : 0)};
     bottom: 0;
     position: absolute;
     background: ${({ error, theme }) => (error ? theme.colors.danger : theme.colors.primary)};
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
-    width: ${({ isFocused }) => (isFocused ? '100%' : '0')};
+    transition: all 0.4s;
+    width: ${({ menuIsOpen, error }) => (menuIsOpen || error ? '100%' : '0')};
   }
 `;
 
 const Label = styled.label`
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? '-14px' : '10px')};
-  font-size: ${({ isFocused }) => (isFocused ? '12px' : '1em')};
+  top: ${({ menuIsOpen, hasValue }) => (menuIsOpen || hasValue ? '-14px' : '10px')};
+  font-size: ${({ menuIsOpen, hasValue }) => (menuIsOpen || hasValue ? '12px' : '1em')};
   transition: all 0.2s;
-  left: 7px;
+  left: ${({ menuIsOpen, hasValue }) => (menuIsOpen || hasValue ? '2px' : '7px')};
   color: ${props => getLabelColor(props)};
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
   z-index: 1;
@@ -257,24 +263,26 @@ export const Control = (props) => {
   const {
     children,
     label,
-    isFocused,
+    menuIsOpen,
     innerTheme,
     hasValue,
     isDisabled,
     error,
   } = props;
+
   return (
     <components.Control {...props}>
       {children}
       <Label
-        isFocused={isFocused || hasValue}
+        menuIsOpen={menuIsOpen}
+        hasValue={hasValue}
         error={error}
         disabled={isDisabled}
       >
         {label}
       </Label>
       <InputLine
-        isFocused={isFocused}
+        menuIsOpen={menuIsOpen}
         theme={innerTheme}
         disabled={isDisabled}
         error={error}

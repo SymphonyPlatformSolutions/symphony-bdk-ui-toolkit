@@ -8,6 +8,7 @@ import PhoneInputField from '.';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
+import InputField from '../input-field';
 
 const styles = {
   width: '24rem',
@@ -54,7 +55,7 @@ storiesOf('Base', module)
       <PhoneInputFieldLiveSample />
       <Box vertical space={20}>
         <div style={styles}>
-          <PhoneInputField value="+1" label="Default Phone Input field" />
+          <PhoneInputField value="+1" label="Default Phone Input field" tooltip="Stuff!" />
         </div>
       </Box>
       <Box vertical space={20}>

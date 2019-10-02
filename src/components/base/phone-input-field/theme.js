@@ -11,12 +11,12 @@ const getThemedBorderColor = ({ theme, inputState }) => {
   return theme.colors.bordergrey;
 };
 
-const getColor = ({ theme, inputState }) => (inputState === 'error'
-  ? theme.colors.danger
-  : (theme.mode === THEME_TYPES.DARK
-    ? theme.colors.basegrey
-    : theme.colors.darkaccent)
-);
+const getColor = ({ theme, disabled }) => {
+  if (disabled) {
+    return theme.colors.darkgrey;
+  }
+  return theme.colors.textcolor;
+};
 
 const getDropdownColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
   ? theme.colors.basegrey
@@ -58,7 +58,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
   .${overrides.formControl} {
     font-size: 1rem;
     transition: border 1s cubic-bezier(.25,.8,.25,1);
-    height: 40px !important;
+    height: 33px !important;
     padding-left: 57px !important;
     width: 100% !important;
     border: none !important;
@@ -165,12 +165,17 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     }
   }
  
- position: relative;
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 `;
 
 function getLineColor(props) {
-  const { theme } = props;
-
+  const { theme, disabled } = props;
+  if (disabled) {
+    return theme.colors.darkgrey;
+  }
   return theme.colors.textcolor;
 }
 
@@ -186,37 +191,48 @@ export const InputLine = styled.span`
     width: 100%;
     bottom: 0;
     position: absolute;
-    border-bottom: 1px ${({ disabled }) => (disabled ? 'dotted' : 'solid')}
-    ${props => getLineColor(props)};
-  }
-
-  div:hover:not(:disabled) ~ &:before {
-    border-bottom: ${props => (props.disabled ? undefined : `2px solid ${getLineColor(props)}`)};
+    border-bottom: 1px solid ${props => getLineColor(props)};
   }
 
   &:after {
     content: "";
-    height: 2px;
+    height: 1px;
     width: ${({ error, focused }) => (error || focused ? '100%' : 0)};
     bottom: 0;
     position: absolute;
     background: ${({ error, theme }) => (error ? theme.colors.danger : theme.colors.primary)};
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+    transition: all 0.4s;
   }
 `;
 
+function getLabelColor({
+  theme, error, disabled, focused,
+}) {
+  if (disabled) {
+    return theme.colors.darkgrey;
+  }
+  if (error) {
+    return theme.colors.danger;
+  }
+  if (focused) {
+    return theme.colors.primary;
+  }
+
+  return theme.colors.textcolor;
+}
+
 export const InputLabel = styled.label`
   position: absolute;
-  left: 7px;
+  left: 0;
   font-size: 1rem;
   transition: all 0.2s;
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
-  color: ${({ theme, error, disabled }) => (disabled ? theme.colors.darkgrey : (error ? theme.colors.danger : theme.colors.primary))};
+  color: ${props => getLabelColor(props)};
   top: -14px;
   font-size: 12px;
   z-index: 1;
 `;
 
 export const Container = styled.div`
-  margin-top: 7px;
+  margin-top: 16px;
 `;
