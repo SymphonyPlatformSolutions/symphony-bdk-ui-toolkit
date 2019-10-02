@@ -62,7 +62,7 @@ const Table = ({
       changeData(filterSearchData(data, Object.keys(data[0]), searchTerm));
     }, 300);
     return () => clearTimeout(handler);
-  }, [searchTerm]);
+  }, [searchTerm, data]);
 
   if (loading) {
     return (

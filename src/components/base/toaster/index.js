@@ -48,6 +48,7 @@ export const ToastContainer = styled.div`
   display: inherit;
   left: 50%;
   position: absolute;
+  z-index: 9001;
 `;
 
 const Toast = (props) => {

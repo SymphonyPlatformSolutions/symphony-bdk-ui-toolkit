@@ -23,7 +23,7 @@ const IconWrap = styled.div`
   cursor: pointer;
   width: 16px;
   height: 16px;
-  z-index: 12;
+  z-index: 7;
 `;
 
 const Bubble = styled.div`
@@ -38,7 +38,7 @@ const Bubble = styled.div`
   left: ${({ xPosition }) => `${xPosition + 8}px`};
   top: ${({ yPosition }) => `${yPosition}px`};
   display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index: 10;
+  z-index: 6;
   text-align: center;
 
   &::after {

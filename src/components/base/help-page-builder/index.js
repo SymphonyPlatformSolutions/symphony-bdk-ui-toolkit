@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Text from '../text';
 import Box from '../box';
 import Button from '../button';
-import { Separator } from '../../index';
+import Separator from '../separator';
 import {
   HelpPageContainer,
   HelperLink,
@@ -112,7 +112,6 @@ const HelpPageBuilder = ({ config }) => {
   };
 
   const renderContent = (description) => {
-
     if (typeof description === 'string') {
       return (
         <Text type="secondary">{description}</Text>

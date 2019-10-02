@@ -57,7 +57,7 @@ const COLUMNS = [{
   width: undefined,
 },
 ];
-
+let mockData;
 const DATA_WITH_ACTIONS = [{
   email: Faker.internet.email(),
   name: Faker.name.firstName(),
@@ -89,16 +89,18 @@ const DATA_WITH_ACTIONS = [{
   actionsMenu: [
     {
       label: 'Edit',
-      callback: handleTestEdit,
+      callback: () => mockData.slice(4, 1),
       type: 'primary',
     },
     {
       label: 'Delete',
-      callback: handleTestDelete,
+      callback: () => mockData.slice(5, 1),
       type: 'danger',
     },
   ],
 }];
+
+mockData = DATA_WITH_ACTIONS;
 
 const COLUMNS_WITH_ACTIONS = [{
   Header: 'Name',
@@ -173,7 +175,7 @@ storiesOf('Base', module)
           <Text isTitle size="large">Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
-              data={DATA_WITH_ACTIONS}
+              data={mockData}
               columns={COLUMNS_WITH_ACTIONS}
             />
           </Box>
