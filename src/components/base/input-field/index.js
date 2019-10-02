@@ -87,6 +87,7 @@ const InputField = (props) => {
     type,
     errorMessage,
     tooltip,
+    readOnly,
     ...rest
   } = props;
 
@@ -134,9 +135,10 @@ const InputField = (props) => {
           />
           <StyledInput
             {...rest}
+            readOnly={readOnly}
             disabled={disabled}
             id={id}
-            onChange={onChange}
+            onChange={readOnly ? null : onChange}
             value={value}
             ref={inputRef}
             type={showPassword ? INPUT_TYPES.TEXT : type}
@@ -144,10 +146,10 @@ const InputField = (props) => {
             inputState={inputState}
             required
           />
-          <InputLabel error={inputState === 'error'} disabled={disabled} className={disabled && value ? 'override-label' : null}>
+          <InputLabel error={inputState === 'error'} readOnly={readOnly} disabled={disabled} className={(disabled || readOnly) && value ? 'override-label' : null}>
             {label}
           </InputLabel>
-          <InputLine error={inputState === 'error'} disabled={disabled} />
+          <InputLine error={inputState === 'error'} readOnly={readOnly} disabled={disabled} />
         </InputWrapper>
       </Container>
     </ErrorWrapper>
@@ -167,6 +169,7 @@ InputField.propTypes = {
   label: PropTypes.string,
   tooltip: PropTypes.string,
   type: PropTypes.oneOf(Object.keys(INPUT_TYPES).map(l => INPUT_TYPES[l])),
+  readOnly: PropTypes.bool,
 };
 
 InputField.defaultProps = {
@@ -182,6 +185,7 @@ InputField.defaultProps = {
   value: '',
   label: null,
   tooltip: null,
+  readOnly: false,
 };
 
 export default InputField;

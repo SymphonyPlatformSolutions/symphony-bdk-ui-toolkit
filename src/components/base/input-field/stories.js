@@ -185,6 +185,16 @@ storiesOf('Base', module)
       </Box>
       <Box vertical space={20}>
         <div style={styles}>
+          <InputField readOnly value="Some content" label="Read-Only Field" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
+        <div style={styles}>
+          <InputField type="copy" readOnly value="Some other content" label="Read-Only Copy Field" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
+        <div style={styles}>
           <InputField disabled label="Disabled input field with value" value="Some stuff written to be read only!" />
         </div>
       </Box>

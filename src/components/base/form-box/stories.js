@@ -51,7 +51,7 @@ export const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
 
   return (
-    <Dropdown label="Many options" options={OPTIONS} value={chosen} onChange={changeChosen} />
+    <Dropdown options={OPTIONS} value={chosen} onChange={changeChosen} {...props} />
   );
 };
 
@@ -146,30 +146,19 @@ storiesOf('Base', module)
         </Box>
         <FormBox style={{ width: '32rem' }}>
           <FormGroup>
-            <Label htmlFor="normal-input">Normal input</Label>
-            <InputController id="normal-input" />
+            <InputController id="normal-input" label="Normal input" />
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="normal-input" tooltip="Some piece of relevant info!">Input with tooltip</Label>
-            <InputController id="normal-input" />
+            <InputController id="normal-input" tooltip="Some piece of relevant info!" label="Input with tooltip" />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="normal-input-2">
-              <LabelText>Normal input 2 <i>(but now, with custom label!)</i></LabelText>
-            </label>
-            <InputController id="normal-input-2" />
+            <EmailController id="email-input" label="Input with Email Validation" />
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="email-input">Input with Email Validation</Label>
-            <EmailController id="email-input" />
+            <InputController type="textarea" id="textarea" label="Text area input" />
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="textarea">Text area input</Label>
-            <InputController type="textarea" id="textarea" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Dropdown input</Label>
-            <DropdownHandler />
+            <DropdownHandler label="Dropdown input" />
           </FormGroup>
           <FormGroup>
             <Label>Pick a few</Label>
