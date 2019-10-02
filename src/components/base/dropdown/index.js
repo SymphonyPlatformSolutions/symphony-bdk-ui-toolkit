@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Select from 'react-select';
@@ -40,6 +40,7 @@ const Dropdown = (props) => {
     error,
     errorMessage,
     label,
+    tooltip,
     ...rest
   } = props;
 
@@ -52,31 +53,18 @@ const Dropdown = (props) => {
     }
   }
 
-  const [isFocused, toggleFocus] = useState(false);
-
   return (
-    <div
-      onFocus={() => {
-        if (!clickHandler) { return; }
-        if (!isFocused) {
-          toggleFocus(true);
-          clickHandler();
-        }
-      }}
-      onBlur={() => {
-        if (!clickHandler) { return; }
-        toggleFocus(false);
-      }}
-    >
+    <div>
       <ErrorWrapper error={error} errorMessage={errorMessage}>
         <Select
           styles={customStyles({ theme, error })}
           isDisabled={disabled}
           isClearable={false}
           options={options || []}
+          onMenuOpen={clickHandler}
           onChange={data => onChange(data)}
           components={{
-            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
+            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, tooltip, theme }),
             SingleValue,
             Placeholder,
             Option,
@@ -111,6 +99,7 @@ Dropdown.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   label: PropTypes.string,
+  tooltip: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -127,6 +116,7 @@ Dropdown.defaultProps = {
   error: false,
   errorMessage: 'Something went wrong!',
   label: 'Dropdown input',
+  tooltip: null,
 };
 
 export default withTheme(Dropdown);

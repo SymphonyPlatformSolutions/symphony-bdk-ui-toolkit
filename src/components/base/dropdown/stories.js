@@ -76,7 +76,7 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <Box>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler options={OPTIONS} label="Simple dropdown" />
+            <DropdownHandler options={OPTIONS} label="Simple dropdown" tooltip="Stuff!" />
           </Box>
         </Box>
         <Box>

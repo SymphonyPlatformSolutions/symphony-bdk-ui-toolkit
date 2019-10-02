@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { lighten, transparentize, darken } from 'polished';
+import { transparentize, darken } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 
 const getPlaceholderColor = ({ theme, inputState }) => (inputState === 'error' ? theme.colors.danger : theme.colors.darkgrey);
@@ -15,7 +15,7 @@ export const ToggleButtonText = styled.div`
   font-size: 0.875rem;
   padding-right: 7px;
   color: ${props => getInputColor(props)};
-  cursor: ${p => (p.disabled ? 'default' : 'pointer')};
+  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${p => (p.disabled ? 'none' : '')};
   z-index: 3;
 `;
@@ -42,6 +42,7 @@ export const StyledInput = styled.input`
     "Arial", sans-serif !important;
   z-index: 2;
   position: relative;
+  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
 
   ::placeholder {
     transition: all 0.3s;
@@ -66,22 +67,17 @@ export const InputLine = styled.span`
     width: 100%;
     bottom: 0;
     position: absolute;
-    border-bottom: 1px ${({ disabled }) => (disabled ? 'dotted' : 'solid')}
-      ${props => getLineColor(props)};
-  }
-
-  ${StyledInput}:hover:not(:disabled) ~ &:before {
-    border-bottom: 2px solid ${props => getLineColor(props)};
+    border-bottom: 1px solid ${props => getLineColor(props)};
   }
 
   &:after {
     content: "";
-    height: 2px;
+    height: 1px;
     width: ${({ error }) => (error ? '100%' : 0)};
     bottom: 0;
     position: absolute;
     background: ${({ error, theme }) => (error ? theme.colors.danger : theme.colors.primary)};
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+    transition: all 0.4s;
   }
 
   ${StyledInput}:focus ~ &:after,
@@ -96,16 +92,23 @@ export const InputLabel = styled.label`
   font-size: 1rem;
   transition: all 0.2s;
   top: 10px;
-  color: ${props => getPlaceholderColor(props)};
+  color: ${({ theme, error, disabled }) => (disabled ? theme.colors.darkgrey : theme.colors.textcolor)};
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
   ${StyledInput}:focus + &,
-  ${StyledInput}:valid + &,
   ${TextArea}:focus + &,
-  ${TextArea}:valid + &,
   &.override-label {
     color: ${({ theme, error, disabled }) => (disabled ? theme.colors.darkgrey : (error ? theme.colors.danger : theme.colors.primary))};
     top: -14px;
+    left: 2px;
     font-size: 12px;
+  }
+
+  ${StyledInput}:valid + &,
+  ${TextArea}:valid + & {
+    color: ${({ theme, error }) => (error ? theme.colors.danger : undefined)};
+    top: -14px;
+    font-size: 12px;
+    left: 2px;
   }
   z-index: 1;
 `;
