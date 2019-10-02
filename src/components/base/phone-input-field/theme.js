@@ -64,7 +64,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     border: none !important;
     border-radius: 0px !important;
     color: ${props => getColor(props)};
-    background-color: ${props => getBackgroundColor(props)} !important;
+    background-color: transparent !important;
     cursor: ${props => (props.disabled ? 'inherit' : 'text')};
 
     &:disabled {
@@ -80,13 +80,6 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
      outline: none;
     }
 
-    &:hover {
-      background-color: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK
-    ? disabled
-      ? undefined
-      : `${transparentize(0.82, darken(0.15, theme.colors.white))} !important`
-    : 'transparent !important')};
-    }
   }
 
   .${overrides.flagDropdownButton} {
@@ -169,6 +162,16 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+  background-color: ${props => getBackgroundColor(props)};
+  transition: all 0.3s;
+
+  &:hover {
+      background-color: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK
+    ? disabled
+      ? undefined
+      : `${transparentize(0.82, darken(0.15, theme.colors.white))} !important`
+    : 'transparent !important')};
+    }
 `;
 
 function getLineColor(props) {

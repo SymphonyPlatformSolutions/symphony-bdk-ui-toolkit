@@ -42,7 +42,7 @@ export const StyledInput = styled.input`
     "Arial", sans-serif !important;
   z-index: 2;
   position: relative;
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${p => (p.disabled ? 'not-allowed' : (p.readOnly ? 'default' : 'pointer'))};
 
   ::placeholder {
     transition: all 0.3s;
@@ -64,7 +64,7 @@ export const InputLine = styled.span`
   &:before {
     content: "";
     height: 1px;
-    width: 100%;
+    width: ${({ readOnly }) => (readOnly ? '0' : '100%')};
     bottom: 0;
     position: absolute;
     border-bottom: 1px solid ${props => getLineColor(props)};
@@ -82,9 +82,25 @@ export const InputLine = styled.span`
 
   ${StyledInput}:focus ~ &:after,
   ${TextArea}:focus ~ &:after {
-    width: 100%;
+    width: ${({ readOnly }) => (readOnly ? undefined : '100%')};
   }
 `;
+
+function getLabelColor({
+  theme, error, disabled, readOnly,
+}) {
+  if (disabled) {
+    return theme.colors.darkgrey;
+  }
+  if (error) {
+    return theme.colors.danger;
+  }
+  if (readOnly) {
+    return theme.colors.textcolor;
+  }
+
+  return theme.colors.primary;
+}
 
 export const InputLabel = styled.label`
   position: absolute;
@@ -92,12 +108,12 @@ export const InputLabel = styled.label`
   font-size: 1rem;
   transition: all 0.2s;
   top: 10px;
-  color: ${({ theme, error, disabled }) => (disabled ? theme.colors.darkgrey : theme.colors.textcolor)};
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.darkgrey : theme.colors.textcolor)};
   font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
   ${StyledInput}:focus + &,
   ${TextArea}:focus + &,
   &.override-label {
-    color: ${({ theme, error, disabled }) => (disabled ? theme.colors.darkgrey : (error ? theme.colors.danger : theme.colors.primary))};
+    color: ${props => getLabelColor(props)};
     top: -14px;
     left: 2px;
     font-size: 12px;
