@@ -131,6 +131,7 @@ export const InputLabel = styled.label`
 
 export const Container = styled.div`
   margin-top: 16px;
+
   background: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK ? (disabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white))) : 'transparent')};
   transition: background 0.3s;
 
