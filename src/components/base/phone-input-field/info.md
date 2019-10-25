@@ -9,6 +9,11 @@ everything passed to PhoneInputField will be propagated and **override** any pro
 
 ## Sample
 ```jsx
+const INPUT_STATES = {
+  Initial: 'initial',
+  Error: 'error',
+};
+
  <PhoneInputField
   inputState={inputStates}
   disabled={isDisabled}
