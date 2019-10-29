@@ -8,7 +8,7 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
 storiesOf('Base', module)
-  .add('Checkbox', () => (
+  .add('QuoteBadge', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>
         <Text isTitle size="large">Quote Badges</Text>

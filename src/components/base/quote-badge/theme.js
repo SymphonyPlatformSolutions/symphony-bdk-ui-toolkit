@@ -12,11 +12,13 @@ export const BaseBadge = styled(Box)`
 export const SideInfo = styled(Text)`
   font-size: 8px;
   margin-right: 4px;
+  color: #4d4d4d;
 `;
 
 export const MainInfo = styled(Text)`
   font-size: 12px;
   font-weight: bold;
+  color: #4d4d4d;
 `;
 
 export const IconButton = styled.button`
@@ -24,6 +26,6 @@ export const IconButton = styled.button`
   margin: 1px 0 0 4px;
   border: none;
   background: none;
-  color: ${({ theme }) => (theme.colors.textcolor)};
+  color: #4d4d4d;
   cursor: pointer;
 `;
