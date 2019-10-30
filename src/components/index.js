@@ -16,6 +16,7 @@ export { default as RadioButton } from './base/radio-button';
 export { default as Dropdown } from './base/dropdown';
 export { default as MessageBox } from './base/message-box';
 export { default as QuoteBadge } from './base/quote-badge';
+export { default as QuotePanel } from './base/quote-panel';
 export {
   default as FormBox, FormGroup, Label, LabelText,
 } from './base/form-box';
