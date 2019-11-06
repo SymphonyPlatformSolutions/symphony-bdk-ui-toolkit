@@ -16,7 +16,7 @@ A card for displaying quotes
 ```jsx
 import styled from 'styled-components';
 
-const MyCustomQuoteBadge = styled(QuoteCard)`
+const MyCustomQuoteCard = styled(QuoteCard)`
     background-color: red;
 `
 ```

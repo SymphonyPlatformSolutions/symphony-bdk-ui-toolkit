@@ -1,27 +1,27 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import QuoteBadge from '.';
+import QuoteProductTag from '.';
 import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
 storiesOf('Base', module)
-  .add('QuoteBadge', () => (
+  .add('QuoteProductTag', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>
-        <Text isTitle size="large">Quote Badges</Text>
-        <QuoteBadge
+        <Text isTitle size="large">Quote Product Tag</Text>
+        <QuoteProductTag
           mainInfo="H0"
         />
-        <QuoteBadge
+        <QuoteProductTag
           mainInfo="H0"
           sideInfo="start"
           hasCloseButton={false}
           onClose={action('close button clicked')}
         />
-        <QuoteBadge
+        <QuoteProductTag
           mainInfo="H0"
           sideInfo="start"
           hasCloseButton

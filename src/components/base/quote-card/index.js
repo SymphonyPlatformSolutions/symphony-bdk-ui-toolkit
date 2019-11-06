@@ -7,7 +7,7 @@ import {
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
-import QuoteBadge from '../quote-badge';
+import QuoteProductTag from '../quote-product-tag';
 
 const QuoteCard = (props) => {
   const {
@@ -34,7 +34,7 @@ const QuoteCard = (props) => {
           {badges && (
           <Box horizontal space={4}>
             {badges.map(badge => (
-              <QuoteBadge
+              <QuoteProductTag
                 key={badge.productId}
                 mainInfo={badge.mainInfo}
                 sideInfo={badge.sideInfo}

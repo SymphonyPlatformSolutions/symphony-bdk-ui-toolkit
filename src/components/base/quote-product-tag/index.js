@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import {
-  BaseBadge, SideInfo, MainInfo, IconButton,
+  BaseBadge as BaseQuoteTag, SideInfo, MainInfo, IconButton,
 } from './theme';
 
-const QuoteBadge = (props) => {
+const QuoteProductTag = (props) => {
   const {
     mainInfo, sideInfo, hasCloseButton, onClose, ...rest
   } = props;
 
   return (
-    <BaseBadge horizontal type="flat" {...rest}>
+    <BaseQuoteTag horizontal type="flat" {...rest}>
       {sideInfo
         && <SideInfo>{sideInfo.toUpperCase()}</SideInfo>
       }
@@ -26,21 +26,21 @@ const QuoteBadge = (props) => {
         </IconButton>
         )
       }
-    </BaseBadge>
+    </BaseQuoteTag>
   );
 };
 
-QuoteBadge.propTypes = {
+QuoteProductTag.propTypes = {
   mainInfo: PropTypes.string.isRequired,
   sideInfo: PropTypes.string,
   hasCloseButton: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
-QuoteBadge.defaultProps = {
+QuoteProductTag.defaultProps = {
   sideInfo: null,
   hasCloseButton: false,
   onClose: null,
 };
 
-export default withTheme(QuoteBadge);
+export default withTheme(QuoteProductTag);

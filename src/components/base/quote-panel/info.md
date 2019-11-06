@@ -16,7 +16,7 @@ A panel for displaying quote prices
 ```jsx
 import styled from 'styled-components';
 
-const MyCustomQuoteBadge = styled(QuotePanel)`
+const MyCustomQuotePanel = styled(QuotePanel)`
     background-color: red;
 `
 ```

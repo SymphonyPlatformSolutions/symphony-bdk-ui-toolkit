@@ -1,10 +1,10 @@
-#Quote Badge
-A badge for displaying financial quotes
+#Quote Product Tag
+A tag for displaying financial product quotes
 
 ##Sample
 
 ```jsx　
-<QuoteBadge
+<QuoteProductTag
   mainInfo="H0"
   sideInfo="start"
   hasCloseButton
@@ -16,21 +16,21 @@ A badge for displaying financial quotes
 ```jsx
 import styled from 'styled-components';
 
-const MyCustomQuoteBadge = styled(QuoteBadge)`
+const MyCustomQuoteProductTag = styled(QuoteProductTag)`
     background-color: red;
 `
 ```
 
 ##Proptypes
 ```jsx
-QuoteBadge.propTypes = {
+QuoteProductTag.propTypes = {
   mainInfo: PropTypes.string.isRequired,
   sideInfo: PropTypes.string,
   hasCloseButton: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
-QuoteBadge.defaultProps = {
+QuoteProductTag.defaultProps = {
   sideInfo: null,
   hasCloseButton: false,
   onClose: null,
