@@ -1,31 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { MdClose } from 'react-icons/md';
+import errorIconPath from '../../../assets/quote-product-tag/tag-error-icon.svg';
+import closeDarkIconPath from '../../../assets/quote-product-tag/tag-close-dark-icon.svg';
 import {
-  BaseBadge as BaseQuoteTag, SideInfo, MainInfo, IconButton,
+  BaseQuoteTag, SideInfo, MainInfo, IconImage, IconButton,
 } from './theme';
 
 const QuoteProductTag = (props) => {
   const {
-    mainInfo, sideInfo, hasCloseButton, onClose, ...rest
+    mainInfo, sideInfo, tagState, onClose, ...rest
   } = props;
 
+  const renderIcon = () => {
+    switch (tagState) {
+      case 'active':
+        return (
+          <IconButton
+            onClick={onClose}
+          >
+            <img src={closeDarkIconPath} alt="icon" />
+          </IconButton>
+        );
+      case 'error':
+        return (
+          <IconImage src={errorIconPath} alt="icon" />
+        );
+      case 'default':
+      case 'disabled':
+      case 'removed':
+      case 'added':
+      default:
+        return null;
+    }
+  };
+
   return (
-    <BaseQuoteTag horizontal type="flat" {...rest}>
+    <BaseQuoteTag horizontal type="flat" align="center" {...rest}>
       {sideInfo
         && <SideInfo>{sideInfo.toUpperCase()}</SideInfo>
       }
       <MainInfo>{mainInfo.toUpperCase()}</MainInfo>
-      {hasCloseButton
-        && (
-        <IconButton
-          onClick={onClose}
-        >
-          <MdClose />
-        </IconButton>
-        )
-      }
+      {renderIcon()}
     </BaseQuoteTag>
   );
 };
@@ -33,13 +49,13 @@ const QuoteProductTag = (props) => {
 QuoteProductTag.propTypes = {
   mainInfo: PropTypes.string.isRequired,
   sideInfo: PropTypes.string,
-  hasCloseButton: PropTypes.bool,
+  tagState: PropTypes.string,
   onClose: PropTypes.func,
 };
 
 QuoteProductTag.defaultProps = {
   sideInfo: null,
-  hasCloseButton: false,
+  tagState: 'default',
   onClose: null,
 };
 

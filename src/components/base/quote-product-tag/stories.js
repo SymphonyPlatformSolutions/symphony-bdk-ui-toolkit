@@ -18,14 +18,38 @@ storiesOf('Base', module)
         <QuoteProductTag
           mainInfo="H0"
           sideInfo="start"
-          hasCloseButton={false}
+          tagState="active"
           onClose={action('close button clicked')}
         />
         <QuoteProductTag
           mainInfo="H0"
           sideInfo="start"
-          hasCloseButton
-          onClose={action('close button clicked')}
+          tagState="disabled"
+        />
+        <QuoteProductTag
+          mainInfo="H0"
+          sideInfo="start"
+          tagState="loading"
+        />
+        <QuoteProductTag
+          mainInfo="IRS"
+          sideInfo="start"
+          tagState="error"
+        />
+        <QuoteProductTag
+          mainInfo="H0"
+          sideInfo="start"
+          tagState="success"
+        />
+        <QuoteProductTag
+          mainInfo="H0"
+          sideInfo="start"
+          tagState="removed"
+        />
+        <QuoteProductTag
+          mainInfo="H0"
+          sideInfo="start"
+          tagState="added"
         />
       </Box>
     </StoryWrapper>

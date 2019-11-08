@@ -21,9 +21,9 @@ const getTextColor = ({ theme }) => (
     : '#000028'
 );
 
-export const BaseBadge = styled(Box)`
+export const BaseQuoteTag = styled(Box)`
   border-radius: 2px;
-  padding: 4px 8px;
+  padding: 4px 8px;  
   background-color: ${props => getBadgeColor(props)};
   border: ${props => `1px solid ${getBadgeBorderColor(props)}`};
   width: fit-content;
@@ -41,11 +41,20 @@ export const MainInfo = styled(Text)`
   color: ${props => getTextColor(props)};
 `;
 
-export const IconButton = styled.button`
+export const IconButton = styled.button`  
+  height: 16px;
+  width: 16px;
   padding: 0;
-  margin: 1px 0 0 4px;
+  margin-left: 6px;
+  margin-bottom: 1px;
   border: none;
   background: none;
   color: ${props => getTextColor(props)};
   cursor: pointer;
+`;
+
+export const IconImage = styled.img`
+  margin-left: 6px;
+  height: 13px;
+  width: 13px;
 `;
