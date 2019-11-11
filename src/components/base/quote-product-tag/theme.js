@@ -81,10 +81,11 @@ export const BaseQuoteTag = styled(Box)`
   border-radius: 2px;
   padding: 4px 8px;
   background-color: ${props => getTagColor(props)};
-  border: ${props => getTagBorder(props)};
-  box-sizing: border-box;
+  border: ${props => getTagBorder(props)};  
   opacity: ${props => getTagOpacity(props)};
   width: fit-content;
+  height: 27px;
+  box-sizing: border-box;
 `;
 
 export const SideInfo = styled(Text)`
