@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
+import loadingIconPath from '../../../assets/quote-product-tag/tag-loading-icon.svg';
 import errorIconPath from '../../../assets/quote-product-tag/tag-error-icon.svg';
-import closeDarkIconPath from '../../../assets/quote-product-tag/tag-close-dark-icon.svg';
+import successIconPath from '../../../assets/quote-product-tag/tag-success-icon.svg';
 import {
-  BaseQuoteTag, SideInfo, MainInfo, IconImage, IconButton,
+  BaseQuoteTag, SideInfo, MainInfo, IconImage, IconButton, getCloseIconPath,
 } from './theme';
 
 const QuoteProductTag = (props) => {
@@ -19,12 +20,20 @@ const QuoteProductTag = (props) => {
           <IconButton
             onClick={onClose}
           >
-            <img src={closeDarkIconPath} alt="icon" />
+            <img src={getCloseIconPath(props)} alt="icon" />
           </IconButton>
+        );
+      case 'loading':
+        return (
+          <IconImage src={loadingIconPath} alt="icon" />
         );
       case 'error':
         return (
           <IconImage src={errorIconPath} alt="icon" />
+        );
+      case 'success':
+        return (
+          <IconImage src={successIconPath} alt="icon" />
         );
       case 'default':
       case 'disabled':
@@ -36,11 +45,11 @@ const QuoteProductTag = (props) => {
   };
 
   return (
-    <BaseQuoteTag horizontal type="flat" align="center" {...rest}>
+    <BaseQuoteTag horizontal type="flat" align="center" tagState={tagState} {...rest}>
       {sideInfo
-        && <SideInfo>{sideInfo.toUpperCase()}</SideInfo>
+        && <SideInfo tagState={tagState}>{sideInfo.toUpperCase()}</SideInfo>
       }
-      <MainInfo>{mainInfo.toUpperCase()}</MainInfo>
+      <MainInfo tagState={tagState}>{mainInfo.toUpperCase()}</MainInfo>
       {renderIcon()}
     </BaseQuoteTag>
   );

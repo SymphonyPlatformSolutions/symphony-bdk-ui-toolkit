@@ -13,42 +13,36 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <Text isTitle size="large">Quote Product Tag</Text>
         <QuoteProductTag
+          sideInfo="start"
           mainInfo="H0"
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="active"
           onClose={action('close button clicked')}
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="disabled"
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="loading"
         />
         <QuoteProductTag
           mainInfo="IRS"
-          sideInfo="start"
           tagState="error"
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="success"
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="removed"
         />
         <QuoteProductTag
-          mainInfo="H0"
-          sideInfo="start"
+          mainInfo="IRS"
           tagState="added"
         />
       </Box>

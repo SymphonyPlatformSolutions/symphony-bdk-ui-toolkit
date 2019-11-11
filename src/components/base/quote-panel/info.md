@@ -1,4 +1,4 @@
-#Quote Badge
+#Quote Panel
 A panel for displaying quote prices
 
 ##Sample

@@ -1,4 +1,4 @@
-#Quote Badge
+#Quote Card
 A card for displaying quotes
 
 ##Sample
