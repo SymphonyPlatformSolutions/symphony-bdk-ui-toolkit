@@ -7,18 +7,19 @@ import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-const badges = [
-  {
-    productId: '1',
-    mainInfo: 'H0',
-    sideInfo: null,
+const productData = {
+  name: 'IRS',
+  currency: 'USD',
+  rateIndex: '3M-LIBOR',
+  clearingHouse: 'EUREX',
+  startDate: 'spot',
+  tenor: { data: '1y', type: 'single' },
+  roll: 'IMM',
+  size: {
+    type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
   },
-  {
-    productId: '2',
-    mainInfo: 'USD 1B',
-    sideInfo: 'DV01',
-  },
-];
+  payDirection: 'pay',
+};
 
 const panelData = {
   dealerName: 'Dealer two',
@@ -35,19 +36,23 @@ storiesOf('Base', module)
         <QuoteCard
           quoteIdName="A5"
           panelData={panelData}
-          badges={null}
+          productData={null}
+          onEdit={action('Edit button clicked')}
+          onCancel={action('Cancel button clicked')}
         />
         <QuoteCard
           quoteIdName="D5"
           panelData={null}
-          badges={badges}
-          onRemove={action('Badge to be removed')}
+          productData={productData}
+          onEdit={action('Edit button clicked')}
+          onCancel={action('Cancel button clicked')}
         />
         <QuoteCard
           quoteIdName="H1"
           panelData={panelData}
-          badges={badges}
-          onRemove={action('Badge to be removed')}
+          productData={productData}
+          onEdit={action('Edit button clicked')}
+          onCancel={action('Cancel button clicked')}
         />
       </Box>
     </StoryWrapper>
