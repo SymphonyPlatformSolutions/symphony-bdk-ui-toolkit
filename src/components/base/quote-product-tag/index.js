@@ -58,7 +58,7 @@ const QuoteProductTag = (props) => {
 QuoteProductTag.propTypes = {
   mainInfo: PropTypes.string.isRequired,
   sideInfo: PropTypes.string,
-  tagState: PropTypes.string,
+  tagState: PropTypes.oneOf(['default', 'active', 'disabled', 'loading', 'error', 'success', 'removed', 'added']),
   onClose: PropTypes.func,
 };
 

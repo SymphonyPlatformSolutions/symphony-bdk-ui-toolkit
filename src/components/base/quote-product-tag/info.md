@@ -1,14 +1,27 @@
 #Quote Product Tag
-A tag for displaying financial product quotes
+A tag for displaying financial product quotes.
+
+The close button only appears when "tagState" is "active". Then, the "onClose" callback is required.
+
+- 
 
 ##Sample
 
-```jsx　
+```jsx
 <QuoteProductTag
-  mainInfo="H0"
   sideInfo="start"
-  hasCloseButton
+  mainInfo="H0"
+/>
+
+<QuoteProductTag
+  mainInfo="IRS"
+  tagState="active"
   onClose={closeHandler}
+/>
+
+<QuoteProductTag
+  mainInfo="IRS"
+  tagState="error"
 />
 ```
 ##Overriding styles
@@ -26,13 +39,13 @@ const MyCustomQuoteProductTag = styled(QuoteProductTag)`
 QuoteProductTag.propTypes = {
   mainInfo: PropTypes.string.isRequired,
   sideInfo: PropTypes.string,
-  hasCloseButton: PropTypes.bool,
+  tagState: PropTypes.oneOf(['default', 'active', 'disabled', 'loading', 'error', 'success', 'removed', 'added']),
   onClose: PropTypes.func,
 };
 
 QuoteProductTag.defaultProps = {
   sideInfo: null,
-  hasCloseButton: false,
+  tagState: 'default',
   onClose: null,
 };
 ```
