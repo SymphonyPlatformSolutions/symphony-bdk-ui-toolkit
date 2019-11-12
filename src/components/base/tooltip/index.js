@@ -28,12 +28,12 @@ const IconWrap = styled.div`
 
 const Bubble = styled.div`
   position: absolute;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.grey_800};
   padding: 0.4rem 1rem;
   line-height: 0.9rem;
   min-width: 10rem;
   max-width: 20rem;
-  border-radius: 0.23rem;
+  border-radius: 3px;
   transform: translate(-50%, ${({ bottom }) => (bottom ? '26px' : 'calc(-100% - 8px)')});
   left: ${({ xPosition }) => `${xPosition + 8}px`};
   top: ${({ yPosition }) => `${yPosition}px`};
@@ -42,17 +42,20 @@ const Bubble = styled.div`
   text-align: center;
 
   &::after {
+    border-radius: 4px;
     content: " ";
     position: absolute;
-    ${({ bottom }) => (bottom ? 'bottom' : 'top')}:
-      ${({ addPercentage }) => `${94 + addPercentage}%`};
+    transform: rotate(45deg);
     left: calc(50% - 2px);
     margin-left: -0.4rem;
     border-width: 0.5rem;
     border-style: solid;
-    border-color: ${({ theme, bottom }) => (bottom
-    ? `transparent transparent ${theme.colors.primary} transparent`
-    : `${theme.colors.primary} transparent transparent transparent`)};
+    position: absolute;
+    ${({ bottom }) => (bottom ? 'bottom' : 'top')}:
+      ${({ addPercentage }) => `${addPercentage * 3 + 68}%`};
+    left: calc(50% - 2px);
+    border-color: ${({ theme }) => theme.colors.grey_800};
+    z-index: -1;
   }
 `;
 
@@ -65,7 +68,7 @@ const TooltipBubble = (props) => {
     <Bubble
       show={show}
       bottom={bottom}
-      addPercentage={Math.floor(children.length / 20)}
+      addPercentage={Math.floor(children.length / 25)}
       xPosition={
         tooltipRef.current
           ? tooltipRef.current.getBoundingClientRect().x + window.scrollX
@@ -80,7 +83,7 @@ const TooltipBubble = (props) => {
 
       <Text
         size="small"
-        style={{ color: theme.colors.white, fontStyle: 'normal' }}
+        style={{ color: theme.colors.grey_050, fontStyle: 'normal' }}
       >
         {children}
       </Text>
@@ -104,7 +107,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <MdInfo size={size} color={theme.colors.darkgrey} />
+        <MdInfo color={theme.colors.grey_800} />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}
