@@ -59,8 +59,6 @@ const COMMON_COLORS = {
   misc_7: '#00BFA5',
   misc_8: '#E17900',
   misc_9: '#8C513B',
-
-  white: '#fff',
 };
 
 const THEMES = [
