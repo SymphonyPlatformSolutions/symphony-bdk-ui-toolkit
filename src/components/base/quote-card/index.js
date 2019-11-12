@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import {
   BaseCard, QuoteShortCodeArea, ContentArea, MenuArea,
-  QuoteShortCodeLabel, QuoteShortCodeName,
+  QuoteShortCodeLabel, QuoteShortCodeName, TagList,
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
@@ -94,7 +94,7 @@ const QuoteCard = (props) => {
             />
           )}
           {productData && (
-          <Box horizontal space={4}>
+          <TagList>
             {getProductTags().map(tag => (
               <QuoteProductTag
                 key={tag.mainInfo}
@@ -102,7 +102,7 @@ const QuoteCard = (props) => {
                 sideInfo={tag.sideInfo}
               />
             ))}
-          </Box>
+          </TagList>
           )}
         </Box>
       </ContentArea>

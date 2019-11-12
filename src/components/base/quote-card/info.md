@@ -3,12 +3,35 @@ A card for displaying quotes
 
 ##Sample
 
-```jsx　
+```jsx
+const panelData = {
+  dealerName: 'Dealer two',
+  dealerPayedValue: 1.75,
+  clientName: 'Client one',
+  clientPayedValue: 3,
+};
+
+const productData = {
+  name: 'IRS',
+  currency: 'USD',
+  rateIndex: '3M-LIBOR',
+  clearingHouse: 'EUREX',
+  startDate: 'spot',
+  tenorDate: '1y',
+  roll: 'IMM',
+  size: {
+    type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
+  },
+  payDirection: 'pay',
+};
+
 <QuoteCard
-  quoteIdName="H1"
+  quoteShortCode="A5"
+  colorIndex={1}
   panelData={panelData}
-  badges={badges}
-  onRemove={handleRemove}
+  productData={productData}
+  onEdit={handleEdit}
+  onCancel={handleCancel}
 />
 ```
 ##Overriding styles
@@ -24,15 +47,18 @@ const MyCustomQuoteCard = styled(QuoteCard)`
 ##Proptypes
 ```jsx
 QuoteCard.propTypes = {
-  quoteIdName: PropTypes.string.isRequired,
+  quoteShortCode: PropTypes.string.isRequired,
+  colorIndex: PropTypes.number.isRequired,
   panelData: PropTypes.object,
-  badges: PropTypes.array,
-  onRemove: PropTypes.func,
+  productData: PropTypes.object,
+  onEdit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
 
 QuoteCard.defaultProps = {
   panelData: null,
-  badges: null,
-  onRemove: null,
+  productData: null,
+  onEdit: null,
+  onCancel: null,
 };
 ```

@@ -87,3 +87,14 @@ export const QuoteShortCodeName = styled.span`
   font-weight: bold;
   color: #FFFFFF;
 `;
+
+export const TagList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  > * {
+    margin-bottom: 4px;
+  }
+  > *:not(:last-child) {
+    margin-right: 4px;
+  }
+`;
