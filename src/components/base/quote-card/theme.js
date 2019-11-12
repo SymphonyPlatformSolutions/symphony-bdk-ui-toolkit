@@ -38,6 +38,18 @@ const getCardBorderColor = ({ theme }) => (
     : '#35383E'
 );
 
+const getIconButtonHoverColor = ({ theme }) => (
+  theme.mode === THEME_TYPES.LIGHT
+    ? '#F5F5F5'
+    : '#232529'
+);
+
+const getIconButtonFocusColor = ({ theme }) => (
+  theme.mode === THEME_TYPES.LIGHT
+    ? '#EEEEEE'
+    : '#35383E'
+);
+
 export const BaseCard = styled.div`
   display: grid;
   grid-template-columns: 40px auto 56px; 
@@ -96,5 +108,21 @@ export const TagList = styled.div`
   }
   > *:not(:last-child) {
     margin-right: 4px;
+  }
+`;
+
+export const IconButton = styled.button`
+  height: 24px;
+  width: 24px;
+  padding: 2px 4px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  :hover {
+    background: ${props => getIconButtonHoverColor(props)};
+  }
+  :focus {
+    background: ${props => getIconButtonFocusColor(props)};
   }
 `;
