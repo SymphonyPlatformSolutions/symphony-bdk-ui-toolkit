@@ -29,7 +29,7 @@ export default function Text(props) {
 Text.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'info']),
   isTitle: PropTypes.bool,
-  size: PropTypes.string,
+  size: PropTypes.oneOf(['tiny', 'small', 'regular', 'large']),
   px: PropTypes.string,
   py: PropTypes.string,
   mx: PropTypes.string,
@@ -45,7 +45,7 @@ Text.defaultProps = {
   py: null,
   mx: null,
   my: null,
-  size: 'large',
+  size: 'regular',
   underline: false,
   type: 'secondary',
   tooltip: null,

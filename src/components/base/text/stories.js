@@ -19,6 +19,7 @@ Because of the kids. They called me Mr Glass.`;
 const TEXT_SIZES = {
   Tiny: 'tiny',
   Small: 'small',
+  Regular: 'regular',
   Large: 'large',
 };
 
@@ -39,8 +40,8 @@ storiesOf('Base', module)
         <Text
           underline={boolean('Has underline', false)}
           isTitle={boolean('Is Title', false)}
-          type={select('Text Types', TEXT_TYPES, 'primary')}
-          size={select('Text Sizes', TEXT_SIZES, 'large')}
+          type={select('Text Types', TEXT_TYPES, 'secondary')}
+          size={select('Text Sizes', TEXT_SIZES, 'regular')}
           px={text('Padding vertical', '10px')}
           py={text('Padding horizontal', '3px')}
           mx={text('Margin Vertical', '10px')}
