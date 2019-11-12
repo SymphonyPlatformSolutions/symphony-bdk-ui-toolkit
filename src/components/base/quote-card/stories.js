@@ -13,7 +13,7 @@ const productData = {
   rateIndex: '3M-LIBOR',
   clearingHouse: 'EUREX',
   startDate: 'spot',
-  tenor: { data: '1y', type: 'single' },
+  tenorDate: '1y',
   roll: 'IMM',
   size: {
     type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
@@ -34,21 +34,24 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <Text isTitle size="large">Quote Card</Text>
         <QuoteCard
-          quoteIdName="A5"
+          quoteShortCode="A5"
+          colorIndex={1}
           panelData={panelData}
           productData={null}
           onEdit={action('Edit button clicked')}
           onCancel={action('Cancel button clicked')}
         />
         <QuoteCard
-          quoteIdName="D5"
+          quoteShortCode="D5"
+          colorIndex={3}
           panelData={null}
           productData={productData}
           onEdit={action('Edit button clicked')}
           onCancel={action('Cancel button clicked')}
         />
         <QuoteCard
-          quoteIdName="H1"
+          quoteShortCode="H1"
+          colorIndex={5}
           panelData={panelData}
           productData={productData}
           onEdit={action('Edit button clicked')}

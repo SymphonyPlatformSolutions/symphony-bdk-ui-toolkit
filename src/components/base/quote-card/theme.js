@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
 
-const getQuoteIdColor = ({ id }) => {
-  switch (id) {
-    case 'A5':
+const getQuoteShortCodeColor = ({ colorIndex }) => {
+  switch (colorIndex) {
+    case 1:
       return '#EC407A';
-    case 'B5':
+    case 2:
       return '#880E4F';
-    case 'C5':
+    case 3:
       return '#AB47BC';
-    case 'D5':
+    case 4:
       return '#4A148C';
-    case 'E5':
+    case 5:
       return '#42A5F5';
-    case 'F5':
+    case 6:
       return '#006064';
-    case 'G5':
+    case 7:
       return '#00BFA5';
-    case 'H1':
+    case 8:
       return '#E17900';
-    case 'I5':
+    case 9:
       return '#8C513B';
     default:
       return '#FFFFFF';
@@ -43,12 +43,12 @@ export const BaseCard = styled.div`
   grid-template-columns: 40px auto 56px; 
   grid-template-rows: auto; 
   grid-template-areas:
-    "quoteIdArea contentArea menuArea";
+    "quoteShortCodeArea contentArea menuArea";
 `;
 
-export const QuoteIdArea = styled.div`
-  grid-area: quoteIdArea;
-  background-color: ${props => getQuoteIdColor(props)};
+export const QuoteShortCodeArea = styled.div`
+  grid-area: quoteShortCodeArea;
+  background-color: ${props => getQuoteShortCodeColor(props)};
   border-radius: 4px 0 0 4px;
   display: flex;
   flex-direction: column;
@@ -76,12 +76,12 @@ export const MenuArea = styled.div`
   box-sizing: border-box;
 `;
 
-export const QuoteIdLabel = styled.span`
+export const QuoteShortCodeLabel = styled.span`
   font-size: 10px;
   color: rgba(255, 255, 255, 0.8);
 `;
 
-export const QuoteIdName = styled.span`
+export const QuoteShortCodeName = styled.span`
   margin-top: 4px;
   font-size: 16px;
   font-weight: bold;
