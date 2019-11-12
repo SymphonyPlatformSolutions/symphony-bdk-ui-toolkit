@@ -1,19 +1,14 @@
 import React from 'react';
 import styled, { keyframes, withTheme } from 'styled-components';
-import { ClipLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 import {
   getBackgroundColor, getTileColor,
 } from './theme';
-
-const LoaderWrapper = styled.div`
-  width: 100%;
-  position: absolute;
-`;
+import LoaderPNG from './Loading.png';
 
 const SPINNER_SIZES = {
   SMALL: 'small',
-  NORMAL: 'normal',
+  REGULAR: 'regular',
   LARGE: 'large',
 };
 
@@ -22,7 +17,7 @@ const spin = keyframes`
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(-360deg);
   }
 `;
 
@@ -70,36 +65,38 @@ const InnerRing = styled.div`
   }
 `;
 
+const LoaderImg = styled.img`
+  animation: ${spin} 0.7s linear infinite;
+  height: ${props => spinnerSize(props)};
+  width: ${props => spinnerSize(props)};
+`;
+
 const Loader = (props) => {
   const {
-    size, color, type, theme, presetSize, ...rest
+    size, type, theme, ...rest
   } = props;
 
+
   if (type === 'v2') {
-    return <InnerRing {...rest} size={presetSize} theme={theme} colorObject={color} />;
+    return <InnerRing {...rest} size={size} theme={theme} />;
   }
 
   return (
-    <LoaderWrapper>
-      <ClipLoader
-        sizeUnit="px"
-        size={size}
-        color={color}
-      />
-    </LoaderWrapper>
+    <div {...rest}>
+      <LoaderImg src={LoaderPNG} size={size} />
+    </div>
   );
 };
 
 Loader.propTypes = {
-  size: PropTypes.number,
   type: PropTypes.string,
-  presetSize: PropTypes.string,
+  size: PropTypes.oneOf(Object.keys(SPINNER_SIZES).map(el => SPINNER_SIZES[el])),
+  theme: PropTypes.object.isRequired,
 };
 
 Loader.defaultProps = {
   type: 'v1',
-  presetSize: SPINNER_SIZES.NORMAL,
-  size: 12,
+  size: SPINNER_SIZES.REGULAR,
 };
 
 export default withTheme(Loader);
