@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
+import uuid from 'uuid';
 import { MdPlayArrow, MdSearch } from 'react-icons/md';
 import { transparentize } from 'polished';
 import InputField from '../input-field';
@@ -232,6 +233,7 @@ export const generateContextMenu = (theme, id, item) => (
   <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
     {item.actionsMenu.map((menuItem, index, arr) => (
       <MenuItem
+        key={uuid.v1()}
         type="flat"
         align="start"
         justify="center"
