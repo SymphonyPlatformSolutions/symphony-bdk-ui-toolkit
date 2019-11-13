@@ -4,6 +4,7 @@ import { withTheme } from 'styled-components';
 import {
   BaseCard, QuoteShortCodeArea, ContentArea, MenuArea,
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
+  IconButton, getMenuIconPath,
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
@@ -106,7 +107,13 @@ const QuoteCard = (props) => {
           )}
         </Box>
       </ContentArea>
-      <MenuArea>...</MenuArea>
+      <MenuArea>
+        <IconButton
+          onClick={() => console.log('menu')}
+        >
+          <img src={getMenuIconPath(props)} alt="menu-icon" />
+        </IconButton>
+      </MenuArea>
     </BaseCard>
   );
 };

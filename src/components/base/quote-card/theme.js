@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
+import menuDarkIconPath from '../../../assets/commons/menu-dark-icon.svg';
+import menuLightIconPath from '../../../assets/commons/menu-light-icon.svg';
 
 const getQuoteShortCodeColor = ({ colorIndex }) => {
   switch (colorIndex) {
@@ -114,7 +116,7 @@ export const TagList = styled.div`
 export const IconButton = styled.button`
   height: 24px;
   width: 24px;
-  padding: 2px 4px;
+  padding: 1px 1px 0 0;
   border: none;
   border-radius: 50%;
   background: none;
@@ -126,3 +128,9 @@ export const IconButton = styled.button`
     background: ${props => getIconButtonFocusColor(props)};
   }
 `;
+
+export const getMenuIconPath = ({ theme }) => (
+  theme.mode === THEME_TYPES.LIGHT
+    ? menuLightIconPath
+    : menuDarkIconPath
+);

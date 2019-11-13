@@ -3,11 +3,11 @@ import Box from '../box';
 import Text from '../text';
 import { THEME_TYPES } from '../../../styles/colors';
 import closeDarkIconPath from '../../../assets/quote-product-tag/tag-close-dark-icon.svg';
-import lightDarkIconPath from '../../../assets/quote-product-tag/tag-close-light-icon.svg';
+import closelightIconPath from '../../../assets/quote-product-tag/tag-close-light-icon.svg';
 
 export const getCloseIconPath = ({ theme }) => (
   theme.mode === THEME_TYPES.LIGHT
-    ? lightDarkIconPath
+    ? closelightIconPath
     : closeDarkIconPath
 );
 
