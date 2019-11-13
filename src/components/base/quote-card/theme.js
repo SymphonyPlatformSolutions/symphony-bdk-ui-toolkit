@@ -134,3 +134,14 @@ export const getMenuIconPath = ({ theme }) => (
     ? menuLightIconPath
     : menuDarkIconPath
 );
+
+export const ContextMenuItem = styled.button`
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  :hover {
+    background: ${props => getIconButtonHoverColor(props)};
+  }
+`;

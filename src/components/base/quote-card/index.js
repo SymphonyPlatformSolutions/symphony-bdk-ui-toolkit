@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
+import 'react-table/react-table.css';
+import 'react-contexify/dist/ReactContexify.min.css';
+import { contextMenu, Menu } from 'react-contexify';
+import uuid from 'uuid';
 import {
   BaseCard, QuoteShortCodeArea, ContentArea, MenuArea,
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
-  IconButton, getMenuIconPath,
+  IconButton, getMenuIconPath, ContextMenuItem,
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
@@ -12,9 +16,11 @@ import QuoteProductTag from '../quote-product-tag';
 
 const QuoteCard = (props) => {
   const {
-    quoteShortCode, colorIndex, panelData, productData, onEdit, onCancel,
-    ...rest
+    theme, quoteShortCode, colorIndex, panelData, productData,
+    onEdit, onCancel, ...rest
   } = props;
+
+  const menuId = uuid.v1();
 
   const getProductTags = () => {
     const tags = [];
@@ -78,6 +84,37 @@ const QuoteCard = (props) => {
     return tags;
   };
 
+  const renderContextMenu = () => (
+    <Menu animation="fade" id={menuId}>
+      <ContextMenuItem
+        onClick={onEdit}
+      >
+        Edit
+      </ContextMenuItem>
+      <ContextMenuItem
+        onClick={onCancel}
+      >
+        Cancel RFQ
+      </ContextMenuItem>
+    </Menu>
+  );
+
+  const openContextMenu = (e) => {
+    const rtlEvent = Object.assign(
+      {},
+      {
+        x: e.x - 180,
+        y: e.y,
+        clientX: e.clientX - 180,
+        clientY: e.clientY,
+        stopPropagation: () => {
+          e.stopPropagation();
+        },
+      },
+    );
+    contextMenu.show({ id: menuId, event: rtlEvent });
+  };
+
   return (
     <BaseCard {...rest}>
       <QuoteShortCodeArea colorIndex={colorIndex}>
@@ -109,16 +146,18 @@ const QuoteCard = (props) => {
       </ContentArea>
       <MenuArea>
         <IconButton
-          onClick={() => console.log('menu')}
+          onClick={openContextMenu}
         >
           <img src={getMenuIconPath(props)} alt="menu-icon" />
         </IconButton>
+        {renderContextMenu()}
       </MenuArea>
     </BaseCard>
   );
 };
 
 QuoteCard.propTypes = {
+  theme: PropTypes.object.isRequired,
   quoteShortCode: PropTypes.string.isRequired,
   colorIndex: PropTypes.number.isRequired,
   panelData: PropTypes.object,
