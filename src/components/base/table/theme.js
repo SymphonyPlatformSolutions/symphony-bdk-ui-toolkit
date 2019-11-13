@@ -9,25 +9,23 @@ import { THEME_TYPES, THEMES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
-const getEmptyTableColor = theme => (theme.mode === THEME_TYPES.DARK
-  ? theme.colors.inputgrey
-  : theme.colors.lightgrey);
-
-export const getTheadStyle = theme => ({
+export const getTheadStyle = (theme, searchable) => ({
   style: {
-    backgroundColor: theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : theme.colors.white,
-    boxShadow: '0px 1px 3px rgb(0,0,0,0.1)',
+    backgroundColor: theme.colors.grey_100,
+    boxShadow: 'none',
     minHeight: '48px',
     padding: '5px 0px',
+    borderTopRightRadius: !searchable && '4px',
+    borderTopLeftRadius: !searchable && '4px',
   },
 });
-// '#797979'
+
 export const getHeaderColumnTextStyle = theme => ({
-  fontSize: '1.2rem',
-  fontWeight: 'normal',
-  fontStyle: 'normal',
+  // fontSize: '1.2rem',
+  // fontWeight: 'normal',
+  // fontStyle: 'normal',
   lineHeight: '1.2rem',
-  color: theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.darkgrey),
+  color: theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.grey_400),
 });
 
 export const getPropsStyle = maxHeight => ({
@@ -63,7 +61,7 @@ export const getStyleProps = theme => ({
       background: 'none',
       top: '75%',
       padding: '4px 25px',
-      color: theme.colors.textcolor,
+      color: theme.colors.grey_700,
     },
   }),
   getTdProps: () => ({
@@ -71,25 +69,30 @@ export const getStyleProps = theme => ({
       borderRight: 'none',
     },
   }),
+  getTbodyProps: () => ({
+    style: {
+      border: `2px solid ${theme.colors.grey_100}`,
+      borderBottomRightRadius: '4px',
+      borderBottomLeftRadius: '4px',
+    },
+  }),
 });
 
 const overrides = {
   trGroup: 'rt-tr-group',
 };
+
 function getHover(props) {
   const { children: { props: { data } }, theme } = props;
   if (!data || !data.length) {
     return 'none';
   }
-  if (theme.mode === THEME_TYPES.DARK) {
-    return '#4489f8';
-  }
-  return '#e6efff';
+  return theme.colors.grey_200;
 }
 
 export const TableWrapper = styled.div.attrs(overrides)`
   .ReactTable .${overrides.trGroup} {
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
     :hover {
       background-color: ${props => getHover(props)};
     }
@@ -100,12 +103,8 @@ export const getMenuBackgroundColor = theme => ({
   style: {
     padding: '0px',
     borderRadius: '4px',
-    backgroundColor:
-      theme.mode === THEME_TYPES.DARK ? '#2F3237' : theme.colors.white,
-    boxShadow:
-      theme.mode === THEME_TYPES.DARK
-        ? '0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #292929'
-        : null,
+    backgroundColor: theme.colors.grey_050,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
   },
 });
 
@@ -122,12 +121,11 @@ const IconSpinner = styled.div`
 
 const SearchWrapper = styled.div`
   width: calc(100%);
-  transform: translateX(-2px);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
   justify-content: flex-end;
-  background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.darkaccent : 'white')};
+  background-color: ${({ theme }) => theme.colors.grey_100};
 `;
 const InputWrapper = styled.div`
   position: relative;
@@ -146,7 +144,7 @@ export const SearchBar = withTheme((props) => {
     <SearchWrapper theme={theme}>
       <InputWrapper>
         <SearchIconWrapper>
-          <MdSearch color={theme.colors.darkgrey} />
+          <MdSearch color={theme.colors.grey_400} />
         </SearchIconWrapper>
         <InputField
           theme={THEMES[0]}
@@ -166,7 +164,7 @@ export const SortingIcon = ({ sorting, columnId, theme }) => {
     return (
       <IconWrapper>
         <IconSpinner>
-          <MdPlayArrow color={transparentize(0.6, theme.colors.textcolor)} />
+          <MdPlayArrow color={transparentize(0.6, theme.colors.grey_700)} />
         </IconSpinner>
       </IconWrapper>
     );
@@ -175,7 +173,7 @@ export const SortingIcon = ({ sorting, columnId, theme }) => {
   return (
     <IconWrapper>
       <IconSpinner desc={sorting[0].desc}>
-        <MdPlayArrow color={theme.colors.primary} />
+        <MdPlayArrow color={theme.colors.primary_900} />
       </IconSpinner>
     </IconWrapper>
   );
@@ -187,21 +185,21 @@ export const EmptyTable = styled.div`
   align-items: center;
   width: 100%;
   height: 9.5rem;
-  border-radius: 3px;
-  background-color: ${({ theme }) => getEmptyTableColor(theme)};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.grey_100};
 `;
 
 export const MoreActionsIcon = styled(MoreVert)`
   width: 24px;
   height: 24px;
-  color: ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT ? '#006CAF' : 'white')};
+  color: ${({ theme }) => theme.colors.primary_900};
   &:hover {
     cursor: pointer;
   }
 `;
 
 export const EmptyText = styled(Text)`
-  color: ${({ theme }) => theme.colors.darkgrey};
+  color: ${({ theme }) => theme.colors.grey_400};
 `;
 
 export const CellWrapper = styled(Box)`
@@ -224,7 +222,7 @@ export const MenuItem = styled(Box)`
   padding-left: 15px;
   border-left: 4px solid transparent;
   &:hover {
-    background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '#464B53' : '#F1F2F4')};
+    background-color: ${({ theme }) => theme.colors.primary_300};
     border-top-left-radius: ${props => (props.isFirst ? '4px' : null)};
     border-bottom-left-radius: ${props => (props.isLast ? '4px' : null)};
     border-left: ${({ theme, accent }) => `4px solid ${theme.colors[accent]}`};

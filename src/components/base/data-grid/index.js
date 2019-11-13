@@ -31,7 +31,7 @@ const DataGrid = (
             <Box horizontal align="center" space={5}>
               <Text
                 isTitle
-                size="small"
+                size="tiny"
               >
                 {args.column.name}
               </Text>
@@ -44,7 +44,7 @@ const DataGrid = (
         <CellContainer>
           <Text
             isTitle
-            size="small"
+            size="tiny"
           >
             {args.column.name}
           </Text>
@@ -58,7 +58,6 @@ const DataGrid = (
       return (
         <CellContainer error={error}>
           <Text
-            type="primary"
             size="small"
             style={{
               textOverflow: 'ellipsis',
