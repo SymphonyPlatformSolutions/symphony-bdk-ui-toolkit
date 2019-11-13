@@ -1,14 +1,27 @@
-import { darken, lighten } from 'polished';
-import { THEME_TYPES } from '../../../styles/colors';
+export const getBackgroundColor = ({ theme, isChecked, disabled }, isHover) => {
+  if (isHover && disabled) { return undefined; }
+  if (disabled) {
+    return (
+      isChecked
+        ? theme.colors.grey_100
+        : 'transparent'
+    );
+  }
+  return (
+    isChecked
+      ? (isHover ? theme.colors.primary_700 : theme.colors.primary_500)
+      : 'transparent'
+  );
+};
 
-export const getBackgroundColor = ({ theme, isChecked, disabled }) => (
-  isChecked
-    ? disabled
-      ? theme.colors.darkgrey
-      : theme.colors.primary
-    : disabled
-      ? theme.colors.grey
-      : theme.mode === THEME_TYPES.LIGHT
-        ? darken(0.1, theme.colors.grey)
-        : lighten(0.1, theme.colors.grey)
-);
+export const getBorderColor = ({ theme, isChecked, disabled }, isHover) => {
+  if (isHover && disabled) { return undefined; }
+  if (disabled) {
+    return `1px solid ${theme.colors.grey_200}`;
+  }
+  return `1px solid ${(
+    isChecked
+      ? (isHover ? theme.colors.primary_700 : theme.colors.primary_500)
+      : (isHover ? theme.colors.grey_600 : theme.colors.grey_400)
+  )}`;
+};
