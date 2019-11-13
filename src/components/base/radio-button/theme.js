@@ -1,12 +1,18 @@
 import styled from 'styled-components';
-import { darken, lighten } from 'polished';
-import { THEME_TYPES } from '../../../styles/colors';
+
+export const RadioLabel = styled.label`
+  position: relative;
+  padding-left: 1.4rem;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  line-height: 0.9rem;
+  display: inline-block;
+`;
 
 export const Radio = styled.input`
   visibility: hidden;
   position: absolute;
-  left: -1px;
-  top: -2px;
+  left: ${({ checked }) => (checked ? '-4px' : '-3px')};
+  top: -4px;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
   &:disabled {
@@ -19,14 +25,15 @@ export const Radio = styled.input`
     position: absolute;
     left: -4px;
     top: -4px;
-    width: 14px;
-    height: 14px;
-    border: 2px solid ${({ theme }) => theme.colors.primary};
+    width: 20px;
+    height: 20px;
+    border: 2px solid ${({ theme }) => theme.colors.primary_500};
     border-radius: 100%;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   } 
-
-  &:disabled:checked:before {
-    border: 2px solid ${({ theme }) => theme.colors.grey};
+  ${RadioLabel}:hover &:checked:before {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: ${({ theme, disabled }) => (disabled ? undefined : `2px solid ${theme.colors.primary_700}`)};
   }
 
   &:not(:checked):before {
@@ -35,16 +42,15 @@ export const Radio = styled.input`
     position: absolute;
     left: -4px;
     top: -4px;
-    width: 0.9rem;
-    height: 0.9rem;
-    border: 2px solid ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT
-    ? darken(0.1, theme.colors.grey)
-    : lighten(0.1, theme.colors.grey))};
+    width: 20px;
+    height: 20px;
+    border: 1px solid ${({ theme }) => theme.colors.grey_400};
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     border-radius: 100%;
   }
-
-  &:disabled:not(:checked):before {
-    border: 2px solid ${({ theme }) => theme.colors.grey};
+  ${RadioLabel}:hover &:not(:checked):before {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: ${({ theme, disabled }) => (disabled ? undefined : `1px solid ${theme.colors.grey_600}`)};
   }
 
   &:checked:after,
@@ -53,18 +59,19 @@ export const Radio = styled.input`
     content: '';
     left: 1px;
     top: 1px;
-    width: 8px;
-    height: 8px;
-    background: ${({ theme }) => theme.colors.primary};
+    width: 14px;
+    height: 14px;
+    background: ${({ theme }) => theme.colors.primary_500};
     position: absolute;
     border-radius: 100%;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
   }
 
-  &:disabled:checked:after,
-  &:disabled:not(:checked):after {
-    background: ${({ theme }) => theme.colors.grey};
+  ${RadioLabel}:hover &:checked:after,
+  &:not(:checked):after {
+    transition: all 0.2s ease;
+    background: ${({ theme, disabled }) => (disabled ? undefined : theme.colors.primary_700)};
   }
 
   &:not(:checked):after {
@@ -80,14 +87,9 @@ export const Radio = styled.input`
   }
 `;
 
-export const RadioLabel = styled.label`
-  position: relative;
-  padding-left: 1.4rem;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  line-height: 0.9rem;
-  display: inline-block;
-`;
-
 export const RadioContainer = styled.div`
-  margin: 5px 0;
+  margin: 9px 0;
+  opacity: ${({ disabled }) => (disabled ? '0.25' : '1')};
+  align-items: center;
+    display: flex;
 `;

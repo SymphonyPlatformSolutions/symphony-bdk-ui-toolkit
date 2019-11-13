@@ -46,11 +46,11 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box vertical space={20}>
         <Box>
-          <Text isTitle size="large">Radio Button</Text>
+          <Text isTitle>Radio Button</Text>
           <RadioGroup groupNumber={1} />
         </Box>
         <Box>
-          <Text isTitle size="large">Disabled Radio Button</Text>
+          <Text isTitle>Disabled Radio Button</Text>
           <RadioGroup groupNumber={2} disabled />
         </Box>
       </Box>

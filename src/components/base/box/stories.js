@@ -31,7 +31,7 @@ storiesOf('Base', module)
   .add('Box', () => (
     <StoryWrapper p={15}>
       <Box type="primary">
-        <Text isTitle size="large">Box Justify</Text>
+        <Text isTitle>Box Justify</Text>
         <Box space={10}>
           <Box horizontal justify="flex-start" space={20}>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
@@ -68,7 +68,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Primary Horizontal</Text>
+          <Text isTitle>Box Primary Horizontal</Text>
           <Box horizontal>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -82,7 +82,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Secondary Horizontal</Text>
+          <Text isTitle>Box Secondary Horizontal</Text>
           <Box horizontal type="secondary">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -96,7 +96,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Flat Horizontal</Text>
+          <Text isTitle>Box Flat Horizontal</Text>
           <Box horizontal type="flat">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -110,7 +110,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Primary Vertical</Text>
+          <Text isTitle>Box Primary Vertical</Text>
           <Box vertical>
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -124,7 +124,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Secondary Vertical</Text>
+          <Text isTitle>Box Secondary Vertical</Text>
           <Box vertical type="secondary">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -138,7 +138,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Flat Horizontal</Text>
+          <Text isTitle>Box Flat Horizontal</Text>
           <Box horizontal type="flat">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>
@@ -152,7 +152,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box space={10}>
-          <Text isTitle size="large">Box Flat Vertical</Text>
+          <Text isTitle>Box Flat Vertical</Text>
           <Box vertical type="flat">
             <Box style={Object.assign({}, boxStyle, boxCTA)}>
               <span>Child</span>

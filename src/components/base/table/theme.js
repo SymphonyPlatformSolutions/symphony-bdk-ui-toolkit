@@ -173,7 +173,7 @@ export const SortingIcon = ({ sorting, columnId, theme }) => {
   return (
     <IconWrapper>
       <IconSpinner desc={sorting[0].desc}>
-        <MdPlayArrow color={theme.colors.primary_900} />
+        <MdPlayArrow color={theme.colors.primary_500} />
       </IconSpinner>
     </IconWrapper>
   );
@@ -192,7 +192,7 @@ export const EmptyTable = styled.div`
 export const MoreActionsIcon = styled(MoreVert)`
   width: 24px;
   height: 24px;
-  color: ${({ theme }) => theme.colors.primary_900};
+  color: ${({ theme }) => theme.colors.primary_500};
   &:hover {
     cursor: pointer;
   }
