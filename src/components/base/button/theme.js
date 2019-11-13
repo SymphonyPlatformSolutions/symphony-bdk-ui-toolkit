@@ -94,9 +94,11 @@ export const Container = styled(Box)`
 export const TextContainer = styled(Text)`
   color: inherit;
   font-size: inherit;
-  line-height: null;
+  line-height: 0;
   letter-spacing: 1px;
   font-weight: bold;
+  line-height: none;
+  margin-top: 1px;
 `;
 
 export const ChildrenContainer = styled(Box)`

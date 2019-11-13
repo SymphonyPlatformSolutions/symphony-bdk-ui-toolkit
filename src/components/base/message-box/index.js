@@ -3,35 +3,42 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import {
   MdClose,
 } from 'react-icons/md';
 import {
-  MessageBoxIconContainer,
-  MessageBoxLogo,
   MessageBoxText,
   StyledMessageBox,
   MessageBoxButtonContainer,
   MessageBoxButton,
-  getIcon,
 } from './theme';
 import Text from '../text';
+
+const CloseButton = styled.svg``;
+const CloseButtonBg = styled.rect`
+  transition: all 0.3s;
+  opacity: 0;
+  ${CloseButton}:hover & {
+    opacity: 1;
+  }
+`;
+const CloseButtonPath = styled.path`
+  transition: all 0.3s;
+  stroke: #757575;
+  ${CloseButton}:hover & {
+    stroke: #424242;
+  }
+`;
 
 const MessageBox = (props) => {
   const {
     type, children, hasButton, buttonHandler, style,
-    theme,
   } = props;
 
   return (
     <StyledMessageBox type={type} style={style}>
-      <MessageBoxLogo type={type}>
-        <MessageBoxIconContainer>
-          {getIcon({ type, theme })}
-        </MessageBoxIconContainer>
-      </MessageBoxLogo>
-      <MessageBoxText>
+      <MessageBoxText type={type}>
         <span>
           {children
             ? children
@@ -49,7 +56,11 @@ const MessageBox = (props) => {
             type="button"
             onClick={buttonHandler}
           >
-            <MdClose color="#4d4d4d" size="1.2rem" />
+            <CloseButton width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <CloseButtonBg width="24" height="24" rx="12" fill="#F5F5F5" />
+              <CloseButtonPath d="M16 8.12903L8 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <CloseButtonPath d="M8 8.12903L16 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </CloseButton>
           </MessageBoxButton>
         </MessageBoxButtonContainer>
         )

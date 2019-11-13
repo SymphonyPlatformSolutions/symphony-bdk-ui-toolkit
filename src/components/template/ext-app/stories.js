@@ -83,7 +83,7 @@ const PageOne = () => {
       Cell: ({ original }) => (
         <Box style={{ width: '100%' }} horizontal justify="center">
           <Button
-            style={{ width: '116px', color:'white' }}
+            style={{ width: '116px', color: 'white' }}
             size="small"
             type={original.connected ? 'danger' : 'secondary'}
             onClick={() => handleButtonClick(original)}
@@ -100,7 +100,7 @@ const PageOne = () => {
 
   return (
     <Box vertical space={10}>
-      <Text type="primary" size="large" isTitle>
+      <Text type="primary" isTitle>
         Setup Page
       </Text>
       <Text type="primary">
@@ -154,7 +154,7 @@ const PageTwo = () => {
 
   return (
     <Box vertical space={10}>
-      <Text type="primary" size="large" isTitle>
+      <Text type="primary" isTitle>
         Manage Notifications
       </Text>
       <Text type="primary">

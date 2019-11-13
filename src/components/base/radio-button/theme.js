@@ -36,6 +36,11 @@ export const Radio = styled.input`
     border: ${({ theme, disabled }) => (disabled ? undefined : `2px solid ${theme.colors.primary_700}`)};
   }
 
+  &:focus:checked::before {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: ${({ theme, disabled }) => (disabled ? undefined : `2px solid ${theme.colors.primary_700}`)};
+  }
+
   &:not(:checked):before {
     visibility: visible;
     content: '';
@@ -49,6 +54,11 @@ export const Radio = styled.input`
     border-radius: 100%;
   }
   ${RadioLabel}:hover &:not(:checked):before {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: ${({ theme, disabled }) => (disabled ? undefined : `1px solid ${theme.colors.grey_600}`)};
+  }
+
+  &:focus:not(:checked)::before {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     border: ${({ theme, disabled }) => (disabled ? undefined : `1px solid ${theme.colors.grey_600}`)};
   }
@@ -70,6 +80,12 @@ export const Radio = styled.input`
 
   ${RadioLabel}:hover &:checked:after,
   &:not(:checked):after {
+    transition: all 0.2s ease;
+    background: ${({ theme, disabled }) => (disabled ? undefined : theme.colors.primary_700)};
+  }
+
+  &:focus:checked::after,
+  &:focus:not(:checked)::after {
     transition: all 0.2s ease;
     background: ${({ theme, disabled }) => (disabled ? undefined : theme.colors.primary_700)};
   }
