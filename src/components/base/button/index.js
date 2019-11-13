@@ -6,23 +6,17 @@ import {
   BaseButton,
   Container,
   ChildrenContainer,
-  getSpinnerColor,
+  BUTTON_TYPES,
+  TextContainer,
+  FILL_TYPES,
 } from './theme';
 import { NoOp } from '../../../utils/helpers';
 
 const LoaderContainer = styled.div`
     display: flex;
     position: absolute;
-    transform: scale(0.9);
+    height: 16px;
 `;
-
-const BUTTON_TYPES = {
-  SUBMIT: 'submit',
-  PRIMARY: 'primary',
-  DANGER: 'danger',
-  GREY: 'grey',
-  SECONDARY: 'secondary',
-};
 
 const Button = ({
   children, size, type, fill, theme, loading, disabled, htmlType, circular, ...rest
@@ -60,17 +54,19 @@ const Button = ({
       disabled={isLoading || disabled}
     >
       <Container justify="center" align="center" type="flat">
-        <ChildrenContainer isLoading={isLoading}>
-          {children}
-        </ChildrenContainer>
-        {isLoading && (
+        {isLoading ? (
           <LoaderContainer circular={circular} size={size}>
             <Loader
-              color={getSpinnerColor(({ type, fill, theme }))}
-              type="v2"
-              presetSize="small"
+              color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
+              size="small"
             />
           </LoaderContainer>
+        ) : (
+          <ChildrenContainer isLoading={isLoading} fill={fill}>
+            <TextContainer>
+              {children}
+            </TextContainer>
+          </ChildrenContainer>
         )}
       </Container>
     </BaseButton>
@@ -80,25 +76,25 @@ const Button = ({
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.keys(BUTTON_TYPES).map(e => BUTTON_TYPES[e])),
-  size: PropTypes.oneOf(['tiny', 'small', 'large']),
+  size: PropTypes.oneOf(['small', 'regular', 'large']),
   fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   htmlType: PropTypes.string,
-  circular: PropTypes.string,
+  circular: PropTypes.bool,
 };
 
 Button.defaultProps = {
   type: 'primary',
-  size: 'large',
+  size: 'regular',
   fill: 'filled',
   disabled: false,
   onClick: NoOp,
   loading: null,
   htmlType: 'button',
-  circular: null
+  circular: false,
 };
 
 export default withTheme(Button);

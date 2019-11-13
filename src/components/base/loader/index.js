@@ -5,6 +5,7 @@ import {
   getBackgroundColor, getTileColor,
 } from './theme';
 import LoaderPNG from './Loading.png';
+import WhiteLoaderPNG from './Loading_White.png';
 
 const SPINNER_SIZES = {
   SMALL: 'small',
@@ -17,7 +18,7 @@ const spin = keyframes`
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 `;
 
@@ -73,7 +74,7 @@ const LoaderImg = styled.img`
 
 const Loader = (props) => {
   const {
-    size, type, theme, ...rest
+    size, type, theme, color, ...rest
   } = props;
 
 
@@ -83,7 +84,7 @@ const Loader = (props) => {
 
   return (
     <div {...rest}>
-      <LoaderImg src={LoaderPNG} size={size} />
+      <LoaderImg src={color === 'white' ? WhiteLoaderPNG : LoaderPNG} size={size} />
     </div>
   );
 };
