@@ -1,34 +1,16 @@
 import { darken, transparentize } from 'polished';
 import styled from 'styled-components';
+import Text from '../text';
 import { THEME_TYPES } from '../../../styles/colors';
 
 
 const getThemedBorderColor = ({ theme, inputState }) => {
   if (inputState === 'error') {
-    return theme.colors.danger;
+    return theme.colors.error_400;
   }
 
-  return theme.colors.bordergrey;
+  return theme.colors.grey_400;
 };
-
-const getColor = ({ theme, disabled }) => {
-  if (disabled) {
-    return theme.colors.darkgrey;
-  }
-  return theme.colors.textcolor;
-};
-
-const getDropdownColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
-  ? theme.colors.basegrey
-  : theme.colors.darkaccent);
-
-const getPlaceholderColor = ({ theme, inputState }) => (
-  inputState === 'error'
-    ? theme.colors.danger
-    : theme.colors.darkgrey
-);
-
-const getBackgroundColor = ({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK ? (disabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white))) : 'transparent');
 
 const overrides = {
   container: 'react-tel-input',
@@ -41,18 +23,13 @@ const overrides = {
   search: 'search',
 };
 
-const getDropdownBackgroundColor = ({ theme, disabled }) => (disabled ? theme.colors.lightgrey : theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.white);
-
 const getDropdownWidth = ({ hasRef }) => (hasRef ? `${hasRef.clientWidth}px` : 'auto');
 
 export const PhoneInputWrapper = styled.div.attrs(overrides)`
   .${overrides.container} {
-     width: 100%;
-     border-radius: 0;
-     border: none;
-     & > input {
-       font-style: ${({ disabled }) => (disabled ? 'italic !important' : 'normal')};
-     }
+    width: 100%;
+    border-radius: 0;
+    border: 0;
   }
 
   .${overrides.formControl} {
@@ -63,7 +40,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     width: 100% !important;
     border: none !important;
     border-radius: 0px !important;
-    color: ${props => getColor(props)};
+    color: ${({ theme }) => theme.colors.grey_700};
     background-color: transparent !important;
     cursor: ${props => (props.disabled ? 'inherit' : 'text')};
 
@@ -73,13 +50,12 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     }
 
     &::placeholder {
-      color: ${props => getPlaceholderColor(props)};
+      color: ${({ theme }) => theme.colors.grey_300};
     }
-
+    
     &:focus {
      outline: none;
     }
-
   }
 
   .${overrides.flagDropdownButton} {
@@ -89,7 +65,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     .selected-flag {
       background-color: transparent !important;
     }
-  filter: ${({ disabled }) => (disabled ? 'grayscale(100%)' : undefined)};
+    filter: ${({ disabled }) => (disabled ? 'grayscale(100%)' : undefined)};
   }
 
   .${overrides.searchHover} {
@@ -106,19 +82,19 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     .arrow {
       margin-left: 5px !important;
       transform: scale(1.5) !important;
-      border-top: ${props => `3px solid ${getDropdownColor(props)} !important`};
+      border-top: ${({ theme }) => `3px solid ${theme.colors.grey_500} !important`};
 
       &.up {
         border-top: none !important;
-        border-bottom: ${props => `3px solid ${getDropdownColor(props)} !important`};
+        border-bottom: ${({ theme }) => `3px solid ${theme.colors.grey_500} !important`};
       }
     }
   }
 
   .${overrides.flagDropdownMenu} {
     border-radius: 0px !important;
-    color: ${props => getDropdownColor(props)} !important;
-    background-color: ${props => getDropdownBackgroundColor(props)} !important;
+    color: ${({ theme }) => theme.colors.grey_700} !important;
+    background-color: ${({ theme }) => theme.colors.mainbackground} !important;
     border: 1px solid ${props => getThemedBorderColor(props)} !important;
     width: ${props => getDropdownWidth(props)} !important;
     margin: 0 0 10px -1px !important;
@@ -127,8 +103,9 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       padding: 5px 4px !important;
     }
     .search-box {
-      font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif !important;
-      font-size: 16px !important;
+      font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana",
+    "Arial", sans-serif !important;
+      font-size: 14px !important;
       line-height: 16px !important;
       margin-left: 6px !important;
       padding: 4px 4px !important;
@@ -136,25 +113,25 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
       border-radius: 0px !important;
     }
     .dial-code {
-      color: ${({ theme }) => darken(0.5, theme.colors.textcolor)} !important;
+      color: ${({ theme }) => darken(0.5, theme.colors.grey_500)} !important;
     }
     .country {
       height: 34px !important;
     }
     .country:hover {
-      color: ${({ theme }) => theme.colors.textcolor} !important;
-      background-color: ${({ theme }) => theme.colors.secondary} !important;
+      color: ${({ theme }) => theme.colors.grey_700} !important;
+      background-color: ${({ theme }) => theme.colors.grey_200} !important;
      .dial-code {
-        color: ${({ theme }) => theme.colors.textcolor} !important;
+        color: ${({ theme }) => theme.colors.grey_900} !important;
       }
     }
 
     .highlight {
-      color: ${({ theme }) => theme.colors.textcolor} !important;
+      color: ${({ theme }) => theme.colors.grey_700} !important;
       .dial-code {
-        color: ${({ theme }) => theme.colors.textcolor} !important;
+        color: ${({ theme }) => theme.colors.grey_900} !important;
       }
-      background-color: ${({ theme }) => theme.colors.primary} !important;
+      background-color: ${({ theme }) => theme.colors.primary_500} !important;
     }
   }
  
@@ -162,80 +139,22 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  background-color: ${props => getBackgroundColor(props)};
+  background-color: transparent;
   transition: all 0.3s;
-
-  &:hover {
-      background-color: ${({ theme, disabled }) => (theme.mode === THEME_TYPES.DARK
-    ? disabled
-      ? undefined
-      : `${transparentize(0.82, darken(0.15, theme.colors.white))} !important`
-    : 'transparent !important')};
-    }
 `;
 
-function getLineColor(props) {
-  const { theme, disabled } = props;
-  if (disabled) {
-    return theme.colors.darkgrey;
-  }
-  return theme.colors.textcolor;
-}
-
-export const InputLine = styled.span`
-  width: 100%;
-  display: block;
-  position: absolute;
-  bottom: 0;
-
-  &:before {
-    content: "";
-    height: 1px;
-    width: 100%;
-    bottom: 0;
-    position: absolute;
-    border-bottom: 1px solid ${props => getLineColor(props)};
-  }
-
-  &:after {
-    content: "";
-    height: 1px;
-    width: ${({ error, focused }) => (error || focused ? '100%' : 0)};
-    bottom: 0;
-    position: absolute;
-    background: ${({ error, theme }) => (error ? theme.colors.danger : theme.colors.primary)};
-    transition: all 0.4s;
-  }
-`;
-
-function getLabelColor({
-  theme, error, disabled, focused,
-}) {
-  if (disabled) {
-    return theme.colors.darkgrey;
-  }
-  if (error) {
-    return theme.colors.danger;
-  }
-  if (focused) {
-    return theme.colors.primary;
-  }
-
-  return theme.colors.textcolor;
-}
-
-export const InputLabel = styled.label`
-  position: absolute;
-  left: 0;
-  font-size: 1rem;
-  transition: all 0.2s;
-  font-style: ${({ disabled }) => (disabled ? 'italic' : 'normal')};
-  color: ${props => getLabelColor(props)};
-  top: -14px;
-  font-size: 12px;
-  z-index: 1;
+export const InputLabel = styled(Text)`
+  color: ${({ theme }) => theme.colors.grey_600};
+  font-weight: bold;
 `;
 
 export const Container = styled.div`
-  margin-top: 16px;
+  margin-top: 3px;
+  background: ${({ theme, disabled }) => (disabled ? theme.colors.grey_050 : 'transparent')};
+  border: 1px solid ${({ theme, error }) => (error ? theme.colors.error_500 : theme.colors.grey_300)};
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  &:focus-within {
+    border: 1px solid ${({ theme }) => theme.colors.oldprimary_400};
+  }
 `;

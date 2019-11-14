@@ -5,7 +5,6 @@ import Tooltip from '../tooltip';
 import {
   FloatInput,
   InputLabel,
-  InputLine,
   InputWrapper,
   StyledInput,
   TextArea,
@@ -24,7 +23,7 @@ export const ErrorWrapper = ({ children, error, errorMessage }) => (
   <div>
     {children}
     {error && (
-      <Text type="danger" style={{ marginTop: '5px' }} size="tiny">
+      <Text type="danger" style={{ marginTop: '3px' }} size="small">
         {errorMessage}
       </Text>
     )}
@@ -88,6 +87,7 @@ const InputField = (props) => {
     errorMessage,
     tooltip,
     readOnly,
+    size,
     ...rest
   } = props;
 
@@ -99,10 +99,12 @@ const InputField = (props) => {
   if (type === INPUT_TYPES.TEXTAREA) {
     return (
       <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-        <Container disabled={disabled}>
+        {label && <label><InputLabel size="small">{label}</InputLabel></label>}
+        <Container disabled={disabled} error={inputState === 'error'}>
           <InputWrapper>
             <TextArea
               {...rest}
+              size={size}
               placeholder={placeholder}
               textArea
               disabled={disabled}
@@ -113,10 +115,6 @@ const InputField = (props) => {
               rows="2"
               required
             />
-            <InputLabel error={inputState === 'error'} disabled={disabled} className={disabled && value ? 'override-label' : null}>
-              {label}
-            </InputLabel>
-            <InputLine disabled={disabled} error={inputState === 'error'} />
           </InputWrapper>
         </Container>
       </ErrorWrapper>
@@ -125,7 +123,8 @@ const InputField = (props) => {
 
   return (
     <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-      <Container disabled={disabled}>
+      {label && <label><InputLabel size="small">{label}</InputLabel></label>}
+      <Container disabled={disabled} error={inputState === 'error'}>
         <InputWrapper>
           <InputAddons
             copyToClipBoard={copyToClipBoard}
@@ -135,6 +134,7 @@ const InputField = (props) => {
           />
           <StyledInput
             {...rest}
+            size={size}
             readOnly={readOnly}
             disabled={disabled}
             id={id}
@@ -146,10 +146,6 @@ const InputField = (props) => {
             inputState={inputState}
             required
           />
-          <InputLabel error={inputState === 'error'} readOnly={readOnly} disabled={disabled} className={(disabled || readOnly) && value ? 'override-label' : null}>
-            {label}
-          </InputLabel>
-          <InputLine error={inputState === 'error'} readOnly={readOnly} disabled={disabled} />
         </InputWrapper>
       </Container>
     </ErrorWrapper>
@@ -170,6 +166,7 @@ InputField.propTypes = {
   tooltip: PropTypes.string,
   type: PropTypes.oneOf(Object.keys(INPUT_TYPES).map(l => INPUT_TYPES[l])),
   readOnly: PropTypes.bool,
+  size: PropTypes.oneOf(['regular', 'large']),
 };
 
 InputField.defaultProps = {
@@ -186,6 +183,7 @@ InputField.defaultProps = {
   label: null,
   tooltip: null,
   readOnly: false,
+  size: 'regular',
 };
 
 export default InputField;
