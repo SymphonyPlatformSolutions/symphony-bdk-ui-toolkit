@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Text from '../text';
 import Box from '../box';
 import Button from '../button';
-import { Separator } from '../../index';
+import Separator from '../separator';
 import {
   HelpPageContainer,
   HelperLink,

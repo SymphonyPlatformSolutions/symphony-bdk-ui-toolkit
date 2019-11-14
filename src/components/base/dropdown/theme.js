@@ -69,6 +69,7 @@ export const customStyles = ({ theme, error }) => ({
         : theme.colors.grey_200,
     border: `1px solid ${getBorderColor(theme)}`,
     borderTop: 'none',
+    zIndex: 10,
   }),
   option: (provided, state) => ({
     ...provided,

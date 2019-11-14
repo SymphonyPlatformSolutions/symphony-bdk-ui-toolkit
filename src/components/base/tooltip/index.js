@@ -23,7 +23,7 @@ const IconWrap = styled.div`
   cursor: pointer;
   width: 16px;
   height: 16px;
-  z-index: 12;
+  z-index: 8;
 `;
 
 const Bubble = styled.div`

@@ -22,4 +22,5 @@ export { ToasterProvider, ToasterConsumer } from './base/toaster/toaster-context
 export { default as Tooltip } from './base/tooltip';
 export { default as ModalRoot, DangerConfirmationModal } from './base/modal';
 export { ModalConsumer, ModalProvider } from './base/modal/modal-context';
+export { default as HelpPageBuilder } from './base/help-page-builder';
 export { THEMES, THEME_TYPES } from '../styles/colors';
