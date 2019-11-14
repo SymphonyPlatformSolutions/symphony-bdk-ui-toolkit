@@ -1,9 +1,8 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { MdClose } from 'react-icons/md';
 import Text from '../text';
-import Button from '../button';
+import Button, { CloseButton } from '../button';
 import Box from '../box';
 import { ModalConsumer } from './modal-context';
 import { Overlay, Modal } from './theme';
@@ -46,12 +45,12 @@ const ModalTitle = styled(Text)`
   color: ${({ theme, filledTitle }) => (filledTitle ? theme.colors.grey_800 : theme.colors.grey_700)};
 `;
 
-const CloseButton = (props) => {
+const Close = (props) => {
   const { clickHandler, theme } = props;
 
   return (
     <IconContainer onClick={clickHandler}>
-      <MdClose size="22px" color={theme.colors.textcolor} />
+      <CloseButton />
     </IconContainer>
   );
 };
@@ -70,7 +69,7 @@ const TitleBar = (props) => {
     }
     return (
       <FloatingCloseContainer>
-        <CloseButton {...props} />
+        <Close {...props} />
       </FloatingCloseContainer>
     );
   }
@@ -84,7 +83,7 @@ const TitleBar = (props) => {
       </TextWrapper>
       {hasClose && (
         <CloseContainer>
-          <CloseButton {...props} />
+          <Close {...props} />
         </CloseContainer>
       )}
     </TitleContainer>

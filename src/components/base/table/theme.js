@@ -21,9 +21,6 @@ export const getTheadStyle = (theme, searchable) => ({
 });
 
 export const getHeaderColumnTextStyle = theme => ({
-  // fontSize: '1.2rem',
-  // fontWeight: 'normal',
-  // fontStyle: 'normal',
   lineHeight: '1.2rem',
   color: theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.grey_400),
 });
@@ -103,7 +100,8 @@ export const getMenuBackgroundColor = theme => ({
   style: {
     padding: '0px',
     borderRadius: '4px',
-    backgroundColor: theme.colors.grey_050,
+    border: `1px solid ${theme.colors.grey_200}`,
+    backgroundColor: theme.colors.mainbackground,
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
   },
 });
@@ -221,8 +219,9 @@ export const MenuItem = styled(Box)`
   height: 35px;
   padding-left: 15px;
   border-left: 4px solid transparent;
+  transition: all 0.3s ease;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary_300};
+    background-color: ${({ theme }) => theme.colors.grey_100};
     border-top-left-radius: ${props => (props.isFirst ? '4px' : null)};
     border-bottom-left-radius: ${props => (props.isLast ? '4px' : null)};
     border-left: ${({ theme, accent }) => `4px solid ${theme.colors[accent]}`};
@@ -231,20 +230,22 @@ export const MenuItem = styled(Box)`
 
 export const generateContextMenu = (theme, id, item) => (
   <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
-    {item.actionsMenu.map((menuItem, index, arr) => (
-      <MenuItem
-        type="flat"
-        align="start"
-        justify="center"
-        accent={menuItem.type}
-        isFirst={index === 0}
-        isLast={index === arr.length - 1}
-        onClick={() => menuItem.callback(item)}
-      >
-        <Text type="primary" size="small">
-          {menuItem.label}
-        </Text>
-      </MenuItem>
-    ))}
+    <Box type="flat" my="8px">
+      {item.actionsMenu.map((menuItem, index, arr) => (
+        <MenuItem
+          type="flat"
+          align="start"
+          justify="center"
+          accent={menuItem.type}
+          isFirst={index === 0}
+          isLast={index === arr.length - 1}
+          onClick={() => menuItem.callback(item)}
+        >
+          <Text type="primary" size="small">
+            {menuItem.label}
+          </Text>
+        </MenuItem>
+      ))}
+    </Box>
   </Menu>
 );

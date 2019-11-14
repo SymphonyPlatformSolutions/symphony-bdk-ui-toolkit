@@ -73,6 +73,28 @@ const Button = ({
   );
 };
 
+const CloseSVG = styled.svg``;
+const CloseSVGBg = styled.rect`
+  transition: all 0.3s;
+  opacity: 0;
+  ${CloseSVG}:hover & {
+    opacity: 1;
+  }
+`;
+const CloseSVGPath = styled.path`
+  transition: all 0.3s;
+  stroke: #757575;
+  ${CloseSVG}:hover & {
+    stroke: #424242;
+  }
+`;
+export const CloseButton = () => (
+  <CloseSVG width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <CloseSVGBg width="24" height="24" rx="12" fill="#F5F5F5" />
+    <CloseSVGPath d="M16 8.12903L8 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <CloseSVGPath d="M8 8.12903L16 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </CloseSVG>
+);
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.keys(BUTTON_TYPES).map(e => BUTTON_TYPES[e])),
