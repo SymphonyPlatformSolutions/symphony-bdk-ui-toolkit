@@ -236,11 +236,11 @@ const CONTEXT_COLORS = {
   success: 'success_50',
 };
 
-const getContextItemColor = ({ theme, type }) => {
-  if (!type || !CONTEXT_COLORS[type]) {
+const getContextItemColor = ({ theme, contextType }) => {
+  if (!contextType || !CONTEXT_COLORS[contextType]) {
     return CONTEXT_COLORS.neutral;
   }
-  return theme.colors[CONTEXT_COLORS[type]];
+  return theme.colors[CONTEXT_COLORS[contextType]];
 };
 
 const ContextText = styled(Text)`
@@ -260,7 +260,7 @@ export const generateContextMenu = (theme, id, item) => (
           isLast={index === arr.length - 1}
           onClick={() => menuItem.callback(item)}
         >
-          <ContextText theme={theme} type={menuItem.type}>
+          <ContextText theme={theme} contextType={menuItem.type}>
             {menuItem.label}
           </ContextText>
         </MenuItem>

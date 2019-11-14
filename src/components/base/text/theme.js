@@ -67,7 +67,6 @@ export const BaseText = styled.div`
   font-style: ${props => getFontStyle(props)};
   font-size: ${props => getFontSize(props)};
   font-weight: ${props => getFontWeight(props)};
-  font-family: 'Lato', sans-serif;
   line-height: ${props => getLineHeight(props)};
   padding: ${props => getPadding(props)};
   border-bottom: ${props => getBorderBottom(props)};
