@@ -52,6 +52,34 @@ const getIconButtonFocusColor = ({ theme }) => (
     : '#35383E'
 );
 
+export const getMenuStyle = theme => ({
+  style: {
+    padding: '8px 0',
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+    borderRadius: '4px',
+    border: `1px solid ${getCardBorderColor({ theme })}`,
+    boxSizing: 'border-box',
+    backgroundColor:
+      theme.mode === THEME_TYPES.DARK ? '#17191C' : theme.colors.white,
+  },
+});
+
+const getContextMenuItemColor = ({ theme, type }) => {
+  if (type === 'primary') {
+    return theme.mode === THEME_TYPES.LIGHT
+      ? '#0098FF'
+      : '#5FB8FF';
+  }
+
+  if (type === 'warn') {
+    return theme.mode === THEME_TYPES.LIGHT
+      ? '#D50935'
+      : '#F85959';
+  }
+
+  return theme.colors.textcolor;
+};
+
 export const BaseCard = styled.div`
   display: grid;
   grid-template-columns: 40px auto 56px; 
@@ -140,6 +168,10 @@ export const ContextMenuItem = styled.button`
   padding: 8px;
   border: none;
   background: none;
+  text-align: start;
+  font-size: 14px;
+  font-weight: bold;
+  color: ${props => getContextMenuItemColor(props)};
   cursor: pointer;
   :hover {
     background: ${props => getIconButtonHoverColor(props)};

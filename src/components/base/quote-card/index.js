@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import 'react-table/react-table.css';
@@ -8,7 +8,7 @@ import uuid from 'uuid';
 import {
   BaseCard, QuoteShortCodeArea, ContentArea, MenuArea,
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
-  IconButton, getMenuIconPath, ContextMenuItem,
+  IconButton, getMenuIconPath, getMenuStyle, ContextMenuItem,
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
@@ -20,7 +20,7 @@ const QuoteCard = (props) => {
     onEdit, onCancel, ...rest
   } = props;
 
-  const menuId = uuid.v1();
+  const [menuId, setMenuId] = useState(uuid.v1());
 
   const getProductTags = () => {
     const tags = [];
@@ -85,13 +85,15 @@ const QuoteCard = (props) => {
   };
 
   const renderContextMenu = () => (
-    <Menu animation="fade" id={menuId}>
+    <Menu animation="fade" id={menuId} {...getMenuStyle(theme)}>
       <ContextMenuItem
+        type="primary"
         onClick={onEdit}
       >
         Edit
       </ContextMenuItem>
       <ContextMenuItem
+        type="warn"
         onClick={onCancel}
       >
         Cancel RFQ
