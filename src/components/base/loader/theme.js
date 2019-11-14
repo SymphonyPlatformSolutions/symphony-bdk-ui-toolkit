@@ -73,7 +73,7 @@ export const InnerRing = styled.div`
     animation: ${spin} 0.7s linear infinite;
   }
 `;
-// src={color === 'white' ? WhiteLoaderPNG : LoaderPNG}
+
 export const SpinnerIcon = styled.div`
   background: ${({ color }) => (color && color === 'white'
     ? 'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAH3SURBVHgBpZS9SxxhEMZnN3dJVGJCkATyQUiRD9KYLultLMTeWssD/xMRO8FSBStBES0EUQsRwUJFK7Gw8gNRzw+801t/jzfrrngndzjw29m7nXlm3nf23cAqWBRFr3B/4Bt8ghZ4AQeQh80gCFYq5QYVxL7j2qAJspBxn76XP4UZhJeqCiL2D9fq3SjpZcpnU79jUTGF6MQjQcQk9DcVWIJ12CLhxGO0/M/QAR89TsVniRm5F/Rl/veHYgeWCbqyCkZ8A64T2l00hH7ta+gxv+HG2eDBQjWxuy6C4BLGuF1KbU+OQo0hl6/80FSLoKWtWe027HkSbIY2dfjB/xTrVC7WqkbsBW7akregVYKa3LVzbPXbnCVT/6FLg3eninmr08jZY9skqAF/ycRizzStMtKNlnxu5eUW/cjVZeT8tGQPdySY9y4L8N7qt18pwX0JHlsylHdUDGtVIvYNLmfJUBaVfARX3qWOW4vVbr1W/iJJbI8BTYZcdDp2rXxK1GUjld9C8ERnzdDHbbclJ2XQ/EajPyNAnTa5sF4lnaIzFeF55ELqpgt6PFYNqHAfMeP3gi56SELBA0se+NrK04+HVvCtuXavLRsidyDWyaSXwoNTT5ZQ5MKRY14kRm9HjpyZBxpWfZ+y3kHJt0GFtmEV5mE0/k6m7RbtXrVSgabvEQAAAABJRU5ErkJggg==\') no-repeat center'
