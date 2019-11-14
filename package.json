@@ -1,6 +1,6 @@
 {
   "name": "sms-sdk-toolbox-ui",
-  "version": "1.0.12",
+  "version": "1.0.20",
   "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
