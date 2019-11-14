@@ -228,6 +228,26 @@ export const MenuItem = styled(Box)`
   }
 `;
 
+const CONTEXT_COLORS = {
+  neutral: 'grey_700',
+  info: 'primary_500',
+  error: 'error_500',
+  warning: 'warning_500',
+  success: 'success_50',
+};
+
+const getContextItemColor = ({ theme, type }) => {
+  if (!type || !CONTEXT_COLORS[type]) {
+    return CONTEXT_COLORS.neutral;
+  }
+  return theme.colors[CONTEXT_COLORS[type]];
+};
+
+const ContextText = styled(Text)`
+  font-weight: bold;
+  color: ${props => getContextItemColor(props)};
+`;
+
 export const generateContextMenu = (theme, id, item) => (
   <Menu animation="fade" id={id} {...getMenuBackgroundColor(theme)}>
     <Box type="flat" my="8px">
@@ -236,14 +256,13 @@ export const generateContextMenu = (theme, id, item) => (
           type="flat"
           align="start"
           justify="center"
-          accent={menuItem.type}
           isFirst={index === 0}
           isLast={index === arr.length - 1}
           onClick={() => menuItem.callback(item)}
         >
-          <Text type="primary" size="small">
+          <ContextText theme={theme} type={menuItem.type}>
             {menuItem.label}
-          </Text>
+          </ContextText>
         </MenuItem>
       ))}
     </Box>

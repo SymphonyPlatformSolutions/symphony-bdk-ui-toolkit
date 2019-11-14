@@ -70,12 +70,12 @@ const DATA_WITH_ACTIONS = [{
     {
       label: 'Edit',
       callback: handleTestEdit,
-      type: 'primary',
+      type: 'info',
     },
     {
       label: 'Delete',
       callback: handleTestDelete,
-      type: 'danger',
+      type: 'error',
     },
   ],
 }, {
@@ -90,12 +90,12 @@ const DATA_WITH_ACTIONS = [{
     {
       label: 'Edit',
       callback: handleTestEdit,
-      type: 'primary',
+      type: 'info',
     },
     {
       label: 'Delete',
       callback: handleTestDelete,
-      type: 'danger',
+      type: 'error',
     },
   ],
 }];
@@ -142,12 +142,12 @@ for (let i = 0; i < 40; i++) {
       {
         label: 'Edit',
         callback: handleTestEdit,
-        type: 'primary',
+        type: 'info',
       },
       {
         label: 'Delete',
         callback: handleTestDelete,
-        type: 'danger',
+        type: 'error',
       },
     ];
   }

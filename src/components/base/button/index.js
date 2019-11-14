@@ -13,9 +13,11 @@ import {
 import { NoOp } from '../../../utils/helpers';
 
 const LoaderContainer = styled.div`
-    display: flex;
-    position: absolute;
-    height: 16px;
+  display: flex;
+  padding: 0 20px;
+  position: absolute;
+  height: 16px;
+  opacity: ${({ isLoading }) => (isLoading ? '1' : '0')};
 `;
 
 const Button = ({
@@ -54,20 +56,17 @@ const Button = ({
       disabled={isLoading || disabled}
     >
       <Container justify="center" align="center" type="flat">
-        {isLoading ? (
-          <LoaderContainer circular={circular} size={size}>
-            <Loader
-              color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
-              size="small"
-            />
-          </LoaderContainer>
-        ) : (
-          <ChildrenContainer isLoading={isLoading} fill={fill}>
-            <TextContainer>
-              {children}
-            </TextContainer>
-          </ChildrenContainer>
-        )}
+        <LoaderContainer circular={circular} size={size} isLoading={isLoading}>
+          <Loader
+            color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
+            size="small"
+          />
+        </LoaderContainer>
+        <ChildrenContainer isLoading={isLoading} fill={fill}>
+          <TextContainer>
+            {children}
+          </TextContainer>
+        </ChildrenContainer>
       </Container>
     </BaseButton>
   );

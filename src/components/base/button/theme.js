@@ -21,17 +21,17 @@ export const BUTTON_SIZES = {
 const FONT_SIZES = {
   small: '12px',
   regular: '14px',
-  large: '16px',
+  large: '18px',
 };
 const MIN_HEIGHTS = {
-  small: '32px',
-  regular: '40px',
-  large: '48px',
+  small: '18px',
+  regular: '30px',
+  large: '40px',
 };
 const MIN_WIDTHS = {
-  small: '100px',
-  regular: '140px',
-  large: '180px',
+  small: '42px',
+  regular: '120px',
+  large: '140px',
 };
 
 const BUTTON_THEME = (theme, buttonType) => {
@@ -102,7 +102,7 @@ export const TextContainer = styled(Text)`
 `;
 
 export const ChildrenContainer = styled(Box)`
-  opacity: ${p => (p.isLoading ? 0.25 : 1)};
+  opacity: ${p => (p.isLoading ? 0 : 1)};
   cursor: ${p => (p.isLoading ? 'none' : 'inherit')};
   padding: ${({ fill, circular }) => (fill === FILL_TYPES.GHOST || circular ? '0' : '0 20px')};
 `;

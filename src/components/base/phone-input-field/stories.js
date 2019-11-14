@@ -8,7 +8,6 @@ import PhoneInputField from '.';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
-import InputField from '../input-field';
 
 const styles = {
   width: '24rem',
@@ -34,7 +33,7 @@ const PhoneInputFieldLiveSample = () => {
 
   return (
     <Box vertical space={20}>
-      <Text isTitle size="large">Live Sample (Knobs)</Text>
+      <Text isTitle>Live Sample (Knobs)</Text>
       <div style={styles}>
         <PhoneInputField
           id="test"
@@ -71,6 +70,7 @@ storiesOf('Base', module)
       <Box vertical space={20}>
         <div style={styles}>
           <PhoneInputField value="+1" inputState="error" label="Error Phone Input Field" />
+          <InputField />
         </div>
       </Box>
     </StoryWrapper>
