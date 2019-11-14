@@ -20,7 +20,15 @@ const MyCustomButton = styled(Loader)`
 ##Proptypes
 ```jsx
 Loader.propTypes = {
-  color: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
+  type: PropTypes.string,
+  size: PropTypes.oneOf(Object.keys(SPINNER_SIZES).map(el => SPINNER_SIZES[el])),
+  theme: PropTypes.object.isRequired,
+};
+```
+
+```jsx
+Loader.defaultProps = {
+  type: 'v1',
+  size: SPINNER_SIZES.REGULAR,
 };
 ```
