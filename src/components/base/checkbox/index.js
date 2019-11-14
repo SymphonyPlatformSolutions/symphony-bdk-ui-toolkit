@@ -116,7 +116,7 @@ CheckBox.propTypes = {
 CheckBox.defaultProps = {
   disabled: false,
   checked: false,
-  size: 'regular',
+  size: 'small',
   children: '',
 };
 

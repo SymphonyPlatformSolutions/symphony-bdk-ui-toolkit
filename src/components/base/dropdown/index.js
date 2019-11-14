@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Select from 'react-select';
@@ -10,7 +10,6 @@ import {
   Placeholder,
   Option,
   NoOptionsMessage,
-  Control,
 } from './theme';
 import { ErrorWrapper } from '../input-field';
 
@@ -39,8 +38,6 @@ const Dropdown = (props) => {
     placeholder,
     error,
     errorMessage,
-    label,
-    tooltip,
     ...rest
   } = props;
 
@@ -53,24 +50,34 @@ const Dropdown = (props) => {
     }
   }
 
+  const [isFocused, toggleFocus] = useState(false);
+
   return (
-    <div>
+    <div
+      onFocus={() => {
+        if (!clickHandler) { return; }
+        if (!isFocused) {
+          toggleFocus(true);
+          clickHandler();
+        }
+      }}
+      onBlur={() => {
+        if (!clickHandler) { return; }
+        toggleFocus(false);
+      }}
+    >
       <ErrorWrapper error={error} errorMessage={errorMessage}>
         <Select
           styles={customStyles({ theme, error })}
           isDisabled={disabled}
           isClearable={false}
           options={options || []}
-          onMenuOpen={clickHandler}
           onChange={data => onChange(data)}
           components={{
-            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, tooltip, theme }),
+            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, theme }),
             SingleValue,
             Placeholder,
             Option,
-            Control: innerProps => Control({
-              ...innerProps, error, label, innerTheme: theme,
-            }),
             NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
             ...components,
           }}
@@ -98,8 +105,6 @@ Dropdown.propTypes = {
   placeholder: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  label: PropTypes.string,
-  tooltip: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -115,8 +120,6 @@ Dropdown.defaultProps = {
   clickHandler: null,
   error: false,
   errorMessage: 'Something went wrong!',
-  label: 'Dropdown input',
-  tooltip: null,
 };
 
 export default withTheme(Dropdown);

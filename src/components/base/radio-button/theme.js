@@ -23,10 +23,10 @@ export const Radio = styled.input`
     visibility: visible;
     content: '';
     position: absolute;
-    left: -4px;
-    top: -4px;
-    width: 20px;
-    height: 20px;
+    left: -2px;
+    top: -2px;
+    width: 16px;
+    height: 16px;
     border: 2px solid ${({ theme }) => theme.colors.primary_500};
     border-radius: 100%;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
