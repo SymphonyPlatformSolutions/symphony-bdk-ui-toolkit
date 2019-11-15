@@ -25,6 +25,7 @@ import {
   getHeaderColumnTextStyle,
 } from './theme';
 import Loader from '../loader';
+import Card from '../card';
 
 function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {

@@ -50,7 +50,7 @@ const TabHeaderItem = styled.li`
 
 const TabHeaderIndicator = styled.div`
   width: ${props => getHeaderIndicatorWidth(props)};
-  height: 3px;
+  height: 1px;
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
   margin-top: 38px;

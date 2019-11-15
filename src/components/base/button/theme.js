@@ -12,6 +12,7 @@ export const BUTTON_TYPES = {
   PRIMARY: 'primary',
   DANGER: 'danger',
 };
+
 export const BUTTON_SIZES = {
   SMALL: 'small',
   REGULAR: 'regular',
@@ -84,6 +85,15 @@ const getHover = ({
   }
   return undefined;
 };
+
+const getButtonBoxShadow = (({
+  theme, fill, disabled, circular,
+}) => {
+  const isGhost = fill === FILL_TYPES.GHOST;
+  const isDark = theme.mode === THEME_TYPES.DARK;
+  return disabled || isGhost ? null : isDark ? circular ? '0px 0px 4px 1px rgba(255,255,255,0.27)' : '0px 2px 4px 0px rgba(255, 255, 255, 0.27)' : '0px 3px 4px 0px rgba(0,0,0,.14)';
+});
+
 
 export const Container = styled(Box)`
   display: flex;

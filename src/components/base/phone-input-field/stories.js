@@ -8,6 +8,7 @@ import PhoneInputField from '.';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
+import InputField from '../input-field';
 
 const styles = {
   width: '24rem',

@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { components } from 'react-select';
+import { transparentize, darken } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 import Text from '../text';
+import Tooltip from '../tooltip';
 
 const getBorderColor = (theme, error = false) => {
   if (error) {
@@ -17,6 +19,7 @@ export const customStyles = ({ theme, error }) => ({
   container: provided => ({
     ...provided,
     pointerEvents: 'auto',
+    marginTop: '4px',
   }),
   control: (provided, state) => ({
     ...provided,
@@ -34,13 +37,10 @@ export const customStyles = ({ theme, error }) => ({
     color: theme.colors.grey_800,
     minHeight: '35px',
     backgroundColor:
-    theme.mode === THEME_TYPES.DARK
-      ? theme.colors.inputgrey
-      : (state.isDisabled
-        ? theme.colors.grey
-        : theme.colors.white),
+      theme.mode === THEME_TYPES.DARK
+        ? (state.isDisabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white)))
+        : 'transparent',
     margin: '0',
-    borderRadius: '3px',
     transition: 'all 0.3s',
     '&:hover': {
       border: `1px solid ${
@@ -50,13 +50,13 @@ export const customStyles = ({ theme, error }) => ({
       }`,
     },
     cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+    padding: 0,
   }),
   indicatorSeparator: provided => ({ ...provided, display: 'none' }),
   menu: (provided, state) => ({
     ...provided,
     marginTop: 0,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
+    borderRadius: 0,
     color: state.isDisabled
       ? theme.colors.lightgrey
       : theme.mode === THEME_TYPES.DARK
@@ -91,14 +91,14 @@ export const customStyles = ({ theme, error }) => ({
       backgroundColor: theme.colors.primary_400,
     },
   }),
-  singleValue: provided => ({
+  singleValue: (provided, state) => ({
     ...provided,
     overflow: 'unset !important',
     transition: 'all 0.3s',
     backgroundColor: 'rgba(0,0,0,0)',
     color: error ? `${theme.colors.error_500} !important` : undefined,
   }),
-  placeholder: provided => ({
+  valueContainer: provided => ({
     ...provided,
     transition: 'all 0.3s',
     color: theme.colors.grey_300,
@@ -106,7 +106,12 @@ export const customStyles = ({ theme, error }) => ({
 });
 
 const ArrowContainer = styled.div`
-  margin-right: 15px;
+  margin-right: 8px;
+`;
+
+const IconContainer = styled.div`
+  align-items: center;
+  display: flex;
 `;
 
 const SmallArrow = styled.div`
@@ -122,13 +127,17 @@ const SmallArrow = styled.div`
 export const DropdownIndicator = (props) => {
   const {
     selectProps: { menuIsOpen, isDisabled },
+    tooltip,
     theme,
   } = props;
 
   return (
-    <ArrowContainer>
-      <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
-    </ArrowContainer>
+    <IconContainer>
+      <ArrowContainer>
+        <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
+      </ArrowContainer>
+      {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '5px' }}>{tooltip}</Tooltip>}
+    </IconContainer>
   );
 };
 
@@ -173,9 +182,8 @@ export const Placeholder = ({ children, isDisabled, ...props }) => (
       py="0"
       px="0"
       size="small"
-      style={{ color: 'inherit', fontStyle: isDisabled ? 'italic' : 'normal', lineHeight: 'inherit' }}
-    >
-      {children}
+      style={{ color: 'inherit', lineHeight: 'inherit' }}
+    >{children}
     </Text>
   </components.Placeholder>
 );

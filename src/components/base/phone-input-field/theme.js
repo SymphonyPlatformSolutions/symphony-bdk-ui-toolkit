@@ -52,10 +52,11 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey_300};
     }
-    
+
     &:focus {
      outline: none;
     }
+
   }
 
   .${overrides.flagDropdownButton} {

@@ -77,43 +77,43 @@ storiesOf('Base', module)
         <Box>
           <Text isTitle>Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler options={OPTIONS} />
+            <DropdownHandler options={OPTIONS} label="Simple dropdown" tooltip="Stuff!" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Dropdown with Error</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" />
+            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" label="Dropdown with error" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown disabled options={OPTIONS} />
+            <Dropdown disabled options={OPTIONS} label="Disabled Dropdown" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown disabled chosenValue="option2" options={OPTIONS} />
+            <Dropdown disabled chosenValue="option2" options={OPTIONS} label="Filled disabled Dropdown" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <Dropdown options={[]} />
+            <Dropdown options={[]} label="Empty Dropdown" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
-            <AsyncDropdownHandler options={OPTIONS} />
+            <AsyncDropdownHandler options={OPTIONS} label="Dropdown with Loading" />
           </Box>
         </Box>
         <Box>
           <Text isTitle>Empty Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
-            <AsyncDropdownHandler options={[]} />
+            <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
           </Box>
         </Box>
       </Box>
