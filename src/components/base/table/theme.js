@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
-import uuid from 'uuid';
 import { MdPlayArrow, MdSearch } from 'react-icons/md';
 import { darken, transparentize } from 'polished';
 import InputField from '../input-field';
@@ -135,8 +134,12 @@ const SearchIconWrapper = styled.div`
   position: absolute;
   z-index: 4;
   left: 14px;
-  top: 14px;
+  top: 17px;
 `;
+const InputFieldBackground = styled.div`
+  background-color: ${({ theme }) => theme.colors.mainbackground};
+`;
+
 export const SearchBar = withTheme((props) => {
   const { theme, value, onChange } = props;
   return (
@@ -145,14 +148,15 @@ export const SearchBar = withTheme((props) => {
         <SearchIconWrapper>
           <MdSearch color={theme.colors.grey_400} />
         </SearchIconWrapper>
-        <InputField
-          theme={THEMES[0]}
-          placeholder="Search value"
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          type="text"
-          style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
-        />
+        <InputFieldBackground>
+          <InputField
+            placeholder="Search value"
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            type="text"
+            style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
+          />
+        </InputFieldBackground>
       </InputWrapper>
     </SearchWrapper>
   );

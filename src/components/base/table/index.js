@@ -25,12 +25,17 @@ import {
   getHeaderColumnTextStyle,
 } from './theme';
 import Loader from '../loader';
-import Card from '../card';
 
 function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {
     for (let i = 0; i < rowKeys.length; i++) {
-      if (row[rowKeys[i]].includes(searchTerm)) {
+      if (typeof row[rowKeys[i]] === 'number') {
+        return row[rowKeys[i]] === searchTerm;
+      }
+      if (typeof row[rowKeys[i]] !== 'string') {
+        return false;
+      }
+      if (row[rowKeys[i]].toLowerCase().includes(searchTerm)) {
         return true;
       }
     }

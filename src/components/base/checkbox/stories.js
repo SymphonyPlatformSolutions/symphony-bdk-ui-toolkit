@@ -59,9 +59,9 @@ storiesOf('Base', module)
             <IndeterminateCheckbox>Indeterminate Checkbox</IndeterminateCheckbox>
           </Box>
           <Box type="secondary">
-            <Text isTitle size="small">Small</Text>
-            <CheckBoxComponent size="small">Small Checkbox</CheckBoxComponent>
-            <IndeterminateCheckbox size="small">Small Indeterminate Checkbox</IndeterminateCheckbox>
+            <Text isTitle size="small">Large</Text>
+            <CheckBoxComponent size="large">Large Checkbox</CheckBoxComponent>
+            <IndeterminateCheckbox size="large">Large Indeterminate Checkbox</IndeterminateCheckbox>
           </Box>
         </Box>
       </Box>
@@ -75,10 +75,10 @@ storiesOf('Base', module)
             <Checkbox onChange={NoOp} indeterminate checked disabled>Disabled Checked</Checkbox>
           </Box>
           <Box type="secondary">
-            <Text isTitle size="small">Small</Text>
-            <Checkbox onChange={NoOp} size="small" disabled>Disabled Unchecked</Checkbox>
-            <Checkbox onChange={NoOp} size="small" checked disabled>Disabled Checked</Checkbox>
-            <Checkbox onChange={NoOp} size="small" indeterminate checked disabled>Disabled Checked</Checkbox>
+            <Text isTitle size="small">Large</Text>
+            <Checkbox onChange={NoOp} size="large" disabled>Disabled Unchecked</Checkbox>
+            <Checkbox onChange={NoOp} size="large" checked disabled>Disabled Checked</Checkbox>
+            <Checkbox onChange={NoOp} size="large" indeterminate checked disabled>Disabled Checked</Checkbox>
           </Box>
         </Box>
       </Box>

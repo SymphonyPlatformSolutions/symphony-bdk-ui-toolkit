@@ -5,7 +5,7 @@ import Text from '../text';
 import { getBackgroundColor, getBorderColor } from './theme';
 
 const SIZES = {
-  SMALL: 'small',
+  LARGE: 'large',
   REGULAR: 'regular',
 };
 
@@ -24,7 +24,7 @@ const Checkmark = styled.svg`
   fill: none;
   stroke: white;
   stroke-linecap: round;
-  stroke-width: ${({ size }) => (size === SIZES.SMALL ? '2px' : '3px')};;
+  stroke-width: ${({ size }) => (size === SIZES.REGULAR ? '2px' : '3px')};;
   opacity: ${props => (props.isChecked ? '1' : '0')};
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
@@ -40,8 +40,8 @@ const CheckBoxInput = styled.input`
 
 const BaseCheckBox = styled.div`
   align-self:center;
-  width: ${({ size }) => (size === SIZES.SMALL ? '16px' : '20px')};
-  height: ${({ size }) => (size === SIZES.SMALL ? '16px' : '20px')};
+  width: ${({ size }) => (size === SIZES.REGULAR ? '16px' : '20px')};
+  height: ${({ size }) => (size === SIZES.REGULAR ? '16px' : '20px')};
   background: ${props => getBackgroundColor(props, false)};
   border: ${props => getBorderColor(props, false)};
   border-radius: 3px;
@@ -62,7 +62,7 @@ const BaseCheckBox = styled.div`
 
 const LabelText = styled(Text)`
   position: relative;
-  top: ${({ checkSize }) => (checkSize === SIZES.SMALL ? '2px' : '4px')};;
+  top: ${({ checkSize }) => (checkSize === SIZES.REGULAR ? '2px' : '4px')};;
   opacity: ${({ disabled }) => (disabled ? '0.25' : '1')};
 `;
 
@@ -109,15 +109,17 @@ CheckBox.propTypes = {
   disabled: PropTypes.bool,
   checked: PropTypes.bool,
   children: PropTypes.string,
-  size: PropTypes.oneOf(['small', 'regular']),
+  size: PropTypes.oneOf(['large', 'regular']),
   onChange: PropTypes.func.isRequired,
+  indeterminate: PropTypes.bool,
 };
 
 CheckBox.defaultProps = {
   disabled: false,
   checked: false,
-  size: 'small',
+  size: 'regular',
   children: '',
+  indeterminate: false,
 };
 
 export default CheckBox;

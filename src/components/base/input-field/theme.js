@@ -37,7 +37,7 @@ export const StyledInput = styled.input`
   transition: all 0.3s;
   width: 100%;
   background-color: transparent;
-  color: ${({ theme, disabled }) => (disabled ? theme.colors.grey_400 : theme.colors.grey_800)};
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.grey_400 : theme.colors.grey_700)};
   resize: vertical;
   font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana",
     "Arial", sans-serif !important;
