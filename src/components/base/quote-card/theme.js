@@ -3,78 +3,31 @@ import { THEME_TYPES } from '../../../styles/colors';
 import menuDarkIconPath from '../../../assets/commons/menu-dark-icon.svg';
 import menuLightIconPath from '../../../assets/commons/menu-light-icon.svg';
 
-const getQuoteShortCodeColor = ({ colorIndex }) => {
-  switch (colorIndex) {
-    case 1:
-      return '#EC407A';
-    case 2:
-      return '#880E4F';
-    case 3:
-      return '#AB47BC';
-    case 4:
-      return '#4A148C';
-    case 5:
-      return '#42A5F5';
-    case 6:
-      return '#006064';
-    case 7:
-      return '#00BFA5';
-    case 8:
-      return '#E17900';
-    case 9:
-      return '#8C513B';
-    default:
-      return '#FFFFFF';
+const getQuoteShortCodeColor = ({ colorIndex, theme }) => {
+  if (colorIndex >= 0 && colorIndex <= 9) {
+    return theme.colors[`misc_${colorIndex}`];
   }
+  return theme.colors.white;
 };
-
-const getCardColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT
-    ? '#F5F5F5'
-    : '#232529'
-);
-
-const getCardBorderColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT
-    ? '#EEEEEE'
-    : '#35383E'
-);
-
-const getIconButtonHoverColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT
-    ? '#F5F5F5'
-    : '#232529'
-);
-
-const getIconButtonFocusColor = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT
-    ? '#EEEEEE'
-    : '#35383E'
-);
 
 export const getMenuStyle = theme => ({
   style: {
     padding: '8px 0',
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
     borderRadius: '4px',
-    border: `1px solid ${getCardBorderColor({ theme })}`,
+    border: `1px solid ${theme.colors.grey_200}`,
     boxSizing: 'border-box',
-    backgroundColor:
-      theme.mode === THEME_TYPES.DARK ? '#17191C' : theme.colors.white,
+    backgroundColor: theme.colors.mainbackground,
   },
 });
 
 const getContextMenuItemColor = ({ theme, type }) => {
   if (type === 'primary') {
-    return theme.mode === THEME_TYPES.LIGHT
-      ? '#0098FF'
-      : '#5FB8FF';
+    return theme.colors.primary_500;
   }
 
   if (type === 'warn') {
-    return theme.mode === THEME_TYPES.LIGHT
-      ? '#D50935'
-      : '#F85959';
+    return theme.colors.error_500;
   }
 
   return theme.colors.textcolor;
@@ -100,21 +53,21 @@ export const QuoteShortCodeArea = styled.div`
 
 export const ContentArea = styled.div`
   grid-area: contentArea;
-  background-color: ${props => getCardColor(props)};
+  background-color: ${({ theme }) => theme.colors.grey_100};
   padding: 16px;
-  border-top: ${props => `1px solid ${getCardBorderColor(props)}`};
-  border-bottom: ${props => `1px solid ${getCardBorderColor(props)}`};
+  border-top: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
+  border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
 `;
 
 export const MenuArea = styled.div`
   grid-area: menuArea;
-  background-color: ${props => getCardColor(props)};
+  background-color: ${({ theme }) => theme.colors.grey_100};
   padding: 16px;
   border-radius: 0 4px 4px 0;
-  border-top: ${props => `1px solid ${getCardBorderColor(props)}`};
-  border-bottom: ${props => `1px solid ${getCardBorderColor(props)}`};
-  border-right: ${props => `1px solid ${getCardBorderColor(props)}`};
+  border-top: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
+  border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
+  border-right: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
 `;
 
@@ -150,10 +103,10 @@ export const IconButton = styled.button`
   background: none;
   cursor: pointer;
   :hover {
-    background: ${props => getIconButtonHoverColor(props)};
+    background: ${({ theme }) => theme.colors.grey_100};
   }
   :focus {
-    background: ${props => getIconButtonFocusColor(props)};
+    background: ${({ theme }) => theme.colors.grey_100};
   }
 `;
 
@@ -174,6 +127,6 @@ export const ContextMenuItem = styled.button`
   color: ${props => getContextMenuItemColor(props)};
   cursor: pointer;
   :hover {
-    background: ${props => getIconButtonHoverColor(props)};
+    background: ${({ theme }) => theme.colors.grey_100};
   }
 `;

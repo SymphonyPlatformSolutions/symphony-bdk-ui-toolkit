@@ -13,38 +13,34 @@ export const getCloseIconPath = ({ theme }) => (
 
 const getTagColor = ({ theme, tagState }) => {
   if (tagState === 'removed') {
-    return theme.mode === THEME_TYPES.LIGHT
-      ? 'rgba(213, 9, 53, 0.1)'
-      : '#FFD0D6';
+    return theme.colors.misc_12;
   }
 
   if (tagState === 'added') {
-    return theme.mode === THEME_TYPES.LIGHT
-      ? 'rgba(41, 208, 171, 0.1)'
-      : '#C6EFC3';
+    return theme.colors.misc_13;
   }
 
   return theme.mode === THEME_TYPES.LIGHT
-    ? '#E0EBFC'
-    : '#E1E3E9';
+    ? theme.colors.oldprimary_100
+    : theme.colors.secondary_050;
 };
 
 const getTagBorder = ({ theme, tagState }) => {
   if (tagState === 'removed') {
     return theme.mode === THEME_TYPES.LIGHT
-      ? '1px solid #D50935'
+      ? `1px solid ${theme.colors.error_700}`
       : 'none';
   }
 
   if (tagState === 'added') {
     return theme.mode === THEME_TYPES.LIGHT
-      ? '1px solid #29D0AB'
+      ? `1px solid ${theme.colors.misc_14}`
       : 'none';
   }
 
   return theme.mode === THEME_TYPES.LIGHT
-    ? '1px solid #C3D5F0'
-    : '1px solid #B5BACA';
+    ? `1px solid ${theme.colors.oldprimary_200}`
+    : `1px solid ${theme.colors.secondary_100}`;
 };
 
 const getTextDecorator = ({ tagState }) => (
@@ -61,20 +57,18 @@ const getTagOpacity = ({ tagState }) => (
 
 const getTextColor = ({ theme, tagState }) => {
   if (tagState === 'removed') {
-    return theme.mode === THEME_TYPES.LIGHT
-      ? '#D50935'
-      : '#C12325';
+    return theme.colors.error_700;
   }
 
   if (tagState === 'added') {
     return theme.mode === THEME_TYPES.LIGHT
-      ? '#156B58'
-      : '#007500';
+      ? theme.colors.misc_15
+      : theme.colors.success_700;
   }
 
   return theme.mode === THEME_TYPES.LIGHT
-    ? '#19376B'
-    : '#000028';
+    ? theme.colors.oldprimary_900
+    : theme.colors.secondary_900;
 };
 
 export const BaseQuoteTag = styled(Box)`

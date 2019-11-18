@@ -59,6 +59,8 @@ const COMMON_COLORS = {
   misc_7: '#00BFA5',
   misc_8: '#E17900',
   misc_9: '#8C513B',
+  misc_14: '#29D0AB',
+  misc_15: '#156B58',
   white: '#FFFFFF',
 };
 
@@ -78,6 +80,12 @@ const THEMES = [
       grey_100: '#F5F5F5',
       grey_050: '#FAFAFA',
       mainbackground: '#FFFFFF',
+      misc_10: '#F3E5F5',
+      misc_11: '#4A148C',
+      misc_12: 'rgba(213, 9, 53, 0.1)',
+      misc_13: 'rgba(41, 208, 171, 0.1)',
+      misc_16: COMMON_COLORS.oldprimary_100,
+      misc_17: COMMON_COLORS.oldprimary_900,
     },
   },
   {
@@ -95,6 +103,12 @@ const THEMES = [
       grey_100: '#232529',
       grey_050: '#1F2125',
       mainbackground: '#17191C',
+      misc_10: '#CE93D8',
+      misc_11: '#49148C',
+      misc_12: COMMON_COLORS.error_100,
+      misc_13: COMMON_COLORS.success_100,
+      misc_16: '#8FAEE7',
+      misc_17: '#341670',
     },
   },
 ];
