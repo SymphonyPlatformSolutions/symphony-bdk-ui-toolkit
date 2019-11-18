@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import Box from '../box';
 import Text from '../text';
 import { THEME_TYPES } from '../../../styles/colors';
-import closeDarkIconPath from '../../../assets/quote-product-tag/tag-close-dark-icon.svg';
-import closelightIconPath from '../../../assets/quote-product-tag/tag-close-light-icon.svg';
 
-export const getCloseIconPath = ({ theme }) => (
+const darkCloseIcon = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNC4xMjkwM0w0IDEyLjM4NzEiIHN0cm9rZT0iIzAwMDAyOCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNCA0LjEyOTAzTDEyIDEyLjM4NzEiIHN0cm9rZT0iIzAwMDAyOCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=';
+
+const lightCloseIcon = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNC4xMjkwM0w0IDEyLjM4NzEiIHN0cm9rZT0iIzE5Mzc2QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNCA0LjEyOTAzTDEyIDEyLjM4NzEiIHN0cm9rZT0iIzE5Mzc2QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=';
+
+export const getCloseIcon = ({ theme }) => (
   theme.mode === THEME_TYPES.LIGHT
-    ? closelightIconPath
-    : closeDarkIconPath
+    ? lightCloseIcon
+    : darkCloseIcon
 );
 
 const getTagColor = ({ theme, tagState }) => {

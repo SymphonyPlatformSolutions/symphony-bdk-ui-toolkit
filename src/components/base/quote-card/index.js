@@ -8,7 +8,7 @@ import uuid from 'uuid';
 import {
   BaseCard, QuoteShortCodeArea, ContentArea, MenuArea,
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
-  IconButton, getMenuIconPath, getMenuStyle, ContextMenuItem,
+  IconButton, getMenuIcon, getMenuStyle, ContextMenuItem,
 } from './theme';
 import Box from '../box';
 import QuotePanel from '../quote-panel';
@@ -150,7 +150,7 @@ const QuoteCard = (props) => {
         <IconButton
           onClick={openContextMenu}
         >
-          <img src={getMenuIconPath(props)} alt="menu-icon" />
+          <img src={getMenuIcon(props)} alt="menu-icon" />
         </IconButton>
         {renderContextMenu()}
       </MenuArea>
