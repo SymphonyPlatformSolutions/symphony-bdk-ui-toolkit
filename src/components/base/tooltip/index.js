@@ -94,7 +94,7 @@ const TooltipBubble = (props) => {
 
 const Tooltip = (props) => {
   const {
-    children, theme, bottom, size, ...rest
+    children, theme, bottom, ...rest
   } = props;
   const [isHover, changeHover] = useState(false);
   const tooltipRef = useRef(null);
@@ -107,7 +107,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <MdInfo color={theme.colors.grey_800} />
+        <MdInfo size="1.2em" color={theme.colors.grey_400} />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}
