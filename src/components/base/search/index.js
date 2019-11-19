@@ -1,9 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import styled, { withTheme } from 'styled-components';
-import InputField from '../input-field';
-import { LargeSearchIcon, SearchIcon } from './search-icon';
+import SearchIcon from './search-icons';
+import Text from '../text';
+import Box from '../box';
+import { InputWrapper } from '../input-field/theme';
+import {
+  StyledSearch,
+  SearchWrapper,
+  MenuContainer,
+  MenuItem,
+  SearchContainer,
+  FakeBorderBottom,
+  BorderContainer,
+} from './theme';
 
 const INIT_DEBOUNCE = 500;
+
+const Menu = (props) => {
+  const {
+    content,
+    contentLabel,
+    itemChooseHandler,
+    theme,
+    noResultsMessage,
+  } = props;
+
+  if (!content.length) {
+    return (
+      <MenuContainer theme={theme}>
+        <Box align="center" justify="center" horizontal>
+          <Text style={{ fontStyle: 'italic', paddingTop: '5px' }}>
+            {noResultsMessage}
+          </Text>
+        </Box>
+      </MenuContainer>
+    );
+  }
+
+  return (
+    <MenuContainer theme={theme}>
+      {content.map(el => (
+        <MenuItem
+          theme={theme}
+          key={el[contentLabel]}
+          onMouseDown={() => itemChooseHandler(el)}
+        >
+          <Text>{el[contentLabel]}</Text>
+        </MenuItem>
+      ))}
+    </MenuContainer>
+  );
+};
 
 const Search = (props) => {
   const {
@@ -13,9 +60,13 @@ const Search = (props) => {
     resultHandler,
     debouncePeriod,
     size,
+    contentLabel,
+    placeholder,
+    noResultsMessage,
     ...rest
   } = props;
   const [typedTerm, setTypedTerm] = useState('');
+  const [isMenuOpen, setisMenuOpen] = useState(false);
   const [memo, setMemo] = useState({});
 
   const executeSearch = () => {
@@ -45,19 +96,44 @@ const Search = (props) => {
   }, [typedTerm]);
 
   return (
-    <InputField
-      {...rest}
-      size={size}
-      style={{ padding: size === 'large' ? '9px 12px 11px 33px' : '9px 5px 9px 30px' }}
-      Icon={size === 'large' ? LargeSearchIcon : SearchIcon}
-      value={typedTerm}
-      onChange={({ target: { value } }) => setTypedTerm(value)}
-    />
+    <SearchWrapper>
+      <BorderContainer>
+        <SearchContainer>
+          <InputWrapper>
+            <SearchIcon isLarge={size === 'large'} />
+            <StyledSearch
+              {...rest}
+              size={size}
+              value={typedTerm}
+              onChange={({ target: { value } }) => setTypedTerm(value)}
+              onFocus={() => setisMenuOpen(true)}
+              onBlur={() => setisMenuOpen(false)}
+              placeholder={placeholder}
+            />
+          </InputWrapper>
+        </SearchContainer>
+        <FakeBorderBottom theme={theme} show={isMenuOpen} />
+      </BorderContainer>
+      {isMenuOpen && (
+        <Menu
+          theme={theme}
+          content={content}
+          itemChooseHandler={(item) => {
+            setTypedTerm(item[contentLabel]);
+          }}
+          contentLabel={contentLabel}
+          noResultsMessage={noResultsMessage}
+        />
+      )}
+    </SearchWrapper>
   );
 };
 
 Search.defaultProps = {
   debouncePeriod: INIT_DEBOUNCE,
+  contentLabel: 'label',
+  placeholder: 'Search...',
+  noResultsMessage: 'No results',
 };
 
 export default withTheme(Search);

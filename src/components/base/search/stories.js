@@ -9,16 +9,18 @@ import { StoryWrapper } from '../wrappers';
 // import Info from './info.md';
 
 const mockData = [];
-for (let i = 0; i < 20; i++) {
-  mockData.push(Faker.name.firstName());
+for (let i = 0; i < 15; i++) {
+  mockData.push({
+    label: Faker.name.firstName(),
+  });
 }
 
 const SearchWrapper = () => {
-  const [currentContent, setCurrentContent] = useState(mockData);
+  const [currentContent, setCurrentContent] = useState([]);
   const filterFunc = (searchTerm) => {
     setCurrentContent(
       mockData.filter((el) => {
-        if (el.toLowerCase().includes(searchTerm)) {
+        if (el.label.toLowerCase().includes(searchTerm.toLowerCase())) {
           return true;
         }
         return false;
@@ -27,19 +29,16 @@ const SearchWrapper = () => {
   };
 
   return (
-    <div>
-      <Search
-        size="large"
-        content={currentContent}
-        searchHandler={filterFunc}
-        resultHandler={setCurrentContent}
-      />
-      {currentContent.length ? (
-        currentContent.map(el => <Text> - {el}</Text>)
-      ) : (
-        <Text>No content</Text>
-      )}
-    </div>
+    <Box type="secondary">
+      <Box horizontal>
+        <Search
+          size="large"
+          content={currentContent}
+          searchHandler={filterFunc}
+          resultHandler={setCurrentContent}
+        />
+      </Box>
+    </Box>
   );
 };
 

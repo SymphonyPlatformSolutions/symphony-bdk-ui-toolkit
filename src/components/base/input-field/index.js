@@ -88,7 +88,6 @@ const InputField = (props) => {
     tooltip,
     readOnly,
     size,
-    Icon,
     ...rest
   } = props;
 
@@ -147,7 +146,6 @@ const InputField = (props) => {
             inputState={inputState}
             required
           />
-          {Icon && <Icon />}
         </InputWrapper>
       </Container>
     </ErrorWrapper>
@@ -169,11 +167,9 @@ InputField.propTypes = {
   type: PropTypes.oneOf(Object.keys(INPUT_TYPES).map(l => INPUT_TYPES[l])),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
-  Icon: PropTypes.node,
 };
 
 InputField.defaultProps = {
-  Icon: null,
   copyInput: false,
   disabled: false,
   hasPasswordShow: true,

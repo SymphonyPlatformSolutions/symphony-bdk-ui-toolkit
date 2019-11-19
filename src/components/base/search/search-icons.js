@@ -4,7 +4,7 @@ import styled, { withTheme } from 'styled-components';
 const SearchWrapper = styled.div`
   position: absolute;
   top: ${({ isLarge }) => (isLarge ? '12px' : '9px')};
-  left: 12px;
+  left: ${({ isLarge }) => (isLarge ? '10px' : '12px')};
 `;
 
 const LargeSearchIconSVG = ({ theme }) => (
@@ -39,13 +39,15 @@ const SearchIconSVG = ({ theme }) => (
 const ThemedSearchIcon = withTheme(SearchIconSVG);
 const ThemedLargeSearchIcon = withTheme(LargeSearchIconSVG);
 
-export const SearchIcon = () => (
-  <SearchWrapper>
-    <ThemedSearchIcon />
-  </SearchWrapper>
-);
-export const LargeSearchIcon = () => (
-  <SearchWrapper isLarge>
-    <ThemedLargeSearchIcon />
-  </SearchWrapper>
-);
+const SearchIcon = (props) => {
+  const { isLarge } = props;
+  return (
+    <SearchWrapper isLarge={isLarge}>
+      {isLarge
+        ? <ThemedLargeSearchIcon />
+        : <ThemedSearchIcon />}
+    </SearchWrapper>
+  );
+};
+
+export default SearchIcon;
