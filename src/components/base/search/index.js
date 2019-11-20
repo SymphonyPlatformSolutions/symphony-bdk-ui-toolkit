@@ -63,6 +63,7 @@ const Search = (props) => {
     contentLabel,
     placeholder,
     noResultsMessage,
+    itemChooseHandler,
     ...rest
   } = props;
   const [typedTerm, setTypedTerm] = useState('');
@@ -120,6 +121,7 @@ const Search = (props) => {
           content={content}
           itemChooseHandler={(item) => {
             setTypedTerm(item[contentLabel]);
+            itemChooseHandler(item);
           }}
           contentLabel={contentLabel}
           noResultsMessage={noResultsMessage}

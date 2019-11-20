@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import Faker from 'faker';
+import Axios from 'axios';
 import Search from '.';
 import Box from '../box';
 import Text from '../text';
@@ -32,12 +33,66 @@ const SearchWrapper = () => {
     <Box type="secondary">
       <Box horizontal>
         <Search
-          size="large"
           content={currentContent}
           searchHandler={filterFunc}
           resultHandler={setCurrentContent}
         />
       </Box>
+    </Box>
+  );
+};
+
+const ResultCard = (props) => {
+  const { Icon: { URL }, FirstURL } = props;
+  return (
+    <div>
+      <img src={URL} />
+      <Text>{props.Text}</Text>
+      <br />
+      <a href={FirstURL}>Link</a>
+    </div>
+  );
+};
+
+const DuckDuckGoWrapper = () => {
+  const [currentContent, setCurrentContent] = useState([]);
+  const [chosenResult, setChosenResult] = useState(null);
+  const searchFunc = async (searchTerm) => {
+    if (!searchTerm) {
+      setCurrentContent([]);
+      return;
+    }
+    const results = await Axios.get(
+      `https://api.duckduckgo.com/?q=${encodeURIComponent(
+        searchTerm,
+      )}&format=json`,
+    );
+    const endResults = results.data.RelatedTopics.map((el) => {
+      if (el.Text) {
+        return el;
+      }
+      return {
+        ...el.Topics[0],
+      };
+    });
+    setCurrentContent(endResults);
+  };
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '500px' }}>
+        <Search
+          placeholder="Search DuckDuckGo..."
+          content={currentContent}
+          searchHandler={searchFunc}
+          contentLabel="Text"
+          resultHandler={setCurrentContent}
+          itemChooseHandler={setChosenResult}
+        />
+      </Box>
+      {chosenResult && (
+        <ResultCard {...chosenResult} />
+      )}
     </Box>
   );
 };
@@ -48,9 +103,15 @@ storiesOf('Base', module)
     'Search',
     () => (
       <StoryWrapper p={15}>
-        <Box vertical space={20}>
-          <Text isTitle>Search</Text>
-          <SearchWrapper data={mockData} />
+        <Box horizontal p={50}>
+          <Box vertical space={20}>
+            <Text isTitle>Search</Text>
+            <SearchWrapper />
+          </Box>
+          <Box vertical space={20}>
+            <Text isTitle>Search</Text>
+            <DuckDuckGoWrapper />
+          </Box>
         </Box>
       </StoryWrapper>
     ),
