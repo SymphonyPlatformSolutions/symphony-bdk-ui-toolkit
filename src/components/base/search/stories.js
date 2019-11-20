@@ -7,7 +7,7 @@ import Search from '.';
 import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
-// import Info from './info.md';
+import Info from './info.md';
 
 const mockData = [];
 for (let i = 0; i < 15; i++) {
@@ -67,12 +67,21 @@ const DuckDuckGoWrapper = () => {
         searchTerm,
       )}&format=json`,
     );
+    const STRING_CUT = 50;
     const endResults = results.data.RelatedTopics.map((el) => {
       if (el.Text) {
-        return el;
+        return {
+          ...el,
+          shortened: el.Text.length > STRING_CUT
+            ? `${el.Text.slice(0, STRING_CUT)}...`
+            : el.Text,
+        };
       }
       return {
         ...el.Topics[0],
+        shortened: el.Topics[0].Text.length > STRING_CUT
+          ? `${el.Topics[0].Text.slice(0, STRING_CUT)}...`
+          : el.Topics[0].Text,
       };
     });
     setCurrentContent(endResults);
@@ -85,7 +94,7 @@ const DuckDuckGoWrapper = () => {
           placeholder="Search DuckDuckGo..."
           content={currentContent}
           searchHandler={searchFunc}
-          contentLabel="Text"
+          contentLabel="shortened"
           resultHandler={setCurrentContent}
           itemChooseHandler={setChosenResult}
         />
@@ -117,7 +126,7 @@ storiesOf('Base', module)
     ),
     {
       notes: {
-        // markdown: Info,
+        markdown: Info,
       },
     },
   );

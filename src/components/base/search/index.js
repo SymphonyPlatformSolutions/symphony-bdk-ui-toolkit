@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
+import PropTypes from 'prop-types';
 import SearchIcon from './search-icons';
 import Text from '../text';
 import Box from '../box';
@@ -131,11 +132,36 @@ const Search = (props) => {
   );
 };
 
+Menu.propTypes = {
+  content: PropTypes.array,
+  contentLabel: PropTypes.string.isRequired,
+  itemChooseHandler: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
+  noResultsMessage: PropTypes.string.isRequired,
+};
+Menu.defaultProps = {
+  content: [],
+};
+
+Search.propTypes = {
+  theme: PropTypes.object.isRequired,
+  content: PropTypes.array,
+  searchHandler: PropTypes.func.isRequired,
+  resultHandler: PropTypes.func.isRequired,
+  debouncePeriod: PropTypes.number,
+  size: PropTypes.oneOf(['regular', 'large']),
+  contentLabel: PropTypes.string,
+  placeholder: PropTypes.string,
+  noResultsMessage: PropTypes.string,
+  itemChooseHandler: PropTypes.func.isRequired,
+};
 Search.defaultProps = {
   debouncePeriod: INIT_DEBOUNCE,
   contentLabel: 'label',
   placeholder: 'Search...',
   noResultsMessage: 'No results',
+  content: [],
+  size: 'regular',
 };
 
 export default withTheme(Search);

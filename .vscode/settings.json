@@ -1,5 +1,0 @@
-{
-  "eslint.provideLintTask": true,
-  "eslint.autoFixOnSave": true,
-  "eslint.alwaysShowStatus": true
-}
