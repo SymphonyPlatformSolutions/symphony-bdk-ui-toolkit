@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 
-const getBorderColor = theme => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : theme.colors.lightgrey);
-const getHeaderFontColor = theme => (theme.colors.textcolor);
-const getHoverBackgroundColor = theme => (theme.mode === THEME_TYPES.DARK ? 'rgba(256, 256, 256, 0.1)' : 'rgba(0, 0, 0, 0.04)');
+const getBorderColor = theme => theme.colors.grey_100;
+const getHeaderFontColor = theme => theme.colors.grey_700;
+const getHoverBackgroundColor = theme => theme.colors.grey_200;
 
-const getErrorBarColor = theme => (theme.colors.danger);
+const getErrorBarColor = theme => (theme.colors.error_300);
 
 const overrides = {
   header: 'react-grid-Header',

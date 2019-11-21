@@ -5,7 +5,7 @@ import Card from '../card';
 
 export const HelperLink = styled.span`
   width: fit-content;
-  color: ${({ theme }) => theme.colors.link};
+  color: ${({ theme }) => theme.colors.primary_500};
   text-decoration: none;
   :hover {
     cursor: pointer;
@@ -17,7 +17,7 @@ export const HelperLink = styled.span`
 export const StyledArrowRightCircle = styled(ArrowRightCircle)`
   width: 32px;
   height: 32px;
-  color: ${({ theme }) => theme.colors.primary}
+  color: ${({ theme }) => theme.colors.primary_500}
   opacity: 0.7;
   transition: ease opacity .2s;
   &:hover {

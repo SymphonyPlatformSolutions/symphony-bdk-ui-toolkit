@@ -23,7 +23,12 @@ const IconWrap = styled.div`
   cursor: pointer;
   width: 16px;
   height: 16px;
-  z-index: 12;
+  z-index: 8;
+  color: ${({ theme }) => theme.colors.grey_400};
+  transition: color 0.2s ease;
+  &:hover {
+    color: ${({ theme }) => theme.colors.grey_600};
+  }
 `;
 
 const Bubble = styled.div`
@@ -94,7 +99,7 @@ const TooltipBubble = (props) => {
 
 const Tooltip = (props) => {
   const {
-    children, theme, bottom, size, ...rest
+    children, theme, bottom, ...rest
   } = props;
   const [isHover, changeHover] = useState(false);
   const tooltipRef = useRef(null);
@@ -107,7 +112,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <MdInfo color={theme.colors.grey_800} />
+        <MdInfo size="1.2em" color="inherit" />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}

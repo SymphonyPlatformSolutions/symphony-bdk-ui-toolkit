@@ -70,12 +70,12 @@ const DATA_WITH_ACTIONS = [{
     {
       label: 'Edit',
       callback: handleTestEdit,
-      type: 'primary',
+      type: 'info',
     },
     {
       label: 'Delete',
       callback: handleTestDelete,
-      type: 'danger',
+      type: 'error',
     },
   ],
 }, {
@@ -90,12 +90,12 @@ const DATA_WITH_ACTIONS = [{
     {
       label: 'Edit',
       callback: handleTestEdit,
-      type: 'primary',
+      type: 'info',
     },
     {
       label: 'Delete',
       callback: handleTestDelete,
-      type: 'danger',
+      type: 'error',
     },
   ],
 }];
@@ -142,12 +142,12 @@ for (let i = 0; i < 40; i++) {
       {
         label: 'Edit',
         callback: handleTestEdit,
-        type: 'primary',
+        type: 'info',
       },
       {
         label: 'Delete',
         callback: handleTestDelete,
-        type: 'danger',
+        type: 'error',
       },
     ];
   }
@@ -161,7 +161,7 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box p={15}>
         <Box>
-          <Text isTitle size="large">Filled Table</Text>
+          <Text isTitle>Filled Table</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA}
@@ -170,7 +170,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Actions</Text>
+          <Text isTitle>Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA_WITH_ACTIONS}
@@ -179,7 +179,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Searchable Table, and max Height</Text>
+          <Text isTitle>Searchable Table, and max Height</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               searchable
@@ -190,7 +190,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Tooltips</Text>
+          <Text isTitle>Tooltips</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA}
@@ -199,7 +199,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Empty Table</Text>
+          <Text isTitle>Empty Table</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={[]}
@@ -208,7 +208,7 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Loading Table</Text>
+          <Text isTitle>Loading Table</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={[]}

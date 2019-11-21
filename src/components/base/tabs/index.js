@@ -4,14 +4,12 @@ import React, {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Box from '../box';
+import Text from '../text';
 import {
   getHeaderIndicatorBackground,
-  getTabHeaderBorder,
   getTabHeaderIndicatorMarginLeft,
   getHeaderIndicatorWidth,
   getTabItemAlign,
-  getTabItemColor,
-  getTabItemOpacity,
 } from './theme';
 
 const BaseTabs = styled.div`
@@ -23,15 +21,18 @@ const BaseTabs = styled.div`
 const TabHeader = styled.ol`
   padding-left: 0;
   width: 100%;
-  border-bottom: ${props => getTabHeaderBorder(props)};
 `;
 
-const TabHeaderLabel = styled.span`
-  font-size: 1.25rem;
-  opacity: ${props => getTabItemOpacity(props)};
+const TabHeaderLabel = styled(Text)`
+  font-size: 18px;
   line-height: 22px;
   cursor: pointer;
-  color: ${props => getTabItemColor(props)};
+  font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};
+  color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary_500 : theme.colors.grey_600)};
+  transition: color 0.2s ease;
+  &:hover {
+    color: ${({ isSelected, theme }) => (isSelected ? undefined : theme.colors.grey_700)};
+  }
 `;
 
 const TabHeaderItem = styled.li`
@@ -43,10 +44,9 @@ const TabHeaderItem = styled.li`
   text-align: ${props => getTabItemAlign(props)};
   float: ${props => getTabItemAlign(props)};
   &:hover {
-    color: ${props => props.theme.colors.primary}
+    color: ${props => props.theme.colors.primary_500}
   }
 `;
-
 
 const TabHeaderIndicator = styled.div`
   width: ${props => getHeaderIndicatorWidth(props)};
@@ -59,7 +59,6 @@ const TabHeaderIndicator = styled.div`
   transition-duration: .5s;
   transition-timing-function: ease;
 `;
-
 
 export default function Tabs({ children, activeTab, ...rest }) {
   const elRef = useRef([...Array(children.length)].map(() => createRef()));
@@ -98,7 +97,7 @@ export default function Tabs({ children, activeTab, ...rest }) {
                 align={align}
                 onClick={() => onClickTabItem(label, index, align)}
               >
-                <TabHeaderLabel label={label} activeTab={selectedTab}>{label}</TabHeaderLabel>
+                <TabHeaderLabel isSelected={selectedTab === label}>{label}</TabHeaderLabel>
               </TabHeaderItem>
             );
           })}

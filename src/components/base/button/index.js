@@ -6,23 +6,19 @@ import {
   BaseButton,
   Container,
   ChildrenContainer,
-  getSpinnerColor,
+  BUTTON_TYPES,
+  TextContainer,
+  FILL_TYPES,
 } from './theme';
 import { NoOp } from '../../../utils/helpers';
 
 const LoaderContainer = styled.div`
-    display: flex;
-    position: absolute;
-    transform: scale(0.9);
+  display: flex;
+  padding: 0 20px;
+  position: absolute;
+  height: 16px;
+  opacity: ${({ isLoading }) => (isLoading ? '1' : '0')};
 `;
-
-const BUTTON_TYPES = {
-  SUBMIT: 'submit',
-  PRIMARY: 'primary',
-  DANGER: 'danger',
-  GREY: 'grey',
-  SECONDARY: 'secondary',
-};
 
 const Button = ({
   children, size, type, fill, theme, loading, disabled, htmlType, circular, ...rest
@@ -60,45 +56,66 @@ const Button = ({
       disabled={isLoading || disabled}
     >
       <Container justify="center" align="center" type="flat">
-        <ChildrenContainer isLoading={isLoading}>
-          {children}
+        <LoaderContainer circular={circular} size={size} isLoading={isLoading}>
+          <Loader
+            color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
+            size="small"
+          />
+        </LoaderContainer>
+        <ChildrenContainer isLoading={isLoading} fill={fill}>
+          <TextContainer>
+            {children}
+          </TextContainer>
         </ChildrenContainer>
-        {isLoading && (
-          <LoaderContainer circular={circular} size={size}>
-            <Loader
-              color={getSpinnerColor(({ type, fill, theme }))}
-              type="v2"
-              presetSize="small"
-            />
-          </LoaderContainer>
-        )}
       </Container>
     </BaseButton>
   );
 };
 
+const CloseSVG = styled.svg``;
+const CloseSVGBg = styled.rect`
+  transition: all 0.3s;
+  opacity: 0;
+  ${CloseSVG}:hover & {
+    opacity: 1;
+  }
+`;
+const CloseSVGPath = styled.path`
+  transition: all 0.3s;
+  stroke: #757575;
+  ${CloseSVG}:hover & {
+    stroke: #424242;
+  }
+`;
+export const CloseButton = () => (
+  <CloseSVG width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <CloseSVGBg width="24" height="24" rx="12" fill="#F5F5F5" />
+    <CloseSVGPath d="M16 8.12903L8 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <CloseSVGPath d="M8 8.12903L16 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </CloseSVG>
+);
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.keys(BUTTON_TYPES).map(e => BUTTON_TYPES[e])),
-  size: PropTypes.oneOf(['tiny', 'small', 'large']),
+  size: PropTypes.oneOf(['small', 'regular', 'large']),
   fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   htmlType: PropTypes.string,
-  circular: PropTypes.string,
+  circular: PropTypes.bool,
 };
 
 Button.defaultProps = {
   type: 'primary',
-  size: 'large',
+  size: 'regular',
   fill: 'filled',
   disabled: false,
   onClick: NoOp,
   loading: null,
   htmlType: 'button',
-  circular: null
+  circular: false,
 };
 
 export default withTheme(Button);

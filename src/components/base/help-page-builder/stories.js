@@ -9,17 +9,17 @@ import Info from './info.md';
 import { StoryWrapper } from '../wrappers';
 import HelpPageBuilder from './index';
 import { Separator } from '../../index';
-import { HelperLink } from './theme'
+import { HelperLink } from './theme';
 
 const StyledBookBookmarkIcon = styled(BookBookmark)`
   width: 32px;
   height: 32px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary_500};
 `;
 const StyledBookmarkIcon = styled(Bookmark)`
   width: 32px;
   height: 32px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary_500};
 `;
 
 export const PAGE_DATA_ONE_LEVEL = {
@@ -116,7 +116,7 @@ storiesOf('Base', module)
           <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
         </Box>
         <Separator />
-        <Text isTitle size="large">Help Page Builder</Text>
+        <Text isTitle>Help Page Builder</Text>
         <Text isTitle size="small">2 Level helper</Text>
         <Box horizontal space={20}>
           <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />

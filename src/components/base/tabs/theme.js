@@ -1,15 +1,6 @@
-export const getTabHeaderBorder = ({ theme }) => `1px ${theme.colors.grey} solid`;
-export const getTabItemColor = ({ activeTab, label, theme }) => (
-  activeTab === label
-    ? theme.colors.primary
-    : theme.colors.darkgrey
-);
-export const getTabItemOpacity = ({ activeTab, label }) => (
-  activeTab === label ? 1 : 0.6
-);
-
+export const getTabHeaderBorder = ({ theme }) => `1px ${theme.colors.grey_600} solid`;
 export const getTabItemAlign = ({ align }) => (align === 'right' ? 'right' : 'left');
-export const getHeaderIndicatorBackground = ({ theme }) => theme.colors.primary;
+export const getHeaderIndicatorBackground = ({ theme }) => theme.colors.primary_500;
 export const getHeaderIndicatorWidth = ({ activeTabIndex, tabs }) => {
   // eslint-disable-next-line prefer-destructuring
   const clientWidth = tabs[activeTabIndex].clientWidth;

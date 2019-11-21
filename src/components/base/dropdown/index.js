@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Select from 'react-select';
 import Loader from '../loader';
+import Text from '../text';
 import {
   customStyles,
   DropdownIndicator,
@@ -10,7 +11,6 @@ import {
   Placeholder,
   Option,
   NoOptionsMessage,
-  Control,
 } from './theme';
 import { ErrorWrapper } from '../input-field';
 
@@ -23,6 +23,10 @@ const LoaderContainer = styled.div`
 `;
 
 const LoaderComponent = () => <LoaderContainer><Loader presetSize="small" type="v2" /></LoaderContainer>;
+const InputLabel = styled(Text)`
+  color: ${({ theme }) => theme.colors.grey_600};
+  font-weight: bold;
+`;
 
 const Dropdown = (props) => {
   const {
@@ -56,6 +60,7 @@ const Dropdown = (props) => {
   return (
     <div>
       <ErrorWrapper error={error} errorMessage={errorMessage}>
+        {label && <label><InputLabel size="small">{label}</InputLabel></label>}
         <Select
           styles={customStyles({ theme, error })}
           isDisabled={disabled}
@@ -68,9 +73,6 @@ const Dropdown = (props) => {
             SingleValue,
             Placeholder,
             Option,
-            Control: innerProps => Control({
-              ...innerProps, error, label, innerTheme: theme,
-            }),
             NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
             ...components,
           }}

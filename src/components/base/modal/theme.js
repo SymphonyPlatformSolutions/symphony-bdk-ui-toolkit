@@ -14,13 +14,7 @@ export const Overlay = styled.div`
   transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 `;
 
-const getBorderColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
-  ? null
-  : `1px solid ${theme.colors.lightgrey}`);
-
-const getBackgroundColor = ({ theme }) => (theme.mode === THEME_TYPES.DARK
-  ? theme.colors.darkaccent
-  : theme.colors.white);
+const getBackgroundColor = ({ theme }) => (theme.colors.mainbackground);
 
 export const Modal = styled.div`
   width: 420px;
@@ -28,9 +22,13 @@ export const Modal = styled.div`
   overflow: visible;
   background: ${props => getBackgroundColor(props)};
   z-index: 9000;
-  border: ${props => getBorderColor(props)};
   position: absolute;
   top: 30%;
+  border-radius: 4px;
+  border: ${({ theme }) => `1px solid ${theme.colors.grey_100}`};
+  box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK
+    ? 'none'
+    : '0px 2px 10px rgba(0, 0, 0, 0.05)')};
   left: 50%;
   opacity: ${({ open }) => (open ? 1 : 0)};
   transform: translate(-50%, -30%);

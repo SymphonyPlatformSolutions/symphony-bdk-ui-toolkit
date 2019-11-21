@@ -1,20 +1,22 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Separator from '.';
+import QuotePanel from '.';
 import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-
 storiesOf('Base', module)
-  .add('Separator', () => (
+  .add('QuotePanel', () => (
     <StoryWrapper p={15}>
-      <Box space={20}>
-        <Text isTitle>Separator</Text>
-        <Box horizontal space={60} align="center">
-          <Separator />
-        </Box>
+      <Box vertical space={20}>
+        <Text isTitle size="large">Quote Panel</Text>
+        <QuotePanel
+          dealerName="Dealer two"
+          dealerPayedValue={1.75}
+          clientName="Client one"
+          clientPayedValue={3}
+        />
       </Box>
     </StoryWrapper>
   ), {

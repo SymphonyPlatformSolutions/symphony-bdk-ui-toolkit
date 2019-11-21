@@ -25,12 +25,17 @@ import {
   getHeaderColumnTextStyle,
 } from './theme';
 import Loader from '../loader';
-import Card from '../card';
 
 function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {
     for (let i = 0; i < rowKeys.length; i++) {
-      if (row[rowKeys[i]].includes(searchTerm)) {
+      if (typeof row[rowKeys[i]] === 'number') {
+        return row[rowKeys[i]] === searchTerm;
+      }
+      if (typeof row[rowKeys[i]] !== 'string') {
+        return false;
+      }
+      if (row[rowKeys[i]].toLowerCase().includes(searchTerm)) {
         return true;
       }
     }
@@ -62,12 +67,12 @@ const Table = ({
       changeData(filterSearchData(data, Object.keys(data[0]), searchTerm));
     }, 300);
     return () => clearTimeout(handler);
-  }, [searchTerm]);
+  }, [searchTerm, data]);
 
   if (loading) {
     return (
       <EmptyTable>
-        <Loader type="v2" />
+        <Loader />
       </EmptyTable>
     );
   }
@@ -121,6 +126,8 @@ const Table = ({
           <Box horizontal space={5}>
             <Text
               type="primary"
+              isTitle
+              size="tiny"
               style={getHeaderColumnTextStyle(theme)}
             >
               {stringHeader}
@@ -151,7 +158,7 @@ const Table = ({
   });
 
   return (
-    <Card p={0}>
+    <div>
       <Box type="flat">
         {searchable && (
         <SearchBar value={searchTerm} onChange={changeSearchTerm} />
@@ -170,14 +177,14 @@ const Table = ({
             if (a.sorted !== sorting) {
               changeSorting(a.sorted);
             }
-            return getTheadStyle(theme);
+            return getTheadStyle(theme, searchable);
           }}
           getProps={() => getPropsStyle(maxHeight)}
           {...getStyleProps(theme)}
           {...rest}
         />
       </TableWrapper>
-    </Card>
+    </div>
   );
 };
 

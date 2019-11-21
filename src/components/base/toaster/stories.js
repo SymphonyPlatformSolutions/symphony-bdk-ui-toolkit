@@ -16,7 +16,7 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <ToasterProvider>
         <Box>
-          <Text isTitle size="large">Toaster</Text>
+          <Text isTitle>Toaster</Text>
           <Box horizontal space={20}>
             <ToasterConsumer>
               {context => (

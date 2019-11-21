@@ -25,7 +25,7 @@ const INPUT_TYPES = {
   Password: 'password',
 };
 
-const InputFieldWithErrorStory = () => {
+const InputFieldWithErrorStory = ({ isLarge }) => {
   const [input, setInput] = useState('');
   const inputState = 'error';
 
@@ -37,6 +37,7 @@ const InputFieldWithErrorStory = () => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           label="Input Field with error"
           inputState={inputState}
           value={input}
@@ -49,7 +50,7 @@ const InputFieldWithErrorStory = () => {
   );
 };
 
-const InputFieldStory = () => {
+const InputFieldStory = ({ isLarge }) => {
   const [input, setInput] = useState('');
   const inputState = 'initial';
 
@@ -60,6 +61,7 @@ const InputFieldStory = () => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           value={input}
           inputState={inputState}
           onChange={handleInput}
@@ -72,7 +74,7 @@ const InputFieldStory = () => {
   );
 };
 
-const InputFieldCopyOptionStory = () => {
+const InputFieldCopyOptionStory = ({ isLarge }) => {
   const [input, setInput] = useState('');
   const inputState = 'initial';
 
@@ -83,6 +85,7 @@ const InputFieldCopyOptionStory = () => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           inputState={inputState}
           value={input}
           onChange={handleInput}
@@ -96,7 +99,7 @@ const InputFieldCopyOptionStory = () => {
   );
 };
 
-const InputFieldPasswordStory = () => {
+const InputFieldPasswordStory = ({ isLarge }) => {
   const [input, setInput] = useState('This is a password');
 
   function handleInput(e) {
@@ -106,6 +109,7 @@ const InputFieldPasswordStory = () => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           label="Password Input Field"
           value={input}
           onChange={handleInput}
@@ -116,7 +120,7 @@ const InputFieldPasswordStory = () => {
   );
 };
 
-const InputFieldLiveSample = () => {
+const InputFieldLiveSample = ({ isLarge }) => {
   const [input, setInput] = useState('');
 
   function handleInput(e) {
@@ -133,6 +137,7 @@ const InputFieldLiveSample = () => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           label="Live Sample (Knobs)"
           placeholder={placeHolder}
           inputState={inputStates}
@@ -148,7 +153,7 @@ const InputFieldLiveSample = () => {
   );
 };
 
-const TextAreaStory = ({ disabled }) => {
+const TextAreaStory = ({ disabled, isLarge }) => {
   const [input, setInput] = useState('');
 
   function handleInput(e) {
@@ -158,6 +163,7 @@ const TextAreaStory = ({ disabled }) => {
     <Box vertical space={20}>
       <div style={styles}>
         <InputField
+          size={isLarge ? 'large' : 'regular'}
           label={`${disabled ? 'Disabled ' : ''} Text Area`}
           value={input}
           onChange={handleInput}
@@ -174,33 +180,68 @@ storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('InputField', () => (
     <StoryWrapper p={15}>
-      <InputFieldLiveSample />
-      <InputFieldStory />
-      <InputFieldCopyOptionStory />
-      <InputFieldPasswordStory />
-      <Box vertical space={20}>
-        <div style={styles}>
-          <InputField disabled label="Disabled input field" />
-        </div>
+      <Box horizontal>
+        <Box>
+          <Text isTitle>Regular Size</Text>
+          <InputFieldLiveSample />
+          <InputFieldStory />
+          <InputFieldCopyOptionStory />
+          <InputFieldPasswordStory />
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField disabled label="Disabled input field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField readOnly value="Some content" label="Read-Only Field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField type="copy" readOnly value="Some other content" label="Read-Only Copy Field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField disabled label="Disabled input field with value" value="Some stuff written to be read only!" />
+            </div>
+          </Box>
+          <InputFieldWithErrorStory />
+          <TextAreaStory />
+          <TextAreaStory disabled />
+        </Box>
+        <Box>
+          <Text isTitle>Large Size</Text>
+          <InputFieldLiveSample isLarge />
+          <InputFieldStory isLarge />
+          <InputFieldCopyOptionStory isLarge />
+          <InputFieldPasswordStory isLarge />
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField size="large" disabled label="Disabled input field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField size="large" readOnly value="Some content" label="Read-Only Field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField size="large" type="copy" readOnly value="Some other content" label="Read-Only Copy Field" />
+            </div>
+          </Box>
+          <Box vertical space={20}>
+            <div style={styles}>
+              <InputField size="large" disabled label="Disabled input field with value" value="Some stuff written to be read only!" />
+            </div>
+          </Box>
+          <InputFieldWithErrorStory isLarge />
+          <TextAreaStory isLarge />
+          <TextAreaStory isLarge disabled />
+        </Box>
       </Box>
-      <Box vertical space={20}>
-        <div style={styles}>
-          <InputField readOnly value="Some content" label="Read-Only Field" />
-        </div>
-      </Box>
-      <Box vertical space={20}>
-        <div style={styles}>
-          <InputField type="copy" readOnly value="Some other content" label="Read-Only Copy Field" />
-        </div>
-      </Box>
-      <Box vertical space={20}>
-        <div style={styles}>
-          <InputField disabled label="Disabled input field with value" value="Some stuff written to be read only!" />
-        </div>
-      </Box>
-      <InputFieldWithErrorStory />
-      <TextAreaStory />
-      <TextAreaStory disabled />
     </StoryWrapper>
   ), {
     notes: {

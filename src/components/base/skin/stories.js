@@ -11,7 +11,7 @@ storiesOf('Base', module)
   .add('Themes', () => (
     <StoryWrapper p={15}>
       <Box space={20}>
-        <Text isTitle size="large">Look at the Notes tab in this page!</Text>
+        <Text isTitle>Look at the Notes tab in this page!</Text>
       </Box>
     </StoryWrapper>
   ), {

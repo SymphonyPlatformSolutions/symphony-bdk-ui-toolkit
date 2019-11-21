@@ -75,36 +75,43 @@ storiesOf('Base', module)
     <StoryWrapper p={15}>
       <Box vertical space={20}>
         <Box>
+          <Text isTitle>Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <DropdownHandler options={OPTIONS} label="Simple dropdown" tooltip="Stuff!" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Dropdown with Error</Text>
           <Box style={{ width: '300px' }}>
             <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" label="Dropdown with error" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled options={OPTIONS} label="Disabled Dropdown" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown disabled chosenValue="option2" options={OPTIONS} label="Filled disabled Dropdown" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
             <Dropdown options={[]} label="Empty Dropdown" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
             <AsyncDropdownHandler options={OPTIONS} label="Dropdown with Loading" />
           </Box>
         </Box>
         <Box>
+          <Text isTitle>Empty Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
             <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
           </Box>

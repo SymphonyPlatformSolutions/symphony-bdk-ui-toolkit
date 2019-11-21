@@ -6,7 +6,6 @@ import './assets/flags.css';
 import Tooltip from '../tooltip';
 import {
   PhoneInputWrapper,
-  InputLine,
   InputLabel,
   Container,
 } from './theme';
@@ -28,8 +27,9 @@ const PhoneInputField = ({
   }, [elRef, elRef.current]);
   const error = inputState === 'error';
   return (
-    <Container>
-      <ErrorWrapper error={error} errorMessage={errorMessage}>
+    <ErrorWrapper error={error} errorMessage={errorMessage}>
+      {label && <label><InputLabel disabled={disabled} focused={isFocused} error={error}>{label}</InputLabel></label>}
+      <Container disabled={disabled} error={error}>
         <PhoneInputWrapper
           ref={elRef}
           hasRef={hasRef}
@@ -53,11 +53,9 @@ const PhoneInputField = ({
             }}
             {...rest}
           />
-          <InputLabel disabled={disabled} focused={isFocused} error={error}>{label}</InputLabel>
-          <InputLine focused={isFocused} disabled={disabled} error={error} />
         </PhoneInputWrapper>
-      </ErrorWrapper>
-    </Container>
+      </Container>
+    </ErrorWrapper>
   );
 };
 

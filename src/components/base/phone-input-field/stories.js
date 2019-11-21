@@ -34,7 +34,7 @@ const PhoneInputFieldLiveSample = () => {
 
   return (
     <Box vertical space={20}>
-      <Text isTitle size="large">Live Sample (Knobs)</Text>
+      <Text isTitle>Live Sample (Knobs)</Text>
       <div style={styles}>
         <PhoneInputField
           id="test"

@@ -8,19 +8,40 @@ import { NoOp } from '../../../utils/helpers';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-const CheckBoxComponent = () => {
+const CheckBoxComponent = (props) => {
+  const { children, ...rest } = props;
   const [isChecked, setCheckMark] = useState(true);
-
-  function handleCheckMark(e) {
-    setCheckMark(e.target.checked);
-  }
 
   return (
     <Checkbox
+      {...rest}
       checked={isChecked}
-      onChange={handleCheckMark}
-      disabled={false}
-    >Checkbox Label
+      onChange={({ target: { checked } }) => setCheckMark(checked)}
+    >{children}
+    </Checkbox>
+  );
+};
+
+const IndeterminateCheckbox = (props) => {
+  const { children, ...rest } = props;
+  const [isChecked, setCheckMark] = useState(true);
+  const [isIndeterminate, setIndeterminate] = useState(false);
+  return (
+    <Checkbox
+      {...rest}
+      indeterminate={isIndeterminate}
+      checked={isChecked}
+      onChange={() => {
+        if (isChecked && isIndeterminate) {
+          setIndeterminate(false);
+        } else if (!isChecked) {
+          setCheckMark(true);
+          setIndeterminate(true);
+        } else {
+          setCheckMark(false);
+        }
+      }}
+    >{children}
     </Checkbox>
   );
 };
@@ -29,17 +50,36 @@ storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('Checkbox', () => (
     <StoryWrapper p={15}>
-      <Box vertical space={20}>
-        <Text isTitle size="large">Default CheckBox</Text>
-        <div>
-          <CheckBoxComponent />
-        </div>
+      <Box>
+        <Text isTitle>Default CheckBox</Text>
+        <Box horizontal>
+          <Box type="secondary">
+            <Text isTitle size="small">Regular</Text>
+            <CheckBoxComponent>Regular Checkbox</CheckBoxComponent>
+            <IndeterminateCheckbox>Indeterminate Checkbox</IndeterminateCheckbox>
+          </Box>
+          <Box type="secondary">
+            <Text isTitle size="small">Large</Text>
+            <CheckBoxComponent size="large">Large Checkbox</CheckBoxComponent>
+            <IndeterminateCheckbox size="large">Large Indeterminate Checkbox</IndeterminateCheckbox>
+          </Box>
+        </Box>
       </Box>
-      <Box vertical space={20}>
-        <Text isTitle size="large">Disabled CheckBox</Text>
-        <Box type="secondary">
-          <Checkbox onChange={NoOp} disabled>Disabled Unchecked</Checkbox>
-          <Checkbox onChange={NoOp} checked disabled>Disabled Checked</Checkbox>
+      <Box>
+        <Text isTitle>Disabled CheckBox</Text>
+        <Box horizontal>
+          <Box type="secondary">
+            <Text isTitle size="small">Regular</Text>
+            <Checkbox onChange={NoOp} disabled>Disabled Unchecked</Checkbox>
+            <Checkbox onChange={NoOp} checked disabled>Disabled Checked</Checkbox>
+            <Checkbox onChange={NoOp} indeterminate checked disabled>Disabled Checked</Checkbox>
+          </Box>
+          <Box type="secondary">
+            <Text isTitle size="small">Large</Text>
+            <Checkbox onChange={NoOp} size="large" disabled>Disabled Unchecked</Checkbox>
+            <Checkbox onChange={NoOp} size="large" checked disabled>Disabled Checked</Checkbox>
+            <Checkbox onChange={NoOp} size="large" indeterminate checked disabled>Disabled Checked</Checkbox>
+          </Box>
         </Box>
       </Box>
     </StoryWrapper>
