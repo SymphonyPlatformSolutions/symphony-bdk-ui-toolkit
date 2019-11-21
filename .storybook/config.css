@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 html, body {
   font-size: 14px;
-  font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif;
+  /* font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif; */
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: normal;
 }

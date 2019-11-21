@@ -35,16 +35,15 @@ const InputFieldWithErrorStory = () => {
 
   return (
     <Box vertical space={20}>
-      <Text isisTitle size="large">Input Field with error</Text>
       <div style={styles}>
         <InputField
+          label="Input Field with error"
           inputState={inputState}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
           errorMessage="Something's not right!"
         />
-        {/* {inputState === 'error' && <Text size="tiny">Error message here.</Text>} */}
       </div>
     </Box>
   );
@@ -59,13 +58,13 @@ const InputFieldStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text isisTitle size="large">Input Field</Text>
       <div style={styles}>
-
         <InputField
           value={input}
           inputState={inputState}
           onChange={handleInput}
+          label="Important field"
+          tooltip="A very important field"
           placeholder="Input here..."
         />
       </div>
@@ -82,15 +81,15 @@ const InputFieldCopyOptionStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text isisTitle size="large">Input Field with copy option</Text>
       <div style={styles}>
-
         <InputField
           inputState={inputState}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
-          copyInput
+          label="A nice field to copy"
+          tooltip="Copy the value that's inside!"
+          type="copy"
         />
       </div>
     </Box>
@@ -105,9 +104,9 @@ const InputFieldPasswordStory = () => {
   }
   return (
     <Box vertical space={20}>
-      <Text isTitle size="large">Password Input Field</Text>
       <div style={styles}>
         <InputField
+          label="Password Input Field"
           value={input}
           onChange={handleInput}
           type="password"
@@ -132,9 +131,9 @@ const InputFieldLiveSample = () => {
 
   return (
     <Box vertical space={20}>
-      <Text isTitle size="large">Live Sample (Knobs)</Text>
       <div style={styles}>
         <InputField
+          label="Live Sample (Knobs)"
           placeholder={placeHolder}
           inputState={inputStates}
           type={inputTypes}
@@ -157,9 +156,9 @@ const TextAreaStory = ({ disabled }) => {
   }
   return (
     <Box vertical space={20}>
-      <Text isTitle size="large">{disabled && 'Disabled '} Text Area</Text>
       <div style={styles}>
         <InputField
+          label={`${disabled ? 'Disabled ' : ''} Text Area`}
           value={input}
           onChange={handleInput}
           placeholder="Input here..."
@@ -180,9 +179,23 @@ storiesOf('Base', module)
       <InputFieldCopyOptionStory />
       <InputFieldPasswordStory />
       <Box vertical space={20}>
-        <Text isTitle size="large">Disabled input field</Text>
         <div style={styles}>
-          <InputField disabled />
+          <InputField disabled label="Disabled input field" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
+        <div style={styles}>
+          <InputField readOnly value="Some content" label="Read-Only Field" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
+        <div style={styles}>
+          <InputField type="copy" readOnly value="Some other content" label="Read-Only Copy Field" />
+        </div>
+      </Box>
+      <Box vertical space={20}>
+        <div style={styles}>
+          <InputField disabled label="Disabled input field with value" value="Some stuff written to be read only!" />
         </div>
       </Box>
       <InputFieldWithErrorStory />

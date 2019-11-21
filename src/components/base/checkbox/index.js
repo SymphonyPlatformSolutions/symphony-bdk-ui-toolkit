@@ -38,7 +38,7 @@ const BaseCheckBox = styled.div`
   height: 1rem;
   background: ${props => getBackgroundColor(props)};
   border: 1px solid ${props => getBackgroundColor(props)};
-  border-radius: 2px;
+  border-radius: 0px;
   cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;

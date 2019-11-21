@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
 } from '@storybook/addon-knobs';
+import Faker from 'faker';
 import Table from '.';
 import Box from '../box';
 import { StoryWrapper } from '../wrappers';
@@ -17,20 +18,20 @@ const handleTestDelete = (item) => {
   console.log(item);
 };
 const DATA = [{
-  email: '4@domain.com',
-  name: 'A',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://a.com',
 }, {
-  email: '3@domain.com',
-  name: 'B',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://b.com',
 }, {
-  email: '2@domain.com',
-  name: 'C',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://c.com',
 }, {
-  email: '1@domain.com',
-  name: 'D',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://d.com',
 }];
 
@@ -58,12 +59,12 @@ const COLUMNS = [{
 ];
 
 const DATA_WITH_ACTIONS = [{
-  email: '4@domain.com',
-  name: 'A',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://a.com',
 }, {
-  email: '3@domain.com',
-  name: 'B',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://b.com',
   actionsMenu: [
     {
@@ -78,12 +79,12 @@ const DATA_WITH_ACTIONS = [{
     },
   ],
 }, {
-  email: '2@domain.com',
-  name: 'C',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://c.com',
 }, {
-  email: '1@domain.com',
-  name: 'D',
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
   link: 'http://d.com',
   actionsMenu: [
     {
@@ -127,6 +128,32 @@ const COLUMNS_WITH_ACTIONS = [{
 },
 ];
 
+const LARGE_DATA_SET = [];
+
+for (let i = 0; i < 40; i++) {
+  const data = {
+    email: Faker.internet.email(),
+    name: Faker.name.firstName(),
+    link: 'https://www.example.com',
+  };
+
+  if (Faker.random.boolean()) {
+    data.actionsMenu = [
+      {
+        label: 'Edit',
+        callback: handleTestEdit,
+        type: 'primary',
+      },
+      {
+        label: 'Delete',
+        callback: handleTestDelete,
+        type: 'danger',
+      },
+    ];
+  }
+
+  LARGE_DATA_SET.push(data);
+}
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -143,21 +170,22 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle size="large">Searchable Table</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              searchable
-              data={DATA}
-              columns={COLUMNS}
-            />
-          </Box>
-        </Box>
-        <Box>
           <Text isTitle size="large">Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
               data={DATA_WITH_ACTIONS}
               columns={COLUMNS_WITH_ACTIONS}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle size="large">Searchable Table, and max Height</Text>
+          <Box space={60} p="0 16px 0 0">
+            <Table
+              searchable
+              data={LARGE_DATA_SET}
+              columns={COLUMNS_WITH_ACTIONS}
+              maxHeight={350}
             />
           </Box>
         </Box>

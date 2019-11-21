@@ -1,36 +1,40 @@
 import styled from 'styled-components';
-import { THEME_TYPES } from '../../../styles/colors';
 
 const FONTSIZE = {
-  tiny: '.75rem',
-  small: '.87rem',
-  large: '1rem',
+  tiny: '10px',
+  small: '12px',
+  regular: '14px',
+  large: '18px',
 };
 const FONTSIZETITLE = {
-  tiny: '.75rem',
-  small: '1rem',
-  large: '2rem',
+  tiny: '14px',
+  small: '18px',
+  regular: '24px',
+  large: '40px',
 };
 const LINEHEIGHT = {
-  tiny: '1rem',
-  small: '1rem',
-  large: '1.25rem',
+  tiny: '16px',
+  small: '14px',
+  regular: '20px',
+  large: '24px',
 };
 const LINEHEIGHTTITLE = {
-  tiny: '14px',
-  small: '20px',
-  large: '29px',
+  tiny: '20px',
+  small: '24px',
+  regular: '24px',
+  large: '28px',
 };
 
-const getTextColor = ({ type, theme }) => {
+const getTextColor = ({ type, theme, isTitle }) => {
   const colorMap = {
-    primary: theme.colors.textcolor,
-    secondary: theme.mode === THEME_TYPES.DARK ? theme.colors.white : theme.colors.black,
-    danger: theme.colors.danger,
-    info: theme.colors.darkgrey,
+    primary: theme.colors.grey_900,
+    secondary: theme.colors.grey_700,
+    danger: theme.colors.error_700,
+    info: theme.colors.warning_700,
   };
 
-  return colorMap[type] ? colorMap[type] : theme.colors.black;
+  return isTitle
+    ? colorMap.primary : (colorMap[type] ? colorMap[type] : theme.colors.grey_700);
 };
 
 const getPadding = ({ px, py }) => {
@@ -56,7 +60,7 @@ const getFontStyle = ({ isTitle, size }) => (isTitle || size !== 'tiny' ? 'norma
 const getFontSize = ({ isTitle, size }) => (isTitle ? FONTSIZETITLE[size] : FONTSIZE[size]);
 const getLineHeight = ({ isTitle, size }) => (isTitle ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = ({ isTitle }) => (isTitle ? '900' : '400');
-const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.colors.grey} solid` : '0px');
+const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.colors.grey_700} solid` : '0px');
 
 export const BaseText = styled.div`
   color: ${props => getTextColor(props)};

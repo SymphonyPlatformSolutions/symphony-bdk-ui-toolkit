@@ -11,13 +11,9 @@ import {
 import { NoOp } from '../../../utils/helpers';
 
 const LoaderContainer = styled.div`
-  position: absolute;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  top: -2px;
-  margin-top: 0 !important;
+    display: flex;
+    position: absolute;
+    transform: scale(0.9);
 `;
 
 const BUTTON_TYPES = {
@@ -29,7 +25,7 @@ const BUTTON_TYPES = {
 };
 
 const Button = ({
-  children, size, type, fill, theme, loading, disabled, htmlType, ...rest
+  children, size, type, fill, theme, loading, disabled, htmlType, circular, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +56,7 @@ const Button = ({
       {...rest}
       onClick={handleClick}
       isLoading={isLoading}
+      circular={circular}
       disabled={isLoading || disabled}
     >
       <Container justify="center" align="center" type="flat">
@@ -67,7 +64,7 @@ const Button = ({
           {children}
         </ChildrenContainer>
         {isLoading && (
-          <LoaderContainer>
+          <LoaderContainer circular={circular} size={size}>
             <Loader
               color={getSpinnerColor(({ type, fill, theme }))}
               type="v2"
@@ -90,6 +87,7 @@ Button.propTypes = {
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   htmlType: PropTypes.string,
+  circular: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -100,6 +98,7 @@ Button.defaultProps = {
   onClick: NoOp,
   loading: null,
   htmlType: 'button',
+  circular: null
 };
 
 export default withTheme(Button);
