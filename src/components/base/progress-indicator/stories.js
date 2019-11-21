@@ -5,7 +5,7 @@ import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Button from '../button';
-// import Info from './info.md';
+import Info from './info.md';
 
 const ProgressController = (props) => {
   const { steps, ...rest } = props;
@@ -79,6 +79,6 @@ storiesOf('Base', module)
     </StoryWrapper>
   ), {
     notes: {
-      // markdown: Info,
+      markdown: Info,
     },
   });
