@@ -16,7 +16,7 @@ for (let i = 0; i < 15; i++) {
   });
 }
 
-const SearchWrapper = () => {
+const SearchWrapper = ({ CustomMenuItem }) => {
   const [currentContent, setCurrentContent] = useState([]);
   const filterFunc = (searchTerm) => {
     setCurrentContent(
@@ -36,6 +36,8 @@ const SearchWrapper = () => {
           content={currentContent}
           searchHandler={filterFunc}
           resultHandler={setCurrentContent}
+          itemChooseHandler={() => {}}
+          CustomMenuItem={CustomMenuItem}
         />
       </Box>
     </Box>
@@ -43,7 +45,10 @@ const SearchWrapper = () => {
 };
 
 const ResultCard = (props) => {
-  const { Icon: { URL }, FirstURL } = props;
+  const {
+    Icon: { URL },
+    FirstURL,
+  } = props;
   return (
     <div>
       <img src={URL} />
@@ -72,16 +77,18 @@ const DuckDuckGoWrapper = () => {
       if (el.Text) {
         return {
           ...el,
-          shortened: el.Text.length > STRING_CUT
-            ? `${el.Text.slice(0, STRING_CUT)}...`
-            : el.Text,
+          shortened:
+            el.Text.length > STRING_CUT
+              ? `${el.Text.slice(0, STRING_CUT)}...`
+              : el.Text,
         };
       }
       return {
         ...el.Topics[0],
-        shortened: el.Topics[0].Text.length > STRING_CUT
-          ? `${el.Topics[0].Text.slice(0, STRING_CUT)}...`
-          : el.Topics[0].Text,
+        shortened:
+          el.Topics[0].Text.length > STRING_CUT
+            ? `${el.Topics[0].Text.slice(0, STRING_CUT)}...`
+            : el.Topics[0].Text,
       };
     });
     setCurrentContent(endResults);
@@ -99,12 +106,24 @@ const DuckDuckGoWrapper = () => {
           itemChooseHandler={setChosenResult}
         />
       </Box>
-      {chosenResult && (
-        <ResultCard {...chosenResult} />
-      )}
+      {chosenResult && <ResultCard {...chosenResult} />}
     </Box>
   );
 };
+
+const CustomItem = ({ item }) => (
+  <Text
+    style={{
+      color: '#DEE4E7',
+      backgroundColor: '#37474F',
+      padding: '4px 6px',
+      borderRadius: '3px',
+      transition: 'all 0.3s linear',
+    }}
+  >
+    {item.label}
+  </Text>
+);
 
 storiesOf('Base', module)
   .addDecorator(withKnobs)
@@ -118,7 +137,11 @@ storiesOf('Base', module)
             <SearchWrapper />
           </Box>
           <Box vertical space={20}>
-            <Text isTitle>Search</Text>
+            <Text isTitle>Search with custom Menu Item</Text>
+            <SearchWrapper CustomMenuItem={CustomItem} />
+          </Box>
+          <Box vertical space={20}>
+            <Text isTitle>Async Search</Text>
             <DuckDuckGoWrapper />
           </Box>
         </Box>

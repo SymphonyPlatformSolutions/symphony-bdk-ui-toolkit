@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import SearchIcon from './search-icons';
@@ -11,11 +11,14 @@ import {
   MenuContainer,
   MenuItem,
   SearchContainer,
-  FakeBorderBottom,
+  ShrinkingBorder,
   BorderContainer,
 } from './theme';
 
 const INIT_DEBOUNCE = 500;
+const UP_KEY = 38;
+const DOWN_KEY = 40;
+const ENTER_KEY = 13;
 
 const Menu = (props) => {
   const {
@@ -24,6 +27,10 @@ const Menu = (props) => {
     itemChooseHandler,
     theme,
     noResultsMessage,
+    lightFocus,
+    setLightFocus,
+    CustomMenuItem,
+    typedTerm,
   } = props;
 
   if (!content.length) {
@@ -40,13 +47,20 @@ const Menu = (props) => {
 
   return (
     <MenuContainer theme={theme}>
-      {content.map(el => (
+      {content.map((el, index) => (
         <MenuItem
           theme={theme}
           key={el[contentLabel]}
           onMouseDown={() => itemChooseHandler(el)}
+          onMouseEnter={() => setLightFocus(index)}
+          onMouseLeave={() => setLightFocus(null)}
+          lightFocused={index === lightFocus}
         >
-          <Text>{el[contentLabel]}</Text>
+          {CustomMenuItem ? (
+            <CustomMenuItem item={el} typedTerm={typedTerm} />
+          ) : (
+            <Text>{el[contentLabel]}</Text>
+          )}
         </MenuItem>
       ))}
     </MenuContainer>
@@ -65,11 +79,15 @@ const Search = (props) => {
     placeholder,
     noResultsMessage,
     itemChooseHandler,
+    CustomMenuItem,
     ...rest
   } = props;
+
   const [typedTerm, setTypedTerm] = useState('');
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [memo, setMemo] = useState({});
+  const [lightFocus, setLightFocus] = useState(-1);
+  const inputRef = useRef(null);
 
   const executeSearch = () => {
     if (memo[typedTerm]) {
@@ -97,6 +115,27 @@ const Search = (props) => {
     return () => clearTimeout(handler);
   }, [typedTerm]);
 
+  const choseItem = (item) => {
+    setTypedTerm(item[contentLabel]);
+    itemChooseHandler(item);
+    inputRef.current.blur();
+  };
+
+  const specialKeyHandler = ({ keyCode }) => {
+    switch (keyCode) {
+      case DOWN_KEY:
+        return setLightFocus((lightFocus + 1) % content.length);
+      case UP_KEY:
+        return setLightFocus(
+          lightFocus - 1 < 0 ? content.length - 1 : lightFocus - 1,
+        );
+      case ENTER_KEY:
+        return choseItem(content[lightFocus]);
+      default:
+        return null;
+    }
+  };
+
   return (
     <SearchWrapper>
       <BorderContainer>
@@ -105,25 +144,34 @@ const Search = (props) => {
             <SearchIcon isLarge={size === 'large'} />
             <StyledSearch
               {...rest}
+              ref={inputRef}
+              onKeyDown={specialKeyHandler}
               size={size}
               value={typedTerm}
               onChange={({ target: { value } }) => setTypedTerm(value)}
-              onFocus={() => setisMenuOpen(true)}
-              onBlur={() => setisMenuOpen(false)}
+              onFocus={() => {
+                setLightFocus(-1);
+                setisMenuOpen(true);
+              }}
+              onBlur={() => {
+                setLightFocus(-1);
+                setisMenuOpen(false);
+              }}
               placeholder={placeholder}
             />
           </InputWrapper>
         </SearchContainer>
-        <FakeBorderBottom theme={theme} show={isMenuOpen} />
+        <ShrinkingBorder theme={theme} show={isMenuOpen} />
       </BorderContainer>
       {isMenuOpen && (
         <Menu
+          typedTerm={typedTerm}
+          CustomMenuItem={CustomMenuItem}
+          lightFocus={lightFocus}
+          setLightFocus={setLightFocus}
           theme={theme}
           content={content}
-          itemChooseHandler={(item) => {
-            setTypedTerm(item[contentLabel]);
-            itemChooseHandler(item);
-          }}
+          itemChooseHandler={choseItem}
           contentLabel={contentLabel}
           noResultsMessage={noResultsMessage}
         />
@@ -138,9 +186,11 @@ Menu.propTypes = {
   itemChooseHandler: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   noResultsMessage: PropTypes.string.isRequired,
+  CustomMenuItem: PropTypes.node,
 };
 Menu.defaultProps = {
   content: [],
+  CustomMenuItem: null,
 };
 
 Search.propTypes = {
@@ -154,6 +204,7 @@ Search.propTypes = {
   placeholder: PropTypes.string,
   noResultsMessage: PropTypes.string,
   itemChooseHandler: PropTypes.func.isRequired,
+  CustomMenuItem: PropTypes.node,
 };
 Search.defaultProps = {
   debouncePeriod: INIT_DEBOUNCE,
@@ -162,6 +213,7 @@ Search.defaultProps = {
   noResultsMessage: 'No results',
   content: [],
   size: 'regular',
+  CustomMenuItem: null,
 };
 
 export default withTheme(Search);

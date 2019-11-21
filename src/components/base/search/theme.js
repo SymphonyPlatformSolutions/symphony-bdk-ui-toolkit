@@ -22,30 +22,32 @@ export const StyledSearch = styled(StyledInput)`
 `;
 export const SearchWrapper = styled.div`
   width: 100%;
+  position: relative;
 `;
 export const MenuContainer = styled.div`
   padding: 7px 0 5px 0;
   margin: -3px -1px -1px -1px;
   background-color: ${({ theme }) => theme.colors.mainbackground};
   border: 1px solid ${({ theme }) => (theme.colors.oldprimary_400)};
+  top: 40px;
   border-top: none;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   width: inherit;
+  position: absolute;
+
 `;
 export const MenuItem = styled.div`
   padding: 4px 8px 4px 12px;
   transition: all 0.2s;
   cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.grey_200};
-  }
+  background-color: ${({ theme, lightFocused }) => (lightFocused ? theme.colors.grey_200 : 'transparent')};
 `;
-export const FakeBorderBottom = styled.span`
+export const ShrinkingBorder = styled.span`
   border-bottom: 1px solid ${({ theme }) => theme.colors.oldprimary_400};
   width: ${({ show }) => (show ? '80%' : '100%')};
   transition: all 0.3s ease;
-  top: -2px;
+  top: -3px;
   position: relative;
   height: 1px;  
   display: block;
