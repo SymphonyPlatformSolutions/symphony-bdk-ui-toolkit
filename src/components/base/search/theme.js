@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import { StyledInput, Container } from '../input-field/theme';
 
 export const BorderContainer = styled.div`
@@ -29,7 +28,7 @@ export const MenuContainer = styled.div`
   margin: -3px -1px -1px -1px;
   background-color: ${({ theme }) => theme.colors.mainbackground};
   border: 1px solid ${({ theme }) => (theme.colors.oldprimary_400)};
-  top: 40px;
+  top: ${({ isLarge }) => (isLarge ? '47px' : '40px')};
   border-top: none;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;

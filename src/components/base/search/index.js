@@ -31,6 +31,7 @@ const Menu = (props) => {
     setLightFocus,
     CustomMenuItem,
     typedTerm,
+    isLarge,
   } = props;
 
   if (!content.length) {
@@ -46,7 +47,7 @@ const Menu = (props) => {
   }
 
   return (
-    <MenuContainer theme={theme}>
+    <MenuContainer theme={theme} isLarge={isLarge}>
       {content.map((el, index) => (
         <MenuItem
           theme={theme}
@@ -80,6 +81,7 @@ const Search = (props) => {
     noResultsMessage,
     itemChooseHandler,
     CustomMenuItem,
+    disabled,
     ...rest
   } = props;
 
@@ -139,11 +141,12 @@ const Search = (props) => {
   return (
     <SearchWrapper>
       <BorderContainer>
-        <SearchContainer>
+        <SearchContainer disabled={disabled}>
           <InputWrapper>
             <SearchIcon isLarge={size === 'large'} />
             <StyledSearch
               {...rest}
+              disabled={disabled}
               ref={inputRef}
               onKeyDown={specialKeyHandler}
               size={size}
@@ -165,6 +168,7 @@ const Search = (props) => {
       </BorderContainer>
       {isMenuOpen && (
         <Menu
+          isLarge={size === 'large'}
           typedTerm={typedTerm}
           CustomMenuItem={CustomMenuItem}
           lightFocus={lightFocus}
