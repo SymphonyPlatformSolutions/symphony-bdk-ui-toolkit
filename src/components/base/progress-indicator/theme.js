@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import Text from '../text';
 
+export const PROGRESS_BUTTON_SIZE = 28;
+
 export const ProgressContainer = styled.div`
   display: flex;
   flex-direction: ${({ horizontal }) => (horizontal ? 'row' : 'column')};
   position: static;
 `;
 export const ProgressButton = styled.div`
-    width: 28px;
-    height: 28px;
+    width: ${() => PROGRESS_BUTTON_SIZE}px;
+    height: ${() => PROGRESS_BUTTON_SIZE}px;
     border-radius: 50%;
     transition: background-color 0.4s cubic-bezier(1,.02,.41,.37);
     background-color: ${({ theme, activated }) => (activated ? theme.colors.primary_500 : theme.colors.grey_300)};
@@ -20,8 +22,8 @@ export const ProgressButton = styled.div`
     z-index: 2;
 `;
 export const ButtonRing = styled.div`
-  width: ${({ show }) => (show ? 32 : 0)}px;
-  height: ${({ show }) => (show ? 32 : 0)}px;
+  width: ${({ show }) => (show ? PROGRESS_BUTTON_SIZE + 4 : 0)}px;
+  height: ${({ show }) => (show ? PROGRESS_BUTTON_SIZE + 4 : 0)}px;
   transition: all 0.3s cubic-bezier(1,.02,.41,.37);
   background-color: ${({ theme }) => theme.colors.mainbackground};
   border: solid 2px ${({ theme }) => theme.colors.primary_500};
