@@ -72,7 +72,9 @@ const Button = ({
   );
 };
 
-const CloseSVG = styled.svg``;
+const CloseSVG = styled.svg`
+  cursor: pointer;
+`;
 const CloseSVGBg = styled.rect`
   transition: all 0.3s;
   opacity: 0;
@@ -82,18 +84,21 @@ const CloseSVGBg = styled.rect`
 `;
 const CloseSVGPath = styled.path`
   transition: all 0.3s;
-  stroke: #757575;
+  stroke: ${({ theme }) => theme.colors.grey_600};
   ${CloseSVG}:hover & {
-    stroke: #424242;
+    stroke: ${({ theme }) => theme.colors.grey_800};
   }
 `;
-export const CloseButton = () => (
+const ThemelessCloseButton = ({ theme }) => (
   <CloseSVG width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <CloseSVGBg width="24" height="24" rx="12" fill="#F5F5F5" />
+    <CloseSVGBg width="24" height="24" rx="12" fill={theme.colors.grey_100} />
     <CloseSVGPath d="M16 8.12903L8 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <CloseSVGPath d="M8 8.12903L16 16.3871" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </CloseSVG>
 );
+
+export const CloseButton = withTheme(ThemelessCloseButton);
+
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.keys(BUTTON_TYPES).map(e => BUTTON_TYPES[e])),
