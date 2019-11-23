@@ -66,7 +66,6 @@ const Menu = (props) => {
           key={el[dataLabel]}
           onMouseDown={() => itemChooseHandler(el)}
           onMouseEnter={() => setLightFocus(index)}
-          onMouseLeave={() => setLightFocus(null)}
           lightFocused={index === lightFocus}
         >
           {CustomMenuItem ? (
