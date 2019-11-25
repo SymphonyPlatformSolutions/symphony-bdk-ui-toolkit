@@ -30,7 +30,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '9px 12px 11px 15px' : '9px 5px 9px 7px')};
+  padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '9px 12px 11px 18px' : '9px 5px 9px 7px')};
   border: 0;
   outline: none;
   font-size: ${({ size }) => (size === INPUT_SIZES.LARGE ? '16px' : '12px')};
