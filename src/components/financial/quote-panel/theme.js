@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Box from '../box';
+import Box from '../../base/box';
 
 export const BasePanel = styled.div`
   display: grid;

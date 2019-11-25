@@ -4,7 +4,7 @@ import Text from '../text';
 export const MainTag = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_900};
   font-weight: bold;
-  line-height: 17px;
+  line-height: 14px;
 `;
 export const SubTag = styled(Text)`
   font-style: italic;
@@ -15,7 +15,7 @@ export const TagContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 4px;
-  padding: 4px 8px 6px 8px;
+  padding: 4px 8px;
   border: 1px solid ${({ theme }) => theme.colors.grey_300};
 `;
 export const MainTextContainer = styled.div``;

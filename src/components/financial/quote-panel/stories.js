@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import QuotePanel from '.';
-import Box from '../box';
-import Text from '../text';
-import { StoryWrapper } from '../wrappers';
+import QuotePanel from './index';
+import Box from '../../base/box';
+import Text from '../../base/text';
+import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
 
-storiesOf('Base', module)
+storiesOf('Financial', module)
   .add('QuotePanel', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import QuoteProductTag from '.';
-import Box from '../box';
-import Text from '../text';
-import { StoryWrapper } from '../wrappers';
+import QuoteProductTag from './index';
+import Box from '../../base/box';
+import Text from '../../base/text';
+import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
 
-storiesOf('Base', module)
+storiesOf('Financial', module)
   .add('QuoteProductTag', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>

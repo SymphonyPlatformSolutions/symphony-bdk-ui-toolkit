@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import QuoteCard from '.';
-import Box from '../box';
-import Text from '../text';
-import { StoryWrapper } from '../wrappers';
+import QuoteCard from './index';
+import Box from '../../base/box';
+import Text from '../../base/text';
+import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
 
 const productData = {
@@ -28,7 +28,7 @@ const panelData = {
   clientPayedValue: 3,
 };
 
-storiesOf('Base', module)
+storiesOf('Financial', module)
   .add('QuoteCard', () => (
     <StoryWrapper p={15}>
       <Box vertical space={20}>
