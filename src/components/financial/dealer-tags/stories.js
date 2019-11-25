@@ -2,14 +2,14 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import DealerTag from '.';
-import Box from '../box';
-import Text from '../text';
-import { StoryWrapper } from '../wrappers';
+import DealerTag from './index';
+import Box from '../../base/box';
+import Text from '../../base/text';
+import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
 
 
-storiesOf('Base', module)
+storiesOf('Financial', module)
   .add('Dealer Tag', () => (
     <StoryWrapper p={15}>
       <Box type="primary" style={{ margin: '0px 100px' }}>

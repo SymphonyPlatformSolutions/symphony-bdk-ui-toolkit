@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import Text from '../text';
-import { CloseButton } from '../button';
+import Text from '../../base/text';
+import { CloseButton } from '../../base/button';
 import {
   MainTag,
   SubTag,
