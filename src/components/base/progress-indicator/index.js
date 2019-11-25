@@ -19,7 +19,7 @@ const ProgressIndicator = (props) => {
   const {
     horizontal, numberOfSteps, currentStep, length,
   } = props;
-  const [buttonIDs] = useState(Array(numberOfSteps).fill().map(() => uuid.v1()));
+  const [buttonIDs] = useState(Array(numberOfSteps).fill().map(() => uuid.v4()));
   if (numberOfSteps <= 0) {
     return null;
   }
@@ -28,13 +28,13 @@ const ProgressIndicator = (props) => {
   return (
     <ProgressContainer horizontal={horizontal}>
       {buttonIDs.map((el, index) => (
-        <BarAndButton index={buttonIDs.length - index} horizontal={horizontal}>
+        <BarAndButton index={buttonIDs.length - index} horizontal={horizontal} key={el}>
           {index !== 0 && (
           <ProgressBar horizontal={horizontal} show={currentStep >= index} length={barLength} />
           )}
           <RingAndButton>
             <ButtonRing show={currentStep === index} />
-            <ProgressButton activated={currentStep >= index} key={el}>
+            <ProgressButton activated={currentStep >= index}>
               <ButtonText size="small">{index + 1}</ButtonText>
             </ProgressButton>
           </RingAndButton>
