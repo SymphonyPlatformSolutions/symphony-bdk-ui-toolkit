@@ -10,7 +10,7 @@ import {
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
   IconButton, getMenuIcon, getMenuStyle, ContextMenuItem,
 } from './theme';
-import Box from '../box';
+import Box from '../../base/box';
 import QuotePanel from '../quote-panel';
 import QuoteProductTag from '../quote-product-tag';
 
