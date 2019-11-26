@@ -45,3 +45,5 @@ ModalProvider.defaultProps = {
 };
 
 export const ModalConsumer = ModalContext.Consumer;
+
+export default ModalContext;
