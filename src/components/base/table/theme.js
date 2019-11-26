@@ -4,8 +4,9 @@ import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
 import { MdPlayArrow, MdSearch } from 'react-icons/md';
 import { darken, transparentize } from 'polished';
+import uuid from 'uuid';
 import InputField from '../input-field';
-import { THEME_TYPES, THEMES } from '../../../styles/colors';
+import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
 
@@ -258,6 +259,7 @@ export const generateContextMenu = (theme, id, item) => (
     <Box type="flat" my="8px">
       {item.actionsMenu.map((menuItem, index, arr) => (
         <MenuItem
+          key={uuid.v4()}
           type="flat"
           align="start"
           justify="center"

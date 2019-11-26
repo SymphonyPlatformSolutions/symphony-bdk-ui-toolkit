@@ -21,9 +21,10 @@ export { default as QuoteCard } from './financial/quote-card';
 export {
   default as FormBox, FormGroup, Label, LabelText,
 } from './base/form-box';
+export { default as AutoFetchWrapper } from './helpers/auto-fetch';
 export { ToasterProvider, ToasterConsumer } from './base/toaster/toaster-context';
 export { default as Tooltip } from './base/tooltip';
 export { default as ModalRoot, DangerConfirmationModal } from './base/modal';
-export { ModalConsumer, ModalProvider } from './base/modal/modal-context';
+export { default as ModalContext, ModalConsumer, ModalProvider } from './base/modal/modal-context';
 export { default as HelpPageBuilder } from './base/help-page-builder';
 export { THEMES, THEME_TYPES } from '../styles/colors';

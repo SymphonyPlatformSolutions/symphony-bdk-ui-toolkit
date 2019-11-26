@@ -22,8 +22,8 @@ const ENTER_KEY = 13;
 
 const Menu = (props) => {
   const {
-    content,
-    contentLabel,
+    data,
+    dataLabel,
     itemChooseHandler,
     theme,
     noResultsMessage,
@@ -34,7 +34,7 @@ const Menu = (props) => {
     isLarge,
   } = props;
 
-  if (!content.length) {
+  if (!data.length) {
     return (
       <MenuContainer theme={theme}>
         <Box align="center" justify="center" horizontal>
@@ -48,10 +48,10 @@ const Menu = (props) => {
 
   return (
     <MenuContainer theme={theme} isLarge={isLarge}>
-      {content.map((el, index) => (
+      {data.map((el, index) => (
         <MenuItem
           theme={theme}
-          key={el[contentLabel]}
+          key={el[dataLabel]}
           onMouseDown={() => itemChooseHandler(el)}
           onMouseEnter={() => setLightFocus(index)}
           onMouseLeave={() => setLightFocus(null)}
@@ -60,7 +60,7 @@ const Menu = (props) => {
           {CustomMenuItem ? (
             <CustomMenuItem item={el} typedTerm={typedTerm} />
           ) : (
-            <Text>{el[contentLabel]}</Text>
+            <Text>{el[dataLabel]}</Text>
           )}
         </MenuItem>
       ))}
@@ -71,12 +71,12 @@ const Menu = (props) => {
 const Search = (props) => {
   const {
     theme,
-    content,
+    data,
     searchHandler,
     resultHandler,
     debouncePeriod,
     size,
-    contentLabel,
+    dataLabel,
     placeholder,
     noResultsMessage,
     itemChooseHandler,
@@ -104,10 +104,10 @@ const Search = (props) => {
     if (typedTerm && !memo[typedTerm]) {
       setMemo({
         ...memo,
-        [typedTerm]: content,
+        [typedTerm]: data,
       });
     }
-  }, [content]);
+  }, [data]);
 
   // Debounce
   useEffect(() => {
@@ -118,7 +118,7 @@ const Search = (props) => {
   }, [typedTerm]);
 
   const choseItem = (item) => {
-    setTypedTerm(item[contentLabel]);
+    setTypedTerm(item[dataLabel]);
     itemChooseHandler(item);
     inputRef.current.blur();
   };
@@ -126,13 +126,13 @@ const Search = (props) => {
   const specialKeyHandler = ({ keyCode }) => {
     switch (keyCode) {
       case DOWN_KEY:
-        return setLightFocus((lightFocus + 1) % content.length);
+        return setLightFocus((lightFocus + 1) % data.length);
       case UP_KEY:
         return setLightFocus(
-          lightFocus - 1 < 0 ? content.length - 1 : lightFocus - 1,
+          lightFocus - 1 < 0 ? data.length - 1 : lightFocus - 1,
         );
       case ENTER_KEY:
-        return choseItem(content[lightFocus]);
+        return choseItem(data[lightFocus]);
       default:
         return null;
     }
@@ -174,9 +174,9 @@ const Search = (props) => {
           lightFocus={lightFocus}
           setLightFocus={setLightFocus}
           theme={theme}
-          content={content}
+          data={data}
           itemChooseHandler={choseItem}
-          contentLabel={contentLabel}
+          dataLabel={dataLabel}
           noResultsMessage={noResultsMessage}
         />
       )}
@@ -185,26 +185,26 @@ const Search = (props) => {
 };
 
 Menu.propTypes = {
-  content: PropTypes.array,
-  contentLabel: PropTypes.string.isRequired,
+  data: PropTypes.array,
+  dataLabel: PropTypes.string.isRequired,
   itemChooseHandler: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   noResultsMessage: PropTypes.string.isRequired,
   CustomMenuItem: PropTypes.node,
 };
 Menu.defaultProps = {
-  content: [],
+  data: [],
   CustomMenuItem: null,
 };
 
 Search.propTypes = {
   theme: PropTypes.object.isRequired,
-  content: PropTypes.array,
+  data: PropTypes.array,
   searchHandler: PropTypes.func.isRequired,
   resultHandler: PropTypes.func.isRequired,
   debouncePeriod: PropTypes.number,
   size: PropTypes.oneOf(['regular', 'large']),
-  contentLabel: PropTypes.string,
+  dataLabel: PropTypes.string,
   placeholder: PropTypes.string,
   noResultsMessage: PropTypes.string,
   itemChooseHandler: PropTypes.func.isRequired,
@@ -212,10 +212,10 @@ Search.propTypes = {
 };
 Search.defaultProps = {
   debouncePeriod: INIT_DEBOUNCE,
-  contentLabel: 'label',
+  dataLabel: 'label',
   placeholder: 'Search...',
   noResultsMessage: 'No results',
-  content: [],
+  data: [],
   size: 'regular',
   CustomMenuItem: null,
 };

@@ -30,12 +30,12 @@ function filterSearchData(data, rowKeys, searchTerm) {
   return data.filter((row) => {
     for (let i = 0; i < rowKeys.length; i++) {
       if (typeof row[rowKeys[i]] === 'number') {
-        return row[rowKeys[i]] === searchTerm;
+        return row[rowKeys[i]].toLowerCase() === searchTerm.toLowerCase();
       }
       if (typeof row[rowKeys[i]] !== 'string') {
         return false;
       }
-      if (row[rowKeys[i]].toLowerCase().includes(searchTerm)) {
+      if (row[rowKeys[i]].toLowerCase().includes(searchTerm.toLowerCase())) {
         return true;
       }
     }
