@@ -101,7 +101,6 @@ const COLUMNS_WITH_AUTO_FETCH = [{
 ```jsx
 const RefreshExample = ({ data, loading, refreshData }) => {
   const onRefresh = () => {
-    console.log(data, loading, refreshData);
     refreshData({ params: { page: 1 + Math.round((Math.random() * 1)) } });
   };
   return (
