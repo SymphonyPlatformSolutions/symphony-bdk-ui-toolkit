@@ -15,44 +15,41 @@ The injected data will be:
 ### Search with auto Fetch
 
 ```jsx
-const SampleComponent = () => {
-  const handleData = data => data.RelatedTopics;
-
-  const [config, setConfig] = useState({
-    term: '',
-    endpoint: 'https://api.duckduckgo.com',
-    params: { format: 'json' },
-    handleData,
-  });
-
+const SearchExample = ({ data, refreshData }) => {
   const searchFunc = async (searchTerm) => {
     if (!searchTerm) {
       return;
     }
 
-    setConfig(prevState => ({
-      ...prevState,
+    refreshData({
       params: {
         format: 'json',
         q: encodeURIComponent(searchTerm),
       },
-    }));
+    });
   };
-
   return (
     <Box>
       <Box type="flat" vertical>
-        <AutoFetchWrapper config={config}>
-          <Search
-            placeholder="Search DuckDuckGo..."
-            searchHandler={searchFunc}
-            dataLabel="Text"
-          />
-        </AutoFetchWrapper>
+        <Search
+          data={data}
+          dataLabel="Text"
+          placeholder="Search DuckDuckGo..."
+          searchHandler={searchFunc}
+        />
       </Box>
     </Box>
   );
 };
+
+...
+
+<Text isTitle>Search with Auto fetch</Text>
+<Box space={60} p="0 16px 0 0">
+  <AutoFetchWrapper config={duckDuckGoFetchConfig}>
+    <SearchExample />
+    </AutoFetchWrapper>
+</Box>
 ```
 
 ### table
@@ -85,6 +82,8 @@ const COLUMNS_WITH_AUTO_FETCH = [{
   tooltip: 'The person email address',
   accessor: 'email',
 }];
+
+...
 
 <Box>
   <Text isTitle>Table with Auto Fetch</Text>
@@ -119,6 +118,8 @@ const RefreshExample = ({ data, loading, refreshData }) => {
       </Box>
     </Box>
   );
+
+...
 
 <Box style={{ width: '50%' }}>
     <Text isTitle>Table with Auto fetch and manual refresh</Text>

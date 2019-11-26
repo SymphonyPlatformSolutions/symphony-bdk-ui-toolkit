@@ -20,6 +20,14 @@ const autoFetchConfig = {
   handleData: results => results.data,
 };
 
+const duckDuckGoFetchConfig = {
+  endpoint: 'https://api.duckduckgo.com',
+  params: { format: 'json', q: null },
+  handleData: results => results.RelatedTopics
+  ,
+};
+
+
 const COLUMNS_WITH_AUTO_FETCH = [{
   Header: 'Picture',
   tooltip: 'The person picture',
@@ -56,40 +64,28 @@ const DATA_GRID_COLUMNS_WITH_AUTO_FETCH = [{
   editable: true,
 }];
 
-const SearchExample = () => {
-  const handleData = data => data.RelatedTopics;
-
-  const [config, setConfig] = useState({
-    term: '',
-    endpoint: 'https://api.duckduckgo.com',
-    params: { format: 'json' },
-    handleData,
-  });
-
+const SearchExample = ({ data, refreshData }) => {
   const searchFunc = async (searchTerm) => {
     if (!searchTerm) {
       return;
     }
 
-    setConfig(prevState => ({
-      ...prevState,
+    refreshData({
       params: {
         format: 'json',
         q: encodeURIComponent(searchTerm),
       },
-    }));
+    });
   };
-
   return (
     <Box>
       <Box type="flat" vertical>
-        <AutoFetchWrapper config={config}>
-          <Search
-            placeholder="Search DuckDuckGo..."
-            searchHandler={searchFunc}
-            dataLabel="Text"
-          />
-        </AutoFetchWrapper>
+        <Search
+          data={data}
+          dataLabel="Text"
+          placeholder="Search DuckDuckGo..."
+          searchHandler={searchFunc}
+        />
       </Box>
     </Box>
   );
@@ -124,7 +120,9 @@ storiesOf('Helpers', module)
           <Box style={{ width: '50%' }}>
             <Text isTitle>Search with Auto fetch</Text>
             <Box space={60} p="0 16px 0 0">
-              <SearchExample />
+              <AutoFetchWrapper config={duckDuckGoFetchConfig}>
+                <SearchExample />
+              </AutoFetchWrapper>
             </Box>
           </Box>
           <Box style={{ width: '50%' }}>
