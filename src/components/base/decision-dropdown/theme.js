@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
-import { Container } from '../input-field/theme';
+import { Container, StyledInput } from '../input-field/theme';
 import Text from '../text';
 
 export const INPUT_SIZES = {
@@ -87,15 +87,6 @@ export const ChevronWrapper = styled.div`
   transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)})
     translateY(${({ turn }) => (turn ? '-2px' : '-3px')});
 `;
-export const PlaceholderText = styled(Text)`
-  user-select: none;
-  color: ${({ theme }) => theme.colors.grey_400};
-  font-size: inherit;
-`;
-export const ValueText = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey_900};
-  font-size: inherit;
-`;
 
 export const DropdownContainer = styled(Container)`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -111,9 +102,9 @@ export const DropdownContainer = styled(Container)`
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
 export const ValueContainer = styled.div`
+  padding: 0 5px 0 7px;
   display: flex;
-  padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '9px 12px 9px 18px' : '6px 5px 6px 7px')};
-  font-size: ${({ size }) => (size === INPUT_SIZES.LARGE ? '16px' : '12px')};
+  align-items: center;
 `;
 export const ChevronContainer = styled.div`
   margin-right: 8px;
@@ -132,7 +123,7 @@ export const MenuContainer = styled.div`
   padding-bottom: ${({ hasBottomPadding }) => (hasBottomPadding ? '8px' : '0')};
   position: absolute;
   width: 100%;
-  z-index: 2;
+  z-index: 3;
   background-color: ${({ theme }) => theme.colors.mainbackground};
 `;
 
@@ -157,10 +148,9 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const InvisibleInput = styled.input`
-  width: 0;
-  position: absolute;
-  opacity: 0;
+export const ControlInput = styled(StyledInput)`
+  width: 100%;
+  border: none;
 `;
 export const MenuWrapper = styled.div`
   position: relative;
@@ -178,11 +168,15 @@ export const LabelContainer = styled.div`
 export const MultiSelectContainer = styled.div`
   margin-right: 5px;
   padding: 4px 7px 4px 4px;
+  display: flex;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.grey_200};
   border-radius: 4px;
 `;
 export const MultiSelectText = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_800};
+  white-space: nowrap;
+  margin-right: 6px;
 `;
 export const MultiValueContainer = styled.div`
     display: flex;

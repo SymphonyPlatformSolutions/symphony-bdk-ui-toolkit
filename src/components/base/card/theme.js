@@ -28,7 +28,7 @@ export const BaseCard = styled.div`
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
   overflow: hidden;
   &:hover {
-    transform: ${props => props.hoverEffect ? 'scale(1.02)' : null }
+    transform: ${props => (props.hoverEffect ? 'scale(1.02)' : null)}
   }
   width: 100%;
 `;

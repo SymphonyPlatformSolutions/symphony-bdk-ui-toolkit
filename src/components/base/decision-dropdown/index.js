@@ -11,7 +11,6 @@ import {
 import {
   ShrinkingBorder,
   Wrapper,
-  InvisibleInput,
   MenuWrapper,
 } from './theme';
 
@@ -19,6 +18,12 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
 const ESC_KEY = 27;
+
+/*
+TODO:
+- Tooltip
+- Typehead filtering
+*/
 
 const DecisionDropdown = (props) => {
   const {
@@ -33,33 +38,15 @@ const DecisionDropdown = (props) => {
     hasBackButton,
     size,
     isMulti,
+    theme,
     ...rest
   } = props;
   const [labeledData, setLabeledData] = useState(null);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const node = useRef();
-  const controlNode = useRef();
-  const inputRef = useRef();
+  const controlRef = useRef();
   const menuRef = useRef();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (!disabled) {
-      if (controlNode.current.contains(e.target)) {
-        if (!menuIsOpen) {
-          inputRef.current.focus();
-          if (clickHandler) {
-            clickHandler();
-          }
-        } else {
-          inputRef.current.blur();
-        }
-      } else if (menuIsOpen && !node.current.contains(e.target)) {
-        inputRef.current.blur();
-      }
-    }
-  };
 
   useEffect(() => {
     if (disabled && menuIsOpen) {
@@ -71,11 +58,6 @@ const DecisionDropdown = (props) => {
     const labelized = labelize(data);
     setLabeledData(labelized);
   }, [data]);
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  });
 
   const chooseHandler = (item) => {
     if (isMulti) {
@@ -93,7 +75,7 @@ const DecisionDropdown = (props) => {
       }
     } else {
       onChange(item);
-      inputRef.current.blur();
+      controlRef.current.toggleInputBlur(true);
     }
   };
 
@@ -118,7 +100,7 @@ const DecisionDropdown = (props) => {
       case ENTER_KEY:
         return menuRef.current.enterOption();
       case ESC_KEY:
-        return inputRef.current.blur();
+        return controlRef.current.toggleInputBlur(true);
       default:
         return null;
     }
@@ -126,18 +108,11 @@ const DecisionDropdown = (props) => {
 
   return (
     <Wrapper ref={node} {...rest}>
-      <InvisibleInput
-        onKeyDown={specialKeyHandler}
-        ref={inputRef}
-        onFocus={() => focusBlurHandler(true)}
-        onBlur={() => focusBlurHandler(false)}
-        disabled={disabled}
-      />
       <div>
         <DropdownControl
           chooseHandler={chooseHandler}
           size={size}
-          ref={controlNode}
+          ref={controlRef}
           error={error}
           disabled={disabled}
           value={value}
@@ -145,6 +120,9 @@ const DecisionDropdown = (props) => {
           menuIsOpen={menuIsOpen}
           isMulti={isMulti}
           clearHandler={() => onChange(null)}
+          specialKeyHandler={specialKeyHandler}
+          focusBlurHandler={focusBlurHandler}
+          theme={theme}
         />
         <MenuWrapper error={error}>
           <ShrinkingBorder show={menuIsOpen} error={error} />

@@ -16,35 +16,103 @@ const getBorderColor = (theme, error = false) => {
   return theme.colors.grey_300;
 };
 
-export const MenuItemContainer = styled.div`
-  padding: 8px 0;
-  border-top: ${({ hasTopBar, theme }) => (hasTopBar ? `1px solid ${theme.colors.grey_200}` : 'none')};
-  border-bottom: ${({ hasBottomBar, theme }) => (hasBottomBar ? `1px solid ${theme.colors.grey_200}` : 'none')};
+export const customStyles = ({ theme, error }) => ({
+  container: provided => ({
+    ...provided,
+    pointerEvents: 'auto',
+    marginTop: '4px',
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    width: '100%',
+    boxShadow: 'none',
+    border:
+      state.menuIsOpen
+        ? `1px solid ${theme.colors.oldprimary_400}`
+        : `1px solid ${getBorderColor(theme, error)}`,
+    borderBottomLeftRadius: state.menuIsOpen ? 0 : '3px',
+    borderBottomRightRadius: state.menuIsOpen ? 0 : '3px',
+    borderColor: state.menuIsOpen
+      ? theme.colors.oldprimary_400
+      : getBorderColor(theme, error),
+    color: theme.colors.grey_800,
+    minHeight: '35px',
+    backgroundColor:
+      theme.mode === THEME_TYPES.DARK
+        ? (state.isDisabled ? transparentize(0.86, darken(0.7, theme.colors.white)) : transparentize(0.86, darken(0.4, theme.colors.white)))
+        : 'transparent',
+    margin: '0',
+    transition: 'all 0.3s',
+    '&:hover': {
+      border: `1px solid ${
+        state.menuIsOpen
+          ? theme.colors.oldprimary_400
+          : getBorderColor(theme, error)
+      }`,
+    },
+    cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+    padding: 0,
+  }),
+  indicatorSeparator: provided => ({ ...provided, display: 'none' }),
+  menu: (provided, state) => ({
+    ...provided,
+    marginTop: 0,
+    borderRadius: 0,
+    color: state.isDisabled
+      ? theme.colors.lightgrey
+      : theme.mode === THEME_TYPES.DARK
+        ? theme.colors.white
+        : theme.colors.black,
+    backgroundColor: state.isDisabled
+      ? theme.colors.grey_050
+      : theme.mode === THEME_TYPES.DARK
+        ? theme.colors.grey_200
+        : theme.colors.grey_200,
+    border: `1px solid ${getBorderColor(theme)}`,
+    borderTop: 'none',
+    zIndex: 10,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: 'inherit',
+    backgroundColor: state.selectProps.isDisabled
+      ? theme.colors.lightgrey
+      : theme.mode === THEME_TYPES.DARK
+        ? theme.colors.inputgrey
+        : theme.colors.white,
+    ':active': {
+      ...state[':active'],
+      backgroundColor: theme.colors.oldprimary_400,
+    },
+    '&:focus': {
+      background: 'none',
+    },
+    '&:hover': {
+      color: theme.colors.white,
+      backgroundColor: theme.colors.primary_400,
+    },
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    overflow: 'unset !important',
+    transition: 'all 0.3s',
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: error ? `${theme.colors.error_500} !important` : undefined,
+  }),
+  valueContainer: provided => ({
+    ...provided,
+    transition: 'all 0.3s',
+    color: theme.colors.grey_300,
+  }),
+});
+
+const ArrowContainer = styled.div`
+  margin-right: 8px;
 `;
-export const MenuItemTitle = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey_900};
-  font-weight: bold;
-  font-size: 14px;
-  padding: 4px 12px 6px 12px;
-  line-height: 14px;
-`;
-export const MenuItemSubTitle = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey_500};
-  font-size: 11px;
-  padding: 0 12px 6px 12px;
-  line-height: 11px;
-`;
-export const SimpleItemContainer = styled.div`
-  transition: all 0.2s linear;
-  padding: 10px 12px;
-  background-color: ${({ theme, lightFocused }) => (lightFocused
-    ? theme.mode === THEME_TYPES.DARK
-      ? theme.colors.grey_100
-      : theme.colors.oldprimary_100
-    : 'transparent')};
+
+const IconContainer = styled.div`
+  align-items: center;
   display: flex;
-  justify-content: space-between;
-  cursor: pointer;
 `;
 
 const ChevronWrapper = styled.div`
@@ -64,60 +132,6 @@ export const DropdownIndicator = (props) => {
         <ChevronWrapper turn={menuIsOpen}>
           <DownChevron color={isDisabled ? theme.colors.grey_300 : theme.colors.grey_600} />
         </ChevronWrapper>
-      </ArrowContainer>
-      {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '5px' }}>{tooltip}</Tooltip>}
-    </IconContainer>
-  );
-};
-
-export const SimpleItemLabel = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey_900};
-  line-height: 14px;
-`;
-export const SimpleItemSubLabel = styled(Text)`
-  padding-left: 9px;
-  color: ${({ theme }) => theme.colors.grey_600};
-  font-style: italic;
-  font-size: 11px;
-  line-height: 14px;
-`;
-
-const IconContainer = styled.div`
-  align-items: center;
-  display: flex;
-`;
-
-const SmallArrow = styled.div`
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid ${({ theme }) => getBorderColor(theme)};
-  transform: ${({ turn }) => (turn ? 'rotate(180deg)' : null)};
-  transition: all 0.4s;
-`;
-
-export const PlaceholderText = styled(Text)`
-  user-select: none;
-  color: ${({ theme }) => theme.colors.grey_400};
-  font-size: inherit;
-`;
-export const ValueText = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey_900};
-  font-size: inherit;
-`;
-
-export const DropdownIndicator = (props) => {
-  const {
-    selectProps: { menuIsOpen, isDisabled },
-    tooltip,
-    theme,
-  } = props;
-
-  return (
-    <IconContainer>
-      <ArrowContainer>
-        <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
       </ArrowContainer>
       {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '5px' }}>{tooltip}</Tooltip>}
     </IconContainer>

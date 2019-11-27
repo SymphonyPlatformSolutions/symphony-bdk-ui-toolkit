@@ -64,6 +64,6 @@ export const Container = styled.div`
   border-radius: 4px;
   transition: all 0.3s ease;
   &:focus-within {
-    border: 1px solid ${({ theme }) => theme.colors.oldprimary_200};
+    border: 1px solid ${({ theme, error }) => (error ? theme.colors.error_500 : theme.colors.oldprimary_400)};
   }
 `;

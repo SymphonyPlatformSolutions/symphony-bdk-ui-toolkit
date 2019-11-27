@@ -1,5 +1,6 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { withTheme } from 'styled-components';
+import React, {
+  useState, forwardRef, useImperativeHandle, useRef, useEffect,
+} from 'react';
 import Loader from '../loader';
 import { buildSelectableArray } from './helpers';
 import {
@@ -12,8 +13,7 @@ import {
   EmptyMessageContainer,
   EmptyMessageText,
   ChevronWrapper,
-  PlaceholderText,
-  ValueText,
+  ControlInput,
   DropdownContainer,
   ValueContainer,
   ChevronContainer,
@@ -29,26 +29,14 @@ import {
   MultiValueContainer,
   ClearIconContainer,
 } from './theme';
+import {
+  CrossIcon, TickIcon, DownChevron, CloseIcon,
+} from '../icons';
 
 export const DefaultEmptyMessage = ({ children }) => (
   <EmptyMessageContainer>
     <EmptyMessageText>{children || 'No data'}</EmptyMessageText>
   </EmptyMessageContainer>
-);
-
-const MultiChosenCheckIcon = () => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M11.8125 6C11.8125 9.21016 9.21016 11.8125 6 11.8125C2.78984 11.8125 0.1875 9.21016 0.1875 6C0.1875 2.78984 2.78984 0.1875 6 0.1875C9.21016 0.1875 11.8125 2.78984 11.8125 6ZM5.32767 9.07767L9.64017 4.76517C9.78661 4.61873 9.78661 4.38129 9.64017 4.23485L9.10985 3.70453C8.96341 3.55807 8.72597 3.55807 8.57951 3.70453L5.0625 7.22152L3.42049 5.57951C3.27405 5.43307 3.03661 5.43307 2.89015 5.57951L2.35983 6.10983C2.21339 6.25627 2.21339 6.49371 2.35983 6.64015L4.79733 9.07765C4.94379 9.22411 5.18121 9.22411 5.32767 9.07767Z"
-      fill="#00BFA5"
-    />
-  </svg>
 );
 
 const SimpleItem = (props) => {
@@ -65,7 +53,10 @@ const SimpleItem = (props) => {
     <SimpleItemContainer
       onMouseEnter={() => lightFocusHandler(uid)}
       lightFocused={lightFocused}
-      onClick={clickHandler}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        clickHandler();
+      }}
     >
       <LabelContainer>
         {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
@@ -73,7 +64,7 @@ const SimpleItem = (props) => {
       </LabelContainer>
       {multiChosen && (
         <MultiChosenCheck>
-          <MultiChosenCheckIcon />
+          <TickIcon />
         </MultiChosenCheck>
       )}
     </SimpleItemContainer>
@@ -131,73 +122,39 @@ export const MenuItem = (props) => {
   );
 };
 
-const ThemelessDownChevron = ({ theme, disabled }) => (
-  <svg
-    width="10"
-    height="6"
-    viewBox="0 0 10 6"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M1 1L5 5L9 1"
-      stroke={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-const DownChevron = withTheme(ThemelessDownChevron);
-
 const MultiSelectValue = ({ children, removeHandler }) => (
-  <MultiSelectContainer
-    onClick={() => {
-      // removeHandler();
-    }}
+  <MultiSelectContainer onMouseDown={(e) => {
+    e.preventDefault();
+    removeHandler();
+  }}
   >
     <MultiSelectText size="tiny">{children}</MultiSelectText>
+    <CloseIcon size={8} />
   </MultiSelectContainer>
 );
 
-const DropdownControlValue = (props) => {
+const MultiValueList = (props) => {
   const {
-    value, isMulti, placeholder, chooseHandler,
+    value, chooseHandler, size,
   } = props;
 
-  if (!value || (isMulti && !value.length)) {
-    return <PlaceholderText>{placeholder}</PlaceholderText>;
-  }
-
-  if (!isMulti) {
-    return <ValueText>{value.label}</ValueText>;
+  if (!value || !value.length) {
+    return null;
   }
 
   return (
-    <MultiValueContainer>
-      {value.map(l => (
-        <MultiSelectValue removeHandler={() => chooseHandler(l)} key={l.value}>
-          {l.label}
-        </MultiSelectValue>
-      ))}
-    </MultiValueContainer>
+    <ValueContainer size={size}>
+      <MultiValueContainer>
+        {value.map(l => (
+          <MultiSelectValue removeHandler={() => chooseHandler(l)} key={l.value}>
+            {l.label}
+          </MultiSelectValue>
+        ))}
+      </MultiValueContainer>
+    </ValueContainer>
   );
 };
 
-const ClearIcon = () => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M6 0.1875C2.78906 0.1875 0.1875 2.78906 0.1875 6C0.1875 9.21094 2.78906 11.8125 6 11.8125C9.21094 11.8125 11.8125 9.21094 11.8125 6C11.8125 2.78906 9.21094 0.1875 6 0.1875ZM8.85 7.52578C8.96016 7.63594 8.96016 7.81406 8.85 7.92422L7.92188 8.85C7.81172 8.96016 7.63359 8.96016 7.52344 8.85L6 7.3125L4.47422 8.85C4.36406 8.96016 4.18594 8.96016 4.07578 8.85L3.15 7.92188C3.03984 7.81172 3.03984 7.63359 3.15 7.52344L4.6875 6L3.15 4.47422C3.03984 4.36406 3.03984 4.18594 3.15 4.07578L4.07812 3.14766C4.18828 3.0375 4.36641 3.0375 4.47656 3.14766L6 4.6875L7.52578 3.15C7.63594 3.03984 7.81406 3.03984 7.92422 3.15L8.85234 4.07812C8.9625 4.18828 8.9625 4.36641 8.85234 4.47656L7.3125 6L8.85 7.52578Z"
-      fill="#A9ADB6"
-    />
-  </svg>
-);
 export const DropdownControl = forwardRef((props, ref) => {
   const {
     placeholder,
@@ -209,7 +166,40 @@ export const DropdownControl = forwardRef((props, ref) => {
     isMulti,
     chooseHandler,
     clearHandler,
+    specialKeyHandler,
+    focusBlurHandler,
+    theme,
   } = props;
+
+  const [typedValue, setTypedValue] = useState('');
+  const inputRef = useRef();
+
+  const toggleInputBlur = (isBlur) => {
+    if (isBlur) {
+      inputRef.current.blur();
+    } else {
+      inputRef.current.focus();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    toggleInputBlur(isBlur) {
+      toggleInputBlur(isBlur);
+    },
+  }));
+
+  useEffect(() => {
+    if (!isMulti) {
+      if (value) {
+        setTypedValue(value.label);
+      } else {
+        setTypedValue('');
+      }
+    }
+  }, [value]);
+
+  const shouldRenderClear = isMulti ? !!(value && value.length) : value;
+
   return (
     <DropdownContainer
       ref={ref}
@@ -217,22 +207,40 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      <ValueContainer size={size}>
-        <DropdownControlValue
+      {isMulti
+      && (
+        <MultiValueList
           chooseHandler={chooseHandler}
           value={value}
-          placeholder={placeholder}
-          isMulti={isMulti}
+          size={size}
         />
-      </ValueContainer>
+      )
+    }
+      <ControlInput
+        onKeyDown={specialKeyHandler}
+        ref={inputRef}
+        placeholder={placeholder}
+        value={typedValue}
+        onChange={({ target }) => setTypedValue(target.value)}
+        onFocus={() => focusBlurHandler(true)}
+        onBlur={() => focusBlurHandler(false)}
+        disabled={disabled}
+        size={size}
+      />
       <ChevronContainer>
-        {value && (
+        {shouldRenderClear && (
           <ClearIconContainer onClick={clearHandler}>
-            <ClearIcon />
+            <CrossIcon />
           </ClearIconContainer>
         )}
-        <ChevronWrapper turn={menuIsOpen}>
-          <DownChevron disabled={disabled} />
+        <ChevronWrapper
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleInputBlur(menuIsOpen);
+          }}
+          turn={menuIsOpen}
+        >
+          <DownChevron color={disabled ? theme.colors.grey_300 : theme.colors.grey_600} />
         </ChevronWrapper>
       </ChevronContainer>
     </DropdownContainer>
@@ -343,7 +351,12 @@ export const DropdownMenu = forwardRef((props, ref) => {
         )}
         {hasBackButton && navTree.length > 0 && (
           <BackButtonContainer>
-            <BackButton onClick={goBack}>Back</BackButton>
+            <BackButton onMouseDown={(e) => {
+              e.preventDefault();
+              goBack();
+            }}
+            >Back
+            </BackButton>
           </BackButtonContainer>
         )}
       </MenuContainer>

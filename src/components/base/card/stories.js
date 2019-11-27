@@ -8,7 +8,6 @@ import Text from '../text';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
-
 storiesOf('Base', module)
   .add('Card', () => (
     <StoryWrapper p={15}>
