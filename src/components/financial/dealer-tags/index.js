@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import Text from '../../base/text';
-import { CloseButton } from '../../base/button';
+import { CloseButton } from '../../base/button/icon-buttons';
 import {
   MainTag,
   SubTag,
@@ -27,7 +26,7 @@ const DealerTag = (props) => {
           <SubTag size="small">{subText}</SubTag>
         </SubTextContainer>
       </TextContainer>
-      {closeHandler && <CloseButton onClick={closeHandler} />}
+      {closeHandler && <CloseButton onClick={closeHandler} size={18} />}
     </TagContainer>
   );
 };

@@ -52,3 +52,8 @@ export const ShrinkingBorder = styled.span`
   display: block;
   opacity: ${({ show }) => (show ? '1' : '0')};
 `;
+export const SearchIconWrapper = styled.div`
+  position: absolute;
+  top: ${({ isLarge }) => (isLarge ? '12px' : '9px')};
+  left: ${({ isLarge }) => (isLarge ? '10px' : '12px')};
+`;

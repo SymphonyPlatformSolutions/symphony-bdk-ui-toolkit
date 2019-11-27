@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { CloseButton } from '../button';
+import { CloseButton } from '../button/icon-buttons';
 import {
   MessageBoxText,
   StyledMessageBox,

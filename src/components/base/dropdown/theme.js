@@ -6,6 +6,7 @@ import { transparentize, darken } from 'polished';
 import { THEME_TYPES } from '../../../styles/colors';
 import Text from '../text';
 import Tooltip from '../tooltip';
+import { DownChevron } from '../icons';
 
 const getBorderColor = (theme, error = false) => {
   if (error) {
@@ -114,27 +115,23 @@ const IconContainer = styled.div`
   display: flex;
 `;
 
-const SmallArrow = styled.div`
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid ${({ theme }) => getBorderColor(theme)};
-  transform: ${({ turn }) => (turn ? 'rotate(180deg)' : null)};
+const ChevronWrapper = styled.div`
+  transform: rotate(${({ turn }) => (turn ? -180 : 0)}deg) translateY(${({ turn }) => (turn ? -3 : -1)}px);
   transition: all 0.4s;
 `;
 
 export const DropdownIndicator = (props) => {
   const {
     selectProps: { menuIsOpen, isDisabled },
-    tooltip,
-    theme,
+    tooltip, theme,
   } = props;
 
   return (
     <IconContainer>
       <ArrowContainer>
-        <SmallArrow turn={menuIsOpen} theme={theme} isDisabled={isDisabled} />
+        <ChevronWrapper turn={menuIsOpen}>
+          <DownChevron color={isDisabled ? theme.colors.grey_300 : theme.colors.grey_600} />
+        </ChevronWrapper>
       </ArrowContainer>
       {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '5px' }}>{tooltip}</Tooltip>}
     </IconContainer>

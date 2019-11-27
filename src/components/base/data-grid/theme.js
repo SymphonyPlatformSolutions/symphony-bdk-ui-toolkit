@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 
 const getBorderColor = theme => theme.colors.grey_100;
