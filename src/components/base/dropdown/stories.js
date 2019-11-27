@@ -7,85 +7,64 @@ import Box from '../box';
 import Dropdown from '.';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
-// import Info from './info.md';
+import Info from './info.md';
 
-const CONTENT = [{
-  title: 'Hello',
-  subTitle: 'Sup man',
-  suboptions: [
-    { label: 'Thing 1', value: 'thing1' },
-    {
-      label: 'Thing 2',
-      subLabel: 'With more stuff',
-      value: 'thing2',
-      options: [
-        {
-          label: 'Thing 1-A',
-          subLabel: '(Has sublevels)',
-          options: [
-            { label: 'Thing 2-A', value: 'thing2a' },
-            { label: 'Thing 2-B', value: 'thing2b' },
-          ],
-          value: 'thing1a',
-        },
-        {
-          label: 'Thing 1-B',
-          subLabel: '(Has sublevels)',
-          value: 'thing1b',
-          options: [
-            {
-              title: 'Sub Card Alpha',
-              suboptions: [{
-                label: 'Alpha 1', value: 'alpha1',
-              }, {
-                label: 'Alpha 2', value: 'alpha2', subLabel: 'Some more info on alpha 2',
-              }, {
-                label: 'Alpha 3', value: 'alpha3',
-              }],
-            },
-            {
-              suboptions: [{
-                label: 'Beta 1', value: 'beta1',
-              }],
-            },
-            {
-              subTitle: 'Sub Card Gamma, but only as subtitle',
-              suboptions: [{
-                label: 'Gamma 1', value: 'gamma1',
-              }, {
-                label: 'Gamma 2', value: 'gamma2',
-              }, {
-                label: 'Gamma 3', value: 'gamma3',
-              },
-              {
-                label: 'Gamma 4', value: 'gamma3',
-              }],
-            },
-          ],
-        },
-        { label: 'Thing 1-C', value: 'thing1c' },
-      ],
-    }],
-},
-{
-  title: 'More content',
-  suboptions: [
-    { label: 'Thing A', value: 'thinga' },
-    { label: 'Thing B', value: 'thingb' },
-    { label: 'Thing C', value: 'thingc' },
-  ],
-}, {
-  title: 'Empty content',
-  suboptions: [],
-  // emptyMessage: 'Dropdown region temporarily under maintenance',
-}];
+const OPTIONS = [
+  {
+    value: 'option1',
+    label: 'Option 1',
+  },
+  {
+    value: 'option2',
+    label: 'Option 2',
+  },
+  {
+    value: 'option3',
+    label: 'Option 3',
+  },
+  {
+    value: 'option4',
+    label: 'Option 4',
+  },
+  {
+    value: 'option5',
+    label: 'Option 5',
+  },
+];
 
 const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
-  console.log(chosen);
+
   return (
     <Box style={{ width: '300px' }}>
-      <Dropdown onChange={changeChosen} value={chosen} {...props} />
+      <Dropdown {...props} value={chosen} onChange={changeChosen} />
+    </Box>
+  );
+};
+
+const AsyncDropdownHandler = (props) => {
+  const { options, ...rest } = props;
+  const [chosen, changeChosen] = useState(null);
+  const [isLoading, toggleIsLoading] = useState(false);
+  const [loadedOptions, changeLoadedOptions] = useState([]);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown
+        {...rest}
+        value={chosen}
+        onChange={changeChosen}
+        isLoading={isLoading}
+        clickHandler={() => {
+          toggleIsLoading(true);
+          changeLoadedOptions([]);
+          setTimeout(() => {
+            changeLoadedOptions(options.slice(Math.floor(Math.random() * 3) + 2));
+            toggleIsLoading(false);
+          }, 1000);
+        }}
+        options={loadedOptions}
+      />
     </Box>
   );
 };
@@ -98,19 +77,43 @@ storiesOf('Base', module)
         <Box>
           <Text isTitle>Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            {/* <DropdownHandler loading content={CONTENT} /> */}
+            <DropdownHandler options={OPTIONS} label="Simple dropdown" tooltip="Stuff!" />
           </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Dropdown with Error</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler data={CONTENT} />
+            <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" label="Dropdown with error" />
           </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler data={[{ label: 'whoa', value: 'ay' }]} size="large" />
+            <Dropdown disabled options={OPTIONS} label="Disabled Dropdown" />
           </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Filled disabled Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler data={CONTENT} isMulti />
+            <Dropdown disabled chosenValue="option2" options={OPTIONS} label="Filled disabled Dropdown" />
           </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Empty Dropdown</Text>
           <Box style={{ width: '300px' }}>
-            <DropdownHandler data={CONTENT} isMulti size="large" />
+            <Dropdown options={[]} label="Empty Dropdown" />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Dropdown with Loading</Text>
+          <Box style={{ width: '300px' }}>
+            <AsyncDropdownHandler options={OPTIONS} label="Dropdown with Loading" />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Empty Dropdown with Loading</Text>
+          <Box style={{ width: '300px' }}>
+            <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
           </Box>
         </Box>
       </Box>
@@ -118,6 +121,6 @@ storiesOf('Base', module)
   ),
   {
     notes: {
-      // markdown: Info,
+      markdown: Info,
     },
   });

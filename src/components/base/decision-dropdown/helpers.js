@@ -2,6 +2,9 @@ import uuid from 'uuid';
 
 // Recursively label each renderable object with a uuid
 export const labelize = (obj) => {
+  if (!obj) {
+    return null;
+  }
   if (Array.isArray(obj)) {
     return obj.map(l => labelize(l));
   }

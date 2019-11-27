@@ -1,172 +1,124 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { withTheme } from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { withTheme } from 'styled-components';
+import Select from 'react-select';
+import Loader from '../loader';
+import Text from '../text';
 import {
-  labelize,
-} from './helpers';
-import {
-  DropdownControl,
-  DropdownMenu,
-} from './components';
-import {
-  ShrinkingBorder,
-  Wrapper,
-  InvisibleInput,
-  MenuWrapper,
+  customStyles,
+  DropdownIndicator,
+  SingleValue,
+  Placeholder,
+  Option,
+  NoOptionsMessage,
 } from './theme';
+import { ErrorWrapper } from '../input-field';
 
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
+const LoaderContainer = styled.div`
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  margin: 8px 0;
+  overflow: hidden;
+`;
+
+const LoaderComponent = () => <LoaderContainer><Loader presetSize="small" type="v2" /></LoaderContainer>;
+const InputLabel = styled(Text)`
+  color: ${({ theme }) => theme.colors.grey_600};
+  font-weight: bold;
+`;
 
 const Dropdown = (props) => {
   const {
-    data,
-    onChange,
-    loading,
     disabled,
-    placeholder,
+    options,
+    onChange,
     value,
-    error,
+    chosenValue,
+    noOptionsMessage,
+    components,
+    theme,
     clickHandler,
-    hasBackButton,
-    size,
-    isMulti,
+    isLoading,
+    placeholder,
+    error,
+    errorMessage,
+    label,
+    tooltip,
     ...rest
   } = props;
-  const [labeledData, setLabeledData] = useState(null);
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-  const node = useRef();
-  const controlNode = useRef();
-  const inputRef = useRef();
-  const menuRef = useRef();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (!disabled) {
-      if (controlNode.current.contains(e.target)) {
-        if (!menuIsOpen) {
-          inputRef.current.focus();
-          if (clickHandler) {
-            clickHandler();
-          }
-        } else {
-          inputRef.current.blur();
-        }
-      } else if (menuIsOpen && !node.current.contains(e.target)) {
-        inputRef.current.blur();
-      }
+  let placeValue = null;
+  if (value) {
+    placeValue = value;
+  } else if (chosenValue) {
+    if (options) {
+      placeValue = options.find(el => chosenValue === el.value);
     }
-  };
-
-  useEffect(() => {
-    if (disabled && menuIsOpen) {
-      setMenuIsOpen(false);
-    }
-  }, [disabled]);
-
-  useEffect(() => {
-    const labelized = labelize(data);
-    setLabeledData(labelized);
-  }, [data]);
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  });
-
-  const chooseHandler = (item) => {
-    if (isMulti) {
-      if (!value || !value.length) {
-        onChange([item]);
-      } else {
-        const newItemIndex = value.findIndex(x => x.value === item.value);
-        if (newItemIndex < 0) {
-          onChange([...value, item]);
-        } else {
-          const newValue = [...value];
-          newValue.splice(newItemIndex, 1);
-          onChange(newValue);
-        }
-      }
-    } else {
-      onChange(item);
-      inputRef.current.blur();
-    }
-  };
-
-  const focusBlurHandler = (isFocus) => {
-    if (isFocus && !menuIsOpen) {
-      if (clickHandler) {
-        clickHandler();
-      }
-      setMenuIsOpen(true);
-    } else if (!isFocus && menuIsOpen) {
-      setMenuIsOpen(false);
-    }
-  };
-
-  // References child component, due to parent owning the input
-  const specialKeyHandler = ({ keyCode }) => {
-    switch (keyCode) {
-      case DOWN_KEY:
-        return menuRef.current.increaseLightFocus();
-      case UP_KEY:
-        return menuRef.current.decreaseLightFocus();
-      case ENTER_KEY:
-        return menuRef.current.enterOption();
-      case ESC_KEY:
-        return inputRef.current.blur();
-      default:
-        return null;
-    }
-  };
+  }
 
   return (
-    <Wrapper ref={node} {...rest}>
-      <InvisibleInput
-        onKeyDown={specialKeyHandler}
-        ref={inputRef}
-        onFocus={() => focusBlurHandler(true)}
-        onBlur={() => focusBlurHandler(false)}
-        disabled={disabled}
-      />
-      <div>
-        <DropdownControl
-          chooseHandler={chooseHandler}
-          size={size}
-          ref={controlNode}
-          error={error}
-          disabled={disabled}
-          value={value}
-          placeholder={placeholder}
-          menuIsOpen={menuIsOpen}
-          isMulti={isMulti}
-          clearHandler={() => onChange(null)}
+    <div>
+      <ErrorWrapper error={error} errorMessage={errorMessage}>
+        {label && <label><InputLabel size="small">{label}</InputLabel></label>}
+        <Select
+          styles={customStyles({ theme, error })}
+          isDisabled={disabled}
+          isClearable={false}
+          options={options || []}
+          onMenuOpen={clickHandler}
+          onChange={data => onChange(data)}
+          components={{
+            DropdownIndicator: innerProps => DropdownIndicator({ ...innerProps, tooltip, theme }),
+            SingleValue,
+            Placeholder,
+            Option,
+            NoOptionsMessage: isLoading ? LoaderComponent : NoOptionsMessage,
+            ...components,
+          }}
+          value={placeValue}
+          placeholder={isLoading ? 'Loading...' : placeholder}
+          {...rest}
+          noOptionsMessage={() => (isLoading ? 'Loading...' : 'No options')}
         />
-        <MenuWrapper error={error}>
-          <ShrinkingBorder show={menuIsOpen} error={error} />
-          {menuIsOpen && !disabled && (
-            <DropdownMenu
-              value={value}
-              isMulti={isMulti}
-              ref={menuRef}
-              chooseHandler={chooseHandler}
-              data={labeledData}
-              loading={loading}
-              hasBackButton={hasBackButton}
-            />
-          )}
-        </MenuWrapper>
-      </div>
-    </Wrapper>
+      </ErrorWrapper>
+    </div>
   );
 };
 
+Dropdown.propTypes = {
+  disabled: PropTypes.bool,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
+  value: PropTypes.object,
+  chosenValue: PropTypes.string,
+  noOptionsMessage: PropTypes.string,
+  theme: PropTypes.object.isRequired,
+  components: PropTypes.object,
+  clickHandler: PropTypes.func,
+  isLoading: PropTypes.bool,
+  placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  label: PropTypes.string,
+  tooltip: PropTypes.string,
+};
+
 Dropdown.defaultProps = {
-  placeholder: 'Select...',
-  hasBackButton: false,
+  disabled: false,
+  options: [],
+  onChange: null,
+  value: null,
+  chosenValue: null,
+  noOptionsMessage: undefined,
+  components: null,
+  placeholder: undefined,
+  isLoading: false,
+  clickHandler: null,
+  error: false,
+  errorMessage: 'Something went wrong!',
+  label: 'Dropdown input',
+  tooltip: null,
 };
 
 export default withTheme(Dropdown);

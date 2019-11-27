@@ -64,4 +64,5 @@ export {
   PricingIcon,
   SearchIcon,
 } from './base/icons';
+export { default as DecisionDropdown } from './base/decision-dropdown';
 export { THEMES, THEME_TYPES } from '../styles/colors';

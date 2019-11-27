@@ -5,10 +5,10 @@ import { buildSelectableArray } from './helpers';
 import {
   MenuItemContainer,
   MenuItemTitle,
-  MenuItemSubTitle,
+  MenuItemSubtitle,
   SimpleItemContainer,
   SimpleItemLabel,
-  SimpleItemSubLabel,
+  SimpleItemSublabel,
   EmptyMessageContainer,
   EmptyMessageText,
   ChevronWrapper,
@@ -54,7 +54,7 @@ const MultiChosenCheckIcon = () => (
 const SimpleItem = (props) => {
   const {
     label,
-    subLabel,
+    sublabel,
     clickHandler,
     lightFocused,
     lightFocusHandler,
@@ -69,7 +69,7 @@ const SimpleItem = (props) => {
     >
       <LabelContainer>
         {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
-        {subLabel && <SimpleItemSubLabel>{subLabel}</SimpleItemSubLabel>}
+        {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
       </LabelContainer>
       {multiChosen && (
         <MultiChosenCheck>
@@ -83,7 +83,7 @@ const SimpleItem = (props) => {
 export const MenuItem = (props) => {
   const {
     title,
-    subTitle,
+    subtitle,
     suboptions,
     emptyMessage,
     chooseHandler,
@@ -99,7 +99,7 @@ export const MenuItem = (props) => {
     return (
       <MenuItemContainer hasTopBar={hasTopBar} hasBottomBar={hasBottomBar}>
         {title && <MenuItemTitle>{title}</MenuItemTitle>}
-        {subTitle && <MenuItemSubTitle>{subTitle}</MenuItemSubTitle>}
+        {subtitle && <MenuItemSubtitle>{subtitle}</MenuItemSubtitle>}
         {suboptions.length ? (
           suboptions.map(el => (
             <SimpleItem
@@ -151,9 +151,10 @@ const ThemelessDownChevron = ({ theme, disabled }) => (
 const DownChevron = withTheme(ThemelessDownChevron);
 
 const MultiSelectValue = ({ children, removeHandler }) => (
-  <MultiSelectContainer onClick={() => {
-    // removeHandler();
-  }}
+  <MultiSelectContainer
+    onClick={() => {
+      // removeHandler();
+    }}
   >
     <MultiSelectText size="tiny">{children}</MultiSelectText>
   </MultiSelectContainer>
@@ -175,14 +176,26 @@ const DropdownControlValue = (props) => {
   return (
     <MultiValueContainer>
       {value.map(l => (
-        <MultiSelectValue removeHandler={() => chooseHandler(l)} key={l.value}>{l.label}</MultiSelectValue>
+        <MultiSelectValue removeHandler={() => chooseHandler(l)} key={l.value}>
+          {l.label}
+        </MultiSelectValue>
       ))}
     </MultiValueContainer>
   );
 };
+
 const ClearIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 0.1875C2.78906 0.1875 0.1875 2.78906 0.1875 6C0.1875 9.21094 2.78906 11.8125 6 11.8125C9.21094 11.8125 11.8125 9.21094 11.8125 6C11.8125 2.78906 9.21094 0.1875 6 0.1875ZM8.85 7.52578C8.96016 7.63594 8.96016 7.81406 8.85 7.92422L7.92188 8.85C7.81172 8.96016 7.63359 8.96016 7.52344 8.85L6 7.3125L4.47422 8.85C4.36406 8.96016 4.18594 8.96016 4.07578 8.85L3.15 7.92188C3.03984 7.81172 3.03984 7.63359 3.15 7.52344L4.6875 6L3.15 4.47422C3.03984 4.36406 3.03984 4.18594 3.15 4.07578L4.07812 3.14766C4.18828 3.0375 4.36641 3.0375 4.47656 3.14766L6 4.6875L7.52578 3.15C7.63594 3.03984 7.81406 3.03984 7.92422 3.15L8.85234 4.07812C8.9625 4.18828 8.9625 4.36641 8.85234 4.47656L7.3125 6L8.85 7.52578Z" fill="#A9ADB6" />
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M6 0.1875C2.78906 0.1875 0.1875 2.78906 0.1875 6C0.1875 9.21094 2.78906 11.8125 6 11.8125C9.21094 11.8125 11.8125 9.21094 11.8125 6C11.8125 2.78906 9.21094 0.1875 6 0.1875ZM8.85 7.52578C8.96016 7.63594 8.96016 7.81406 8.85 7.92422L7.92188 8.85C7.81172 8.96016 7.63359 8.96016 7.52344 8.85L6 7.3125L4.47422 8.85C4.36406 8.96016 4.18594 8.96016 4.07578 8.85L3.15 7.92188C3.03984 7.81172 3.03984 7.63359 3.15 7.52344L4.6875 6L3.15 4.47422C3.03984 4.36406 3.03984 4.18594 3.15 4.07578L4.07812 3.14766C4.18828 3.0375 4.36641 3.0375 4.47656 3.14766L6 4.6875L7.52578 3.15C7.63594 3.03984 7.81406 3.03984 7.92422 3.15L8.85234 4.07812C8.9625 4.18828 8.9625 4.36641 8.85234 4.47656L7.3125 6L8.85 7.52578Z"
+      fill="#A9ADB6"
+    />
   </svg>
 );
 export const DropdownControl = forwardRef((props, ref) => {
@@ -214,9 +227,9 @@ export const DropdownControl = forwardRef((props, ref) => {
       </ValueContainer>
       <ChevronContainer>
         {value && (
-        <ClearIconContainer onClick={clearHandler}>
-          <ClearIcon />
-        </ClearIconContainer>
+          <ClearIconContainer onClick={clearHandler}>
+            <ClearIcon />
+          </ClearIconContainer>
         )}
         <ChevronWrapper turn={menuIsOpen}>
           <DownChevron disabled={disabled} />
@@ -228,7 +241,13 @@ export const DropdownControl = forwardRef((props, ref) => {
 
 export const DropdownMenu = forwardRef((props, ref) => {
   const {
-    data, chooseHandler, loading, hasBackButton, isMulti, value,
+    data,
+    chooseHandler,
+    loading,
+    hasBackButton,
+    isMulti,
+    value,
+    error,
   } = props;
 
   const [lightFocus, setLightFocus] = useState(-1);
@@ -291,6 +310,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
   return (
     <Wrapper ref={ref}>
       <MenuContainer
+        error={error}
         hasTopPadding={currentData && !currentData[0].suboptions}
         hasBottomPadding={
           !currentData[currentData.length - 1].suboptions
