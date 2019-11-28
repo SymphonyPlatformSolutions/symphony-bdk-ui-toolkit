@@ -166,7 +166,7 @@ const Table = ({
       </Box>
       <TableWrapper>
         <ReactTable
-          data={filteredData}
+          data={data}
           width={100}
           minRows={1}
           columns={customColumns}

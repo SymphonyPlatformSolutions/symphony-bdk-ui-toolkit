@@ -8,7 +8,7 @@
   "unpkg": "dist/index.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 & nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
     "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components && rm dist/index.module.js dist/index.module.js.map",
     "dev": "microbundle --jsx React.createElement --external styled-components --watch --compress false --raw  true"
@@ -55,7 +55,9 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-react": "^7.11.1",
     "faker": "^4.1.0",
+    "json-server": "^0.15.1",
     "node-sass": "^4.12.0",
+    "nodemon": "^2.0.1",
     "polished": "^3.4.1",
     "react": "^16.8.6",
     "react-contexify": "^4.1.1",
@@ -77,7 +79,8 @@
     "uuid": "^3.3.3"
   },
   "dependencies": {
-    "microbundle": "0.11.0"
+    "microbundle": "0.11.0",
+    "react-hooks-sse": "^1.0.0"
   },
   "peerDependencies": {
     "axios": "^0.19.0",

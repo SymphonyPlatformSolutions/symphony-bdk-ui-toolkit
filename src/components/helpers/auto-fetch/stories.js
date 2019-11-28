@@ -27,7 +27,6 @@ const duckDuckGoFetchConfig = {
   ,
 };
 
-
 const COLUMNS_WITH_AUTO_FETCH = [{
   Header: 'Picture',
   tooltip: 'The person picture',
