@@ -27,6 +27,7 @@ Group structure:
   title: 'Group title', /* optional */
   subtitle: 'Group description', /* optional */
   emptyMessage: 'Message to show for when the group is empty', /* optional */
+  CustomEmptyComponent: <SomeCustomComponent />, /* optional */
   suboptions: ['Array of options'], /* optional */
 }
 ```
@@ -34,8 +35,8 @@ Group structure:
 ## Example
 ```jsx
 const CONTENT = [{
-  title: 'Hello',
-  subtitle: 'Sup man',
+  title: 'Full decision tree',
+  subtitle: 'A big example of navigation',
   suboptions: [
     { label: 'Thing 1', value: 'thing1' },
     {
@@ -124,11 +125,12 @@ DecisionDropdown.propTypes = {
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
   clickHandler: PropTypes.func,
   hasBackButton: PropTypes.bool,
   isMulti: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
+  tooltip: PropTypes.string,
 };
 
 DecisionDropdown.defaultProps = {
@@ -138,9 +140,10 @@ DecisionDropdown.defaultProps = {
   loading: false,
   disabled: false,
   value: null,
-  error: false,
+  errorMessage: null,
   clickHandler: () => {},
   isMulti: false,
   size: 'regular',
+  tooltip: null,
 };
 ```

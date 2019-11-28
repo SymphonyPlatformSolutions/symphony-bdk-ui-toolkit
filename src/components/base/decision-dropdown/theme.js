@@ -78,16 +78,13 @@ export const ShrinkingBorder = styled.span`
   height: 1px;
   display: block;
   opacity: ${({ show }) => (show ? '1' : '0')};
-  z-index: 4;
+  z-index: 10;
 `;
-
-
 export const ChevronWrapper = styled.div`
   transition: all 0.3s ease-out;
   transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)})
     translateY(${({ turn }) => (turn ? '-2px' : '-3px')});
 `;
-
 export const DropdownContainer = styled(Container)`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   width: 100%;
@@ -123,7 +120,7 @@ export const MenuContainer = styled.div`
   padding-bottom: ${({ hasBottomPadding }) => (hasBottomPadding ? '8px' : '0')};
   position: absolute;
   width: 100%;
-  z-index: 3;
+  z-index: 9;
   background-color: ${({ theme }) => theme.colors.mainbackground};
 `;
 
@@ -150,6 +147,7 @@ export const Wrapper = styled.div`
 
 export const ControlInput = styled(StyledInput)`
   width: 100%;
+  margin-left: 4px;
   border: none;
 `;
 export const MenuWrapper = styled.div`
@@ -182,6 +180,9 @@ export const MultiValueContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
 `;
-export const ClearIconContainer = styled.div`
+export const IconMarginContainer = styled.div`
   margin-right: 8px;
+`;
+export const TooltipMargin = styled.div`
+  margin-left: 8px;
 `;

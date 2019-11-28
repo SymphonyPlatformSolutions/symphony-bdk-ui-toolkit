@@ -1,6 +1,11 @@
 import React, {
-  useState, forwardRef, useImperativeHandle, useRef, useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
 } from 'react';
+import PropTypes from 'prop-types';
 import Loader from '../loader';
 import { buildSelectableArray } from './helpers';
 import {
@@ -27,11 +32,13 @@ import {
   MultiSelectContainer,
   MultiSelectText,
   MultiValueContainer,
-  ClearIconContainer,
+  IconMarginContainer,
+  TooltipMargin,
 } from './theme';
 import {
   CrossIcon, TickIcon, DownChevron, CloseIcon,
 } from '../icons';
+import Tooltip from '../tooltip';
 
 const BS_KEY = 8;
 
@@ -87,10 +94,19 @@ export const MenuItem = (props) => {
     lightFocusHandler,
     valueList,
     selectableArray,
+    CustomEmptyComponent,
   } = props;
 
+  function renderEmptyContent() {
+    if (!CustomEmptyComponent) {
+      return (<DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>);
+    }
+    return (CustomEmptyComponent);
+  }
   if (suboptions) {
-    const filteredOptions = suboptions.filter(x => !!selectableArray.find(y => y.value === x.value));
+    const filteredOptions = suboptions.filter(
+      x => !!selectableArray.find(y => y.value === x.value),
+    );
     if (!filteredOptions.length && suboptions.length) {
       return null;
     }
@@ -112,9 +128,7 @@ export const MenuItem = (props) => {
               }
             />
           ))
-        ) : (
-          <DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>
-        )}
+        ) : (renderEmptyContent())}
       </MenuItemContainer>
     );
   }
@@ -126,18 +140,28 @@ export const MenuItem = (props) => {
         lightFocused={lightFocusedUid === uid}
         lightFocusHandler={lightFocusHandler}
         clickHandler={() => chooseHandler(props)}
-        multiChosen={valueList && !!valueList.find(x => x.value === props.value)}
+        multiChosen={
+          valueList && !!valueList.find(x => x.value === props.value)
+        }
       />
     );
   }
   return null;
 };
 
+MenuItem.propTypes = {
+  CustomEmptyComponent: PropTypes.node,
+};
+MenuItem.defaultProps = {
+  CustomEmptyComponent: null,
+};
+
 const MultiSelectValue = ({ children, removeHandler }) => (
-  <MultiSelectContainer onMouseDown={(e) => {
-    e.preventDefault();
-    removeHandler();
-  }}
+  <MultiSelectContainer
+    onMouseDown={(e) => {
+      e.preventDefault();
+      removeHandler();
+    }}
   >
     <MultiSelectText size="tiny">{children}</MultiSelectText>
     <CloseIcon size={8} />
@@ -145,9 +169,7 @@ const MultiSelectValue = ({ children, removeHandler }) => (
 );
 
 const MultiValueList = (props) => {
-  const {
-    value, chooseHandler, size,
-  } = props;
+  const { value, chooseHandler, size } = props;
 
   if (!value || !value.length) {
     return null;
@@ -157,7 +179,10 @@ const MultiValueList = (props) => {
     <ValueContainer size={size}>
       <MultiValueContainer>
         {value.map(l => (
-          <MultiSelectValue removeHandler={() => chooseHandler(l)} key={l.value}>
+          <MultiSelectValue
+            removeHandler={() => chooseHandler(l)}
+            key={l.value}
+          >
             {l.label}
           </MultiSelectValue>
         ))}
@@ -180,6 +205,7 @@ export const DropdownControl = forwardRef((props, ref) => {
     specialKeyController,
     focusBlurHandler,
     theme,
+    tooltip,
     filterQueryHandler,
   } = props;
 
@@ -230,15 +256,13 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      {isMulti
-      && (
+      {isMulti && (
         <MultiValueList
           chooseHandler={chooseHandler}
           value={value}
           size={size}
         />
-      )
-    }
+      )}
       <ControlInput
         onKeyDown={(e) => {
           specialKeyController(e);
@@ -260,9 +284,9 @@ export const DropdownControl = forwardRef((props, ref) => {
       />
       <ChevronContainer>
         {shouldRenderClear && (
-          <ClearIconContainer onClick={clearHandler}>
+          <IconMarginContainer onClick={clearHandler}>
             <CrossIcon />
-          </ClearIconContainer>
+          </IconMarginContainer>
         )}
         <ChevronWrapper
           onMouseDown={(e) => {
@@ -271,8 +295,15 @@ export const DropdownControl = forwardRef((props, ref) => {
           }}
           turn={menuIsOpen}
         >
-          <DownChevron color={disabled ? theme.colors.grey_300 : theme.colors.grey_600} />
+          <DownChevron
+            color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+          />
         </ChevronWrapper>
+        {tooltip && (
+          <TooltipMargin>
+            <Tooltip>{tooltip}</Tooltip>
+          </TooltipMargin>
+        )}
       </ChevronContainer>
     </DropdownContainer>
   );
@@ -297,6 +328,13 @@ export const DropdownMenu = forwardRef((props, ref) => {
     buildSelectableArray(data, filterQuery),
   );
   const [currentData, setCurrentData] = useState(data);
+
+  useEffect(() => {
+    setSelectableArray(buildSelectableArray(data, ''));
+    setCurrentData(data);
+    setLightFocus(-1);
+    wipeQueryHandler();
+  }, [data]);
 
   useEffect(() => {
     setSelectableArray(buildSelectableArray(currentData, filterQuery));
@@ -351,51 +389,64 @@ export const DropdownMenu = forwardRef((props, ref) => {
     }, data);
 
     setNavTree(prunedNavTree);
+    setSelectableArray(buildSelectableArray(prevdata, filterQuery));
     setCurrentData(prevdata);
+    setLightFocus(-1);
   };
+
+  const hasOptions = currentData && currentData.length;
+
+  function renderContent() {
+    if (loading) {
+      return (
+        <LoaderWrapper>
+          <Loader />
+        </LoaderWrapper>
+      );
+    }
+    if (hasOptions) {
+      return currentData.map((el, index) => (
+        <MenuItem
+          {...el}
+          selectableArray={selectableArray}
+          lightFocusHandler={lightFocusHandler}
+          lightFocusedUid={
+            lightFocus >= 0 && selectableArray.length
+              ? selectableArray[lightFocus].uid
+              : null
+          }
+          key={el.uid}
+          chooseHandler={chooseOrNavigate}
+          hasTopBar={index !== 0 && !currentData[index - 1].suboptions}
+          hasBottomBar={index !== currentData.length - 1 && !!el.suboptions}
+          valueList={isMulti && value}
+        />
+      ));
+    }
+    return <DefaultEmptyMessage>{currentData.emptyMessage}</DefaultEmptyMessage>;
+  }
 
   return (
     <Wrapper ref={ref}>
       <MenuContainer
         error={error}
-        hasTopPadding={currentData && !currentData[0].suboptions}
+        hasTopPadding={hasOptions && !currentData[0].suboptions}
         hasBottomPadding={
-          !currentData[currentData.length - 1].suboptions
+          hasOptions
+          && !currentData[currentData.length - 1].suboptions
           && navTree.length === 0
         }
       >
-        {loading ? (
-          <LoaderWrapper>
-            <Loader />
-          </LoaderWrapper>
-        ) : currentData && currentData.length ? (
-          currentData.map((el, index) => (
-            <MenuItem
-              {...el}
-              selectableArray={selectableArray}
-              lightFocusHandler={lightFocusHandler}
-              lightFocusedUid={
-                lightFocus >= 0 && selectableArray.length
-                  ? selectableArray[lightFocus].uid
-                  : null
-              }
-              key={el.uid}
-              chooseHandler={chooseOrNavigate}
-              hasTopBar={index !== 0 && !currentData[index - 1].suboptions}
-              hasBottomBar={index !== currentData.length - 1 && !!el.suboptions}
-              valueList={isMulti && value}
-            />
-          ))
-        ) : (
-          <DefaultEmptyMessage>{el.emptyMessage}</DefaultEmptyMessage>
-        )}
+        {renderContent()}
         {hasBackButton && navTree.length > 0 && (
           <BackButtonContainer>
-            <BackButton onMouseDown={(e) => {
-              e.preventDefault();
-              goBack();
-            }}
-            >Back
+            <BackButton
+              onMouseDown={(e) => {
+                e.preventDefault();
+                goBack();
+              }}
+            >
+              Back
             </BackButton>
           </BackButtonContainer>
         )}

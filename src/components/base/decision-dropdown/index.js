@@ -13,6 +13,7 @@ import {
   Wrapper,
   MenuWrapper,
 } from './theme';
+import { ErrorWrapper } from '../input-field';
 
 const UP_KEY = 38;
 const DOWN_KEY = 40;
@@ -22,7 +23,6 @@ const ESC_KEY = 27;
 /*
 TODO:
 - Tooltip
-- Typehead filtering
 */
 
 const DecisionDropdown = (props) => {
@@ -33,12 +33,13 @@ const DecisionDropdown = (props) => {
     disabled,
     placeholder,
     value,
-    error,
+    errorMessage,
     clickHandler,
     hasBackButton,
     size,
     isMulti,
     theme,
+    tooltip,
     ...rest
   } = props;
   const [labeledData, setLabeledData] = useState(null);
@@ -110,43 +111,46 @@ const DecisionDropdown = (props) => {
   const forceQueryWipe = () => controlRef.current.wipeQuery();
 
   return (
-    <Wrapper ref={node} {...rest}>
-      <div>
-        <DropdownControl
-          filterQueryHandler={setFilterQuery}
-          chooseHandler={chooseHandler}
-          size={size}
-          ref={controlRef}
-          error={error}
-          disabled={disabled}
-          value={value}
-          placeholder={placeholder}
-          menuIsOpen={menuIsOpen}
-          isMulti={isMulti}
-          clearHandler={() => onChange(null)}
-          specialKeyController={specialKeyController}
-          focusBlurHandler={focusBlurHandler}
-          theme={theme}
-        />
-        <MenuWrapper error={error}>
-          <ShrinkingBorder show={menuIsOpen} error={error} />
-          {menuIsOpen && !disabled && (
-            <DropdownMenu
-              filterQuery={filterQuery ? filterQuery.toLowerCase() : filterQuery}
-              value={value}
-              isMulti={isMulti}
-              ref={menuRef}
-              chooseHandler={chooseHandler}
-              data={labeledData}
-              loading={loading}
-              hasBackButton={hasBackButton}
-              error={error}
-              wipeQueryHandler={forceQueryWipe}
-            />
-          )}
-        </MenuWrapper>
-      </div>
-    </Wrapper>
+    <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
+      <Wrapper ref={node} {...rest}>
+        <div>
+          <DropdownControl
+            filterQueryHandler={setFilterQuery}
+            chooseHandler={chooseHandler}
+            size={size}
+            ref={controlRef}
+            error={!!errorMessage}
+            disabled={disabled}
+            value={value}
+            placeholder={placeholder}
+            menuIsOpen={menuIsOpen}
+            isMulti={isMulti}
+            clearHandler={() => onChange(null)}
+            specialKeyController={specialKeyController}
+            focusBlurHandler={focusBlurHandler}
+            theme={theme}
+            tooltip={tooltip}
+          />
+          <MenuWrapper error={!!errorMessage}>
+            <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
+            {menuIsOpen && !disabled && (
+              <DropdownMenu
+                filterQuery={filterQuery ? filterQuery.toLowerCase() : filterQuery}
+                value={value}
+                isMulti={isMulti}
+                ref={menuRef}
+                chooseHandler={chooseHandler}
+                data={labeledData}
+                loading={loading}
+                hasBackButton={hasBackButton}
+                error={!!errorMessage}
+                wipeQueryHandler={forceQueryWipe}
+              />
+            )}
+          </MenuWrapper>
+        </div>
+      </Wrapper>
+    </ErrorWrapper>
   );
 };
 
@@ -157,11 +161,12 @@ DecisionDropdown.propTypes = {
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
   clickHandler: PropTypes.func,
   hasBackButton: PropTypes.bool,
   isMulti: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
+  tooltip: PropTypes.string,
 };
 
 DecisionDropdown.defaultProps = {
@@ -171,10 +176,11 @@ DecisionDropdown.defaultProps = {
   loading: false,
   disabled: false,
   value: null,
-  error: false,
+  errorMessage: null,
   clickHandler: () => {},
   isMulti: false,
   size: 'regular',
+  tooltip: null,
 };
 
 export default withTheme(DecisionDropdown);
