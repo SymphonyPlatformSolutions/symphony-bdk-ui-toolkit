@@ -25,15 +25,30 @@ export const labelize = (obj) => {
   return { ...obj, uid: uuid.v4() };
 };
 
-export const buildSelectableArray = (obj) => {
+const filteringFunction = (obj, filterQuery) => {
+  if (!filterQuery) {
+    return true;
+  }
+  if (obj.label.toLowerCase().includes(filterQuery)) {
+    return true;
+  } if (obj.sublabel) {
+    return obj.sublabel.toLowerCase().includes(filterQuery);
+  }
+  return false;
+};
+
+export const buildSelectableArray = (obj, filterQuery = '') => {
   if (!obj || !obj.length) {
     return [];
   }
   return obj.reduce((acc, el) => {
     if (el.suboptions) {
-      return [...acc, ...el.suboptions];
+      return [...acc, ...el.suboptions.filter(x => filteringFunction(x, filterQuery))];
     }
-    return [...acc, el];
+    if (filteringFunction(el, filterQuery)) {
+      return [...acc, el];
+    }
+    return acc;
   }, []);
 };
 

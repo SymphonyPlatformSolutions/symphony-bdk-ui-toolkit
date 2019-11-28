@@ -33,6 +33,8 @@ import {
   CrossIcon, TickIcon, DownChevron, CloseIcon,
 } from '../icons';
 
+const BS_KEY = 8;
+
 export const DefaultEmptyMessage = ({ children }) => (
   <EmptyMessageContainer>
     <EmptyMessageText>{children || 'No data'}</EmptyMessageText>
@@ -84,15 +86,20 @@ export const MenuItem = (props) => {
     uid,
     lightFocusHandler,
     valueList,
+    selectableArray,
   } = props;
 
   if (suboptions) {
+    const filteredOptions = suboptions.filter(x => !!selectableArray.find(y => y.value === x.value));
+    if (!filteredOptions.length && suboptions.length) {
+      return null;
+    }
     return (
       <MenuItemContainer hasTopBar={hasTopBar} hasBottomBar={hasBottomBar}>
         {title && <MenuItemTitle>{title}</MenuItemTitle>}
         {subtitle && <MenuItemSubtitle>{subtitle}</MenuItemSubtitle>}
         {suboptions.length ? (
-          suboptions.map(el => (
+          filteredOptions.map(el => (
             <SimpleItem
               {...el}
               lightFocused={lightFocusedUid === el.uid}
@@ -111,15 +118,19 @@ export const MenuItem = (props) => {
       </MenuItemContainer>
     );
   }
-  return (
-    <SimpleItem
-      {...props}
-      lightFocused={lightFocusedUid === uid}
-      lightFocusHandler={lightFocusHandler}
-      clickHandler={() => chooseHandler(props)}
-      multiChosen={valueList && !!valueList.find(x => x.value === props.value)}
-    />
-  );
+
+  if (selectableArray.find(y => y.value === props.value)) {
+    return (
+      <SimpleItem
+        {...props}
+        lightFocused={lightFocusedUid === uid}
+        lightFocusHandler={lightFocusHandler}
+        clickHandler={() => chooseHandler(props)}
+        multiChosen={valueList && !!valueList.find(x => x.value === props.value)}
+      />
+    );
+  }
+  return null;
 };
 
 const MultiSelectValue = ({ children, removeHandler }) => (
@@ -166,9 +177,10 @@ export const DropdownControl = forwardRef((props, ref) => {
     isMulti,
     chooseHandler,
     clearHandler,
-    specialKeyHandler,
+    specialKeyController,
     focusBlurHandler,
     theme,
+    filterQueryHandler,
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
@@ -186,6 +198,10 @@ export const DropdownControl = forwardRef((props, ref) => {
     toggleInputBlur(isBlur) {
       toggleInputBlur(isBlur);
     },
+    wipeQuery() {
+      setTypedValue('');
+      filterQueryHandler('');
+    },
   }));
 
   useEffect(() => {
@@ -194,9 +210,16 @@ export const DropdownControl = forwardRef((props, ref) => {
         setTypedValue(value.label);
       } else {
         setTypedValue('');
+        filterQueryHandler('');
       }
     }
   }, [value]);
+
+  const backSpaceHandler = () => {
+    if (!typedValue && isMulti && value && value.length) {
+      chooseHandler(value[value.length - 1]);
+    }
+  };
 
   const shouldRenderClear = isMulti ? !!(value && value.length) : value;
 
@@ -217,11 +240,19 @@ export const DropdownControl = forwardRef((props, ref) => {
       )
     }
       <ControlInput
-        onKeyDown={specialKeyHandler}
+        onKeyDown={(e) => {
+          specialKeyController(e);
+          if (e.keyCode === BS_KEY) {
+            backSpaceHandler();
+          }
+        }}
         ref={inputRef}
         placeholder={placeholder}
         value={typedValue}
-        onChange={({ target }) => setTypedValue(target.value)}
+        onChange={({ target }) => {
+          setTypedValue(target.value);
+          filterQueryHandler(target.value);
+        }}
         onFocus={() => focusBlurHandler(true)}
         onBlur={() => focusBlurHandler(false)}
         disabled={disabled}
@@ -256,21 +287,29 @@ export const DropdownMenu = forwardRef((props, ref) => {
     isMulti,
     value,
     error,
+    filterQuery,
+    wipeQueryHandler,
   } = props;
 
   const [lightFocus, setLightFocus] = useState(-1);
   const [navTree, setNavTree] = useState([]);
   const [selectableArray, setSelectableArray] = useState(
-    buildSelectableArray(data),
+    buildSelectableArray(data, filterQuery),
   );
   const [currentData, setCurrentData] = useState(data);
+
+  useEffect(() => {
+    setSelectableArray(buildSelectableArray(currentData, filterQuery));
+    setLightFocus(-1);
+  }, [filterQuery]);
 
   const chooseOrNavigate = (item) => {
     if (item.options) {
       setNavTree([...navTree, item.value]);
-      setSelectableArray(buildSelectableArray(item.options));
+      setSelectableArray(buildSelectableArray(item.options, filterQuery));
       setLightFocus(-1);
       setCurrentData(item.options);
+      wipeQueryHandler();
     } else {
       chooseHandler(item);
     }
@@ -333,6 +372,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
           currentData.map((el, index) => (
             <MenuItem
               {...el}
+              selectableArray={selectableArray}
               lightFocusHandler={lightFocusHandler}
               lightFocusedUid={
                 lightFocus >= 0 && selectableArray.length

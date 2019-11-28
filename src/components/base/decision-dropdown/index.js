@@ -43,6 +43,7 @@ const DecisionDropdown = (props) => {
   } = props;
   const [labeledData, setLabeledData] = useState(null);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [filterQuery, setFilterQuery] = useState('');
 
   const node = useRef();
   const controlRef = useRef();
@@ -91,7 +92,7 @@ const DecisionDropdown = (props) => {
   };
 
   // References child component, due to parent owning the input
-  const specialKeyHandler = ({ keyCode }) => {
+  const specialKeyController = ({ keyCode }) => {
     switch (keyCode) {
       case DOWN_KEY:
         return menuRef.current.increaseLightFocus();
@@ -106,10 +107,13 @@ const DecisionDropdown = (props) => {
     }
   };
 
+  const forceQueryWipe = () => controlRef.current.wipeQuery();
+
   return (
     <Wrapper ref={node} {...rest}>
       <div>
         <DropdownControl
+          filterQueryHandler={setFilterQuery}
           chooseHandler={chooseHandler}
           size={size}
           ref={controlRef}
@@ -120,7 +124,7 @@ const DecisionDropdown = (props) => {
           menuIsOpen={menuIsOpen}
           isMulti={isMulti}
           clearHandler={() => onChange(null)}
-          specialKeyHandler={specialKeyHandler}
+          specialKeyController={specialKeyController}
           focusBlurHandler={focusBlurHandler}
           theme={theme}
         />
@@ -128,6 +132,7 @@ const DecisionDropdown = (props) => {
           <ShrinkingBorder show={menuIsOpen} error={error} />
           {menuIsOpen && !disabled && (
             <DropdownMenu
+              filterQuery={filterQuery ? filterQuery.toLowerCase() : filterQuery}
               value={value}
               isMulti={isMulti}
               ref={menuRef}
@@ -136,6 +141,7 @@ const DecisionDropdown = (props) => {
               loading={loading}
               hasBackButton={hasBackButton}
               error={error}
+              wipeQueryHandler={forceQueryWipe}
             />
           )}
         </MenuWrapper>
