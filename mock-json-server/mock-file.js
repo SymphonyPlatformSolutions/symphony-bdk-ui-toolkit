@@ -190,13 +190,35 @@ const RandomlyUpdateSSEDemoData = (data) => {
       row.bidSize = Faker.random.number(500);
     }
     row.time = Faker.date.recent();
+  });
 
+  updatedChosen.forEach((entry) => {
+    const index = data.findIndex(elem => elem.id === entry.id);
+    data[index] = entry;
   });
 
   return updatedChosen;
 };
 
+const RandomlyDeleteSSEDemoData = (data) => {
+  const index = Faker.random.number(data.length - 1);
+  const chosen = data[index];
+  data.splice(index, 1);
+  return [chosen];
+};
+const RandomlyCreateSSEDemoData = (data) => {
+  const created = generateSSEDemoData(1);
+  data.push(created[0]);
+  return created;
+};
 
 module.exports = {
-  generateDemoInfo, getBotRooms, mockInstances, initMockNotifications, generateSSEDemoData, RandomlyUpdateSSEDemoData,
+  generateDemoInfo,
+  getBotRooms,
+  mockInstances,
+  initMockNotifications,
+  generateSSEDemoData,
+  RandomlyUpdateSSEDemoData,
+  RandomlyDeleteSSEDemoData,
+  RandomlyCreateSSEDemoData,
 };

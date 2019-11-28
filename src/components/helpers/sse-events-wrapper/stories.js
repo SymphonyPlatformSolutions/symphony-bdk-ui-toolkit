@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
 } from '@storybook/addon-knobs';
-import { SSEProvider, useSSE } from 'react-hooks-sse';
 import styled, { keyframes } from 'styled-components';
 import { UpArrow } from 'styled-icons/boxicons-solid';
 import Box from '../../base/box';
@@ -11,13 +10,23 @@ import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
 import Table from '../../base/table';
 import Text from '../../base/text';
-import { AutoFetchWrapper } from '../../index';
+import SSEventsListWrapper from './index';
 
+const fadeOut = () => keyframes`
+  from {
+    opacity: 1
+  }
 
-const StyledArrow = styled(UpArrow)`
-  transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
+  to {
+    opacity: 0;
+  }
 `;
 
+const StyledArrow = styled(UpArrow)`
+  opacity: 0;
+  transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
+  animation: ${fadeOut} 3s ease-in-out;;
+`;
 
 const PriceAskCell = ({ value, original }) => {
   const arrowColor = original.increasedAsk ? '#10C820' : '#FF4840';
@@ -38,7 +47,7 @@ const PriceBidCell = ({ value, original }) => {
   const arrowColor = original.increasedBid ? '#10C820' : '#FF4840';
   const hasArrow = original.updated && value;
   return (
-    <Box horizontal justify="center" align="center" style={{transform: 'translateX(-20px)'}}>
+    <Box horizontal justify="center" align="center" style={{ transform: 'translateX(-20px)' }}>
       <Box type="flat" style={{ position: 'absolute', transform: 'translateX(-30px)' }}>
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedBid} /> }
       </Box>
@@ -73,8 +82,6 @@ const StyledAnimatedPrice = styled(Text).attrs(({ theme, updated, type }) => ({
   padding: 0px 10px;
   border-radius: 4px;
 `;
-
-const quickDateSort = (a, b) => new Date(b.time) - new Date(a.time);
 
 const getRenderTime = (time) => {
   const date = new Date(time);
@@ -156,7 +163,6 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'comment',
     sortable: false,
   },
-
 ];
 
 const autoFetchConfig = {
@@ -165,47 +171,42 @@ const autoFetchConfig = {
   handleData: results => results,
 };
 
-
-const SSEEventsSample = ({ data, loading, refreshData }) => {
-  const state = useSSE('message');
-  const [tableData, setData] = useState([]);
-
-  useEffect(() => {
-    if (data !== tableData) {
-      const newData = data.map((elem) => {
-        elem.updated = false;
-        return elem;
-      });
-      setData(newData);
-    }
-  }, [data]);
+const SSEEventsSample = ({
+  data, loading, error, refreshData,
+}) => {
+  const [tableData, setTableData] = useState(data);
 
   useEffect(() => {
-    if (state && state.data !== null && state.data.length && tableData && tableData.length) {
-      tableData.forEach((elem) => {
-        elem.updated = false;
+    if (data && data.length && tableData && tableData.length > 0) {
+      const newData = Array.from(data);
+
+      newData.forEach((elem) => {
         elem.increasedAsk = null;
         elem.increasedBid = null;
       });
 
-      state.data.forEach((element) => {
-        const index = tableData.findIndex(value => element.id === value.id);
-        element.updated = true;
-        element.increasedAsk = tableData[index].ask < element.ask;
-        element.increasedBid = tableData[index].bid < element.bid;
-        tableData[index] = element;
+      newData.forEach((element) => {
+        if (element.updated) {
+          const index = tableData.findIndex(value => element.id === value.id);
+          if (index !== -1) {
+            element.increasedAsk = tableData[index].ask < element.ask;
+            element.increasedBid = tableData[index].bid < element.bid;
+          }
+        }
       });
-      setData(Array.from(tableData));
+      setTableData(Array.from(newData));
+    } else {
+      setTableData(Array.from(data));
     }
-  }, [state]);
+  }, [data]);
 
-  return useMemo(() => (
+  return (
     <Table
       data={tableData}
       loading={loading}
       columns={SSE_EVENTS_TABLE_COLUMNS}
     />
-  ), [tableData]);
+  );
 };
 
 
@@ -214,11 +215,12 @@ storiesOf('Helpers', module)
   .add('SSE Events', () => (
     <StoryWrapper p={15}>
       <Box p={15}>
-        <SSEProvider endpoint="http://localhost:3000/sse-events">
-          <AutoFetchWrapper config={autoFetchConfig}>
-            <SSEEventsSample />
-          </AutoFetchWrapper>
-        </SSEProvider>
+        <SSEventsListWrapper
+          sseEndpoint="http://localhost:3000/sse-events"
+          autoFetchConfig={autoFetchConfig}
+        >
+          <SSEEventsSample />
+        </SSEventsListWrapper>
       </Box>
     </StoryWrapper>
   ),

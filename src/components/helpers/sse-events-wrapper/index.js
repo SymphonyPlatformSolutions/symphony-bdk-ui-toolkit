@@ -1,56 +1,151 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { SSEProvider, useSSE } from 'react-hooks-sse';
+import { useAutoFetch } from '../../../utils/auto-fetch';
 
+const isStateValid = (state, data) => state && state.data !== null && data && data.length;
 
-const parserListener = setData => e => setData(JSON.parse(e.data));
-const onOpenListener = setOpen => e => setOpen(true);
-const onErrorListener = (setError, setOpen, setConnecting) => (e) => {
-  if (e.readyState == EventSource.CLOSED) {
-    setOpen(false);
-  } else if (e.readyState == EventSource.CONNECTING) {
-    setConnecting(true);
-  } else {
-    setError(e);
-  }
+const SSE_EVENT_TYPES = {
+  UPDATE: 'update',
+  CREATE: 'create',
+  REMOVE: 'remove',
 };
 
-const useSSEvents = (
-  endpoint, eventType = 'message',
-) => {
-  const [data, setData] = useState();
-  const [isOpen, setOpen] = useState(false);
-  const [isConnecting, setConnecting] = useState(false);
-  const [error, setError] = useState();
+const SSEventsContentWrapper = ({
+  fetchData,
+  loading,
+  error,
+  refreshData,
+  eventType,
+  children,
+}) => {
+  const updatedState = useSSE(SSE_EVENT_TYPES.UPDATE);
+  const createdState = useSSE(SSE_EVENT_TYPES.CREATE);
+  const removedState = useSSE(SSE_EVENT_TYPES.REMOVE);
+
+  const [latestData, setLatestData] = useState(fetchData);
 
   useEffect(() => {
-    const eventSource = new EventSource(endpoint);
-    eventSource.addEventListener(eventType, parserListener(setData));
-    eventSource.addEventListener('open', onOpenListener(setOpen));
-    eventSource.addEventListener('error', onErrorListener(setError, setOpen, setConnecting));
+    setLatestData(fetchData);
+  }, [fetchData]);
 
-    return () => {
-      // on unmount;
-      eventSource.removeEventListener(eventType, parserListener);
-      eventSource.removeEventListener('open', onOpenListener);
-      eventSource.removeEventListener('error', onErrorListener);
-    };
-  }, []);
+  useEffect(() => {
+    if (isStateValid(updatedState, latestData)) {
+      let hasUpdated = false;
+      latestData.forEach((elem) => {
+        elem.updated = false;
+      });
 
-  return {
-    data,
-    isConnecting,
-    isOpen,
+      updatedState.data.forEach((element) => {
+        const index = latestData.findIndex(value => element.id === value.id);
+        if (index !== -1) {
+          element.updated = true;
+          latestData[index] = element;
+          hasUpdated = true;
+        }
+      });
+      if (hasUpdated) {
+        setLatestData(Array.from(latestData));
+      }
+    }
+  }, [updatedState]);
+
+  useEffect(() => {
+    if (isStateValid(createdState, latestData)) {
+      let creatingData = false;
+      createdState.data.forEach((elem) => {
+        const index = latestData.findIndex(entry => entry.id === elem.id);
+        if (index === -1) {
+          latestData.push(elem);
+          creatingData = true;
+        }
+      });
+
+      if (creatingData) {
+        setLatestData(Array.from(latestData));
+      }
+    }
+  }, [createdState]);
+
+  useEffect(() => {
+    if (isStateValid(removedState, latestData)) {
+      let removingData = false;
+      removedState.data.forEach((elem) => {
+        const index = latestData.findIndex(entry => entry.id === elem.id);
+        if (index !== -1) {
+          latestData.splice(index, 1);
+          removingData = true;
+        }
+      });
+
+      if (removingData) {
+        setLatestData(Array.from(latestData));
+      }
+    }
+  }, [removedState]);
+
+  return useMemo(() => React.cloneElement(children, {
+    data: latestData,
+    loading,
     error,
-  };
+    refreshData,
+    eventType,
+  }), [latestData]);
 };
 
-useSSEvents.propTypes = {
-  endpoint: PropTypes.string.isRequired,
-  eventType: PropTypes.string,
+SSEventsContentWrapper.propTypes = {
+  fetchData: PropTypes.array.isRequired,
+  loading: PropTypes.boolean.isRequired,
+  error: PropTypes.object.isRequired,
+  refreshData: PropTypes.Function.isRequired,
+  eventType: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-useSSEvents.defaultProps = {
-  enventType: 'message',
+const SSEventsListWrapper = ({
+  children,
+  sseEndpoint,
+  autoFetchConfig,
+}) => {
+  const [fetchData, setFetchData] = useState([]);
+
+  const {
+    results, isDataLoading, error, refreshData,
+  } = useAutoFetch(autoFetchConfig);
+
+  useEffect(() => {
+    if (results !== fetchData) {
+      const newData = results.map((elem) => {
+        elem.updated = false;
+        return elem;
+      });
+      setFetchData(newData);
+    }
+  }, [results]);
+
+  return (
+    <SSEProvider endpoint={sseEndpoint}>
+      <SSEventsContentWrapper
+        fetchData={fetchData}
+        loading={isDataLoading}
+        error={error}
+        refreshData={refreshData}
+      >
+        {children}
+      </SSEventsContentWrapper>
+    </SSEProvider>
+  );
 };
 
-export default useSSEvents;
+SSEventsListWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  sseEndpoint: PropTypes.string.isRequired,
+  autoFetchConfig: PropTypes.shape({
+    endpoint: PropTypes.string,
+    params: PropTypes.object,
+    handleData: PropTypes.any,
+  }).isRequired,
+};
+
+
+export default SSEventsListWrapper;

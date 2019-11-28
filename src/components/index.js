@@ -22,6 +22,7 @@ export {
   default as FormBox, FormGroup, Label, LabelText,
 } from './base/form-box';
 export { default as AutoFetchWrapper } from './helpers/auto-fetch';
+export { default as SSEventsListWrapper } from './helpers/sse-events-wrapper';
 export { ToasterProvider, ToasterConsumer } from './base/toaster/toaster-context';
 export { default as Tooltip } from './base/tooltip';
 export { default as ModalRoot, DangerConfirmationModal } from './base/modal';

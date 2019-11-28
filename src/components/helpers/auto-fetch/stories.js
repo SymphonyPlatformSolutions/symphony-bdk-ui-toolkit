@@ -23,8 +23,7 @@ const autoFetchConfig = {
 const duckDuckGoFetchConfig = {
   endpoint: 'https://api.duckduckgo.com',
   params: { format: 'json', q: null },
-  handleData: results => results.RelatedTopics
-  ,
+  handleData: results => results.RelatedTopics,
 };
 
 const COLUMNS_WITH_AUTO_FETCH = [{

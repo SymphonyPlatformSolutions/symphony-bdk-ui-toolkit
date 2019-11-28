@@ -3,7 +3,8 @@ const jsonServer = require('json-server');
 const Axios = require('axios');
 const {
   generateDemoInfo, getBotRooms, mockInstances, initMockNotifications,
-  generateSSEDemoData, RandomlyUpdateSSEDemoData,
+  generateSSEDemoData, RandomlyUpdateSSEDemoData, RandomlyCreateSSEDemoData,
+  RandomlyDeleteSSEDemoData,
 } = require('./mock-file');
 
 const server = jsonServer.create();
@@ -56,14 +57,37 @@ server.get('/sse-events', (req, res) => {
     'Cache-Control': 'no-cache',
   });
 
-  const test = () => {
-    res.write(`id: ${sseEventId}\n`);
-    res.write(`data: ${JSON.stringify(RandomlyUpdateSSEDemoData(SSE_DEMO_DATA))}`);
-    res.write('\n\n');
-    res.send();
-    sseEventId += 1;
-  };
-  test();
+  switch (sseEventId % 3) {
+    case 0: {
+      const updatedData = RandomlyUpdateSSEDemoData(SSE_DEMO_DATA);
+      res.write(`id: ${sseEventId}\n`);
+      res.write('event:update\n');
+      res.write(`data: ${JSON.stringify(updatedData)}`);
+      res.write('\n\n');
+      res.send();
+      break;
+    }
+    case 1: {
+      const createdData = RandomlyCreateSSEDemoData(SSE_DEMO_DATA);
+      res.write(`id: ${sseEventId}\n`);
+      res.write('event:create\n');
+      res.write(`data: ${JSON.stringify(createdData)}`);
+      res.write('\n\n');
+      res.send();
+      break;
+    }
+    case 2: {
+      const deletedData = RandomlyDeleteSSEDemoData(SSE_DEMO_DATA);
+      res.write(`id: ${sseEventId}\n`);
+      res.write('event:remove\n');
+      res.write(`data: ${JSON.stringify(deletedData)}`);
+      res.write('\n\n');
+      res.send();
+      break;
+    }
+  }
+
+  sseEventId += 1;
 });
 
 /*
