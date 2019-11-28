@@ -214,6 +214,7 @@ storiesOf('Helpers', module)
   .addDecorator(withKnobs)
   .add('SSE Events', () => (
     <StoryWrapper p={15}>
+      <Text isTitle size="small">SSEventsListWrapper with table</Text>
       <Box p={15}>
         <SSEventsListWrapper
           sseEndpoint="http://localhost:3000/sse-events"
