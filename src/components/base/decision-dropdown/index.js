@@ -130,7 +130,7 @@ const DecisionDropdown = (props) => {
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
             {menuIsOpen && !disabled && (
               <DropdownMenu
-                filterQuery={filterQuery ? filterQuery.toLowerCase() : filterQuery}
+                filterQuery={filterQuery}
                 value={value}
                 isMulti={isMulti}
                 ref={menuRef}

@@ -185,8 +185,8 @@ export const MultiSelectText = styled(Text)`
   margin-right: 6px;
 `;
 export const MultiValueContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 `;
 export const IconMarginContainer = styled.div`
   margin-right: 8px;

@@ -23,15 +23,6 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
 
-const SearchIconComponent = (props) => {
-  const { isLarge } = props;
-  return (
-    <SearchIconWrapper isLarge={isLarge}>
-      <SearchIcon size={isLarge ? 12 : 18} />
-    </SearchIconWrapper>
-  );
-};
-
 const Menu = (props) => {
   const {
     data,

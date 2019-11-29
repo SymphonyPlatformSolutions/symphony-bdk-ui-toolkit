@@ -33,7 +33,6 @@ const SearchWrapper = ({ CustomMenuItem }) => {
     <Box type="secondary">
       <Box horizontal>
         <Search
-
           content={currentContent}
           searchHandler={filterFunc}
           resultHandler={setCurrentContent}
