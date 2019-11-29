@@ -28,7 +28,6 @@ const COMMON_COLORS = {
 
   success_700: '#00A500',
   success_500: '#10C820',
-  success_300: '#75DE7B',
   success_100: '#C6EFC3',
 
   error_700: '#DD3638',
@@ -62,6 +61,7 @@ const COMMON_COLORS = {
   misc_9: '#8C513B',
   misc_14: '#29D0AB',
   misc_15: '#156B58',
+  misc_16: '#75DE7B',
   white: '#FFFFFF',
 };
 

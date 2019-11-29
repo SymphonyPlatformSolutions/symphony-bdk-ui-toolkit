@@ -160,7 +160,7 @@ const autoFetchConfig = {
 };
 
 const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
-  bg: updated ? increased ? theme.colors.success_300 : theme.colors.error_400 : 'initial',
+  bg: updated ? increased ? theme.colors.misc_16 : theme.colors.error_400 : 'initial',
 }))`
   animation: ${FlashAnimation} .8s steps(1, end);
   animation-iteration-count: 2;
