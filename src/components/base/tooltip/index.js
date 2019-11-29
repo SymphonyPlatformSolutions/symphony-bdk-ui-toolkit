@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { MdInfo } from 'react-icons/md';
+import { InfoIcon } from '../icons';
 // eslint-disable-next-line import/no-cycle
 import Text from '../text';
 
@@ -112,7 +112,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <MdInfo size="1.2em" color="inherit" />
+        <InfoIcon size={15} />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}

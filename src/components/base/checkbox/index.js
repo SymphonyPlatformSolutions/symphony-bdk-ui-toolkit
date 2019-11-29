@@ -62,7 +62,7 @@ const BaseCheckBox = styled.div`
 
 const LabelText = styled(Text)`
   position: relative;
-  top: ${({ checkSize }) => (checkSize === SIZES.REGULAR ? '2px' : '4px')};;
+  top: ${({ checkSize }) => (checkSize === SIZES.REGULAR ? '2px' : '4px')};
   opacity: ${({ disabled }) => (disabled ? '0.25' : '1')};
 `;
 
