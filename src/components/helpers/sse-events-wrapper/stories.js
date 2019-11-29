@@ -18,14 +18,11 @@ const StyledArrow = styled(UpArrow)`
 `;
 
 const FlashAnimation = props => keyframes`
-  0% {
+  0%, 100% {
     background-color: initial;
   }
   50% {
     background-color: ${props.bg};
-  }
-  100% {
-    background-color: initial;
   }
 `;
 
@@ -37,7 +34,7 @@ const PriceAskCell = ({ value, original }) => {
       <Box type="flat" style={{ width: '50px' }}>
         <StyledAnimatedPrice type="ask">{value}</StyledAnimatedPrice>
       </Box>
-      <Box type="flat" style={{ width: '50px', transform: 'translateX(-20px)' }}>
+      <Box type="flat" style={{ width: '50px', transform: 'translateX(-35px)' }}>
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedAsk} /> }
       </Box>
     </Box>
@@ -67,78 +64,84 @@ const StyledAnimatedPrice = styled(Text)`
   color: ${({ theme, type }) => (type === 'ask' ? theme.colors.error_500 : theme.colors.primary_400)};
 `;
 
+const StyledText = styled(Text)`
+  mix-blend-mode: revert;
+`;
+
 const getRenderTime = (time) => {
   const date = new Date(time);
   return `${date.getHours()}:${date.getMinutes()}`;
 };
+
+const RegularRow = ({ value }) => useMemo(() => (
+  <Text>{value}</Text>
+), [value]);
 
 const SSE_EVENTS_TABLE_COLUMNS = [
   {
     Header: 'Type',
     tooltip: 'Operation type',
     accessor: 'type',
-
     sortable: false,
+    Cell: RegularRow,
   },
   {
     Header: 'Asset Class',
     tooltip: 'Asset class being traded',
     accessor: 'asset',
     sortable: false,
-
+    Cell: RegularRow,
   },
   {
     Header: 'Product',
     tooltip: 'Product being traded',
     accessor: 'product',
     sortable: false,
-
+    Cell: RegularRow,
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this bid price',
     accessor: 'bidSize',
-
+    Cell: RegularRow,
   },
   {
     Header: 'Bid',
     tooltip: 'The latest Bid price',
     accessor: 'bid',
     Cell: PriceBidCell,
-
   },
   {
     Header: 'Ask',
     tooltip: 'The latest Ask price',
     accessor: 'ask',
     Cell: PriceAskCell,
-
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this ask price',
     accessor: 'askSize',
-
+    Cell: RegularRow,
   },
   {
     Header: 'Time',
     tooltip: 'last time updated',
     accessor: 'time',
     sortable: false,
-    Cell: ({ value }) => (
+    Cell: ({ value }) => useMemo(() => (
       <Text>{getRenderTime(value)}</Text>
-    ),
+    ), [value]),
 
   },
   {
     Header: 'Dealer',
     tooltip: 'The contact',
     accessor: 'dealer',
-    Cell: ({ original }) => (original.dealer.link ? (
+    Cell: ({ original }) => useMemo(() => (original.dealer.link ? (
       <StyledLink href={original.dealer.link}>{original.dealer.name}</StyledLink>
     ) : (
       <Text>{original.dealer.name}</Text>
-    )),
+    )), [original]),
     sortable: false,
   },
   {
@@ -146,6 +149,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     tooltip: 'The person picture',
     accessor: 'comment',
     sortable: false,
+    Cell: RegularRow,
   },
 ];
 
@@ -156,11 +160,16 @@ const autoFetchConfig = {
 };
 
 const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
-  bg: updated ? increased ? theme.colors.success_500 : theme.colors.error_700 : 'initial',
+  bg: updated ? increased ? theme.colors.success_300 : theme.colors.error_400 : 'initial',
 }))`
-  animation: ${FlashAnimation} 1s steps(1, end);
-  animation-iteration-count: 4;
+  animation: ${FlashAnimation} .8s steps(1, end);
+  animation-iteration-count: 2;
   width: 100%;
+  color: ${({ theme }) => theme.colors.grey_900};
+  
+  div {
+    color: inherit;
+  }
 `;
 
 const RowWrapper = ({ children }) => {
@@ -189,16 +198,16 @@ const SSEEventsSample = ({
       const newData = Array.from(data);
 
       newData.forEach((elem) => {
-        elem.increasedAsk = null;
-        elem.increasedBid = null;
+
       });
+
 
       newData.forEach((element) => {
         if (element.updated) {
-          const index = tableData.findIndex(value => element.id === value.id);
-          if (index !== -1) {
-            element.increasedAsk = tableData[index].ask < element.ask;
-            element.increasedBid = tableData[index].bid < element.bid;
+          const mData = tableData.find(e => e.id === element.id);
+          if (mData !== element) {
+            element.increasedAsk = mData.ask < element.ask;
+            element.increasedBid = mData.bid < element.bid;
           }
         }
       });

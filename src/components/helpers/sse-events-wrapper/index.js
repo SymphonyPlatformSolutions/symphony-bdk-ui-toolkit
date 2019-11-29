@@ -56,7 +56,7 @@ const SSEventsContentWrapper = ({
       createdState.data.forEach((elem) => {
         const index = latestData.findIndex(entry => entry.id === elem.id);
         if (index === -1) {
-          latestData.push(elem);
+          latestData.unshift(elem);
           creatingData = true;
         }
       });

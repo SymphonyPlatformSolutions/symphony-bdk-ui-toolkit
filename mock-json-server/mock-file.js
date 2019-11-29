@@ -1,6 +1,8 @@
 // Use this file to generated the fake data.
 const Faker = require('faker');
 
+let lastUpdatedEntries = [];
+
 
 const DEALERS = [
   'Goldman Sacks',
@@ -108,10 +110,19 @@ const RandomlyUpdateSSEDemoData = (data) => {
   const tmpArr = Array.from(data);
   const updatedChosen = [];
 
-  const index = Faker.random.number(tmpArr.length - 1);
-  updatedChosen.push(
-    tmpArr.splice(index, 1)[0],
-  );
+  const numberOfUpdatedEntries = 1 + Faker.random.number(2);
+  for (let i = 0; i < numberOfUpdatedEntries;) {
+    const index = Faker.random.number(tmpArr.length - 1);
+    const updatedLastCycle = lastUpdatedEntries.findIndex(el => el.id === tmpArr[index].id);
+    const updatedChosenCycle = updatedChosen.findIndex(el => el.id === tmpArr[index].id);
+
+    if (updatedLastCycle === -1 && updatedChosenCycle === -1) {
+      updatedChosen.push(
+        tmpArr.splice(index, 1)[0],
+      );
+      i++;
+    }
+  }
 
   updatedChosen.forEach((row) => {
     if (row.type === OPERATION_TYPES[1]) {
@@ -136,6 +147,7 @@ const RandomlyUpdateSSEDemoData = (data) => {
     data[index] = entry;
   });
 
+  lastUpdatedEntries = updatedChosen;
   return updatedChosen;
 };
 
