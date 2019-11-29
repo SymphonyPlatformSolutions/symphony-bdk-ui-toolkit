@@ -11,6 +11,7 @@ import {
   ToggleButtonText,
   Container,
 } from './theme';
+import { EyeIcon, ClosedEyeIcon } from '../icons';
 
 const INPUT_TYPES = {
   PASSWORD: 'password',
@@ -54,7 +55,7 @@ const InputAddons = (props) => {
           disabled={disabled}
           onClick={copyInput ? copyToClipBoard : setShowPassword}
         >
-          {copyInput ? 'copy' : showPassword ? 'hide' : 'show'}
+          {copyInput ? 'copy' : showPassword ? (<ClosedEyeIcon />) : (<EyeIcon />)}
         </ToggleButtonText>
       )}
       {tooltip && (

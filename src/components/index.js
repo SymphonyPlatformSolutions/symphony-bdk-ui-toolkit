@@ -19,13 +19,50 @@ export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
 export { default as QuoteCard } from './financial/quote-card';
 export {
-  default as FormBox, FormGroup, Label, LabelText,
+  default as FormBox,
+  FormGroup,
+  Label,
+  LabelText,
 } from './base/form-box';
 export { default as AutoFetchWrapper } from './helpers/auto-fetch';
 export { default as SSEventsListWrapper } from './helpers/sse-events-wrapper';
-export { ToasterProvider, ToasterConsumer } from './base/toaster/toaster-context';
+export {
+  ToasterProvider,
+  ToasterConsumer,
+} from './base/toaster/toaster-context';
 export { default as Tooltip } from './base/tooltip';
 export { default as ModalRoot, DangerConfirmationModal } from './base/modal';
-export { default as ModalContext, ModalConsumer, ModalProvider } from './base/modal/modal-context';
+export {
+  default as ModalContext,
+  ModalConsumer,
+  ModalProvider,
+} from './base/modal/modal-context';
 export { default as HelpPageBuilder } from './helpers/help-page-builder';
+export {
+  FavoriteButton,
+  CloseButton,
+  MoreButton,
+} from './base/button/icon-buttons';
+export {
+  EllipsisIcon,
+  EmptyStarIcon,
+  StarIcon,
+  InfoIcon,
+  CrossIcon,
+  TickIcon,
+  DownChevron,
+  DeleteIcon,
+  EditIcon,
+  ClosedEyeIcon,
+  EyeIcon,
+  ServerIcon,
+  CloudIcon,
+  InteractionsIcon,
+  NotificationsIcon,
+  SettingsIcon,
+  SecurityIcon,
+  CloseIcon,
+  PricingIcon,
+  SearchIcon,
+} from './base/icons';
 export { THEMES, THEME_TYPES } from '../styles/colors';

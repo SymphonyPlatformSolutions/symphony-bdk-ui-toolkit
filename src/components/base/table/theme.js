@@ -2,13 +2,13 @@ import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import { MoreVert } from 'styled-icons/material';
 import { Menu } from 'react-contexify';
-import { MdPlayArrow, MdSearch } from 'react-icons/md';
 import { darken, transparentize } from 'polished';
 import uuid from 'uuid';
 import InputField from '../input-field';
 import { THEME_TYPES } from '../../../styles/colors';
 import Box from '../box';
 import Text from '../text';
+import { SearchIcon, DownChevron } from '../icons';
 
 export const getTheadStyle = (theme, searchable) => ({
   style: {
@@ -114,8 +114,8 @@ const IconWrapper = styled.div`
 `;
 const IconSpinner = styled.div`
   transform: ${({ desc }) => (desc
-    ? 'rotate(90deg) translateY(4px)'
-    : 'rotate(270deg) translateY(1px)')};
+    ? 'rotate(0)'
+    : 'rotate(180deg) translateY(-4px)')};
 `;
 
 const SearchWrapper = styled.div`
@@ -147,7 +147,7 @@ export const SearchBar = withTheme((props) => {
     <SearchWrapper theme={theme}>
       <InputWrapper>
         <SearchIconWrapper>
-          <MdSearch color={theme.colors.grey_400} />
+          <SearchIcon color={theme.colors.grey_400} size={12} />
         </SearchIconWrapper>
         <InputFieldBackground>
           <InputField
@@ -168,7 +168,7 @@ export const SortingIcon = ({ sorting, columnId, theme }) => {
     return (
       <IconWrapper>
         <IconSpinner>
-          <MdPlayArrow color={transparentize(0.6, theme.colors.grey_700)} />
+          <DownChevron color={transparentize(0.6, theme.colors.grey_700)} />
         </IconSpinner>
       </IconWrapper>
     );
@@ -177,7 +177,7 @@ export const SortingIcon = ({ sorting, columnId, theme }) => {
   return (
     <IconWrapper>
       <IconSpinner desc={sorting[0].desc}>
-        <MdPlayArrow color={theme.colors.primary_500} />
+        <DownChevron color={theme.colors.primary_500} />
       </IconSpinner>
     </IconWrapper>
   );

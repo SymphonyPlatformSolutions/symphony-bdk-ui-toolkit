@@ -9,6 +9,7 @@ import Info from './info.md';
 import Button from '.';
 import Box from '../box';
 import Text from '../text';
+import { FavoriteButton, CloseButton, MoreButton } from './icon-buttons';
 import { FILL_TYPES } from './theme';
 import { NoOp } from '../../../utils/helpers';
 import { StoryWrapper } from '../wrappers';
@@ -335,6 +336,14 @@ storiesOf('Base', module)
           <Button fill="filled" type="primary" circular onClick={asyncAction}>
             <span>+</span>
           </Button>
+        </Box>
+      </Box>
+      <Box>
+        <Text isTitle>Icon Buttons</Text>
+        <Box horizontal>
+          <FavoriteButton />
+          <CloseButton />
+          <MoreButton />
         </Box>
       </Box>
     </StoryWrapper>

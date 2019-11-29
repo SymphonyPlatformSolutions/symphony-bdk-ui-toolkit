@@ -2,7 +2,8 @@ import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Text from '../text';
-import Button, { CloseButton } from '../button';
+import Button from '../button';
+import { CloseButton } from '../button/icon-buttons';
 import Box from '../box';
 import { ModalConsumer } from './modal-context';
 import { Overlay, Modal } from './theme';
@@ -46,7 +47,7 @@ const ModalTitle = styled(Text)`
 `;
 
 const Close = (props) => {
-  const { clickHandler, theme } = props;
+  const { clickHandler } = props;
 
   return (
     <IconContainer onClick={clickHandler}>

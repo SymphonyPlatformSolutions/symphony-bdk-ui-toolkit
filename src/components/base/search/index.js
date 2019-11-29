@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import SearchIcon from './search-icons';
 import Text from '../text';
 import Box from '../box';
 import { InputWrapper } from '../input-field/theme';
@@ -13,12 +12,25 @@ import {
   SearchContainer,
   ShrinkingBorder,
   BorderContainer,
+  SearchIconWrapper,
 } from './theme';
+import {
+  SearchIcon,
+} from '../icons';
 
 const INIT_DEBOUNCE = 500;
 const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
+
+const SearchIconComponent = (props) => {
+  const { isLarge } = props;
+  return (
+    <SearchIconWrapper isLarge={isLarge}>
+      <SearchIcon size={isLarge ? 12 : 18} />
+    </SearchIconWrapper>
+  );
+};
 
 const Menu = (props) => {
   const {
@@ -85,6 +97,8 @@ const Search = (props) => {
     ...rest
   } = props;
 
+  console.log(size);
+
   const [typedTerm, setTypedTerm] = useState('');
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [memo, setMemo] = useState({});
@@ -143,7 +157,9 @@ const Search = (props) => {
       <BorderContainer>
         <SearchContainer disabled={disabled}>
           <InputWrapper>
-            <SearchIcon isLarge={size === 'large'} />
+            <SearchIconWrapper isLarge={size === 'large'}>
+              <SearchIcon size={size === 'large' ? 18 : 14} />
+            </SearchIconWrapper>
             <StyledSearch
               {...rest}
               disabled={disabled}

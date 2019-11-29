@@ -36,6 +36,7 @@ const TabHeaderLabel = styled(Text)`
 `;
 
 const TabHeaderItem = styled.li`
+  user-select: none;
   display: inline-block;
   list-style: none;
   margin-bottom: -1px;
