@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
@@ -23,9 +23,8 @@ const fadeOut = () => keyframes`
 `;
 
 const StyledArrow = styled(UpArrow)`
-  opacity: 0;
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
-  animation: ${fadeOut} 3s ease-in-out;;
+  mix-blend-mode: screen;
 `;
 
 const PriceAskCell = ({ value, original }) => {
@@ -59,11 +58,13 @@ const PriceBidCell = ({ value, original }) => {
 };
 
 const fadeIn = props => keyframes`
-  from {
+  0% {
+    background-color: initial;
+  }
+  50% {
     background-color: ${props.bg};
   }
-
-  to {
+  100% {
     background-color: initial;
   }
 `;
@@ -72,15 +73,8 @@ const StyledLink = styled.a`
   color: ${({ theme }) => theme.colors.primary_200};
 `;
 
-const StyledAnimatedPrice = styled(Text).attrs(({ theme, updated, type }) => ({
-  color: type === 'ask' ? theme.colors.error_500 : theme.colors.primary_400,
-  bg: updated ? type === 'ask' ? theme.colors.error_100 : theme.colors.primary_100 : 'initial',
-}))`
-  color: ${props => props.color};
-  animation: ${fadeIn} 2s ease-in-out;
-  text-align: center;
-  padding: 0px 10px;
-  border-radius: 4px;
+const StyledAnimatedPrice = styled(Text)`
+  color: ${({ theme, type }) => (type === 'ask' ? theme.colors.error_500 : theme.colors.primary_400)};
 `;
 
 const getRenderTime = (time) => {
@@ -93,7 +87,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Header: 'Type',
     tooltip: 'Operation type',
     accessor: 'type',
-    width: 80,
+
     sortable: false,
   },
   {
@@ -101,40 +95,40 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     tooltip: 'Asset class being traded',
     accessor: 'asset',
     sortable: false,
-    width: 120,
+
   },
   {
     Header: 'Product',
     tooltip: 'Product being traded',
     accessor: 'product',
     sortable: false,
-    width: 150,
+
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this bid price',
     accessor: 'bidSize',
-    width: 100,
+
   },
   {
     Header: 'Bid',
     tooltip: 'The latest Bid price',
     accessor: 'bid',
     Cell: PriceBidCell,
-    width: 100,
+
   },
   {
     Header: 'Ask',
     tooltip: 'The latest Ask price',
     accessor: 'ask',
     Cell: PriceAskCell,
-    width: 100,
+
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this ask price',
     accessor: 'askSize',
-    width: 100,
+
   },
   {
     Header: 'Time',
@@ -144,7 +138,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Cell: ({ value }) => (
       <Text>{getRenderTime(value)}</Text>
     ),
-    width: 100,
+
   },
   {
     Header: 'Dealer',
@@ -169,6 +163,30 @@ const autoFetchConfig = {
   endpoint: 'http://localhost:3000/financial-demo',
   params: {},
   handleData: results => results,
+};
+
+const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
+  bg: updated ? increased ? theme.colors.success_500 : theme.colors.error_700 : 'initial',
+}))`
+  animation: ${fadeIn} 1s steps(1, end);
+  animation-iteration-count: 4;
+  width: 100%;
+`;
+
+const RowWrapper = ({ children }) => {
+  if (!children.props || !children.props.original) {
+    return null;
+  }
+
+  const rowData = children.props.original;
+  const increased = rowData.increasedAsk || rowData.increasedBid;
+  const updated = (children && children.props.original) ? children.props.original.updated : null;
+
+  return useMemo(() => (
+    <StyledRow {...children.props} increased={increased} updated={updated}>
+      {children}
+    </StyledRow>
+  ), [children]);
 };
 
 const SSEEventsSample = ({
@@ -203,12 +221,22 @@ const SSEEventsSample = ({
   return (
     <Table
       data={tableData}
+      TdComponent={RowWrapper}
       loading={loading}
       columns={SSE_EVENTS_TABLE_COLUMNS}
     />
   );
 };
 
+// getTrProps={(state, rowInfo, column) => {
+//         if (rowInfo !== undefined) {
+//           return {
+//             style: {
+//               animation: fadeIn() 2s ease-in-out;
+//             },
+//           };
+//         }
+//       }}
 
 storiesOf('Helpers', module)
   .addDecorator(withKnobs)

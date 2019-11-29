@@ -55,6 +55,7 @@ server.get('/sse-events', (req, res) => {
     'Cache-Control': 'no-cache',
   });
 
+  res.write('retry: 2000\n');
   switch (sseEventId % 3) {
     case 0: {
       const updatedData = RandomlyUpdateSSEDemoData(SSE_DEMO_DATA);
@@ -84,7 +85,6 @@ server.get('/sse-events', (req, res) => {
       break;
     }
   }
-
   sseEventId += 1;
 });
 

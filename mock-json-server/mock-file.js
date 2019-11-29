@@ -1,6 +1,15 @@
 // Use this file to generated the fake data.
 const Faker = require('faker');
 
+
+const DEALERS = [
+  'Goldman Sacks',
+  'BNP Paribas',
+  'Deutsche Bank',
+  'UBS',
+  'JP Morgan',
+];
+
 const OPERATION_TYPES = [
   'Run',
   'Axe',
@@ -50,7 +59,7 @@ const generateSSEDemoData = (size = 10) => {
 
     const dealerData = Faker.random.boolean()
       ? {
-        name: `${Faker.name.findName()}`,
+        name: DEALERS[Faker.random.number(DEALERS.length - 1)],
         link: 'http://www.example.com',
       }
       : {
@@ -98,14 +107,11 @@ const generateSSEDemoData = (size = 10) => {
 const RandomlyUpdateSSEDemoData = (data) => {
   const tmpArr = Array.from(data);
   const updatedChosen = [];
-  const numberOfUpdatedEntries = 1 + Faker.random.number(4);
 
-  for (let i = 0; i < numberOfUpdatedEntries; i++) {
-    const index = Faker.random.number(tmpArr.length - 1);
-    updatedChosen.push(
-      tmpArr.splice(index, 1)[0],
-    );
-  }
+  const index = Faker.random.number(tmpArr.length - 1);
+  updatedChosen.push(
+    tmpArr.splice(index, 1)[0],
+  );
 
   updatedChosen.forEach((row) => {
     if (row.type === OPERATION_TYPES[1]) {
