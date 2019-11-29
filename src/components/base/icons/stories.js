@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Box from '../box';
 import Text from '../text';
-// import Info from './info.md';
 import { StoryWrapper } from '../wrappers';
 import {
   SecurityIcon,
@@ -120,9 +119,4 @@ storiesOf('Base', module).add(
       </Box>
     </StoryWrapper>
   )),
-  {
-    notes: {
-      // markdown: Info,
-    },
-  },
 );

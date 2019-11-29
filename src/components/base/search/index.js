@@ -23,15 +23,6 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
 
-const SearchIconComponent = (props) => {
-  const { isLarge } = props;
-  return (
-    <SearchIconWrapper isLarge={isLarge}>
-      <SearchIcon size={isLarge ? 12 : 18} />
-    </SearchIconWrapper>
-  );
-};
-
 const Menu = (props) => {
   const {
     data,
@@ -66,7 +57,6 @@ const Menu = (props) => {
           key={el[dataLabel]}
           onMouseDown={() => itemChooseHandler(el)}
           onMouseEnter={() => setLightFocus(index)}
-          onMouseLeave={() => setLightFocus(null)}
           lightFocused={index === lightFocus}
         >
           {CustomMenuItem ? (
@@ -96,8 +86,6 @@ const Search = (props) => {
     disabled,
     ...rest
   } = props;
-
-  console.log(size);
 
   const [typedTerm, setTypedTerm] = useState('');
   const [isMenuOpen, setisMenuOpen] = useState(false);

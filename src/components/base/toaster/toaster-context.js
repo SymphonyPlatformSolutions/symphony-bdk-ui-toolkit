@@ -50,3 +50,5 @@ export const ToasterConsumer = ({ children }) => (
 ToasterConsumer.propTypes = {
   children: PropTypes.any.isRequired,
 };
+
+export default ToasterContext;
