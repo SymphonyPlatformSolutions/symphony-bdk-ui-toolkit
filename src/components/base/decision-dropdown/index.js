@@ -20,11 +20,6 @@ const DOWN_KEY = 40;
 const ENTER_KEY = 13;
 const ESC_KEY = 27;
 
-/*
-TODO:
-- Tooltip
-*/
-
 const DecisionDropdown = (props) => {
   const {
     data,

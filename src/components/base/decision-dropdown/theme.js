@@ -67,7 +67,6 @@ export const EmptyMessageContainer = styled.div`
 export const EmptyMessageText = styled(Text)`
   font-style: italic;
 `;
-
 export const ShrinkingBorder = styled.span`
   border-bottom: 1px solid
     ${({ theme, error }) => (error ? theme.colors.error_500 : theme.colors.oldprimary_400)};
@@ -99,7 +98,7 @@ export const DropdownContainer = styled(Container)`
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
 export const ValueContainer = styled.div`
-  padding: 0 5px 0 7px;
+  padding: 5px 5px 4px 7px;
   display: flex;
   align-items: center;
 `;
@@ -144,11 +143,20 @@ export const LoaderWrapper = styled.div`
 export const Wrapper = styled.div`
   width: 100%;
 `;
-
 export const ControlInput = styled(StyledInput)`
-  width: 100%;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
+  position: ${({ hide }) => (hide ? 'absolute' : undefined)};
+  height:${({ hide }) => (hide ? 0 : undefined)}; 
+  width: ${({ hide }) => (hide ? 0 : '100%')};
+  z-index: ${({ hide }) => (hide ? -1 : 2)};
+  transition: ${({ hide }) => (hide ? 'none' : undefined)};
   margin-left: 4px;
   border: none;
+`;
+export const ValueAndControl = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 35px);
 `;
 export const MenuWrapper = styled.div`
   position: relative;

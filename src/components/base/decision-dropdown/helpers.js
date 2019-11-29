@@ -51,18 +51,3 @@ export const buildSelectableArray = (obj, filterQuery = '') => {
     return acc;
   }, []);
 };
-
-export const getItemFromUid = (content, uid) => {
-  for (let i = 0; i < content.length; i++) {
-    if (content[i].suboptions) {
-      for (let j = 0; j < content[i].suboptions.length; j++) {
-        if (content[i].suboptions[j].uid === uid) {
-          return content[i].suboptions[j];
-        }
-      }
-    } else if (content[i].uid === uid) {
-      return content[i];
-    }
-  }
-  return null;
-};

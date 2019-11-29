@@ -34,6 +34,7 @@ import {
   MultiValueContainer,
   IconMarginContainer,
   TooltipMargin,
+  ValueAndControl,
 } from './theme';
 import {
   CrossIcon, TickIcon, DownChevron, CloseIcon,
@@ -248,6 +249,7 @@ export const DropdownControl = forwardRef((props, ref) => {
   };
 
   const shouldRenderClear = isMulti ? !!(value && value.length) : value;
+  const hideInput = value && value.length && isMulti && !menuIsOpen;
 
   return (
     <DropdownContainer
@@ -256,32 +258,35 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      {isMulti && (
+      <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }}>
+        {isMulti && (
         <MultiValueList
           chooseHandler={chooseHandler}
           value={value}
           size={size}
         />
-      )}
-      <ControlInput
-        onKeyDown={(e) => {
-          specialKeyController(e);
-          if (e.keyCode === BS_KEY) {
-            backSpaceHandler();
-          }
-        }}
-        ref={inputRef}
-        placeholder={placeholder}
-        value={typedValue}
-        onChange={({ target }) => {
-          setTypedValue(target.value);
-          filterQueryHandler(target.value);
-        }}
-        onFocus={() => focusBlurHandler(true)}
-        onBlur={() => focusBlurHandler(false)}
-        disabled={disabled}
-        size={size}
-      />
+        )}
+        <ControlInput
+          hide={hideInput}
+          onKeyDown={(e) => {
+            specialKeyController(e);
+            if (e.keyCode === BS_KEY) {
+              backSpaceHandler();
+            }
+          }}
+          ref={inputRef}
+          placeholder={placeholder}
+          value={typedValue}
+          onChange={({ target }) => {
+            setTypedValue(target.value);
+            filterQueryHandler(target.value);
+          }}
+          onFocus={() => focusBlurHandler(true)}
+          onBlur={() => focusBlurHandler(false)}
+          disabled={disabled}
+          size={size}
+        />
+      </ValueAndControl>
       <ChevronContainer>
         {shouldRenderClear && (
           <IconMarginContainer onClick={clearHandler}>
