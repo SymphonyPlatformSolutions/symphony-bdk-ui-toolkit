@@ -12,19 +12,21 @@ import Table from '../../base/table';
 import Text from '../../base/text';
 import SSEventsListWrapper from './index';
 
-const fadeOut = () => keyframes`
-  from {
-    opacity: 1
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
   mix-blend-mode: screen;
+`;
+
+const FlashAnimation = props => keyframes`
+  0% {
+    background-color: initial;
+  }
+  50% {
+    background-color: ${props.bg};
+  }
+  100% {
+    background-color: initial;
+  }
 `;
 
 const PriceAskCell = ({ value, original }) => {
@@ -33,7 +35,7 @@ const PriceAskCell = ({ value, original }) => {
   return (
     <Box horizontal justify="center" align="center">
       <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="ask" updated={original.updated}>{value}</StyledAnimatedPrice>
+        <StyledAnimatedPrice type="ask">{value}</StyledAnimatedPrice>
       </Box>
       <Box type="flat" style={{ width: '50px', transform: 'translateX(-20px)' }}>
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedAsk} /> }
@@ -51,23 +53,11 @@ const PriceBidCell = ({ value, original }) => {
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedBid} /> }
       </Box>
       <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="bid" updated={original.updated}>{value}</StyledAnimatedPrice>
+        <StyledAnimatedPrice type="bid">{value}</StyledAnimatedPrice>
       </Box>
     </Box>
   );
 };
-
-const fadeIn = props => keyframes`
-  0% {
-    background-color: initial;
-  }
-  50% {
-    background-color: ${props.bg};
-  }
-  100% {
-    background-color: initial;
-  }
-`;
 
 const StyledLink = styled.a`
   color: ${({ theme }) => theme.colors.primary_200};
@@ -168,7 +158,7 @@ const autoFetchConfig = {
 const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
   bg: updated ? increased ? theme.colors.success_500 : theme.colors.error_700 : 'initial',
 }))`
-  animation: ${fadeIn} 1s steps(1, end);
+  animation: ${FlashAnimation} 1s steps(1, end);
   animation-iteration-count: 4;
   width: 100%;
 `;
@@ -228,22 +218,19 @@ const SSEEventsSample = ({
   );
 };
 
-// getTrProps={(state, rowInfo, column) => {
-//         if (rowInfo !== undefined) {
-//           return {
-//             style: {
-//               animation: fadeIn() 2s ease-in-out;
-//             },
-//           };
-//         }
-//       }}
-
 storiesOf('Helpers', module)
   .addDecorator(withKnobs)
   .add('SSE Events', () => (
     <StoryWrapper p={15}>
       <Text isTitle size="small">SSEventsListWrapper with table</Text>
       <Box p={15}>
+        <Box vertical>
+          <Text>This is an example implementation of SSEEventsListWrapper within a table</Text>
+          <ul>
+            <Text><li>The mock server sends an event every 2 seconds</li></Text>
+            <Text><li>The events are always coming in this order: update, create, remove and then restart</li></Text>
+          </ul>
+        </Box>
         <SSEventsListWrapper
           sseEndpoint="http://localhost:3000/sse-events"
           autoFetchConfig={autoFetchConfig}
