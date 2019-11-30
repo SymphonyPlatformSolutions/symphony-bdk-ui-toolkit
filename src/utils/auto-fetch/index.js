@@ -30,6 +30,7 @@ export const useAutoFetch = ({ endpoint, params, handleData }) => {
   };
 
   const refreshData = (newConfig) => {
+    console.log('AWIo');
     if (newConfig) {
       setConfig(prevState => ({
         ...prevState,

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
 } from '@storybook/addon-knobs';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, withTheme } from 'styled-components';
 import { UpArrow } from 'styled-icons/boxicons-solid';
 import Box from '../../base/box';
 import { StoryWrapper } from '../../base/wrappers';
@@ -11,13 +11,17 @@ import Info from './info.md';
 import Table from '../../base/table';
 import Text from '../../base/text';
 import SSEventsListWrapper from './index';
+import CheckBox from '../../base/checkbox';
+import { RestClient } from '../../../utils';
+import { Card } from '../../index';
+import Button from '../../base/button';
+import MessageBox from '../../base/message-box';
 
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
-  mix-blend-mode: screen;
 `;
 
-const FlashAnimation = props => keyframes`
+const Animation = props => keyframes`
   0%, 100% {
     background-color: initial;
   }
@@ -64,18 +68,20 @@ const StyledAnimatedPrice = styled(Text)`
   color: ${({ theme, type }) => (type === 'ask' ? theme.colors.error_500 : theme.colors.primary_400)};
 `;
 
-const StyledText = styled(Text)`
-  mix-blend-mode: revert;
-`;
-
 const getRenderTime = (time) => {
   const date = new Date(time);
   return `${date.getHours()}:${date.getMinutes()}`;
 };
 
-const RegularRow = ({ value }) => useMemo(() => (
-  <Text>{value}</Text>
-), [value]);
+const StyledText = styled(Text).attrs(({ theme, updated }) => ({
+  color: updated ? theme.colors.white : null,
+}))`
+  color: ${props => props.color} !important;
+`;
+
+const RegularRow = ({ value, original }) => useMemo(() => (
+  <StyledText {...original}>{value}</StyledText>
+), [original, value]);
 
 const SSE_EVENTS_TABLE_COLUMNS = [
   {
@@ -128,8 +134,8 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     tooltip: 'last time updated',
     accessor: 'time',
     sortable: false,
-    Cell: ({ value }) => useMemo(() => (
-      <Text>{getRenderTime(value)}</Text>
+    Cell: ({ value, original }) => useMemo(() => (
+      <StyledText {...original}>{getRenderTime(value)}</StyledText>
     ), [value]),
 
   },
@@ -160,54 +166,61 @@ const autoFetchConfig = {
 };
 
 const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
-  bg: updated ? increased ? theme.colors.misc_16 : theme.colors.error_400 : 'initial',
+  bg: updated ? increased ? theme.colors.misc_18 : theme.colors.error_400 : 'initial',
 }))`
-  animation: ${FlashAnimation} .8s steps(1, end);
   animation-iteration-count: 2;
   width: 100%;
+  background-color: ${props => props.bg};
   color: ${({ theme }) => theme.colors.grey_900};
-  
-  div {
-    color: inherit;
-  }
 `;
 
-const RowWrapper = ({ children }) => {
-  if (!children.props || !children.props.original) {
-    return null;
+const postDemo = async (action, isAuto = null, interval = null) => {
+  try {
+    await RestClient.post('http://localhost:3000/financial-demo',
+      { action, isAuto, interval },
+      {},
+      false);
+  } catch (e) {
+    console.log(e);
   }
-
-  const rowData = children.props.original;
-  const increased = rowData.increasedAsk || rowData.increasedBid;
-  const updated = (children && children.props.original) ? children.props.original.updated : null;
-
-  return useMemo(() => (
-    <StyledRow {...children.props} increased={increased} updated={updated}>
-      {children}
-    </StyledRow>
-  ), [children]);
 };
 
 const SSEEventsSample = ({
-  data, loading, error, refreshData,
+  data, loading, error, refreshData, theme,
+  eventType,
 }) => {
   const [tableData, setTableData] = useState(data);
+  const [autoPilot, setAutoPilot] = useState(false);
 
   useEffect(() => {
-    if (data && data.length && tableData && tableData.length > 0) {
+    if (eventType === 'fetch') {
+      setTableData(data);
+    } else if (data && data.length && tableData && tableData.length > 0) {
       const newData = Array.from(data);
-
-      newData.forEach((elem) => {
-
-      });
-
 
       newData.forEach((element) => {
         if (element.updated) {
           const mData = tableData.find(e => e.id === element.id);
-          if (mData !== element) {
-            element.increasedAsk = mData.ask < element.ask;
-            element.increasedBid = mData.bid < element.bid;
+          element.increasedAsk = mData.ask < element.ask;
+          element.increasedBid = mData.bid < element.bid;
+
+          if (!mData.animating) {
+            element.animating = setTimeout(() => {
+              setTableData((prevState) => {
+                console.log(prevState);
+                const index = prevState.findIndex(el => el.id === mData.id);
+                if (index !== -1) {
+                  console.log(index);
+                  const newState = Array.from(prevState);
+                  console.log(newState[index]);
+                  newState[index].animating = null;
+                  console.log('LIMPA AQUI');
+                  return newState;
+                }
+                return prevState;
+              });
+            }, 30000);
+            console.log(element.animating);
           }
         }
       });
@@ -217,15 +230,88 @@ const SSEEventsSample = ({
     }
   }, [data]);
 
+  const handleAutoPilot = async (e) => {
+    const isChecked = e.target.checked;
+    setAutoPilot(isChecked);
+    postDemo('auto', isChecked);
+  };
+
+  const onRefresh = () => {
+    setTableData([]);
+    refreshData();
+  }
+
   return (
-    <Table
-      data={tableData}
-      TdComponent={RowWrapper}
-      loading={loading}
-      columns={SSE_EVENTS_TABLE_COLUMNS}
-    />
+    <Box type="flat" vertical>
+      <Box>
+        <MessageBox type="info">{`Last Message: ${eventType}`}</MessageBox>
+      </Box>
+      <Box align="end">
+        <Card>
+          <Box horizontal justify="space-between">
+            <Box>
+              <Button
+                onClick={onRefresh}
+              >
+                Refresh
+              </Button>
+            </Box>
+            <Box horizontal justify="flex-end">
+              <Button
+                disabled={autoPilot}
+                onClick={() => postDemo('create')}
+              >
+                Add data
+              </Button>
+              <Button
+                disabled={autoPilot}
+                onClick={() => postDemo('update')}
+              >
+                Update Data
+              </Button>
+              <Button
+                disabled={autoPilot}
+                type="danger"
+                onClick={() => postDemo('remove')}
+              >
+                Remove Data
+              </Button>
+              <CheckBox
+                checked={autoPilot}
+                onChange={handleAutoPilot}
+              >
+                Auto Pilot
+              </CheckBox>
+            </Box>
+          </Box>
+        </Card>
+      </Box>
+      <Box>
+        <Table
+          data={tableData}
+          loading={loading}
+          columns={SSE_EVENTS_TABLE_COLUMNS}
+          getTrProps={(state, rowInfo) => {
+            if (rowInfo && rowInfo.row) {
+              const original = rowInfo.row._original;
+              const increased = original.increasedAsk || original.increasedBid;
+              return {
+                style: {
+                  transition: 'background-color 0.5s cubic-bezier(1,.02,.41,.37)',
+                  backgroundColor: original.animating ? increased ? theme.colors.misc_18 : theme.colors.error_400 : null,
+                },
+              };
+            }
+            return {};
+          }
+      }
+        />
+      </Box>
+    </Box>
   );
 };
+
+const ThemedSample = withTheme(SSEEventsSample);
 
 storiesOf('Helpers', module)
   .addDecorator(withKnobs)
@@ -244,7 +330,7 @@ storiesOf('Helpers', module)
           sseEndpoint="http://localhost:3000/sse-events"
           autoFetchConfig={autoFetchConfig}
         >
-          <SSEEventsSample />
+          <ThemedSample />
         </SSEventsListWrapper>
       </Box>
     </StoryWrapper>

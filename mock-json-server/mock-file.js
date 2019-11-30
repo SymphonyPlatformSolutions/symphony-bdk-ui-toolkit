@@ -151,8 +151,8 @@ const RandomlyUpdateSSEDemoData = (data) => {
   return updatedChosen;
 };
 
-const RandomlyDeleteSSEDemoData = (data) => {
-  const index = Faker.random.number(data.length - 1);
+const DeleteSSEDemoData = (data) => {
+  const index = data.length -1;
   const chosen = data[index];
   data.splice(index, 1);
   return [chosen];
@@ -166,6 +166,6 @@ const RandomlyCreateSSEDemoData = (data) => {
 module.exports = {
   generateSSEDemoData,
   RandomlyUpdateSSEDemoData,
-  RandomlyDeleteSSEDemoData,
+  DeleteSSEDemoData,
   RandomlyCreateSSEDemoData,
 };

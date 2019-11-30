@@ -30,7 +30,7 @@ export const BaseCard = styled.div`
   &:hover {
     transform: ${props => props.hoverEffect ? 'scale(1.02)' : null }
   }
-  width: 100%;
+  width: -webkit-fill-available;
 `;
 
 export const CardTitle = styled.span`;

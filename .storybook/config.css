@@ -6,3 +6,7 @@ html, body {
   font-style: normal;
   font-weight: normal;
 }
+
+.sb-show-main {
+  margin: 0;
+}

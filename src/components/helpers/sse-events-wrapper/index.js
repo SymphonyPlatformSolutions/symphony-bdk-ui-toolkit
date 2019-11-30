@@ -9,6 +9,7 @@ const SSE_EVENT_TYPES = {
   UPDATE: 'update',
   CREATE: 'create',
   REMOVE: 'remove',
+  FETCH: 'fetch',
 };
 
 const SSEventsContentWrapper = ({
@@ -16,7 +17,6 @@ const SSEventsContentWrapper = ({
   loading,
   error,
   refreshData,
-  eventType,
   children,
 }) => {
   const updatedState = useSSE(SSE_EVENT_TYPES.UPDATE);
@@ -24,12 +24,15 @@ const SSEventsContentWrapper = ({
   const removedState = useSSE(SSE_EVENT_TYPES.REMOVE);
 
   const [latestData, setLatestData] = useState(fetchData);
+  const [latestMessageType, setMessageType] = useState(null);
 
   useEffect(() => {
     setLatestData(fetchData);
+    setMessageType(SSE_EVENT_TYPES.FETCH);
   }, [fetchData]);
 
   useEffect(() => {
+    setMessageType(SSE_EVENT_TYPES.UPDATE);
     if (isStateValid(updatedState, latestData)) {
       let hasUpdated = false;
       latestData.forEach((elem) => {
@@ -51,12 +54,16 @@ const SSEventsContentWrapper = ({
   }, [updatedState]);
 
   useEffect(() => {
+    setMessageType(SSE_EVENT_TYPES.CREATE);
     if (isStateValid(createdState, latestData)) {
       let creatingData = false;
+      latestData.forEach((elem) => {
+        elem.updated = false;
+      });
       createdState.data.forEach((elem) => {
         const index = latestData.findIndex(entry => entry.id === elem.id);
         if (index === -1) {
-          latestData.unshift(elem);
+          latestData.push(elem);
           creatingData = true;
         }
       });
@@ -68,7 +75,11 @@ const SSEventsContentWrapper = ({
   }, [createdState]);
 
   useEffect(() => {
+    setMessageType(SSE_EVENT_TYPES.REMOVE);
     if (isStateValid(removedState, latestData)) {
+      latestData.forEach((elem) => {
+        elem.updated = false;
+      });
       let removingData = false;
       removedState.data.forEach((elem) => {
         const index = latestData.findIndex(entry => entry.id === elem.id);
@@ -89,8 +100,8 @@ const SSEventsContentWrapper = ({
     loading,
     error,
     refreshData,
-    eventType,
-  }), [latestData]);
+    eventType: latestMessageType,
+  }), [latestData, loading]);
 };
 
 SSEventsContentWrapper.propTypes = {

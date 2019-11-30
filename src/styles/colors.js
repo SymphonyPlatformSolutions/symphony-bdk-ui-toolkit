@@ -61,7 +61,7 @@ const COMMON_COLORS = {
   misc_9: '#8C513B',
   misc_14: '#29D0AB',
   misc_15: '#156B58',
-  misc_16: '#75DE7B',
+  misc_18: '#75DE7B',
   white: '#FFFFFF',
 };
 
