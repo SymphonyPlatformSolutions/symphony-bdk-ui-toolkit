@@ -8,12 +8,20 @@ const {
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
 
+const SSE_EVENT_TYPES = {
+  UPDATE: 'update',
+  CREATE: 'create',
+  REMOVE: 'remove',
+  AUTO: 'auto',
+};
+
 // Mock delay, for testing loading states. Units are in ms.
 const MOCK_DELAY = 1000;
 let sseEventId = 0;
 const SSE_DEMO_DATA = generateSSEDemoData();
 
-const actionlist = [];
+let actionList = [];
+
 let autoPilot = false;
 
 function send(callback, delay = MOCK_DELAY) {
@@ -41,13 +49,10 @@ server.use((req, res, next) => {
 
 server.post('/financial-demo', (req, res) => {
   const payload = req.body;
-  console.log('aqui');
-  if (payload.action === 'auto') {
-  console.log('acola');
+  if (payload.action === SSE_EVENT_TYPES.AUTO) {
     autoPilot = payload.isAuto;
   } else {
-    console.log('fafa');
-    actionlist.push(payload.action);
+    actionList.push(payload.action);
   }
   res.sendStatus(200);
 });
@@ -57,27 +62,10 @@ server.get('/financial-demo', (req, res) => {
   send(() => res.jsonp(SSE_DEMO_DATA));
 });
 
-const updateMockData = (res) => {
-  const updatedData = RandomlyUpdateSSEDemoData(SSE_DEMO_DATA);
+const buildSSEEvent = (res, type, data) => {
   res.write(`id: ${sseEventId}\n`);
-  res.write('event:update\n');
-  res.write(`data: ${JSON.stringify(updatedData)}`);
-  res.write('\n\n');
-};
-
-const createMockData = (res) => {
-  const createdData = RandomlyCreateSSEDemoData(SSE_DEMO_DATA);
-  res.write(`id: ${sseEventId}\n`);
-  res.write('event:create\n');
-  res.write(`data: ${JSON.stringify(createdData)}`);
-  res.write('\n\n');
-};
-
-const deleteMockData = (res) => {
-  const deletedData = DeleteSSEDemoData(SSE_DEMO_DATA);
-  res.write(`id: ${sseEventId}\n`);
-  res.write('event:remove\n');
-  res.write(`data: ${JSON.stringify(deletedData)}`);
+  res.write(`event:${type}\n`);
+  res.write(`data: ${JSON.stringify(data)}`);
   res.write('\n\n');
 };
 
@@ -88,44 +76,59 @@ server.get('/sse-events', (req, res) => {
     'Cache-Control': 'no-cache',
   });
 
-  console.log(autoPilot);
   res.write('retry: 2000\n');
   if (autoPilot) {
-    console.log(sseEventId);
     switch (sseEventId % 3) {
       case 0: {
-        updateMockData(res);
+        if (SSE_DEMO_DATA.length <= 0) break;
+        const updatedData = RandomlyUpdateSSEDemoData(SSE_DEMO_DATA, SSE_DEMO_DATA.length < 4);
+        buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
         break;
       }
       case 1: {
-        createMockData(res);
+        const createdData = RandomlyCreateSSEDemoData(SSE_DEMO_DATA);
+        buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
         break;
       }
       case 2: {
-        deleteMockData(res);
+        if (SSE_DEMO_DATA.length <= 0) break;
+        const deletedData = DeleteSSEDemoData(SSE_DEMO_DATA);
+        buildSSEEvent(res, SSE_EVENT_TYPES.REMOVE, deletedData);
         break;
       }
     }
     sseEventId += 1;
-  } else if (actionlist.length) {
-    console.log(sseEventId);
-    const newAction = actionlist.pop();
-    switch (newAction) {
-      case 'update': {
-        updateMockData(res);
-        break;
+  } else {
+    const elementsToUpdate = actionList.filter(el => el === SSE_EVENT_TYPES.UPDATE);
+    const elementsToCreate = actionList.filter(el => el === SSE_EVENT_TYPES.CREATE);
+    const elementsToRemove = actionList.filter(el => el === SSE_EVENT_TYPES.REMOVE);
+    actionList = [];
+
+    elementsToUpdate.forEach(() => {
+      if (SSE_DEMO_DATA.length <= 0) {
+        return;
       }
-      case 'create': {
-        createMockData(res);
-        break;
+      const updatedData = RandomlyUpdateSSEDemoData(SSE_DEMO_DATA, true);
+      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
+      sseEventId += 1;
+    });
+
+    elementsToCreate.forEach(() => {
+      const createdData = RandomlyCreateSSEDemoData(SSE_DEMO_DATA);
+      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
+      sseEventId += 1;
+    });
+
+    elementsToRemove.forEach(() => {
+      if (SSE_DEMO_DATA.length <= 0) {
+        return;
       }
-      case 'remove': {
-        deleteMockData(res);
-        break;
-      }
-    }
-    sseEventId += 1;
+      const deletedData = DeleteSSEDemoData(SSE_DEMO_DATA);
+      buildSSEEvent(res, SSE_EVENT_TYPES.REMOVE, deletedData);
+      sseEventId += 1;
+    });
   }
+
   res.send();
 });
 

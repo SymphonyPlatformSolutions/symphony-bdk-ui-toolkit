@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { SSEProvider, useSSE } from 'react-hooks-sse';
 import { useAutoFetch } from '../../../utils/auto-fetch';
 
-const isStateValid = (state, data) => state && state.data !== null && data && data.length;
+const isStateValid = (state, data) => state && state.data !== null && data;
 
 const SSE_EVENT_TYPES = {
   UPDATE: 'update',

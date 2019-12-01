@@ -31,14 +31,14 @@ const Animation = props => keyframes`
 `;
 
 const PriceAskCell = ({ value, original }) => {
-  const arrowColor = original.increasedAsk ? '#10C820' : '#FF4840';
-  const hasArrow = original.updated && value;
+  const arrowColor = original.increasedAsk ? '#10C820' : '#DD3638';
+  const hasArrow = original.animating && value;
   return (
     <Box horizontal justify="center" align="center">
       <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="ask">{value}</StyledAnimatedPrice>
+        <StyledAnimatedPrice type="ask" animating={original.animating}>{value}</StyledAnimatedPrice>
       </Box>
-      <Box type="flat" style={{ width: '50px', transform: 'translateX(-35px)' }}>
+      <Box type="flat" style={{ width: '50px', display: 'absolute' }}>
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedAsk} /> }
       </Box>
     </Box>
@@ -46,26 +46,36 @@ const PriceAskCell = ({ value, original }) => {
 };
 
 const PriceBidCell = ({ value, original }) => {
-  const arrowColor = original.increasedBid ? '#10C820' : '#FF4840';
-  const hasArrow = original.updated && value;
+  const arrowColor = original.increasedBid ? '#10C820' : '#DD3638';
+  const hasArrow = original.animating && value;
   return (
     <Box horizontal justify="center" align="center" style={{ transform: 'translateX(-20px)' }}>
       <Box type="flat" style={{ position: 'absolute', transform: 'translateX(-30px)' }}>
         { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedBid} /> }
       </Box>
       <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="bid">{value}</StyledAnimatedPrice>
+        <StyledAnimatedPrice type="bid" animating={original.animating}>{value}</StyledAnimatedPrice>
       </Box>
     </Box>
   );
 };
 
-const StyledLink = styled.a`
-  color: ${({ theme }) => theme.colors.primary_200};
+const StyledLink = styled.a.attrs(({ theme, animating }) => ({
+  color: animating ? theme.colors.primary_800 : theme.colors.primary_200,
+}))`
+  color: ${props => props.color};
 `;
 
-const StyledAnimatedPrice = styled(Text)`
-  color: ${({ theme, type }) => (type === 'ask' ? theme.colors.error_500 : theme.colors.primary_400)};
+const StyledAnimatedPrice = styled(Text).attrs(({ theme, type, animating }) => ({
+  color: type === 'ask'
+    ? animating
+      ? theme.colors.misc_19
+      : theme.colors.error_500
+    : animating
+      ? theme.colors.primary_800
+      : theme.colors.primary_400,
+}))`
+  color: ${props => props.color};
 `;
 
 const getRenderTime = (time) => {
@@ -73,8 +83,8 @@ const getRenderTime = (time) => {
   return `${date.getHours()}:${date.getMinutes()}`;
 };
 
-const StyledText = styled(Text).attrs(({ theme, updated }) => ({
-  color: updated ? theme.colors.white : null,
+const StyledText = styled(Text).attrs(({ theme, animating }) => ({
+  color: animating ? theme.colors.white : null,
 }))`
   color: ${props => props.color} !important;
 `;
@@ -88,8 +98,9 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Header: 'Type',
     tooltip: 'Operation type',
     accessor: 'type',
-    sortable: false,
+    sortable: true,
     Cell: RegularRow,
+    width: 80,
   },
   {
     Header: 'Asset Class',
@@ -97,6 +108,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'asset',
     sortable: false,
     Cell: RegularRow,
+    width: 120,
   },
   {
     Header: 'Product',
@@ -104,36 +116,43 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'product',
     sortable: false,
     Cell: RegularRow,
+    width: 150,
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this bid price',
     accessor: 'bidSize',
     Cell: RegularRow,
+    width: 80,
   },
   {
     Header: 'Bid',
     tooltip: 'The latest Bid price',
     accessor: 'bid',
     Cell: PriceBidCell,
+    sortable: false,
+    width: 70,
   },
   {
     Header: 'Ask',
     tooltip: 'The latest Ask price',
     accessor: 'ask',
+    sortable: false,
     Cell: PriceAskCell,
+    width: 80,
   },
   {
     Header: 'Size',
     tooltip: 'The amount of equity being traded at this ask price',
     accessor: 'askSize',
     Cell: RegularRow,
+    width: 50,
   },
   {
     Header: 'Time',
     tooltip: 'last time updated',
     accessor: 'time',
-    sortable: false,
+    sortable: true,
     Cell: ({ value, original }) => useMemo(() => (
       <StyledText {...original}>{getRenderTime(value)}</StyledText>
     ), [value]),
@@ -144,11 +163,11 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     tooltip: 'The contact',
     accessor: 'dealer',
     Cell: ({ original }) => useMemo(() => (original.dealer.link ? (
-      <StyledLink href={original.dealer.link}>{original.dealer.name}</StyledLink>
+      <StyledLink animating={original.animating} href={original.dealer.link}>{original.dealer.name}</StyledLink>
     ) : (
-      <Text>{original.dealer.name}</Text>
+      <StyledText {...original}>{original.dealer.name}</StyledText>
     )), [original]),
-    sortable: false,
+    sortable: true,
   },
   {
     Header: 'Comment',
@@ -165,8 +184,8 @@ const autoFetchConfig = {
   handleData: results => results,
 };
 
-const StyledRow = styled.td.attrs(({ theme, increased, updated }) => ({
-  bg: updated ? increased ? theme.colors.misc_18 : theme.colors.error_400 : 'initial',
+const StyledRow = styled.td.attrs(({ theme, increased, animating }) => ({
+  bg: animating ? increased ? theme.colors.misc_18 : theme.colors.error_400 : 'initial',
 }))`
   animation-iteration-count: 2;
   width: 100%;
@@ -186,7 +205,11 @@ const postDemo = async (action, isAuto = null, interval = null) => {
 };
 
 const SSEEventsSample = ({
-  data, loading, error, refreshData, theme,
+  data,
+  loading,
+  error,
+  refreshData,
+  theme,
   eventType,
 }) => {
   const [tableData, setTableData] = useState(data);
@@ -207,14 +230,10 @@ const SSEEventsSample = ({
           if (!mData.animating) {
             element.animating = setTimeout(() => {
               setTableData((prevState) => {
-                console.log(prevState);
                 const index = prevState.findIndex(el => el.id === mData.id);
                 if (index !== -1) {
-                  console.log(index);
                   const newState = Array.from(prevState);
-                  console.log(newState[index]);
                   newState[index].animating = null;
-                  console.log('LIMPA AQUI');
                   return newState;
                 }
                 return prevState;
@@ -239,7 +258,7 @@ const SSEEventsSample = ({
   const onRefresh = () => {
     setTableData([]);
     refreshData();
-  }
+  };
 
   return (
     <Box type="flat" vertical>
@@ -264,13 +283,13 @@ const SSEEventsSample = ({
                 Add data
               </Button>
               <Button
-                disabled={autoPilot}
+                disabled={autoPilot || !tableData.length}
                 onClick={() => postDemo('update')}
               >
                 Update Data
               </Button>
               <Button
-                disabled={autoPilot}
+                disabled={autoPilot || !tableData.length}
                 type="danger"
                 onClick={() => postDemo('remove')}
               >

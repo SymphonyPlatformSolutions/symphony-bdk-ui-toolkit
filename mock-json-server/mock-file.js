@@ -106,17 +106,21 @@ const generateSSEDemoData = (size = 10) => {
   return data;
 };
 
-const RandomlyUpdateSSEDemoData = (data) => {
+const RandomlyUpdateSSEDemoData = (data, forceUpdate = false) => {
   const tmpArr = Array.from(data);
   const updatedChosen = [];
+  let numberOfUpdatedEntries = 1000;
 
-  const numberOfUpdatedEntries = 1 + Faker.random.number(2);
+  while (numberOfUpdatedEntries > data.length) {
+    numberOfUpdatedEntries = 1 + Faker.random.number(2);
+  }
+
   for (let i = 0; i < numberOfUpdatedEntries;) {
     const index = Faker.random.number(tmpArr.length - 1);
     const updatedLastCycle = lastUpdatedEntries.findIndex(el => el.id === tmpArr[index].id);
     const updatedChosenCycle = updatedChosen.findIndex(el => el.id === tmpArr[index].id);
 
-    if (updatedLastCycle === -1 && updatedChosenCycle === -1) {
+    if ((updatedLastCycle === -1 && updatedChosenCycle === -1) || forceUpdate) {
       updatedChosen.push(
         tmpArr.splice(index, 1)[0],
       );
@@ -152,9 +156,12 @@ const RandomlyUpdateSSEDemoData = (data) => {
 };
 
 const DeleteSSEDemoData = (data) => {
-  const index = data.length -1;
-  const chosen = data[index];
-  data.splice(index, 1);
+  let chosen = null;
+  if (data.length) {
+    const index = data.length - 1;
+    chosen = data[index];
+    data.splice(index, 1);
+  }
   return [chosen];
 };
 const RandomlyCreateSSEDemoData = (data) => {
