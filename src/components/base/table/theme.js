@@ -115,7 +115,7 @@ const IconWrapper = styled.div`
 const IconSpinner = styled.div`
   transform: ${({ desc }) => (desc
     ? 'rotate(0)'
-    : 'rotate(180deg) translateY(-4px)')};
+    : 'rotate(180deg) translateY(-5px)')};
 `;
 
 const SearchWrapper = styled.div`

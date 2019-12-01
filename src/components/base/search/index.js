@@ -97,8 +97,6 @@ const Search = (props) => {
     ...rest
   } = props;
 
-  console.log(size);
-
   const [typedTerm, setTypedTerm] = useState('');
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [memo, setMemo] = useState({});

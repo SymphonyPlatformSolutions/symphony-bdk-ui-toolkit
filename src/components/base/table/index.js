@@ -132,7 +132,7 @@ const Table = ({
             >
               {stringHeader}
             </Text>
-            {parsedEl.tooltip && <Tooltip>{parsedEl.tooltip}</Tooltip>}
+            {parsedEl.tooltip && <Tooltip size={12}>{parsedEl.tooltip}</Tooltip>}
             {el.sortable !== false && <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />}
           </Box>
         </CellWrapper>

@@ -30,18 +30,15 @@ const Animation = props => keyframes`
   }
 `;
 
+{ /* <Box type="flat"> */ }
+{ /*
+{ /*    ) } */ }
+
 const PriceAskCell = ({ value, original }) => {
   const arrowColor = original.increasedAsk ? '#10C820' : '#DD3638';
   const hasArrow = original.animating && value;
   return (
-    <Box horizontal justify="center" align="center">
-      <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="ask" animating={original.animating}>{value}</StyledAnimatedPrice>
-      </Box>
-      <Box type="flat" style={{ width: '50px', display: 'absolute' }}>
-        { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedAsk} /> }
-      </Box>
-    </Box>
+    <StyledAnimatedPrice type="ask" animating={original.animating}>{value}</StyledAnimatedPrice>
   );
 };
 
@@ -49,14 +46,7 @@ const PriceBidCell = ({ value, original }) => {
   const arrowColor = original.increasedBid ? '#10C820' : '#DD3638';
   const hasArrow = original.animating && value;
   return (
-    <Box horizontal justify="center" align="center" style={{ transform: 'translateX(-20px)' }}>
-      <Box type="flat" style={{ position: 'absolute', transform: 'translateX(-30px)' }}>
-        { hasArrow && <StyledArrow color={arrowColor} size={24} increased={original.increasedBid} /> }
-      </Box>
-      <Box type="flat" style={{ width: '50px' }}>
-        <StyledAnimatedPrice type="bid" animating={original.animating}>{value}</StyledAnimatedPrice>
-      </Box>
-    </Box>
+    <StyledAnimatedPrice type="bid" animating={original.animating}>{value}</StyledAnimatedPrice>
   );
 };
 
@@ -120,22 +110,19 @@ const SSE_EVENTS_TABLE_COLUMNS = [
   },
   {
     Header: 'Size',
-    tooltip: 'The amount of equity being traded at this bid price',
     accessor: 'bidSize',
     Cell: RegularRow,
     width: 80,
   },
   {
     Header: 'Bid',
-    tooltip: 'The latest Bid price',
     accessor: 'bid',
     Cell: PriceBidCell,
     sortable: false,
-    width: 70,
+    width: 50,
   },
   {
     Header: 'Ask',
-    tooltip: 'The latest Ask price',
     accessor: 'ask',
     sortable: false,
     Cell: PriceAskCell,
@@ -149,6 +136,25 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     width: 50,
   },
   {
+    Header: '',
+    tooltip: '',
+    accessor: null,
+    sortable: false,
+    Cell: ({ original }) => {
+      const arrowColor = original.increasedBid ? '#10C820' : '#DD3638';
+      const hasArrow = original.animating;
+      const increased = original.increasedAsk || original.increasedBid;
+      return hasArrow && (
+      <StyledArrow
+        color={arrowColor}
+        size={24}
+        increased={increased}
+      />
+      );
+    },
+    width: 100,
+  },
+  {
     Header: 'Time',
     tooltip: 'last time updated',
     accessor: 'time',
@@ -156,6 +162,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Cell: ({ value, original }) => useMemo(() => (
       <StyledText {...original}>{getRenderTime(value)}</StyledText>
     ), [value]),
+    width: 80,
 
   },
   {
@@ -168,6 +175,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
       <StyledText {...original}>{original.dealer.name}</StyledText>
     )), [original]),
     sortable: true,
+    width: 120,
   },
   {
     Header: 'Comment',
@@ -200,7 +208,7 @@ const postDemo = async (action, isAuto = null, interval = null) => {
       {},
       false);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -224,8 +232,8 @@ const SSEEventsSample = ({
       newData.forEach((element) => {
         if (element.updated) {
           const mData = tableData.find(e => e.id === element.id);
-          element.increasedAsk = mData.ask < element.ask;
-          element.increasedBid = mData.bid < element.bid;
+          element.increasedAsk = mData.ask <= element.ask;
+          element.increasedBid = mData.bid <= element.bid;
 
           if (!mData.animating) {
             element.animating = setTimeout(() => {
@@ -239,7 +247,6 @@ const SSEEventsSample = ({
                 return prevState;
               });
             }, 30000);
-            console.log(element.animating);
           }
         }
       });

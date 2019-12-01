@@ -99,7 +99,7 @@ const TooltipBubble = (props) => {
 
 const Tooltip = (props) => {
   const {
-    children, theme, bottom, ...rest
+    children, theme, bottom, size, ...rest
   } = props;
   const [isHover, changeHover] = useState(false);
   const tooltipRef = useRef(null);
@@ -112,7 +112,7 @@ const Tooltip = (props) => {
         onMouseLeave={() => changeHover(false)}
         theme={theme}
       >
-        <InfoIcon size={15} />
+        <InfoIcon size={size} />
       </IconWrap>
       <TooltipBubble show={isHover} bottom={bottom} theme={theme} tooltipRef={tooltipRef}>
         {children}
@@ -125,9 +125,11 @@ Tooltip.propTypes = {
   children: PropTypes.string.isRequired,
   theme: PropTypes.object.isRequired,
   bottom: PropTypes.bool,
+  size: PropTypes.number,
 };
 Tooltip.defaultProps = {
   bottom: false,
+  size: 15,
 };
 
 export default withTheme(Tooltip);
