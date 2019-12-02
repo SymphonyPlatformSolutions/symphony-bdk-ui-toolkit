@@ -55,13 +55,15 @@ const Button = ({
       circular={circular}
       disabled={isLoading || disabled}
     >
-      <Container justify="center" align="center" type="flat">
+      <Container justify="center" align="center" type="flat" circular={circular}>
+        {isLoading && (
         <LoaderContainer circular={circular} size={size} isLoading={isLoading}>
           <Loader
             color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
             size="small"
           />
         </LoaderContainer>
+        )}
         <ChildrenContainer isLoading={isLoading} fill={fill}>
           <TextContainer>
             {children}

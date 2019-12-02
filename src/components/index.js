@@ -15,6 +15,7 @@ export { default as DataGrid } from './base/data-grid';
 export { default as RadioButton } from './base/radio-button';
 export { default as Dropdown } from './base/dropdown';
 export { default as MessageBox } from './base/message-box';
+export { default as TextLink } from './base/text-link';
 export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
 export { default as QuoteCard } from './financial/quote-card';
@@ -25,6 +26,7 @@ export {
   LabelText,
 } from './base/form-box';
 export { default as AutoFetchWrapper } from './helpers/auto-fetch';
+export { default as SSEventsListWrapper } from './helpers/sse-events-wrapper';
 export {
   default as ToasterContext,
   ToasterProvider,
@@ -37,7 +39,7 @@ export {
   ModalConsumer,
   ModalProvider,
 } from './base/modal/modal-context';
-export { default as HelpPageBuilder } from './base/help-page-builder';
+export { default as HelpPageBuilder } from './helpers/help-page-builder';
 export {
   FavoriteButton,
   CloseButton,

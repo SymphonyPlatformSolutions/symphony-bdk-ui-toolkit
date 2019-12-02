@@ -306,7 +306,7 @@ export const DropdownControl = forwardRef((props, ref) => {
         </ChevronWrapper>
         {tooltip && (
           <TooltipMargin>
-            <Tooltip>{tooltip}</Tooltip>
+            <Tooltip size={14} color={theme.colors.grey_600}>{tooltip}</Tooltip>
           </TooltipMargin>
         )}
       </ChevronContainer>

@@ -15,7 +15,7 @@ export const FloatInput = styled.div`
 
 export const ToggleButtonText = styled.div`
   font-size: 0.875rem;
-  padding-right: 7px;
+  padding-right: 5px;
   color: ${props => getInputColor(props)};
   cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${p => (p.disabled ? 'none' : '')};
@@ -30,7 +30,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '9px 12px 11px 18px' : '9px 5px 9px 7px')};
+  padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '11px 12px 9px 18px' : '9px 5px 9px 7px')};
   border: 0;
   outline: none;
   font-size: ${({ size }) => (size === INPUT_SIZES.LARGE ? '16px' : '12px')};

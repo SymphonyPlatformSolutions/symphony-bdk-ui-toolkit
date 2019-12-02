@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ArrowRightCircle } from 'styled-icons/feather';
-import Card from '../card';
+import Card from '../../base/card';
 
 export const HelperLink = styled.span`
   width: fit-content;

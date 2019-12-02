@@ -1,17 +1,66 @@
-# Auto Fetch
-A wrapper component that fetches data for you, and injects into the child component
+# Auto Fetch & useAutoFetch
 
-The injected data will be:
+There are two ways of using the auto fetch functionality, either by using a wrapper called
+**AutoFetchWrapper** or using a hook called **useAutoFetch** both of them uses the same configuration
+object.
+
+##Configuration
+The configuration object should follow this strucutre:
+```jsx
+const autoFetchConfig = {
+  endpoint: 'https://reqres.in/api/users',
+  params: { page: 2 },
+  handleData: results => results.data,
+};
+```
+
+## Examples:
+
+**Auto Fetch**
+
+- is a  wrapper component that fetches data for you, and injects into the first child component
+
+These are the injected properties:
 ```jsx
 {
   results: PropTypes.array,
   isDataLoading: Proptypes.boolean,
   error: Proptypes.string,
-  handleDate: Proptypes.Function
+  handleData: Proptypes.Function
 }
 ```
 
-## Examples:
+and this is how you use it:
+```jsx
+  const MyComp = ({results,isDataLoading, error, handleData}) => {
+    return (
+        ....
+    )
+}
+  ...
+  <AutoFetchWrapper config={duckDuckGoFetchConfig}>
+    <MyComp />  
+</AutoFetchWrapper>
+```
+
+
+**useAutoFetch**
+
+- Alternativaley you may use the **useAutoFetch** hook on existing components if you need to
+the usage is quite similar to the wrapper, instea
+
+this is how you use it:
+
+```jsx
+const MyComp = () => {
+    connst {results,isDataLoading, error, handleData} = useAutoFetch(duckDuckGoFetchConfig);
+    return (
+        ....
+    )
+```
+
+##Complex examples
+
 ### Search with auto Fetch
 
 ```jsx

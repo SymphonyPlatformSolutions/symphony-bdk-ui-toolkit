@@ -10,6 +10,11 @@ import Box from '../box';
 import Text from '../text';
 import { SearchIcon, DownChevron } from '../icons';
 
+
+export const ToolTipContainer = styled.span`
+  transform: translateY(-1px);
+`;
+
 export const getTheadStyle = (theme, searchable) => ({
   style: {
     backgroundColor: theme.colors.grey_100,
@@ -113,9 +118,10 @@ const IconWrapper = styled.div`
   top: 8px;
 `;
 const IconSpinner = styled.div`
+  transform-origin: 50% 50%;
   transform: ${({ desc }) => (desc
-    ? 'rotate(0)'
-    : 'rotate(180deg) translateY(-4px)')};
+    ? 'rotate(0) translateY(1px)'
+    : 'rotate(180deg) translateY(-2px)')};
 `;
 
 const SearchWrapper = styled.div`
@@ -157,7 +163,7 @@ export const SearchBar = withTheme((props) => {
             type="text"
             style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
           />
-        </InputFieldBackground>
+        </InputFieldBackground>'
       </InputWrapper>
     </SearchWrapper>
   );

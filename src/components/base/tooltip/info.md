@@ -11,12 +11,14 @@ A small tooltip icon that shows messages both above or below when hovered with t
 ## PropTypes
 
 ```jsx
-Tooltip.propTypes = {
+oltip.propTypes = {
   children: PropTypes.string.isRequired,
   theme: PropTypes.object.isRequired,
   bottom: PropTypes.bool,
+  size: PropTypes.number,
 };
 Tooltip.defaultProps = {
   bottom: false,
+  size: 15,
 };
 ```

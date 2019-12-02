@@ -60,7 +60,7 @@ const InputAddons = (props) => {
       )}
       {tooltip && (
         <Tooltip
-          style={{ paddingRight: '5px' }}
+          style={{ paddingRight: '8px' }}
           size="1.5rem"
         >
           {tooltip}

@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { BookBookmark, Bookmark } from 'styled-icons/boxicons-regular';
 import Faker from 'faker';
 import styled from 'styled-components';
-import Box from '../box';
-import Text from '../text';
+import Box from '../../base/box';
+import Text from '../../base/text';
 import Info from './info.md';
-import { StoryWrapper } from '../wrappers';
+import { StoryWrapper } from '../../base/wrappers';
 import HelpPageBuilder from './index';
 import { Separator } from '../../index';
 import { HelperLink } from './theme';
@@ -107,7 +107,7 @@ for (let i = 0; i < 3; i++) {
 }
 
 
-storiesOf('Base', module)
+storiesOf('Helpers', module)
   .add('Help Page Builder', () => (
     <StoryWrapper p={15}>
       <Box space={20}>

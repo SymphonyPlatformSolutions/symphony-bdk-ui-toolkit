@@ -12,8 +12,8 @@ import Text from '../../base/text';
 import Button from '../../base/button';
 import Table from '../../base/table';
 import { NoOp } from '../../../utils/helpers';
-import HelpPageBuilder from '../../base/help-page-builder';
-import { PAGE_DATA_TWO_LEVELS } from '../../base/help-page-builder/stories';
+import HelpPageBuilder from '../../helpers/help-page-builder';
+import { PAGE_DATA_TWO_LEVELS } from '../../helpers/help-page-builder/stories';
 
 const getFullName = () => `${Faker.name.firstName()} ${Faker.name.lastName()}`;
 const mockData = [];
