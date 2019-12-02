@@ -26,9 +26,8 @@ export const BaseCard = styled.div`
   box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
   transition: all 0.5s cubic-bezier(.25,.8,.25,1);
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
-  overflow: hidden;
   &:hover {
-    transform: ${props => props.hoverEffect ? 'scale(1.02)' : null }
+    transform: ${props => (props.hoverEffect ? 'scale(1.02)' : null)}
   }
   width: -webkit-fill-available;
 `;

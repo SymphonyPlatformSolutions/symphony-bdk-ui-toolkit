@@ -114,6 +114,7 @@ storiesOf('Base', module)
           <Text isTitle>Empty Dropdown with Loading</Text>
           <Box style={{ width: '300px' }}>
             <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
+            <AsyncDropdownHandler options={[]} label="Empty Dropdown with Loading" />
           </Box>
         </Box>
       </Box>

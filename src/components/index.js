@@ -27,6 +27,7 @@ export {
 export { default as AutoFetchWrapper } from './helpers/auto-fetch';
 export { default as SSEventsListWrapper } from './helpers/sse-events-wrapper';
 export {
+  default as ToasterContext,
   ToasterProvider,
   ToasterConsumer,
 } from './base/toaster/toaster-context';
@@ -65,4 +66,5 @@ export {
   PricingIcon,
   SearchIcon,
 } from './base/icons';
+export { default as DecisionDropdown } from './base/decision-dropdown';
 export { THEMES, THEME_TYPES } from '../styles/colors';
