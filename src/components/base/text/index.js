@@ -7,7 +7,7 @@ import Box from '../box';
 
 export default function Text(props) {
   const {
-    children, isTitle, size, underline, tooltip, ...rest
+    children, isTitle, size, underline, tooltip, isLink, ...rest
   } = props;
 
   if (tooltip) {
@@ -21,7 +21,13 @@ export default function Text(props) {
     );
   }
   return (
-    <BaseText isTitle={isTitle} size={size} underline={underline} {...rest}>
+    <BaseText
+      isTitle={isTitle}
+      size={size}
+      underline={underline}
+      as={isLink ? 'a' : undefined}
+      {...rest}
+    >
       {children}
     </BaseText>
   );
