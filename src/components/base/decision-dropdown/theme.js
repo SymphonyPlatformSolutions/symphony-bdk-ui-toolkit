@@ -81,8 +81,8 @@ export const ShrinkingBorder = styled.span`
 `;
 export const ChevronWrapper = styled.div`
   transition: all 0.3s ease-out;
-  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)})
-    translateY(${({ turn }) => (turn ? '-2px' : '-3px')});
+  transform-origin: center;
+  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
 `;
 export const DropdownContainer = styled(Container)`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -98,7 +98,7 @@ export const DropdownContainer = styled(Container)`
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
 export const ValueContainer = styled.div`
-  padding: 5px 5px 4px 7px;
+  padding: 0px 5px 4px 7px;
   display: flex;
   align-items: center;
 `;
@@ -172,6 +172,7 @@ export const LabelContainer = styled.div`
   align-items: flex-end;
 `;
 export const MultiSelectContainer = styled.div`
+  margin-top: 4px;
   margin-right: 5px;
   padding: 4px 7px 4px 4px;
   display: flex;
@@ -189,6 +190,8 @@ export const MultiValueContainer = styled.div`
   flex-wrap: wrap;
 `;
 export const IconMarginContainer = styled.div`
+  transform-origin: center;
+  transform: translateY(2px);
   margin-right: 8px;
 `;
 export const TooltipMargin = styled.div`

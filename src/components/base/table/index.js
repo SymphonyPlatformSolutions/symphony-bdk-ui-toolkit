@@ -23,6 +23,7 @@ import {
   SearchBar,
   TableWrapper,
   getHeaderColumnTextStyle,
+  ToolTipContainer,
 } from './theme';
 import Loader from '../loader';
 
@@ -132,7 +133,13 @@ const Table = ({
             >
               {stringHeader}
             </Text>
-            {parsedEl.tooltip && <Tooltip size={12}>{parsedEl.tooltip}</Tooltip>}
+            {parsedEl.tooltip && (
+              <ToolTipContainer>
+                <Tooltip color={theme.colors.grey_600} size={12}>
+                  {parsedEl.tooltip}
+                </Tooltip>
+              </ToolTipContainer>
+            )}
             {el.sortable !== false && <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />}
           </Box>
         </CellWrapper>

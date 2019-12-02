@@ -196,6 +196,7 @@ const StyledRow = styled.td.attrs(({ theme, increased, animating }) => ({
   bg: animating ? increased ? theme.colors.misc_18 : theme.colors.error_400 : 'initial',
 }))`
   animation-iteration-count: 2;
+  opacity: 0.8;
   width: 100%;
   background-color: ${props => props.bg};
   color: ${({ theme }) => theme.colors.grey_900};
@@ -246,7 +247,7 @@ const SSEEventsSample = ({
                 }
                 return prevState;
               });
-            }, 30000);
+            }, 10000);
           }
         }
       });
@@ -323,6 +324,7 @@ const SSEEventsSample = ({
               const increased = original.increasedAsk || original.increasedBid;
               return {
                 style: {
+                  height: '38px',
                   transition: 'background-color 0.5s cubic-bezier(1,.02,.41,.37)',
                   backgroundColor: original.animating ? increased ? theme.colors.misc_18 : theme.colors.error_400 : null,
                 },
