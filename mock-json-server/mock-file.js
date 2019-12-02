@@ -5,7 +5,7 @@ let lastUpdatedEntries = [];
 
 
 const DEALERS = [
-  'Goldman Sacks',
+  'Goldman Sachs',
   'BNP Paribas',
   'Deutsche Bank',
   'UBS',

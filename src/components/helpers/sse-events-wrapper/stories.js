@@ -16,6 +16,7 @@ import { RestClient } from '../../../utils';
 import { Card } from '../../index';
 import Button from '../../base/button';
 import MessageBox from '../../base/message-box';
+import TextLink from '../../base/text-link';
 
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
@@ -29,10 +30,6 @@ const Animation = props => keyframes`
     background-color: ${props.bg};
   }
 `;
-
-{ /* <Box type="flat"> */ }
-{ /*
-{ /*    ) } */ }
 
 const PriceAskCell = ({ value, original }) => {
   const arrowColor = original.increasedAsk ? '#10C820' : '#DD3638';
@@ -50,10 +47,8 @@ const PriceBidCell = ({ value, original }) => {
   );
 };
 
-const StyledLink = styled.a.attrs(({ theme, animating }) => ({
-  color: animating ? theme.colors.primary_800 : theme.colors.primary_200,
-}))`
-  color: ${props => props.color};
+const StyledLink = styled(TextLink)`
+  ${({ animating, theme }) => (animating ? theme.colors.primary_800 : theme.colors.primary_200)};
 `;
 
 const StyledAnimatedPrice = styled(Text).attrs(({ theme, type, animating }) => ({
