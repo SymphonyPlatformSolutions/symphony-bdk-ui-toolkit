@@ -22,16 +22,16 @@ export const BUTTON_SIZES = {
 const FONT_SIZES = {
   small: '12px',
   regular: '14px',
-  large: '18px',
+  large: '16px',
 };
 const MIN_HEIGHTS = {
-  small: '18px',
-  regular: '30px',
-  large: '40px',
+  small: '25px',
+  regular: '32px',
+  large: '36px',
 };
 const MIN_WIDTHS = {
-  small: '42px',
-  regular: '120px',
+  small: '80px',
+  regular: '100px',
   large: '140px',
 };
 
@@ -99,6 +99,8 @@ export const Container = styled(Box)`
   display: flex;
   position: relative;
   background: transparent;
+  height: 100%;
+  padding: ${props => props.circular ? undefined : '0px 16px'};
 `;
 
 export const TextContainer = styled(Text)`
@@ -114,10 +116,11 @@ export const TextContainer = styled(Text)`
 export const ChildrenContainer = styled(Box)`
   opacity: ${p => (p.isLoading ? 0 : 1)};
   cursor: ${p => (p.isLoading ? 'none' : 'inherit')};
-  padding: ${({ fill, circular }) => (fill === FILL_TYPES.GHOST || circular ? '0' : '0 20px')};
 `;
 
 export const BaseButton = styled.button.attrs({})`
+  font-family: 'Lato';
+  padding: 0 0 0 0;
   color: ${props => getColor(props)};
   margin: 0;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -126,7 +129,7 @@ export const BaseButton = styled.button.attrs({})`
   min-width: ${({ size, fill, circular }) => (circular ? undefined : (fill === FILL_TYPES.GHOST ? undefined : MIN_WIDTHS[size]))};
   background-color: ${props => getBgColor(props)};
   border: ${props => getBorderStyle(props, false)};
-  border-radius: 30px;
+  border-radius: 24px;
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   font-size: ${({ size }) => FONT_SIZES[size]};
   padding: ${({ circular }) => (circular ? '0' : undefined)};
