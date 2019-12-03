@@ -251,8 +251,6 @@ export const DropdownControl = forwardRef((props, ref) => {
   const shouldRenderClear = isMulti ? !!(value && value.length) : value;
   const hideInput = value && value.length && isMulti && !menuIsOpen;
 
-  console.log(value);
-
   return (
     <DropdownContainer
       ref={ref}
