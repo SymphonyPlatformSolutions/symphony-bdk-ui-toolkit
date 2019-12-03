@@ -5,19 +5,17 @@ import Toggle from '.';
 import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
-// import Info from './info.md';
+import Info from './info.md';
 
 const ToggleComponent = (props) => {
-  const { children, ...rest } = props;
   const [toggled, setToggle] = useState(true);
 
   return (
     <Toggle
-      {...rest}
+      {...props}
       toggled={toggled}
       onChange={setToggle}
-    >{children}
-    </Toggle>
+    />
   );
 };
 
@@ -29,14 +27,16 @@ storiesOf('Base', module)
         <Text isTitle>Default Toggle</Text>
         <Box horizontal>
           <Box type="secondary">
-            <Text isTitle size="small">Regular</Text>
-            <ToggleComponent>Regular Toggle</ToggleComponent>
+            <ToggleComponent /><Text>Default</Text>
+            <ToggleComponent color="red" /><Text>Custom color</Text>
+            <ToggleComponent disabled /><Text>Disabled, toggled</Text>
+            <Toggle disabled /><Text>Disabled, untoggled</Text>
           </Box>
         </Box>
       </Box>
     </StoryWrapper>
   ), {
     notes: {
-      // markdown: Info,
+      markdown: Info,
     },
   });

@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
-import { THEME_TYPES } from '../../../styles/colors';
+import PropTypes from 'prop-types';
+import { withTheme } from 'styled-components';
 import {
   InvisibleInput,
   Wrapper,
@@ -9,16 +9,30 @@ import {
 } from './theme';
 
 const Toggle = (props) => {
-  const { toggled, onChange } = props;
+  const {
+    toggled, onChange, color, disabled, ...rest
+  } = props;
 
   return (
-    <Wrapper onClick={() => onChange(!toggled)}>
-      <ToggleContainer toggled={toggled}>
-        <SwitchCircle toggled={toggled} />
+    <Wrapper disabled={disabled} onClick={() => !disabled && onChange(!toggled)} {...rest}>
+      <ToggleContainer disabled={disabled} toggled={toggled}>
+        <SwitchCircle disabled={disabled} toggled={toggled} color={color} />
       </ToggleContainer>
-      <InvisibleInput type="checkbox" onChange={() => onChange(!toggled)} checked={toggled} />
+      <InvisibleInput type="checkbox" disabled={disabled} onChange={() => onChange(!toggled)} checked={toggled} />
     </Wrapper>
   );
+};
+
+Toggle.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  toggled: PropTypes.bool,
+  color: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+Toggle.defaultProps = {
+  toggled: false,
+  disabled: false,
+  color: null,
 };
 
 export default withTheme(Toggle);
