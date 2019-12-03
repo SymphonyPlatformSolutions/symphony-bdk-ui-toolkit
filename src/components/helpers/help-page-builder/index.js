@@ -12,7 +12,7 @@ import {
   StyledSubTopic,
   StyledSubTopicContainer,
 } from './theme';
-
+import { Card } from '../../index';
 
 const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
   const hasTopics = !!currentPage.node.topics;
@@ -131,7 +131,7 @@ const HelpPageBuilder = ({ config }) => {
             <Text type="primary">{config.description}</Text>
             <Box type="secondary">
               {node && node.topics.map(topic => (
-                <StyledCard key={topic.title} hoverEffect onClick={handlePageClick(topic, config)}>
+                <Card key={topic.title} onClick={handlePageClick(topic, config)}>
                   <Box type="flat" horizontal justify="space-between" p="2px 10px 6px 10px">
                     <Box horizontal align="center">
                       { topic.icon }
@@ -141,7 +141,7 @@ const HelpPageBuilder = ({ config }) => {
                       <StyledArrowRightCircle />
                     </Box>
                   </Box>
-                </StyledCard>
+                </Card>
               ))}
             </Box>
           </React.Fragment>
@@ -154,7 +154,6 @@ const HelpPageBuilder = ({ config }) => {
             {node && node.topics.map(subTopic => (
               <StyledSubTopic
                 key={subTopic.title}
-                hoverEffect
                 onClick={handlePageClick(subTopic, node)}
               >
                 <Box type="primary" horizontal align="center" style={{ height: '128px' }}>

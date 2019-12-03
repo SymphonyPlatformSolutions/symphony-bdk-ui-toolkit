@@ -5,19 +5,19 @@ import {
 } from '../icons';
 
 const ButtonBG = styled.button`
-  border: none;
+  font-family: 'Lato';
   transition: all 0.3s;
-  border-radius: 50%;
-  line-height: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  outline: none;
-  padding: 0;
-  width: ${({ size }) => size || 22}px;
-  height: ${({ size }) => size || 22}px;
-
+  margin: auto;
+  border: none;
+  background: transparent;
+  padding: 5px;
+  border-radius: 50%;
+  // width: ${({ size }) => size || 22}px;
+  // height: ${({ size }) => size || 22}px;
+  :before {
+    transform: scale(2);
+  }
   &:hover {
     background-color: ${({ theme }) => theme.colors.grey_200};
   }
@@ -28,7 +28,7 @@ export const FavoriteButton = (props) => {
   const { onClick, isFavorite, size } = props;
   return (
     <ButtonBG onClick={onClick} size={size}>
-      {isFavorite ? <StarIcon /> : <EmptyStarIcon />}
+      {isFavorite ? <StarIcon style={{transform: 'translate(0px, -0.4px)'}} /> : <EmptyStarIcon />}
     </ButtonBG>
   );
 };
@@ -46,6 +46,7 @@ export const CloseButton = withTheme((props) => {
       size={size}
     >
       <CloseIcon
+        style={{ transform: 'translate(0.6px, 0.5px)' }}
         color={isHovering ? theme.colors.grey_800 : theme.colors.grey_600}
       />
     </ButtonBG>

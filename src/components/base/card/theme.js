@@ -17,6 +17,11 @@ export const getBorderColor = ({ theme }) => (
   theme.mode === THEME_TYPES.LIGHT ? `1px solid ${theme.colors.grey}` : '1px solid #494b4e7a'
 );
 
+const test = (...args) => {
+  console.log(args);
+  return '';
+}
+
 
 export const BaseCard = styled.div`
   margin-top: 10px;
@@ -28,6 +33,8 @@ export const BaseCard = styled.div`
   background-color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.inputgrey : null)};
   &:hover {
     transform: ${props => (props.hoverEffect ? 'scale(1.02)' : null)}
+    box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? test(theme) : '0 1px 16px -6px rgba(255, 0, 0, 1)')};
+    
   }
   width: -webkit-fill-available;
 `;
