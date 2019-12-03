@@ -115,8 +115,8 @@ export const ChildrenContainer = styled(Box)`
 `;
 
 export const BaseButton = styled.button.attrs({})`
-  font-family: 'Lato', Sans Serif;
   color: ${props => getColor(props)};
+  font-weight: bold;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${({ size, fill }) => (fill === FILL_TYPES.GHOST ? undefined : MIN_HEIGHTS[size])};
   width: ${({ size, circular }) => (circular ? MIN_HEIGHTS[size] : undefined)};
