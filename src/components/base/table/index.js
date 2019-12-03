@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 import 'react-contexify/dist/ReactContexify.min.css';
 import { contextMenu } from 'react-contexify';
 import uuid from 'uuid';

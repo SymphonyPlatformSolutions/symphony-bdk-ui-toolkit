@@ -119,6 +119,7 @@ const IconWrapper = styled.div`
 `;
 const IconSpinner = styled.div`
   transform-origin: 50% 50%;
+  transition: all 0.3 linear;
   transform: ${({ desc }) => (desc
     ? 'rotate(0) translateY(1px)'
     : 'rotate(180deg) translateY(-2px)')};
@@ -163,7 +164,7 @@ export const SearchBar = withTheme((props) => {
             type="text"
             style={{ padding: '4px 4px 4px 20px', minHeight: 0 }}
           />
-        </InputFieldBackground>'
+        </InputFieldBackground>
       </InputWrapper>
     </SearchWrapper>
   );
