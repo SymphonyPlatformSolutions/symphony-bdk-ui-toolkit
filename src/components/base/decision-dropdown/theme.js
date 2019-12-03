@@ -80,6 +80,8 @@ export const ShrinkingBorder = styled.span`
   z-index: 10;
 `;
 export const ChevronWrapper = styled.div`
+  display: flex;
+  margin-top: 3px;
   transition: all 0.3s ease-out;
   transform-origin: center;
   transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
