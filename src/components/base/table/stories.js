@@ -105,11 +105,9 @@ const COLUMNS_WITH_ACTIONS = [{
   Header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
-  width: undefined,
 }, {
   Header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'Or some other non-obvious descriptor for your table',
 }, {
   Header: 'Link',
@@ -119,7 +117,6 @@ const COLUMNS_WITH_ACTIONS = [{
       {row.value}
     </TextLink>
   ),
-  width: undefined,
 },
 {
   sortable: false,
@@ -131,7 +128,7 @@ const COLUMNS_WITH_ACTIONS = [{
 
 const LARGE_DATA_SET = [];
 
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 5; i++) {
   const data = {
     email: Faker.internet.email(),
     name: Faker.name.firstName(),

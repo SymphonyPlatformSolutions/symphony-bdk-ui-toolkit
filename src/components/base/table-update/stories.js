@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
@@ -9,6 +10,7 @@ import Box from '../box';
 import { StoryWrapper } from '../wrappers';
 // import Info from './info.md';
 import Text from '../text';
+import TextLink from '../text-link';
 
 const handleTestEdit = (item) => {
   console.log(item);
@@ -39,22 +41,21 @@ const COLUMNS = [{
   Header: 'Name',
   tooltip: 'This column is not sortable',
   accessor: 'name',
-  width: undefined,
   sortable: false,
 }, {
   Header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'This column is sortable!',
 }, {
   Header: 'Link',
   accessor: 'link',
-  CustomCell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </a>
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
-  width: undefined,
 },
 ];
 
@@ -99,30 +100,38 @@ const DATA_WITH_ACTIONS = [{
     },
   ],
 }];
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
 
 const COLUMNS_WITH_ACTIONS = [{
   Header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
-  width: undefined,
+  id: 'name',
 }, {
   Header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'Or some other non-obvious descriptor for your table',
+  id: 'email',
 }, {
   Header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </a>
+  id: 'link',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
-  width: undefined,
 },
 {
+  id: 'actions',
   sortable: false,
-  acessor: null,
   width: 50,
   hasActions: true,
 },
@@ -160,7 +169,7 @@ storiesOf('Base', module)
   .add('Updated Table', () => (
     <StoryWrapper p={15}>
       <Box p={15}>
-        <Box>
+        {/* <Box>
           <Text isTitle>Filled Table</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
@@ -169,7 +178,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        {/* <Box>
+        <Box>
           <Text isTitle>Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
@@ -177,7 +186,7 @@ storiesOf('Base', module)
               columns={COLUMNS_WITH_ACTIONS}
             />
           </Box>
-        </Box>
+        </Box> */}
         <Box>
           <Text isTitle>Searchable Table, and max Height</Text>
           <Box space={60} p="0 16px 0 0">
@@ -189,16 +198,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        <Box>
-          <Text isTitle>Tooltips</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={DATA}
-              columns={COLUMNS}
-            />
-          </Box>
-        </Box>
-        <Box>
+        {/* <Box>
           <Text isTitle>Empty Table</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
