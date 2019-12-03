@@ -10,6 +10,7 @@ export const InvisibleInput = styled.input`
 export const Wrapper = styled.div`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   margin: 5px 0;
+  width: 44px;
 `;
 export const ToggleContainer = styled.div`
   display: flex;

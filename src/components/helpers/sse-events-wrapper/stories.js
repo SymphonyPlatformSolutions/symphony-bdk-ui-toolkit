@@ -17,6 +17,7 @@ import { Card } from '../../index';
 import Button from '../../base/button';
 import MessageBox from '../../base/message-box';
 import TextLink from '../../base/text-link';
+import Toggle from '../../base/toggle';
 
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
@@ -252,10 +253,9 @@ const SSEEventsSample = ({
     }
   }, [data]);
 
-  const handleAutoPilot = async (e) => {
-    const isChecked = e.target.checked;
-    setAutoPilot(isChecked);
-    postDemo('auto', isChecked);
+  const handleAutoPilot = async (toggled) => {
+    setAutoPilot(toggled);
+    postDemo('auto', toggled);
   };
 
   const onRefresh = () => {
@@ -270,7 +270,7 @@ const SSEEventsSample = ({
       </Box>
       <Box align="end">
         <Card>
-          <Box horizontal justify="space-between">
+          <Box horizontal justify="space-between" align="center">
             <Box>
               <Button
                 onClick={onRefresh}
@@ -278,7 +278,7 @@ const SSEEventsSample = ({
                 Refresh
               </Button>
             </Box>
-            <Box horizontal justify="flex-end">
+            <Box horizontal justify="flex-end" align="center">
               <Button
                 disabled={autoPilot}
                 onClick={() => postDemo('create')}
@@ -298,12 +298,13 @@ const SSEEventsSample = ({
               >
                 Remove Data
               </Button>
-              <CheckBox
-                checked={autoPilot}
-                onChange={handleAutoPilot}
-              >
-                Auto Pilot
-              </CheckBox>
+              <Box vertical align="center" type="flat">
+                <Text>Auto Pilot</Text>
+                <Toggle
+                  toggled={autoPilot}
+                  onChange={handleAutoPilot}
+                />
+              </Box>
             </Box>
           </Box>
         </Card>
