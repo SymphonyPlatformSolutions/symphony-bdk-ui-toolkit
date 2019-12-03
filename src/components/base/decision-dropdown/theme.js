@@ -81,10 +81,11 @@ export const ShrinkingBorder = styled.span`
 `;
 export const ChevronWrapper = styled.div`
   display: flex;
-  margin-top: 3px;
+  height: 10px;
+  align-items: center;
   transition: all 0.3s ease-out;
   transform-origin: center;
-  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
+  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)}) translateY(1px);
 `;
 export const DropdownContainer = styled(Container)`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -192,8 +193,7 @@ export const MultiValueContainer = styled.div`
   flex-wrap: wrap;
 `;
 export const IconMarginContainer = styled.div`
-  transform-origin: center;
-  transform: translateY(2px);
+  display: flex;
   margin-right: 8px;
 `;
 export const TooltipMargin = styled.div`
