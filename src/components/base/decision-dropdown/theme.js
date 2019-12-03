@@ -147,7 +147,7 @@ export const ControlInput = styled(StyledInput)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
   position: ${({ hide }) => (hide ? 'absolute' : undefined)};
   height:${({ hide }) => (hide ? 0 : undefined)}; 
-  width: ${({ hide }) => (hide ? 0 : '100%')};
+  width: ${({ hide }) => (hide ? 0 : 'auto')};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
   margin-left: 4px;
@@ -156,7 +156,7 @@ export const ControlInput = styled(StyledInput)`
 export const ValueAndControl = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 35px);
+  width: 100%;
 `;
 export const MenuWrapper = styled.div`
   position: relative;

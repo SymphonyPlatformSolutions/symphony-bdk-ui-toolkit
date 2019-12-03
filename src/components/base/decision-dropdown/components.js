@@ -282,14 +282,19 @@ export const DropdownControl = forwardRef((props, ref) => {
             filterQueryHandler(target.value);
           }}
           onFocus={() => focusBlurHandler(true)}
-          onBlur={() => focusBlurHandler(false)}
+          onBlur={() => {
+            if (value && !typedValue && !isMulti) {
+              setTypedValue(value.label);
+            }
+            focusBlurHandler(false);
+          }}
           disabled={disabled}
           size={size}
         />
       </ValueAndControl>
       <ChevronContainer>
         {shouldRenderClear && (
-          <IconMarginContainer onClick={clearHandler}>
+          <IconMarginContainer onMouseDown={clearHandler}>
             <CrossIcon />
           </IconMarginContainer>
         )}

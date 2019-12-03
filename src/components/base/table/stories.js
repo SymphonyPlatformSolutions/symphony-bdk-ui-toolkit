@@ -9,6 +9,7 @@ import Box from '../box';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
+import TextLink from '../text-link';
 
 const handleTestEdit = (item) => {
   console.log(item);
@@ -50,9 +51,9 @@ const COLUMNS = [{
   Header: 'Link',
   accessor: 'link',
   Cell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
+    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
       {row.value}
-    </a>
+    </TextLink>
   ),
   width: undefined,
 },
@@ -114,9 +115,9 @@ const COLUMNS_WITH_ACTIONS = [{
   Header: 'Link',
   accessor: 'link',
   Cell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
+    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
       {row.value}
-    </a>
+    </TextLink>
   ),
   width: undefined,
 },
