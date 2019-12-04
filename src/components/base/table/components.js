@@ -21,7 +21,7 @@ import {
   MenuWrapper,
   ToolTipContainer,
   CellWrapper,
-  getHeaderColumnTextStyle,
+  HeaderText,
 } from './theme';
 
 export const ContextMenu = withTheme(({ theme, id, item }) => (
@@ -46,7 +46,7 @@ export const ContextMenu = withTheme(({ theme, id, item }) => (
   </Menu>
 ));
 
-const SortingIcon = ({ sorting, isSortedDesc, theme }) => {
+const SortingIcon = withTheme(({ sorting, isSortedDesc, theme }) => {
   if (!sorting) {
     return (
       <IconWrapper>
@@ -64,7 +64,7 @@ const SortingIcon = ({ sorting, isSortedDesc, theme }) => {
       </IconSpinner>
     </IconWrapper>
   );
-};
+});
 
 const MenuIconWrapper = styled(EllipsisIcon)`
   width: 24px;
@@ -132,23 +132,24 @@ export const Cell = ({ cell }) => {
 
 export const HeaderCell = (props) => {
   const {
-    Header, tooltip, theme, sortable, isSorted, isSortedDesc,
+    column: {
+      header, tooltip, sortable, isSorted, isSortedDesc,
+    },
   } = props;
 
   return (
     <CellWrapper type="flat">
       <Box horizontal space={5}>
-        <Text
+        <HeaderText
           type="primary"
           isTitle
           size="tiny"
-          style={getHeaderColumnTextStyle(theme)}
         >
-          {typeof Header === 'string' ? Header : null}
-        </Text>
+          {header}
+        </HeaderText>
         {tooltip && (
           <ToolTipContainer>
-            <Tooltip color={theme.colors.grey_600} size={12}>
+            <Tooltip size={12}>
               {tooltip}
             </Tooltip>
           </ToolTipContainer>
@@ -157,7 +158,6 @@ export const HeaderCell = (props) => {
           <SortingIcon
             sorting={isSorted}
             isSortedDesc={isSortedDesc}
-            theme={theme}
           />
         )}
       </Box>

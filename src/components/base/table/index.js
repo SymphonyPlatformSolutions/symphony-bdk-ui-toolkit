@@ -15,6 +15,7 @@ import {
   THeadTr,
   EmptyTable,
   EmptyText,
+  ALIGNMENTS,
 } from './theme';
 import {
   Cell,
@@ -55,27 +56,12 @@ const Table = (props) => {
     loading,
     emptyMessage,
     searchable,
+    Row,
+    align,
     ...rest
   } = props;
 
   const [searchTerm, setSearchTerm] = useState('');
-  const filteredData = useMemo(() => executeSearch(data, searchTerm), [searchTerm, data]);
-
-  if (loading) {
-    return (
-      <EmptyTable>
-        <Loader />
-      </EmptyTable>
-    );
-  }
-
-  if (!data || !data.length) {
-    return (
-      <EmptyTable>
-        <EmptyText theme={theme}>{emptyMessage}</EmptyText>
-      </EmptyTable>
-    );
-  }
 
   const defaultColumn = {
     accessor: 'actionsMenu',
@@ -83,7 +69,15 @@ const Table = (props) => {
     width: 200,
     maxWidth: 400,
     Cell,
+    Header: HeaderCell,
   };
+
+  let filteredData;
+  if (searchable) {
+    filteredData = useMemo(() => executeSearch(data, searchTerm), [searchTerm, data]);
+  } else {
+    filteredData = data;
+  }
 
   const {
     getTableProps,
@@ -101,6 +95,22 @@ const Table = (props) => {
     useSortBy,
   );
 
+  if (loading) {
+    return (
+      <EmptyTable>
+        <Loader />
+      </EmptyTable>
+    );
+  }
+
+  if (!data || !data.length) {
+    return (
+      <EmptyTable>
+        <EmptyText theme={theme}>{emptyMessage}</EmptyText>
+      </EmptyTable>
+    );
+  }
+
   const prepareHeaderProps = (col) => {
     if (col.sortable === false) {
       return col.getHeaderProps();
@@ -113,10 +123,10 @@ const Table = (props) => {
       <THead>
         {searchable && <SearchBar theme={theme} executeFilter={setSearchTerm} />}
         {headerGroups.map(headerGroup => (
-          <THeadTr {...headerGroup.getHeaderGroupProps()} style={{}}>
+          <THeadTr {...headerGroup.getHeaderGroupProps()} align={align} style={{}}>
             {headerGroup.headers.map(column => (
               <THeadTh {...prepareHeaderProps(column)}>
-                <HeaderCell theme={theme} {...column} />
+                {column.render('Header')}
               </THeadTh>
             ))}
           </THeadTr>
@@ -125,8 +135,20 @@ const Table = (props) => {
       <TBody {...getTableBodyProps()} maxHeight={maxHeight}>
         {rows.map((row) => {
           prepareRow(row);
+
+          if (Row) { // Custom row
+            return (
+              <Row {...row.getRowProps()} {...row} align={align} style={{}}>
+                {row.cells.map(cell => (
+                  <TBodyTd {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </TBodyTd>
+                ))}
+              </Row>
+            );
+          }
           return (
-            <TBodyTr {...row.getRowProps()} style={{}}>
+            <TBodyTr {...row.getRowProps()} align={align} style={{}}>
               {row.cells.map(cell => (
                 <TBodyTd {...cell.getCellProps()}>
                   {cell.render('Cell')}
@@ -148,6 +170,7 @@ Table.propTypes = {
   theme: PropTypes.object.isRequired,
   searchable: PropTypes.bool,
   maxHeight: PropTypes.string,
+  align: PropTypes.oneOf(Object.keys(ALIGNMENTS)),
 };
 
 Table.defaultProps = {
@@ -157,6 +180,7 @@ Table.defaultProps = {
   searchable: false,
   emptyMessage: 'You have no content to display!',
   maxHeight: null,
+  align: 'center',
 };
 
 export default withTheme(Table);

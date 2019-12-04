@@ -1,8 +1,16 @@
 import styled from 'styled-components';
-import { darken, transparentize } from 'polished';
+import { darken } from 'polished';
 import Text from '../text';
 import Box from '../box';
 import { THEME_TYPES } from '../../../styles/colors';
+
+export const ALIGNMENTS = {
+  left: 'flex-start',
+  right: 'flex-end',
+  center: 'space-between',
+};
+
+const getAlignment = align => ALIGNMENTS[align] || ALIGNMENTS.center;
 
 export const StyledTable = styled.div`
   border-radius: 4px;
@@ -11,9 +19,8 @@ export const StyledTable = styled.div`
 
 export const THead = styled.div`
   background-color: ${({ theme }) => theme.colors.grey_100};
-  box-shadow: none;
-  padding: 5px 0;
-  border: 2px solid ${({ theme }) => theme.colors.grey_100};
+  padding-top: 2px;
+  border-top: 2px solid ${({ theme }) => theme.colors.grey_100};
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
 `;
@@ -21,7 +28,7 @@ export const THead = styled.div`
 export const THeadTr = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: ${({ align }) => getAlignment(align)};
 `;
 
 export const THeadTh = styled.div`
@@ -35,7 +42,7 @@ export const TBodyTr = styled.div`
   transition: background-color 0.2s;
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: ${({ align }) => getAlignment(align)};
   &:hover {
     background-color: ${({ theme }) => theme.colors.grey_200};
   }
@@ -94,11 +101,11 @@ export const InputFieldBackground = styled.div`
   background-color: ${({ theme }) => theme.colors.mainbackground};
 `;
 
-export const getHeaderColumnTextStyle = theme => ({
-  lineHeight: '1.2rem',
-  userSelect: 'none',
-  color: theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.grey_400),
-});
+export const HeaderText = styled(Text)`
+  line-height: 1.2rem;
+  user-select: none;
+  color: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? theme.colors.white : darken(0.2, theme.colors.grey_400))};
+`;
 
 export const IconWrapper = styled.div`
   margin-left: 8px;
@@ -115,7 +122,8 @@ export const CellWrapper = styled(Box)`
   height: 100%;
 `;
 export const ToolTipContainer = styled.span`
-  transform: translateY(-1px);
+  display: flex;
+  align-items: center;
 `;
 
 export const MenuWrapper = styled(Box)`
@@ -138,7 +146,6 @@ export const MenuItem = styled(Box)`
     border-left: ${({ theme, accent }) => `4px solid ${theme.colors[accent]}`};
   }
 `;
-
 
 export const getMenuBackgroundColor = theme => ({
   style: {

@@ -38,16 +38,16 @@ const DATA = [{
 }];
 
 const COLUMNS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'This column is not sortable',
   accessor: 'name',
   sortable: false,
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
   tooltip: 'This column is sortable!',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
   Cell: ({ cell }) => (
     <CellWrapper>
@@ -178,7 +178,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        <Box>
+        {/* <Box>
           <Text isTitle>Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
@@ -216,7 +216,7 @@ storiesOf('Base', module)
               loading
             />
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </StoryWrapper>
   ),
