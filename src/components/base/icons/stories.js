@@ -27,26 +27,25 @@ import {
 } from '.';
 
 const TestWrapper = styled.div`
-  //background-color: red;
-  ////transition: transform 5s linear;
-  //  &:hover {
-  //  transform: rotate(180deg);
+  background-color: ${props => (props.blueprint ? 'red' : null)};
+    &:hover {
+    transform:  ${props => (props.blueprint ? 'rotate(180deg)' : null)};
   }
 `;
 
 const TestContainer = styled.div`
-  //background: linear-gradient(to top left,
-  //           rgba(0,0,0,0) 0%,
-  //           rgba(0,0,0,0) calc(50% - 0.8px),
-  //           rgba(0,0,0,1) 50%,
-  //           rgba(0,0,0,0) calc(50% + 0.8px),
-  //           rgba(0,0,0,0) 100%),
-  //       linear-gradient(to top right,
-  //           rgba(0,0,0,0) 0%,
-  //           rgba(0,0,0,0) calc(50% - 0.8px),
-  //           rgba(0,0,0,1) 50%,
-  //           rgba(0,0,0,0) calc(50% + 0.8px),
-  //           rgba(0,0,0,0) 100%);
+  background: ${props => (props.blueprint ? `linear-gradient(to top left,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%),
+         linear-gradient(to top right,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%)` : null)};
 `;
 
 storiesOf('Base', module).add(
