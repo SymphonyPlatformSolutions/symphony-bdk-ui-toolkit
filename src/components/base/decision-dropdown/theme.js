@@ -84,8 +84,7 @@ export const ChevronWrapper = styled.div`
   height: 10px;
   align-items: center;
   transition: all 0.3s ease-out;
-  transform-origin: center;
-  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)}) translateY(1px);
+  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
 `;
 export const DropdownContainer = styled(Container)`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};

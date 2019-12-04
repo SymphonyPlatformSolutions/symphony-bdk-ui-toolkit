@@ -8,19 +8,22 @@ const IconWrapper = styled.div`
   }
 `;
 
-export const DownChevron = withTheme(({ theme, color, ...rest }) => (
+export const DownChevron = withTheme(({ theme, color, size=10, ...rest }) => (
   <IconWrapper>
     <svg
       {...rest}
-      width="10"
-      height="10"
-      viewBox="0 0 10 10"
+      width={size}
+      height={size}
+      viewBox="0 -2.5 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        transform="translate(0, 2.2)"
+        fillRule="evenodd" clipRule="evenodd"
         d="M1 1L5 5L9 1"
+        fill="none"
+        width={size || 24} height={size || 24}
+        viewBox="0 0 24 24"
         stroke={color || theme.colors.grey_600}
         strokeWidth="2"
         strokeLinecap="round"
@@ -46,6 +49,7 @@ export const ClosedEyeIcon = withTheme(({
   <IconWrapper>
     <svg
       {...rest}
+      viewBox="0 0 24 24"
       width={size || 24}
       height={size || 24}
       stroke={color || theme.colors.primary_500}
@@ -172,7 +176,7 @@ export const DeleteIcon = withTheme(({
   theme, color, size, ...rest
 }) => (
   <IconWrapper>
-    <svg {...rest} width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg {...rest} width={size || 24} height={size || 24} viewBox="-0.5 -1 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fillRule="evenodd" clipRule="evenodd" d="M17.2667 7.45C17.2667 7.6616 17.0704 7.83333 16.8286 7.83333H6.31429C6.07246 7.83333 5.87619 7.6616 5.87619 7.45V6.68333C5.87619 6.47173 6.07246 6.3 6.31429 6.3H16.8286C17.0704 6.3 17.2667 6.47173 17.2667 6.68333V7.45ZM15.9524 18.5667H7.19048C6.94865 18.5667 6.75238 18.3949 6.75238 18.1833V8.6H16.3905V18.1833C16.3905 18.3949 16.1942 18.5667 15.9524 18.5667ZM10.2571 5.15C10.2571 4.9384 10.4534 4.76667 10.6952 4.76667H12.4476C12.6894 4.76667 12.8857 4.9384 12.8857 5.15V5.53333H10.2571V5.15ZM13.7619 5.53333V5.15C13.7619 4.51597 13.1722 4 12.4476 4H10.6952C9.97063 4 9.38095 4.51597 9.38095 5.15V5.53333H6.31429C5.58968 5.53333 5 6.0493 5 6.68333V7.45C5 7.94987 5.36625 8.37613 5.87619 8.53407V18.1833C5.87619 18.8174 6.46587 19.3333 7.19048 19.3333H15.9524C16.677 19.3333 17.2667 18.8174 17.2667 18.1833V8.53407C17.7766 8.37613 18.1429 7.94987 18.1429 7.45V6.68333C18.1429 6.0493 17.5532 5.53333 16.8286 5.53333H13.7619Z" fill={color || theme.colors.error_500} />
       <path fillRule="evenodd" clipRule="evenodd" d="M14.1268 10.5714C13.9253 10.5714 13.7617 10.7052 13.7617 10.8701V16.8441C13.7617 17.009 13.9253 17.1428 14.1268 17.1428C14.3283 17.1428 14.4919 17.009 14.4919 16.8441V10.8701C14.4919 10.7052 14.3283 10.5714 14.1268 10.5714Z" fill={color || theme.colors.error_500} />
       <path fillRule="evenodd" clipRule="evenodd" d="M11.2059 10.5714C11.0044 10.5714 10.8408 10.7052 10.8408 10.8701V16.8441C10.8408 17.009 11.0044 17.1428 11.2059 17.1428C11.4074 17.1428 11.571 17.009 11.571 16.8441V10.8701C11.571 10.7052 11.4074 10.5714 11.2059 10.5714Z" fill={color || theme.colors.error_500} />
@@ -240,7 +244,7 @@ export const CloseIcon = withTheme(({
   theme, color, size, ...rest
 }) => (
   <IconWrapper>
-    <svg {...rest} width={size || 11} height={size || 11} viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg {...rest} width={size || 11} height={size || 11} viewBox="-0.5 -0.25 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M9 1.12915L1 9.38721" stroke={color || theme.colors.grey_600} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M1 1.12915L9 9.38721" stroke={color || theme.colors.grey_600} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
