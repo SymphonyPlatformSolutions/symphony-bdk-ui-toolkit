@@ -13,8 +13,6 @@ const ButtonBG = styled.button`
   background: transparent;
   padding: 5px;
   border-radius: 50%;
-  // width: ${({ size }) => size || 22}px;
-  // height: ${({ size }) => size || 22}px;
   :before {
     transform: scale(2);
   }
