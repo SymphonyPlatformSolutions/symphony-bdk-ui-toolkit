@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Text from '../text';
 import Tooltip from '../tooltip';
@@ -39,6 +40,7 @@ const InputAddons = (props) => {
     copyToClipBoard,
     setShowPassword,
     type,
+    theme,
   } = props;
 
   const hasPassword = type === INPUT_TYPES.PASSWORD;
@@ -60,8 +62,9 @@ const InputAddons = (props) => {
       )}
       {tooltip && (
         <Tooltip
+          size={14}
+          color={theme.colors.grey_600}
           style={{ paddingRight: '8px' }}
-          size="1.5rem"
         >
           {tooltip}
         </Tooltip>
@@ -89,6 +92,7 @@ const InputField = (props) => {
     tooltip,
     readOnly,
     size,
+    theme,
     ...rest
   } = props;
 
@@ -131,6 +135,7 @@ const InputField = (props) => {
             copyToClipBoard={copyToClipBoard}
             setShowPassword={() => setShowPassword(!showPassword)}
             showPassword={showPassword}
+            theme={theme}
             {...props}
           />
           <StyledInput
@@ -187,4 +192,4 @@ InputField.defaultProps = {
   size: 'regular',
 };
 
-export default InputField;
+export default withTheme(InputField);

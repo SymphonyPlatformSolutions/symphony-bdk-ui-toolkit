@@ -100,7 +100,7 @@ export const DropdownContainer = styled(Container)`
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
 export const ValueContainer = styled.div`
-  padding: 0px 5px 4px 7px;
+  padding: 3px 6px 7px 7px;
   display: flex;
   align-items: center;
 `;

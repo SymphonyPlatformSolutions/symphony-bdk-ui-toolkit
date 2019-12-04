@@ -108,17 +108,17 @@ const CellWrapper = styled(Box)`
 `;
 
 const COLUMNS_WITH_ACTIONS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
   id: 'name',
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
   tooltip: 'Or some other non-obvious descriptor for your table',
   id: 'email',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
   id: 'link',
   Cell: ({ cell }) => (
@@ -178,7 +178,7 @@ storiesOf('Base', module)
             />
           </Box>
         </Box>
-        {/* <Box>
+        <Box>
           <Text isTitle>Actions</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
@@ -216,7 +216,7 @@ storiesOf('Base', module)
               loading
             />
           </Box>
-        </Box> */}
+        </Box>
       </Box>
     </StoryWrapper>
   ),

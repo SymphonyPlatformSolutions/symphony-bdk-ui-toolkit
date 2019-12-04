@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const IconWrap = styled.div`
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   cursor: pointer;
   width: 16px;

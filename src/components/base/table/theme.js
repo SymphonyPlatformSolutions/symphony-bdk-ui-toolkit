@@ -113,7 +113,7 @@ export const IconWrapper = styled.div`
 export const IconSpinner = styled.div`
   transform-origin: 50% 50%;
   transition: all 0.2s;
-  transform: ${({ desc }) => (desc ? 'rotate(0) translateY(-2px)' : 'rotate(180deg) translateY(-2px)')};
+  transform: ${({ desc }) => (desc ? 'rotate(0)' : 'rotate(180deg)')};
 `;
 export const CellWrapper = styled(Box)`
   margin: 0px 19px;
@@ -123,7 +123,7 @@ export const CellWrapper = styled(Box)`
 `;
 export const ToolTipContainer = styled.span`
   display: flex;
-  align-items: center;
+  align-items: start;
 `;
 
 export const MenuWrapper = styled(Box)`
