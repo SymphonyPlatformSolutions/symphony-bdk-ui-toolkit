@@ -42,10 +42,12 @@ const COLUMNS = [{
 }, {
   Header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </a>
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
   width: undefined,
 },
@@ -60,6 +62,15 @@ where DATA is an array of objects containing the desired data, and COLUMNS is an
 ```
 
 ## Tooltips and actions
+
+Actions are added as small ellipsis icon, that once clicked, open a floating context menu.
+Each item of the menu boasts of the following colors: 
+- neutral
+- info
+- error
+- warning
+- success
+
 ```jsx
 const handleTestEdit = (item) => {
   console.log(item);
@@ -124,10 +135,12 @@ const COLUMNS_WITH_ACTIONS = [{
 }, {
   Header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <a href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </a>
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
   width: undefined,
 },
@@ -147,7 +160,11 @@ const COLUMNS_WITH_ACTIONS = [{
  />
 ```
 
+## Search
 
+Search can be activated with the ```searchable``` prop. It's set to false by default.
+
+Once activated, the Table with have a searchbar on top right, that searches text values in all the table data. It has a 300ms debouncing period, and boasts of memoization.
 
 ## Proptypes
 ```jsx

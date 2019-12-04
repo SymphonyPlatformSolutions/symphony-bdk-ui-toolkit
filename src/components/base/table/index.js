@@ -1,73 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
-import ReactTable from 'react-table';
-import 'react-contexify/dist/ReactContexify.min.css';
-import { contextMenu } from 'react-contexify';
-import uuid from 'uuid';
-import Tooltip from '../tooltip';
-import Text from '../text';
-import Box from '../box';
+import React, { useState, useMemo } from 'react';
 import {
-  getStyleProps,
-  generateContextMenu,
+  useTable, useSortBy, useBlockLayout,
+} from 'react-table';
+import { withTheme } from 'styled-components';
+import PropTypes from 'prop-types';
+import Loader from '../loader';
+import {
+  THead,
+  THeadTh,
+  TBodyTr,
+  TBody,
+  TBodyTd,
+  StyledTable,
+  THeadTr,
   EmptyTable,
   EmptyText,
-  CellWrapper,
-  MoreActionsIcon,
-  MenuWrapper,
-  getTheadStyle,
-  SortingIcon,
-  getPropsStyle,
-  SearchBar,
-  TableWrapper,
-  getHeaderColumnTextStyle,
-  ToolTipContainer,
 } from './theme';
-import Loader from '../loader';
+import {
+  Cell,
+  HeaderCell,
+  SearchBar,
+} from './components';
 
-function filterSearchData(data, rowKeys, searchTerm) {
-  return data.filter((row) => {
-    for (let i = 0; i < rowKeys.length; i++) {
-      if (typeof row[rowKeys[i]] === 'number') {
-        return row[rowKeys[i]].toLowerCase() === searchTerm.toLowerCase();
-      }
-      if (typeof row[rowKeys[i]] !== 'string') {
-        return false;
-      }
-      if (row[rowKeys[i]].toLowerCase().includes(searchTerm.toLowerCase())) {
+const searchFilterFunction = (row, searchValue) => {
+  const keys = Object.keys(row);
+  for (let i = 0; i < keys.length; i += 1) {
+    if (typeof row[keys[i]] === 'string') {
+      if (row[keys[i]].toLowerCase().includes(searchValue)) {
         return true;
       }
     }
-    return false;
-  });
-}
-
-const Table = ({
-  data,
-  columns,
-  theme,
-  loading,
-  emptyMessage,
-  searchable,
-  resizable,
-  maxHeight,
-  ...rest
-}) => {
-  const [sorting, changeSorting] = useState([]);
-  const [searchTerm, changeSearchTerm] = useState('');
-  const [filteredData, changeData] = useState(data);
-  // Search debouncing
-  useEffect(() => {
-    if (!searchTerm) {
-      changeData(data);
-      return () => {};
+    if (typeof row[keys[i]] === 'number') {
+      if (row[keys[i]].toString().includes(searchValue)) {
+        return true;
+      }
     }
-    const handler = setTimeout(() => {
-      changeData(filterSearchData(data, Object.keys(data[0]), searchTerm));
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchTerm, data]);
+  }
+  return false;
+};
+
+const executeSearch = (data, searchTerm) => {
+  if (!searchTerm) {
+    return data;
+  }
+  return data.filter(el => searchFilterFunction(el, searchTerm.toLowerCase()));
+};
+
+const Table = (props) => {
+  const {
+    data,
+    columns,
+    theme,
+    maxHeight,
+    loading,
+    emptyMessage,
+    searchable,
+    ...rest
+  } = props;
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const filteredData = useMemo(() => executeSearch(data, searchTerm), [searchTerm, data]);
 
   if (loading) {
     return (
@@ -85,112 +77,66 @@ const Table = ({
     );
   }
 
-  const openContextMenu = menuId => (e) => {
-    const rtlEvent = Object.assign(
-      {},
-      {
-        x: e.x - 180,
-        y: e.y,
-        clientX: e.clientX - 180,
-        clientY: e.clientY,
-        stopPropagation: () => {
-          e.stopPropagation();
-        },
-      },
-    );
-    contextMenu.show({ id: menuId, event: rtlEvent });
+  const defaultColumn = {
+    accessor: 'actionsMenu',
+    minWidth: 30,
+    width: 200,
+    maxWidth: 400,
+    Cell,
   };
 
-  const customColumns = columns.map((el) => {
-    const parsedEl = Object.assign({}, el);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable(
+    {
+      columns,
+      data: filteredData,
+      defaultColumn,
+    },
+    useBlockLayout,
+    useSortBy,
+  );
 
-    if (parsedEl.hasActions) {
-      parsedEl.Cell = ({ original }) => {
-        const hasActions = original.actionsMenu && original.actionsMenu.length;
-        const menuId = uuid.v1();
-        return hasActions ? (
-          <MenuWrapper type="flat">
-            <MoreActionsIcon onClick={openContextMenu(menuId)} />
-            {generateContextMenu(theme, menuId, original)}
-          </MenuWrapper>
-        ) : null;
-      };
-
-      return parsedEl;
+  const prepareHeaderProps = (col) => {
+    if (col.sortable === false) {
+      return col.getHeaderProps();
     }
-
-    if (typeof parsedEl.Header === 'string') {
-      const stringHeader = parsedEl.Header.slice();
-      parsedEl.Header = ({ column }) => (
-        <CellWrapper type="flat">
-          <Box horizontal space={5}>
-            <Text
-              type="primary"
-              isTitle
-              size="tiny"
-              style={getHeaderColumnTextStyle(theme)}
-            >
-              {stringHeader}
-            </Text>
-            {parsedEl.tooltip && (
-              <ToolTipContainer>
-                <Tooltip color={theme.colors.grey_600} size={12}>
-                  {parsedEl.tooltip}
-                </Tooltip>
-              </ToolTipContainer>
-            )}
-            {el.sortable !== false && <SortingIcon sorting={sorting} columnId={column.id} theme={theme} />}
-          </Box>
-        </CellWrapper>
-      );
-    }
-
-    if (!parsedEl.Cell) {
-      parsedEl.Cell = props => (
-        <CellWrapper type="flat">
-          <Text type="primary" size="small">
-            {props.value}
-          </Text>
-        </CellWrapper>
-      );
-    } else {
-      const OldCell = parsedEl.Cell;
-      parsedEl.Cell = args => (
-        <CellWrapper type="flat">{OldCell(args)}</CellWrapper>
-      );
-    }
-
-    return parsedEl;
-  });
+    return col.getHeaderProps(col.getSortByToggleProps());
+  };
 
   return (
-    <div>
-      <Box type="flat">
-        {searchable && (
-        <SearchBar value={searchTerm} onChange={changeSearchTerm} />
-        )}
-      </Box>
-      <TableWrapper>
-        <ReactTable
-          data={filteredData}
-          width={100}
-          minRows={1}
-          columns={customColumns}
-          loading={loading}
-          resizable={resizable || false}
-          showPagination={false}
-          getTheadProps={(a) => {
-            if (a.sorted !== sorting) {
-              changeSorting(a.sorted);
-            }
-            return getTheadStyle(theme, searchable);
-          }}
-          getProps={() => getPropsStyle(maxHeight)}
-          {...getStyleProps(theme)}
-          {...rest}
-        />
-      </TableWrapper>
-    </div>
+    <StyledTable {...getTableProps()} {...rest}>
+      <THead>
+        {searchable && <SearchBar theme={theme} executeFilter={setSearchTerm} />}
+        {headerGroups.map(headerGroup => (
+          <THeadTr {...headerGroup.getHeaderGroupProps()} style={{}}>
+            {headerGroup.headers.map(column => (
+              <THeadTh {...prepareHeaderProps(column)}>
+                <HeaderCell theme={theme} {...column} />
+              </THeadTh>
+            ))}
+          </THeadTr>
+        ))}
+      </THead>
+      <TBody {...getTableBodyProps()} maxHeight={maxHeight}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <TBodyTr {...row.getRowProps()} style={{}}>
+              {row.cells.map(cell => (
+                <TBodyTd {...cell.getCellProps()}>
+                  {cell.render('Cell')}
+                </TBodyTd>
+              ))}
+            </TBodyTr>
+          );
+        })}
+      </TBody>
+    </StyledTable>
   );
 };
 

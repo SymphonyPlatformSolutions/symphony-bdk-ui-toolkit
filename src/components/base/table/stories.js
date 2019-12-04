@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
@@ -40,22 +41,21 @@ const COLUMNS = [{
   Header: 'Name',
   tooltip: 'This column is not sortable',
   accessor: 'name',
-  width: undefined,
   sortable: false,
 }, {
   Header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'This column is sortable!',
 }, {
   Header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </TextLink>
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
-  width: undefined,
 },
 ];
 
@@ -100,27 +100,38 @@ const DATA_WITH_ACTIONS = [{
     },
   ],
 }];
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
 
 const COLUMNS_WITH_ACTIONS = [{
   Header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
+  id: 'name',
 }, {
   Header: 'Email',
   accessor: 'email',
   tooltip: 'Or some other non-obvious descriptor for your table',
+  id: 'email',
 }, {
   Header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </TextLink>
+  id: 'link',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
 },
 {
+  id: 'actions',
   sortable: false,
-  acessor: null,
   width: 50,
   hasActions: true,
 },
@@ -128,7 +139,7 @@ const COLUMNS_WITH_ACTIONS = [{
 
 const LARGE_DATA_SET = [];
 
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 40; i++) {
   const data = {
     email: Faker.internet.email(),
     name: Faker.name.firstName(),
@@ -184,15 +195,6 @@ storiesOf('Base', module)
               data={LARGE_DATA_SET}
               columns={COLUMNS_WITH_ACTIONS}
               maxHeight={350}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Tooltips</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={DATA}
-              columns={COLUMNS}
             />
           </Box>
         </Box>
