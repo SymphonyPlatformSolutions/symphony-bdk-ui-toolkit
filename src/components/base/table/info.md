@@ -30,17 +30,17 @@ const DATA = [{
 }];
 
 const COLUMNS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
   width: undefined,
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
   width: undefined,
   tooltip: 'Or some other non-obvious descriptor for your table',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
   Cell: ({ cell }) => (
     <CellWrapper>
@@ -53,7 +53,9 @@ const COLUMNS = [{
 },
 ];
 ```
+
 where DATA is an array of objects containing the desired data, and COLUMNS is an array of objects containing how to configure each column of the table. Its use follows that of the wrapped component.
+
 ```jsx
 <Table
   data={DATA}
@@ -123,17 +125,17 @@ const DATA_WITH_ACTIONS = [{
 }];
 
 const COLUMNS_WITH_ACTIONS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
   width: undefined,
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
   width: undefined,
   tooltip: 'Or some other non-obvious descriptor for your table',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
   Cell: ({ cell }) => (
     <CellWrapper>
@@ -158,6 +160,23 @@ const COLUMNS_WITH_ACTIONS = [{
  data={DATA_WITH_ACTIONS}
  columns={COLUMNS_WITH_ACTIONS}
  />
+```
+
+## Custom Row Component
+
+You can also pass on a component to render the table row. It is highly advised that you propagate props to it with the ```...rest``` spread, and assign ```children```.
+
+### Example
+
+```jsx
+const CustomRow = (props) => {
+  const { children, ...rest } = props;
+  return (
+    <CustomRowStyle {...rest}>
+      {children}
+    </CustomRowStyle>
+  );
+};
 ```
 
 ## Search

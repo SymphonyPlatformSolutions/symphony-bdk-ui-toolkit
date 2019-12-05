@@ -171,6 +171,7 @@ Table.propTypes = {
   searchable: PropTypes.bool,
   maxHeight: PropTypes.string,
   align: PropTypes.oneOf(Object.keys(ALIGNMENTS)),
+  Row: PropTypes.node,
 };
 
 Table.defaultProps = {
@@ -181,6 +182,7 @@ Table.defaultProps = {
   emptyMessage: 'You have no content to display!',
   maxHeight: null,
   align: 'center',
+  Row: null,
 };
 
 export default withTheme(Table);

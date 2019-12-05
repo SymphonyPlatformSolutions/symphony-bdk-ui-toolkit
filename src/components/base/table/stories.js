@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
@@ -11,6 +11,7 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
 import TextLink from '../text-link';
+import { TBodyTr } from './theme';
 
 const handleTestEdit = (item) => {
   console.log(item);
@@ -164,6 +165,43 @@ for (let i = 0; i < 40; i++) {
   LARGE_DATA_SET.push(data);
 }
 
+const pastelRainbow = keyframes`
+  100%,0%{
+    background-color: #FF9AA2;
+  }
+  16%{
+    background-color: #FFB7B2;
+  }
+  33%{
+    background-color: #FFDAC1;
+  }
+  50%{
+    background-color: #e2f0cb;
+  }
+  67%{
+    background-color: #b5ead7;
+  }
+  79%{
+    background-color: #C7CEEA;
+  }
+`;
+
+const CustomRowStyle = styled(TBodyTr)`
+  &:hover {
+    animation: ${pastelRainbow} 0.85s linear;
+    animation-iteration-count: infinite;
+  }
+`;
+
+const CustomRow = (props) => {
+  const { children, ...rest } = props;
+  return (
+    <CustomRowStyle {...rest}>
+      {children}
+    </CustomRowStyle>
+  );
+};
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('Table', () => (
@@ -175,6 +213,16 @@ storiesOf('Base', module)
             <Table
               data={DATA}
               columns={COLUMNS}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Custom Row component</Text>
+          <Box space={60} p="0 16px 0 0">
+            <Table
+              data={DATA}
+              columns={COLUMNS}
+              Row={CustomRow}
             />
           </Box>
         </Box>
