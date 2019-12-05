@@ -84,7 +84,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'type',
     sortable: true,
     Cell: RegularRow,
-    width: 90,
+    width: 100,
   },
   {
     header: 'Asset Class',
@@ -92,7 +92,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'asset',
     sortable: false,
     Cell: RegularRow,
-    width: 160,
+    width: 150,
   },
   {
     header: 'Product',
@@ -100,34 +100,34 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     accessor: 'product',
     sortable: false,
     Cell: RegularRow,
-    width: 120,
+    width: 200,
   },
   {
     header: 'Size',
     accessor: 'bidSize',
     Cell: RegularRow,
-    width: 80,
+    width: 60,
   },
   {
     header: 'Bid',
     accessor: 'bid',
     Cell: PriceBidCell,
     sortable: false,
-    width: 50,
+    width: 60,
   },
   {
     header: 'Ask',
     accessor: 'ask',
     sortable: false,
     Cell: PriceAskCell,
-    width: 80,
+    width: 60,
   },
   {
     header: 'Size',
     tooltip: 'The amount of equity being traded at this ask price',
     accessor: 'askSize',
     Cell: RegularRow,
-    width: 50,
+    width: 60,
   },
   {
     header: '',
@@ -141,9 +141,9 @@ const SSE_EVENTS_TABLE_COLUMNS = [
         <CellWrapper>
           <StyledArrow color={arrowColor} size={24} increased={increased} />
         </CellWrapper>
-      ) : null;
+      ) : null
     },
-    width: 100,
+    width: 50,
   },
   {
     header: 'Time',
@@ -182,7 +182,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
       [original],
     ),
     sortable: true,
-    width: 120,
+    width: 140,
   },
   {
     header: 'Comment',
