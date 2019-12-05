@@ -69,18 +69,16 @@ const PageOne = () => {
   });
   const columns = [
     {
-      Header: 'Name',
+      header: 'Name',
       tooltip: 'This column is not sortable',
       accessor: 'name',
-      width: undefined,
       sortable: false,
     }, {
-      Header: 'Email',
+      header: 'Email',
       accessor: 'email',
-      width: undefined,
       tooltip: 'This column is sortable!',
     }, {
-      Cell: ({ original }) => (
+      Cell: ({ row: { original } }) => (
         <Box style={{ width: '100%' }} horizontal justify="center">
           <Button
             style={{ width: '116px', color: 'white' }}
@@ -93,7 +91,6 @@ const PageOne = () => {
         </Box>
       ),
       sortable: false,
-      width: undefined,
     },
   ];
 
@@ -129,18 +126,16 @@ const PageTwo = () => {
 
   const columns = [
     {
-      Header: 'Product Name',
+      header: 'Product Name',
       tooltip: 'These products are awesome',
       accessor: 'product',
-      width: undefined,
       sortable: false,
     }, {
-      Header: 'Company',
+      header: 'Company',
       accessor: 'company',
-      width: undefined,
     },
     {
-      Header: 'Operation',
+      header: 'Operation',
       accessor: 'operation',
       width: 100,
     },

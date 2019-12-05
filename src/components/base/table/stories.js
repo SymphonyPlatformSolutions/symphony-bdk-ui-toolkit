@@ -11,7 +11,7 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
 import TextLink from '../text-link';
-import { TBodyTr } from './theme';
+import TableElements from './components/table-elements';
 
 const handleTestEdit = (item) => {
   console.log(item);
@@ -186,7 +186,7 @@ const pastelRainbow = keyframes`
   }
 `;
 
-const CustomRowStyle = styled(TBodyTr)`
+const CustomRowStyle = styled(TableElements.TBodyTr)`
   &:hover {
     animation: ${pastelRainbow} 0.85s linear;
     animation-iteration-count: infinite;

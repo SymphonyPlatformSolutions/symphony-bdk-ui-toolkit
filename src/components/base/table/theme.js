@@ -4,65 +4,6 @@ import Text from '../text';
 import Box from '../box';
 import { THEME_TYPES } from '../../../styles/colors';
 
-export const ALIGNMENTS = {
-  left: 'flex-start',
-  right: 'flex-end',
-  center: 'space-between',
-};
-
-const getAlignment = align => ALIGNMENTS[align] || ALIGNMENTS.center;
-
-export const StyledTable = styled.div`
-  border-radius: 4px;
-  border-spacing: 0;
-`;
-
-export const THead = styled.div`
-  background-color: ${({ theme }) => theme.colors.grey_100};
-  padding-top: 2px;
-  border-top: 2px solid ${({ theme }) => theme.colors.grey_100};
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-`;
-
-export const THeadTr = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: ${({ align }) => getAlignment(align)};
-`;
-
-export const THeadTh = styled.div`
-  padding: 10px;
-  border-right: none;
-  align-items: center;
-`;
-
-export const TBodyTr = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.grey_100};
-  transition: background-color 0.2s;
-  display: flex;
-  width: 100%;
-  justify-content: ${({ align }) => getAlignment(align)};
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.grey_200};
-  }
-`;
-
-export const TBody = styled.div`
-  border: 2px solid ${({ theme }) => theme.colors.grey_100};
-  overflow: scroll;
-  overflow-x: auto;
-  overflow-y: auto;
-  width: calc(100% - 4px);
-  max-height: ${({ maxHeight }) => (maxHeight ? `${maxHeight}px` : undefined)};
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-`;
-
-export const TBodyTd = styled.div`
-  padding: 10px;
-`;
-
 export const EmptyTable = styled.div`
   display: flex;
   justify-content: center;
@@ -116,7 +57,7 @@ export const IconSpinner = styled.div`
   transform: ${({ desc }) => (desc ? 'rotate(0)' : 'rotate(180deg)')};
 `;
 export const CellWrapper = styled(Box)`
-  margin: 0px 19px;
+  padding: 10px 15px;
   align-items: start;
   justify-content: center;
   height: 100%;
@@ -156,6 +97,10 @@ export const getMenuBackgroundColor = theme => ({
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
   },
 });
+
+export const TableScrollWrapper = styled.div`
+  overflow-x: auto;
+`;
 
 /*  Context Menu */
 const CONTEXT_COLORS = {

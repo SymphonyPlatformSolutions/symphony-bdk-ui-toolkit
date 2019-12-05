@@ -6,22 +6,15 @@ import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Loader from '../loader';
 import {
-  THead,
-  THeadTh,
-  TBodyTr,
-  TBody,
-  TBodyTd,
-  StyledTable,
-  THeadTr,
   EmptyTable,
   EmptyText,
-  ALIGNMENTS,
+  TableScrollWrapper,
 } from './theme';
-import {
-  Cell,
-  HeaderCell,
-  SearchBar,
-} from './components';
+import TableElements, { ALIGNMENTS } from './components/table-elements';
+import Cell from './components/cell';
+import HeaderCell from './components/header-cell';
+import SearchBar from './components/search-bar';
+import ContextMenu from './components/context-menu';
 
 const searchFilterFunction = (row, searchValue) => {
   const keys = Object.keys(row);
@@ -85,6 +78,7 @@ const Table = (props) => {
     headerGroups,
     rows,
     prepareRow,
+    totalColumnsWidth,
   } = useTable(
     {
       columns,
@@ -119,46 +113,47 @@ const Table = (props) => {
   };
 
   return (
-    <StyledTable {...getTableProps()} {...rest}>
-      <THead>
-        {searchable && <SearchBar theme={theme} executeFilter={setSearchTerm} />}
-        {headerGroups.map(headerGroup => (
-          <THeadTr {...headerGroup.getHeaderGroupProps()} align={align} style={{}}>
-            {headerGroup.headers.map(column => (
-              <THeadTh {...prepareHeaderProps(column)}>
-                {column.render('Header')}
-              </THeadTh>
-            ))}
-          </THeadTr>
-        ))}
-      </THead>
-      <TBody {...getTableBodyProps()} maxHeight={maxHeight}>
-        {rows.map((row) => {
-          prepareRow(row);
-
-          if (Row) { // Custom row
-            return (
-              <Row {...row.getRowProps()} {...row} align={align} style={{}}>
-                {row.cells.map(cell => (
-                  <TBodyTd {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TBodyTd>
-                ))}
-              </Row>
-            );
-          }
-          return (
-            <TBodyTr {...row.getRowProps()} align={align} style={{}}>
-              {row.cells.map(cell => (
-                <TBodyTd {...cell.getCellProps()}>
-                  {cell.render('Cell')}
-                </TBodyTd>
+    <TableScrollWrapper>
+      <TableElements.StyledTable {...getTableProps()} totalWidth={totalColumnsWidth} {...rest}>
+        <TableElements.THead>
+          {searchable && <SearchBar theme={theme} executeFilter={setSearchTerm} />}
+          {headerGroups.map(headerGroup => (
+            <TableElements.THeadTr {...headerGroup.getHeaderGroupProps()} align={align} style={{}}>
+              {headerGroup.headers.map(column => (
+                <TableElements.THeadTh {...prepareHeaderProps(column)}>
+                  {column.render('Header')}
+                </TableElements.THeadTh>
               ))}
-            </TBodyTr>
-          );
-        })}
-      </TBody>
-    </StyledTable>
+            </TableElements.THeadTr>
+          ))}
+        </TableElements.THead>
+        <TableElements.TBody {...getTableBodyProps()} maxHeight={maxHeight}>
+          {rows.map((row) => {
+            prepareRow(row);
+            if (Row) { // Custom row
+              return (
+                <Row {...row.getRowProps()} {...row} align={align} style={{}}>
+                  {row.cells.map(cell => (
+                    <TableElements.TBodyTd {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </TableElements.TBodyTd>
+                  ))}
+                </Row>
+              );
+            }
+            return (
+              <TableElements.TBodyTr {...row.getRowProps()} align={align} style={{}}>
+                {row.cells.map(cell => (
+                  <TableElements.TBodyTd {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </TableElements.TBodyTd>
+                ))}
+              </TableElements.TBodyTr>
+            );
+          })}
+        </TableElements.TBody>
+      </TableElements.StyledTable>
+    </TableScrollWrapper>
   );
 };
 
@@ -183,6 +178,13 @@ Table.defaultProps = {
   maxHeight: null,
   align: 'center',
   Row: null,
+};
+
+export const TableComponents = {
+  Cell,
+  HeaderCell,
+  SearchBar,
+  ContextMenu,
 };
 
 export default withTheme(Table);

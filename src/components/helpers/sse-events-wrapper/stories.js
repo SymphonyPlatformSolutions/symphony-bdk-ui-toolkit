@@ -15,7 +15,8 @@ import Button from '../../base/button';
 import MessageBox from '../../base/message-box';
 import TextLink from '../../base/text-link';
 import Toggle from '../../base/toggle';
-import { TBodyTr, CellWrapper } from '../../base/table/theme';
+import TableElements from '../../base/table/components/table-elements';
+import { CellWrapper } from '../../base/table/theme';
 
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};
@@ -60,22 +61,15 @@ const getRenderTime = (time) => {
   return `${date.getHours()}:${date.getMinutes()}`;
 };
 
-const StyledText = styled(Text).attrs(({ theme, animating }) => ({
-  color: animating ? theme.colors.white : null,
-}))`
-  color: ${props => props.color} !important;
+const StyledText = styled(Text)`
+  color: ${({ animating, theme }) => (animating ? theme.colors.white : undefined)};
 `;
 
-const RegularRow = ({ cell, row: { original } }) => useMemo(() => {
-  if (cell.animating) {
-    console.log(cell);
-  }
-  return (
-    <CellWrapper>
-        <StyledText {...original}>{cell.value}</StyledText>
-      </CellWrapper>
-  );
-}, [cell]);
+const RegularRow = ({ cell, row: { original } }) => useMemo(() => (
+  <CellWrapper>
+    <StyledText {...original}>{cell.value}</StyledText>
+  </CellWrapper>
+), [cell]);
 
 const SSE_EVENTS_TABLE_COLUMNS = [
   {
@@ -141,7 +135,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
         <CellWrapper>
           <StyledArrow color={arrowColor} size={24} increased={increased} />
         </CellWrapper>
-      ) : null
+      ) : null;
     },
     width: 50,
   },
@@ -153,10 +147,10 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Cell: ({ cell: { value }, row: { original } }) => useMemo(
       () => (
         <CellWrapper>
-            <StyledText {...original}>{getRenderTime(value)}</StyledText>
-          </CellWrapper>
+          <StyledText {...original}>{getRenderTime(value)}</StyledText>
+        </CellWrapper>
       ),
-      [value],
+      [value, original.animating],
     ),
     width: 80,
   },
@@ -167,19 +161,19 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Cell: ({ row: { original } }) => useMemo(
       () => (
         <CellWrapper>
-            {original.dealer.link ? (
-              <StyledLink
-                animating={original.animating}
-                href={original.dealer.link}
-              >
-                {original.dealer.name}
-              </StyledLink>
-            ) : (
-              <StyledText {...original}>{original.dealer.name}</StyledText>
-            )}
-          </CellWrapper>
+          {original.dealer.link ? (
+            <StyledLink
+              animating={original.animating}
+              href={original.dealer.link}
+            >
+              {original.dealer.name}
+            </StyledLink>
+          ) : (
+            <StyledText {...original}>{original.dealer.name}</StyledText>
+          )}
+        </CellWrapper>
       ),
-      [original],
+      [original.animating, original.dealer.name],
     ),
     sortable: true,
     width: 140,
@@ -199,7 +193,7 @@ const autoFetchConfig = {
   handleData: results => results,
 };
 
-const CustomTr = styled(TBodyTr)`
+const CustomTr = styled(TableElements.TBodyTr)`
   transition: ${({ animating }) => (animating
     ? 'background-color 0.5s cubic-bezier(1,.02,.41,.37)'
     : undefined)};
