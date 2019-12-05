@@ -58,7 +58,6 @@ const getMargin = ({ mx, my }) => {
 };
 const getFontStyle = ({ isTitle, size }) => (isTitle || size !== 'tiny' ? 'normal' : 'italic');
 const getFontSize = ({ isTitle, size }) => (isTitle ? FONTSIZETITLE[size] : FONTSIZE[size]);
-const getLineHeight = ({ isTitle, size }) => (isTitle ? LINEHEIGHTTITLE[size] : LINEHEIGHT[size]);
 const getFontWeight = ({ isTitle }) => (isTitle ? '900' : '400');
 const getBorderBottom = ({ underline, theme }) => (underline ? `1px ${theme.colors.grey_700} solid` : '0px');
 
@@ -67,7 +66,6 @@ export const BaseText = styled.div`
   font-style: ${props => getFontStyle(props)};
   font-size: ${props => getFontSize(props)};
   font-weight: ${props => getFontWeight(props)};
-  line-height: ${props => getLineHeight(props)};
   padding: ${props => getPadding(props)};
   border-bottom: ${props => getBorderBottom(props)};
   margin: ${props => getMargin(props)};;

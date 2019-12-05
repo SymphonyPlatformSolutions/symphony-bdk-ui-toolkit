@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import styled from 'styled-components';
 import Box from '../box';
 import Text from '../text';
 import { StoryWrapper } from '../wrappers';
@@ -25,6 +26,28 @@ import {
   CloseIcon,
 } from '.';
 
+const TestWrapper = styled.div`
+  background-color: ${props => (props.blueprint ? 'red' : null)};
+    &:hover {
+    transform:  ${props => (props.blueprint ? 'rotate(180deg)' : null)};
+  }
+`;
+
+const TestContainer = styled.div`
+  background: ${props => (props.blueprint ? `linear-gradient(to top left,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%),
+         linear-gradient(to top right,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%)` : null)};
+`;
+
 storiesOf('Base', module).add(
   'Icons',
   () => React.createElement(() => (
@@ -33,85 +56,161 @@ storiesOf('Base', module).add(
         <Text isTitle>Icons</Text>
         <Box horizontal>
           <Box type="flat" justify="center" align="center">
-            <SettingsIcon />
+            <TestWrapper>
+              <TestContainer>
+                <SettingsIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Settings</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <SecurityIcon />
+            <TestWrapper>
+              <TestContainer>
+                <SecurityIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Security</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <NotificationsIcon />
+            <TestWrapper>
+              <TestContainer>
+                <NotificationsIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Notifications</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <InteractionsIcon />
+            <TestWrapper>
+              <TestContainer>
+                <InteractionsIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Interactions</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <CloudIcon />
-            <Text>Cloud</Text>
+            <TestWrapper>
+              <TestContainer>
+                <CloudIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Cloud</Text>
           </Box>
         </Box>
         <Box horizontal>
           <Box type="flat" justify="center" align="center">
-            <ServerIcon />
+            <TestWrapper>
+              <TestContainer>
+                <ServerIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Server</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <EyeIcon />
-            <Text>Eye</Text>
+            <TestWrapper>
+              <TestContainer>
+                <EyeIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Eye</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <ClosedEyeIcon />
+            <TestWrapper>
+              <TestContainer>
+                <ClosedEyeIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Closed Eye</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <EditIcon />
-            <Text>Edit</Text>
+            <TestWrapper>
+              <TestContainer>
+                <EditIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Edit</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <DeleteIcon />
+            <TestWrapper>
+              <TestContainer>
+                <DeleteIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Delete</Text>
           </Box>
         </Box>
         <Box horizontal>
           <Box type="flat" justify="center" align="center">
-            <DownChevron />
+            <TestWrapper>
+              <TestContainer>
+                <DownChevron size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Down Chevron</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <TickIcon />
-            <Text>Tick</Text>
+            <TestWrapper>
+              <TestContainer>
+                <TickIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Tick</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <CrossIcon />
-            <Text>Cross</Text>
+            <TestWrapper>
+              <TestContainer>
+                <CrossIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Cross</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <PricingIcon />
+            <TestWrapper>
+              <TestContainer>
+                <PricingIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Pricing</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <InfoIcon />
-            <Text>Info</Text>
+            <TestWrapper>
+              <TestContainer>
+                <InfoIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Info</Text>
           </Box>
         </Box>
         <Box horizontal>
           <Box type="flat" justify="center" align="center">
-            <EmptyStarIcon />
+            <TestWrapper>
+              <TestContainer>
+                <EmptyStarIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Empty Star</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <StarIcon />
-            <Text>Star</Text>
+            <TestWrapper>
+              <TestContainer>
+                <StarIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Star</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <CloseIcon />
-            <Text>Close</Text>
+            <TestWrapper>
+              <TestContainer>
+                <CloseIcon size={14} />
+
+              </TestContainer>
+            </TestWrapper><Text>Close</Text>
           </Box>
           <Box type="flat" justify="center" align="center">
-            <EllipsisIcon />
+            <TestWrapper>
+              <TestContainer>
+                <EllipsisIcon size={14} />
+              </TestContainer>
+            </TestWrapper>
             <Text>Ellipsis</Text>
           </Box>
         </Box>
