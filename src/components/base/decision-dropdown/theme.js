@@ -80,8 +80,10 @@ export const ShrinkingBorder = styled.span`
   z-index: 10;
 `;
 export const ChevronWrapper = styled.div`
+  display: flex;
+  height: 10px;
+  align-items: center;
   transition: all 0.3s ease-out;
-  transform-origin: center;
   transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
 `;
 export const DropdownContainer = styled(Container)`
@@ -190,8 +192,7 @@ export const MultiValueContainer = styled.div`
   flex-wrap: wrap;
 `;
 export const IconMarginContainer = styled.div`
-  transform-origin: center;
-  transform: translateY(2px);
+  display: flex;
   margin-right: 8px;
 `;
 export const TooltipMargin = styled.div`

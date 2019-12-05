@@ -342,6 +342,7 @@ storiesOf('Base', module)
         <Text isTitle>Icon Buttons</Text>
         <Box horizontal>
           <FavoriteButton />
+          <FavoriteButton isFavorite />
           <CloseButton />
           <MoreButton />
         </Box>

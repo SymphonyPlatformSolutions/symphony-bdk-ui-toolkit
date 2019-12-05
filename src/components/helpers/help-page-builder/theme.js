@@ -27,6 +27,15 @@ export const StyledArrowRightCircle = styled(ArrowRightCircle)`
 export const StyledCard = styled(Card)`
   height: 35px;
   max-height: 150px;
+  
+  &:hover {
+    svg {
+      opacity: 1;
+    }
+    div {
+      font-weight: 500;
+    }
+  }
 `;
 
 export const StyledSubTopicContainer = styled.div`

@@ -106,11 +106,7 @@ export const Container = styled(Box)`
 export const TextContainer = styled(Text)`
   color: inherit;
   font-size: inherit;
-  line-height: 0;
-  letter-spacing: 1px;
   font-weight: bold;
-  line-height: none;
-  margin-top: 1px;
 `;
 
 export const ChildrenContainer = styled(Box)`
@@ -119,10 +115,8 @@ export const ChildrenContainer = styled(Box)`
 `;
 
 export const BaseButton = styled.button.attrs({})`
-  font-family: 'Lato';
-  padding: 0 0 0 0;
   color: ${props => getColor(props)};
-  margin: 0;
+  font-weight: bold;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   height: ${({ size, fill }) => (fill === FILL_TYPES.GHOST ? undefined : MIN_HEIGHTS[size])};
   width: ${({ size, circular }) => (circular ? MIN_HEIGHTS[size] : undefined)};
@@ -132,7 +126,8 @@ export const BaseButton = styled.button.attrs({})`
   border-radius: 24px;
   cursor: ${props => (props.disabled ? 'none' : 'pointer')};
   font-size: ${({ size }) => FONT_SIZES[size]};
-  padding: ${({ circular }) => (circular ? '0' : undefined)};
+  padding: 0;
+  
   &:focus {
     color: ${props => getHover(props, true)};
     background-color: ${props => getHover(props, false)};
