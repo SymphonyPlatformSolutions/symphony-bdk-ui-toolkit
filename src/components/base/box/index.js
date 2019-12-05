@@ -56,7 +56,7 @@ export default function Box(props) {
 }
 
 const BaseBox = styled.div`
-  box-sizing: inherit;
+  box-sizing: border-box;
   display: ${p => p.display};
   flex-direction: ${direction};
   flex-grow: ${p => p.grow};
