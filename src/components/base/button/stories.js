@@ -282,8 +282,7 @@ storiesOf('Base', module)
       </Box>
       <Box>
         <Text isTitle>Circular Button</Text>
-        <Box>
-          <Box horizontal space={20}>
+          <Box horizontal type="secondary">
             <Button size="small" type="primary" circular onClick={action('clicked')}>+</Button>
             <Button size="regular" type="primary" circular onClick={action('clicked')}>+</Button>
             <Button size="large" type="primary" circular onClick={action('clicked')}>+</Button>
@@ -300,7 +299,6 @@ storiesOf('Base', module)
             <Button disabled size="regular" fill="outlined" circular onClick={action('clicked')}>+</Button>
             <Button disabled size="large" fill="outlined" circular onClick={action('clicked')}>+</Button>
           </Box>
-        </Box>
         <Box>
           <Box horizontal space={20}>
             <Button size="small" type="danger" circular onClick={action('clicked')}>+</Button>

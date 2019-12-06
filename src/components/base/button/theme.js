@@ -107,6 +107,7 @@ export const TextContainer = styled(Text)`
   color: inherit;
   font-size: inherit;
   font-weight: bold;
+  line-height: 1rem;
 `;
 
 export const ChildrenContainer = styled(Box)`
