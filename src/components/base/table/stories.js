@@ -140,11 +140,11 @@ const COLUMNS_WITH_ACTIONS = [{
 
 const LARGE_DATA_SET = [];
 
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 100; i++) {
   const data = {
     email: Faker.internet.email(),
     name: Faker.name.firstName(),
-    link: 'https://www.example.com',
+    link: Faker.internet.url(),
   };
 
   if (Faker.random.boolean()) {
@@ -163,6 +163,18 @@ for (let i = 0; i < 40; i++) {
   }
 
   LARGE_DATA_SET.push(data);
+}
+
+const HUGE_DATA_SET = [];
+
+for (let i = 0; i < 100000; i++) {
+  const data = {
+    email: Faker.internet.email(),
+    name: Faker.name.firstName(),
+    link: Faker.internet.url(),
+  };
+
+  HUGE_DATA_SET.push(data);
 }
 
 const pastelRainbow = keyframes`
@@ -242,6 +254,16 @@ storiesOf('Base', module)
               searchable
               data={LARGE_DATA_SET}
               columns={COLUMNS_WITH_ACTIONS}
+              maxHeight={350}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Huge Data set, and max Height</Text>
+          <Box space={60} p="0 16px 0 0">
+            <Table
+              data={HUGE_DATA_SET}
+              columns={COLUMNS}
               maxHeight={350}
             />
           </Box>

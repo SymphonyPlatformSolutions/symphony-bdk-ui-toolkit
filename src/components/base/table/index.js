@@ -1,15 +1,12 @@
-import React, { useState, useMemo } from 'react';
-import {
-  useTable, useSortBy, useBlockLayout,
-} from 'react-table';
+import React, {
+  useState, useMemo, useCallback, useRef,
+} from 'react';
+import { useTable, useSortBy, useBlockLayout } from 'react-table';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
+import { VariableSizeList } from 'react-window';
+import { EmptyTable, EmptyText, TableScrollWrapper } from './theme';
 import Loader from '../loader';
-import {
-  EmptyTable,
-  EmptyText,
-  TableScrollWrapper,
-} from './theme';
 import TableElements, { ALIGNMENTS } from './components/table-elements';
 import Cell from './components/cell';
 import HeaderCell from './components/header-cell';
@@ -55,6 +52,7 @@ const Table = (props) => {
   } = props;
 
   const [searchTerm, setSearchTerm] = useState('');
+  const tableRef = useRef();
 
   const defaultColumn = {
     accessor: 'actionsMenu',
@@ -65,12 +63,10 @@ const Table = (props) => {
     Header: HeaderCell,
   };
 
-  let filteredData;
-  if (searchable) {
-    filteredData = useMemo(() => executeSearch(data, searchTerm), [searchTerm, data]);
-  } else {
-    filteredData = data;
-  }
+  const filteredData = useMemo(() => executeSearch(data, searchTerm), [
+    searchTerm,
+    data,
+  ]);
 
   const {
     getTableProps,
@@ -89,21 +85,21 @@ const Table = (props) => {
     useSortBy,
   );
 
-  if (loading) {
-    return (
-      <EmptyTable>
-        <Loader />
-      </EmptyTable>
-    );
-  }
+  const renderEmptyTable = () => {
+    if (loading) {
+      return (
+        <EmptyTable>
+          <Loader />
+        </EmptyTable>
+      );
+    }
 
-  if (!data || !data.length) {
     return (
       <EmptyTable>
         <EmptyText theme={theme}>{emptyMessage}</EmptyText>
       </EmptyTable>
     );
-  }
+  };
 
   const prepareHeaderProps = (col) => {
     if (col.sortable === false) {
@@ -112,45 +108,81 @@ const Table = (props) => {
     return col.getHeaderProps(col.getSortByToggleProps());
   };
 
+  const RenderRow = useCallback(
+    ({ index, style }) => {
+      const row = rows[index];
+
+      prepareRow(row);
+      if (Row) {
+        // Custom row
+        return (
+          <Row {...row.getRowProps({ style })} {...row} align={align}>
+            {row.cells.map(cell => (
+              <TableElements.TBodyTd {...cell.getCellProps()}>
+                {cell.render('Cell')}
+              </TableElements.TBodyTd>
+            ))}
+          </Row>
+        );
+      }
+      return (
+        <TableElements.TBodyTr {...row.getRowProps({ style })} align={align}>
+          {row.cells.map(cell => (
+            <TableElements.TBodyTd {...cell.getCellProps()}>
+              {cell.render('Cell')}
+            </TableElements.TBodyTd>
+          ))}
+        </TableElements.TBodyTr>
+      );
+    },
+    [prepareRow, rows],
+  );
+
   return (
     <TableScrollWrapper>
-      <TableElements.StyledTable {...getTableProps()} totalWidth={totalColumnsWidth} {...rest}>
+      <TableElements.StyledTable
+        ref={tableRef}
+        {...getTableProps()}
+        totalWidth={totalColumnsWidth}
+        {...rest}
+      >
         <TableElements.THead>
-          {searchable && <SearchBar theme={theme} executeFilter={setSearchTerm} />}
-          {headerGroups.map(headerGroup => (
-            <TableElements.THeadTr {...headerGroup.getHeaderGroupProps()} align={align} style={{}}>
-              {headerGroup.headers.map(column => (
-                <TableElements.THeadTh {...prepareHeaderProps(column)}>
-                  {column.render('Header')}
-                </TableElements.THeadTh>
-              ))}
-            </TableElements.THeadTr>
-          ))}
-        </TableElements.THead>
-        <TableElements.TBody {...getTableBodyProps()} maxHeight={maxHeight}>
-          {rows.map((row) => {
-            prepareRow(row);
-            if (Row) { // Custom row
+          {searchable && (
+            <SearchBar theme={theme} executeFilter={setSearchTerm} />
+          )}
+          {headerGroups.map((headerGroup) => {
+            if (headerGroup.getHeaderGroupProps) {
               return (
-                <Row {...row.getRowProps()} {...row} align={align} style={{}}>
-                  {row.cells.map(cell => (
-                    <TableElements.TBodyTd {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </TableElements.TBodyTd>
+                <TableElements.THeadTr
+                  {...headerGroup.getHeaderGroupProps()}
+                  align={align}
+                  style={{}}
+                >
+                  {headerGroup.headers.map(column => (
+                    <TableElements.THeadTh {...prepareHeaderProps(column)}>
+                      {column.render('Header')}
+                    </TableElements.THeadTh>
                   ))}
-                </Row>
+                </TableElements.THeadTr>
               );
             }
-            return (
-              <TableElements.TBodyTr {...row.getRowProps()} align={align} style={{}}>
-                {row.cells.map(cell => (
-                  <TableElements.TBodyTd {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TableElements.TBodyTd>
-                ))}
-              </TableElements.TBodyTr>
-            );
+            return null;
           })}
+        </TableElements.THead>
+        <TableElements.TBody {...getTableBodyProps()}>
+          {rows.length ? (
+            <VariableSizeList
+              height={!maxHeight ? rows.length * 35 + 1 : maxHeight}
+              itemCount={rows.length}
+              itemSize={() => 35}
+              width={() => (tableRef.current ? tableRef.current.offsetWidth : 10)
+              }
+            >
+              {RenderRow}
+            </VariableSizeList>
+          ) : (
+            renderEmptyTable()
+          )}
         </TableElements.TBody>
       </TableElements.StyledTable>
     </TableScrollWrapper>
