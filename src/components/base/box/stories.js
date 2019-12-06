@@ -15,31 +15,31 @@ const ExampleViewport = styled(Box)`
 const SideBar = styled(Box)`
   width: 200px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_400};
+  background-color: ${props => props.theme.colors.secondary_400};
 `;
 
 const ContentBox = styled(Box)`
-  padding: 25px;
+  padding: 10px;
   width: -webkit-fill-available;
-  background-color: ${props => props.theme.colors.oldprimary_100};
+  background-color: ${props => props.theme.colors.secondary_050};
 `;
 
 const ContentHeader = styled(Box)`
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_200};
+  background-color: ${props => props.theme.colors.secondary_200};
 `;
 
 const ContentBody = styled(Box)`
   padding: 10px;
   height: 100%;
-  background-color: ${props => props.theme.colors.oldprimary_200};
+  background-color: ${props => props.theme.colors.secondary_200};
 `;
 
 const VerticalList = styled(Box)`
   height: 100%;
   width: -webkit-fill-available;
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_400};
+  background-color: ${props => props.theme.colors.oldprimary_100};
 `;
 
 const InnerVerticalList = styled(VerticalList)`
@@ -53,14 +53,15 @@ const HorizontalList = styled(Box)`
   width: -webkit-fill-available;
   flex-wrap: wrap;
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_400};
+  background-color: ${props => props.theme.colors.oldprimary_100};
 `;
 
-const LeftListElement = styled.div`
+const LeftListElement = styled(Box)`
   width: 100%;
   height: 100%;
+  padding-top: 2px;
   border: ${props => `1px solid ${props.theme.colors.grey_500}`};
-  background-color: ${props => props.theme.colors.misc_18};
+  background-color: ${props => props.theme.colors.secondary_100};
 `;
 
 const RightListElement = styled(LeftListElement)`
@@ -74,45 +75,88 @@ const RightCenterElement = styled(LeftListElement)`
   height: 30px;
 `;
 
+const Title = styled(Text)`
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const ElementText = styled(Text)`
+  color: ${({ theme }) => theme.colors.oldprimary_900};
+`;
+
 const ComplexExample = () => (
   <ExampleViewport type="flat" horizontal>
     <SideBar vertical>
-      <Box>
-        <img src="https://symphony.com/wp-content/uploads/2019/08/logo-symphony.svg" />
+      <Box align="center">
+        <Title isTitle>Sidebar</Title>
       </Box>
     </SideBar>
-    <ContentBox>
+    <ContentBox type="secondary">
       <ContentHeader type="flat" align="center">
-        <Text isTitle>Header</Text>
+        <Title isTitle>Header</Title>
       </ContentHeader>
-      <ContentBody horizontal>
-        <VerticalList vertical>
-          <LeftListElement />
-          <LeftListElement />
-          <LeftListElement />
-          <LeftListElement />
-          <LeftListElement />
-          <LeftListElement />
-        </VerticalList>
-        <HorizontalList type="flat" horizontal justify="space-around" align="center">
-          <RightListElement />
-          <RightListElement />
-          <RightListElement />
-          <RightListElement />
-          <RightListElement />
-          <RightListElement />
-        </HorizontalList>
-        <HorizontalList type="flat" horizontal justify="space-around" align="center">
-          <RightListElement />
-          <RightListElement />
-          <InnerVerticalList vertical>
-            <RightCenterElement />
-            <RightCenterElement />
-            <RightCenterElement />
-            <RightCenterElement />
-          </InnerVerticalList>
-        </HorizontalList>
+      <ContentBody vertical>
+        <Box align="center">
+          <Title isTitle>Body</Title>
+        </Box>
+        <Box horizontal>
+          <VerticalList vertical>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+            <LeftListElement align="center">
+              <ElementText>element</ElementText>
+            </LeftListElement>
+          </VerticalList>
+          <HorizontalList type="flat" horizontal justify="space-around" align="center">
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+          </HorizontalList>
+          <HorizontalList type="flat" horizontal justify="space-around" align="center">
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+            <RightListElement align="center" justify="center">
+              <ElementText>element</ElementText>
+            </RightListElement>
+            <InnerVerticalList vertical>
+              <RightCenterElement align="center" justify="center">
+                <ElementText>element</ElementText>
+              </RightCenterElement>
+              <RightCenterElement align="center" justify="center">
+                <ElementText>element</ElementText>
+              </RightCenterElement>
+              <RightCenterElement align="center" justify="center">
+                <ElementText>element</ElementText>
+              </RightCenterElement>
+            </InnerVerticalList>
+          </HorizontalList>
+        </Box>
       </ContentBody>
+      <ContentHeader type="flat" align="center">
+        <Title isTitle>Footer</Title>
+      </ContentHeader>
     </ContentBox>
   </ExampleViewport>
 );
@@ -173,9 +217,9 @@ storiesOf('Base', module)
         </Text>
         <ShowCaseCard>
           <Box horizontal type="secondary">
-            <img src="http://lorempixel.com/150/100/" />
-            <img src="http://lorempixel.com/150/100/" />
-            <img src="http://lorempixel.com/150/100/" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
           </Box>
         </ShowCaseCard>
       </Box>
@@ -185,9 +229,9 @@ storiesOf('Base', module)
         </Text>
         <ShowCaseCard style={{ width: '100px' }}>
           <Box vertical>
-            <img src="http://lorempixel.com/150/100/" />
-            <img src="http://lorempixel.com/150/100/" />
-            <img src="http://lorempixel.com/150/100/" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
           </Box>
         </ShowCaseCard>
       </Box>
@@ -199,13 +243,13 @@ storiesOf('Base', module)
           </ul>
           <Box horizontal justify="space-between" style={{ height: '100%' }}>
             <ShowCaseCard align="center" justify="flex-start">
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </ShowCaseCard>
             <ShowCaseCard align="center" justify="center">
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </ShowCaseCard>
             <ShowCaseCard align="center" justify="flex-end">
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </ShowCaseCard>
           </Box>
         </Box>
@@ -217,13 +261,13 @@ storiesOf('Base', module)
             </ul>
             <Box vertical>
               <ShowCaseCard align="flex-start">
-                <img src="http://lorempixel.com/150/100/" />
+                <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
               </ShowCaseCard>
               <ShowCaseCard align="center">
-                <img src="http://lorempixel.com/150/100/" />
+                <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
               </ShowCaseCard>
               <ShowCaseCard align="flex-end">
-                <img src="http://lorempixel.com/150/100/" />
+                <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
               </ShowCaseCard>
             </Box>
           </Box>
@@ -262,9 +306,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal>
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </Box>
           </ShowCaseCard>
         </Box>
@@ -274,9 +318,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal type="secondary">
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </Box>
           </ShowCaseCard>
         </Box>
@@ -286,9 +330,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal type="flat">
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
-              <img src="http://lorempixel.com/150/100/" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
             </Box>
           </ShowCaseCard>
         </Box>
