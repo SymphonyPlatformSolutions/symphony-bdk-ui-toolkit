@@ -15,31 +15,31 @@ const ExampleViewport = styled(Box)`
 const SideBar = styled(Box)`
   width: 200px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.secondary_400};
+  background-color: ${({ theme }) => theme.colors.secondary_400};
 `;
 
 const ContentBox = styled(Box)`
   padding: 10px;
   width: -webkit-fill-available;
-  background-color: ${props => props.theme.colors.secondary_050};
+  background-color: ${({ theme }) => theme.colors.secondary_050};
 `;
 
 const ContentHeader = styled(Box)`
   padding: 10px;
-  background-color: ${props => props.theme.colors.secondary_200};
+  background-color: ${({ theme }) => theme.colors.secondary_200};
 `;
 
 const ContentBody = styled(Box)`
   padding: 10px;
   height: 100%;
-  background-color: ${props => props.theme.colors.secondary_200};
+  background-color: ${({ theme }) => theme.colors.secondary_200};
 `;
 
 const VerticalList = styled(Box)`
   height: 100%;
   width: -webkit-fill-available;
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_100};
+  background-color: ${({ theme }) => theme.colors.oldprimary_100};
 `;
 
 const InnerVerticalList = styled(VerticalList)`
@@ -53,21 +53,21 @@ const HorizontalList = styled(Box)`
   width: -webkit-fill-available;
   flex-wrap: wrap;
   padding: 10px;
-  background-color: ${props => props.theme.colors.oldprimary_100};
+  background-color: ${({ theme }) => theme.colors.oldprimary_100};
 `;
 
 const LeftListElement = styled(Box)`
   width: 100%;
   height: 100%;
   padding-top: 2px;
-  border: ${props => `1px solid ${props.theme.colors.grey_500}`};
-  background-color: ${props => props.theme.colors.secondary_100};
+  border: ${({ theme }) => `1px solid ${theme.colors.grey_500}`};
+  background-color: ${({ theme }) => theme.colors.secondary_100};
 `;
 
 const RightListElement = styled(LeftListElement)`
   width: 100px;
   height: 100px;
-  border: ${props => `1px solid ${props.theme.colors.grey_500}`};
+  border: ${({ theme }) => `1px solid ${theme.colors.grey_500}`};
 `;
 
 const RightCenterElement = styled(LeftListElement)`
