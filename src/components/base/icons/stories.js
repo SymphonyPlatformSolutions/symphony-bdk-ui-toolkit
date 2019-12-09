@@ -58,7 +58,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <SettingsIcon size={14} />
+                <SettingsIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Settings</Text>
@@ -66,7 +66,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <SecurityIcon size={14} />
+                <SecurityIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Security</Text>
@@ -74,7 +74,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <NotificationsIcon size={14} />
+                <NotificationsIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Notifications</Text>
@@ -82,7 +82,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <InteractionsIcon size={14} />
+                <InteractionsIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Interactions</Text>
@@ -90,7 +90,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <CloudIcon size={14} />
+                <CloudIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Cloud</Text>
@@ -100,7 +100,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <ServerIcon size={14} />
+                <ServerIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Server</Text>
@@ -108,7 +108,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <EyeIcon size={14} />
+                <EyeIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Eye</Text>
@@ -116,7 +116,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <ClosedEyeIcon size={14} />
+                <ClosedEyeIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Closed Eye</Text>
@@ -124,7 +124,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <EditIcon size={14} />
+                <EditIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Edit</Text>
@@ -132,7 +132,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <DeleteIcon size={14} />
+                <DeleteIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Delete</Text>
@@ -142,7 +142,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <DownChevron size={14} />
+                <DownChevron size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Down Chevron</Text>
@@ -150,7 +150,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <TickIcon size={14} />
+                <TickIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Tick</Text>
@@ -158,7 +158,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <CrossIcon size={14} />
+                <CrossIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Cross</Text>
@@ -166,7 +166,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <PricingIcon size={14} />
+                <PricingIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Pricing</Text>
@@ -174,7 +174,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <InfoIcon size={14} />
+                <InfoIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Info</Text>
@@ -184,7 +184,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <EmptyStarIcon size={14} />
+                <EmptyStarIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Empty Star</Text>
@@ -192,7 +192,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <StarIcon size={14} />
+                <StarIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Star</Text>
@@ -200,7 +200,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <CloseIcon size={14} />
+                <CloseIcon size={20} />
 
               </TestContainer>
             </TestWrapper><Text>Close</Text>
@@ -208,7 +208,7 @@ storiesOf('Base', module).add(
           <Box type="flat" justify="center" align="center">
             <TestWrapper>
               <TestContainer>
-                <EllipsisIcon size={14} />
+                <EllipsisIcon size={20} />
               </TestContainer>
             </TestWrapper>
             <Text>Ellipsis</Text>
