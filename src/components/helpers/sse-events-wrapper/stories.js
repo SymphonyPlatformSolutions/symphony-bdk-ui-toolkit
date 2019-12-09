@@ -277,37 +277,16 @@ const SSEEventsSample = ({
     refreshData();
   };
 
-  const Toolbar = useMemo(() => (
-    <Card>
-      <Box horizontal justify="space-between" align="center">
-        <Box>
-          <Button onClick={onRefresh}>Refresh</Button>
-        </Box>
-        <Box horizontal justify="flex-end" align="center">
-          <Button disabled={autoPilot} onClick={() => postDemo('create')}>
-                Add data
-          </Button>
-          <Button
-            disabled={autoPilot || !tableData.length}
-            onClick={() => postDemo('update')}
-          >
-                Update Data
-          </Button>
-          <Button
-            disabled={autoPilot || !tableData.length}
-            type="danger"
-            onClick={() => postDemo('remove')}
-          >
-                Remove Data
-          </Button>
-          <Box vertical align="center" type="flat">
-            <Text>Auto Pilot</Text>
-            <Toggle toggled={autoPilot} onChange={handleAutoPilot} />
-          </Box>
-        </Box>
-      </Box>
-    </Card>
-  ), [autoPilot, tableData.length]);
+  const TableRenderer = useMemo(() => (
+    <Table
+      align="left"
+      data={tableData}
+      loading={loading}
+      columns={SSE_EVENTS_TABLE_COLUMNS}
+      Row={CustomRow}
+      maxHeight={400}
+    />
+  ), [tableData, loading]);
 
   return useMemo(() => (
     <Box type="flat" vertical>
@@ -315,20 +294,41 @@ const SSEEventsSample = ({
         <MessageBox type="info">{`Last Message: ${eventType}`}</MessageBox>
       </Box>
       <Box align="end">
-        {Toolbar}
+        <Card>
+          <Box horizontal justify="space-between" align="center">
+            <Box>
+              <Button onClick={onRefresh}>Refresh</Button>
+            </Box>
+            <Box horizontal justify="flex-end" align="center">
+              <Button disabled={autoPilot} onClick={() => postDemo('create')}>
+                    Add data
+              </Button>
+              <Button
+                disabled={autoPilot || !tableData.length}
+                onClick={() => postDemo('update')}
+              >
+                    Update Data
+              </Button>
+              <Button
+                disabled={autoPilot || !tableData.length}
+                type="danger"
+                onClick={() => postDemo('remove')}
+              >
+                    Remove Data
+              </Button>
+              <Box vertical align="center" type="flat">
+                <Text>Auto Pilot</Text>
+                <Toggle toggled={autoPilot} onChange={handleAutoPilot} />
+              </Box>
+            </Box>
+          </Box>
+        </Card>
       </Box>
       <Box>
-        <Table
-          align="left"
-          data={tableData}
-          loading={loading}
-          columns={SSE_EVENTS_TABLE_COLUMNS}
-          Row={CustomRow}
-          maxHeight={400}
-        />
+        {TableRenderer}
       </Box>
     </Box>
-  ), [autoPilot, tableData]);
+  ), [autoPilot, tableData, loading]);
 };
 
 const ThemedSample = withTheme(SSEEventsSample);

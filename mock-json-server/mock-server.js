@@ -18,7 +18,7 @@ const SSE_EVENT_TYPES = {
 // Mock delay, for testing loading states. Units are in ms.
 const MOCK_DELAY = 1000;
 let sseEventId = 0;
-const SSE_DEMO_DATA = generateSSEDemoData();
+const SSE_DEMO_DATA = generateSSEDemoData(50000);
 
 let actionList = [];
 
