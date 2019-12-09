@@ -194,6 +194,7 @@ const autoFetchConfig = {
 };
 
 const CustomTr = styled(TableElements.TBodyTr)`
+  height: 44px;
   transition: ${({ animating }) => (animating
     ? 'background-color 0.5s cubic-bezier(1,.02,.41,.37)'
     : undefined)};
@@ -281,7 +282,7 @@ const SSEEventsSample = ({
     <Table
       align="left"
       data={tableData}
-      loading={loading}
+      loading={loading || !tableData.length}
       columns={SSE_EVENTS_TABLE_COLUMNS}
       Row={CustomRow}
       maxHeight={400}

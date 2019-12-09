@@ -24,6 +24,6 @@ export const SubTextContainer = styled.div`
 `;
 export const TextContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   margin-right: 8px;
 `;

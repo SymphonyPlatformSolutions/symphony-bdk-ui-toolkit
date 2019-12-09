@@ -52,7 +52,7 @@ export const MessageBoxButtonContainer = styled.div`
 `;
 
 export const MessageBoxButton = styled.button`
-  margin: 5px 4px 0 0;
+  margin: auto;
   border: none;
   outline: none;
   background: none;

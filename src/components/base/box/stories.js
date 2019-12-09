@@ -217,9 +217,9 @@ storiesOf('Base', module)
         </Text>
         <ShowCaseCard>
           <Box horizontal type="secondary">
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
           </Box>
         </ShowCaseCard>
       </Box>
@@ -306,9 +306,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal>
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
             </Box>
           </ShowCaseCard>
         </Box>
@@ -318,9 +318,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal type="secondary">
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
             </Box>
           </ShowCaseCard>
         </Box>
@@ -330,9 +330,9 @@ storiesOf('Base', module)
           </Text>
           <ShowCaseCard>
             <Box horizontal type="flat">
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
-              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+              <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
             </Box>
           </ShowCaseCard>
         </Box>

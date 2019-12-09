@@ -50,6 +50,7 @@ export const HeaderText = styled(Text)`
 
 export const IconWrapper = styled.div`
   margin-left: 8px;
+  margin: auto;
 `;
 export const IconSpinner = styled.div`
   transform-origin: 50% 50%;
@@ -64,7 +65,8 @@ export const CellWrapper = styled(Box)`
 `;
 export const ToolTipContainer = styled.span`
   display: flex;
-  align-items: start;
+  align-items: end;
+  justify-content: center;
 `;
 
 export const MenuWrapper = styled(Box)`

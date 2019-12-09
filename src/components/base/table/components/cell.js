@@ -35,7 +35,6 @@ const TableCell = ({ cell }) => {
     column: { hasActions },
     value,
   } = cell;
-  // return (<div />);
 
   const [contextId] = useState(hasActions && value ? uuid.v4() : null);
 

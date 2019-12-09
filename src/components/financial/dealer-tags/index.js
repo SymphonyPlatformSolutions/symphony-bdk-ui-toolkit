@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import { CloseButton } from '../../base/button/icon-buttons';
 import {
