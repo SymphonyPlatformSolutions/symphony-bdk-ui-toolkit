@@ -1,4 +1,5 @@
 import React from 'react';
+import styled, { keyframes } from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import {
   withKnobs,
@@ -10,6 +11,7 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 import Text from '../text';
 import TextLink from '../text-link';
+import TableElements from './components/table-elements';
 
 const handleTestEdit = (item) => {
   console.log(item);
@@ -37,25 +39,24 @@ const DATA = [{
 }];
 
 const COLUMNS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'This column is not sortable',
   accessor: 'name',
-  width: undefined,
   sortable: false,
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'This column is sortable!',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </TextLink>
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
-  width: undefined,
 },
 ];
 
@@ -100,30 +101,38 @@ const DATA_WITH_ACTIONS = [{
     },
   ],
 }];
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
 
 const COLUMNS_WITH_ACTIONS = [{
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The name',
   accessor: 'name',
-  width: undefined,
+  id: 'name',
 }, {
-  Header: 'Email',
+  header: 'Email',
   accessor: 'email',
-  width: undefined,
   tooltip: 'Or some other non-obvious descriptor for your table',
+  id: 'email',
 }, {
-  Header: 'Link',
+  header: 'Link',
   accessor: 'link',
-  Cell: row => (
-    <TextLink href={row.value} target="_blank" rel="noopener noreferrer">
-      {row.value}
-    </TextLink>
+  id: 'link',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
   ),
-  width: undefined,
 },
 {
+  id: 'actions',
   sortable: false,
-  acessor: null,
   width: 50,
   hasActions: true,
 },
@@ -131,11 +140,11 @@ const COLUMNS_WITH_ACTIONS = [{
 
 const LARGE_DATA_SET = [];
 
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 100; i++) {
   const data = {
     email: Faker.internet.email(),
     name: Faker.name.firstName(),
-    link: 'https://www.example.com',
+    link: Faker.internet.url(),
   };
 
   if (Faker.random.boolean()) {
@@ -156,6 +165,55 @@ for (let i = 0; i < 40; i++) {
   LARGE_DATA_SET.push(data);
 }
 
+const HUGE_DATA_SET = [];
+
+for (let i = 0; i < 100000; i++) {
+  const data = {
+    email: Faker.internet.email(),
+    name: Faker.name.firstName(),
+    link: Faker.internet.url(),
+  };
+
+  HUGE_DATA_SET.push(data);
+}
+
+const pastelRainbow = keyframes`
+  100%,0%{
+    background-color: #FF9AA2;
+  }
+  16%{
+    background-color: #FFB7B2;
+  }
+  33%{
+    background-color: #FFDAC1;
+  }
+  50%{
+    background-color: #e2f0cb;
+  }
+  67%{
+    background-color: #b5ead7;
+  }
+  79%{
+    background-color: #C7CEEA;
+  }
+`;
+
+const CustomRowStyle = styled(TableElements.TBodyTr)`
+  &:hover {
+    animation: ${pastelRainbow} 0.85s linear;
+    animation-iteration-count: infinite;
+  }
+`;
+
+const CustomRow = (props) => {
+  const { children, ...rest } = props;
+  return (
+    <CustomRowStyle {...rest}>
+      {children}
+    </CustomRowStyle>
+  );
+};
+
 storiesOf('Base', module)
   .addDecorator(withKnobs)
   .add('Table', () => (
@@ -167,6 +225,16 @@ storiesOf('Base', module)
             <Table
               data={DATA}
               columns={COLUMNS}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <Text isTitle>Custom Row component</Text>
+          <Box space={60} p="0 16px 0 0">
+            <Table
+              data={DATA}
+              columns={COLUMNS}
+              Row={CustomRow}
             />
           </Box>
         </Box>
@@ -191,11 +259,12 @@ storiesOf('Base', module)
           </Box>
         </Box>
         <Box>
-          <Text isTitle>Tooltips</Text>
+          <Text isTitle>Huge Data set, and max Height</Text>
           <Box space={60} p="0 16px 0 0">
             <Table
-              data={DATA}
+              data={HUGE_DATA_SET}
               columns={COLUMNS}
+              maxHeight={350}
             />
           </Box>
         </Box>

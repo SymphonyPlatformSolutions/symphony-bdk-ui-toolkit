@@ -116,7 +116,7 @@ const IconContainer = styled.div`
 `;
 
 const ChevronWrapper = styled.div`
-  transform: rotate(${({ turn }) => (turn ? -180 : 0)}deg) translateY(${({ turn }) => (turn ? -3 : -1)}px);
+  transform: rotate(${({ turn }) => (turn ? -180 : 0)}deg);
   transition: all 0.4s;
 `;
 
@@ -133,7 +133,7 @@ export const DropdownIndicator = (props) => {
           <DownChevron color={isDisabled ? theme.colors.grey_300 : theme.colors.grey_600} />
         </ChevronWrapper>
       </ArrowContainer>
-      {tooltip && <Tooltip size="1.5rem" style={{ marginRight: '8px' }}>{tooltip}</Tooltip>}
+      {tooltip && <Tooltip size={14} color={theme.colors.grey_600} style={{ marginRight: '8px' }}>{tooltip}</Tooltip>}
     </IconContainer>
   );
 };
