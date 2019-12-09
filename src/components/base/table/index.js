@@ -4,7 +4,7 @@ import React, {
 import { useTable, useSortBy, useBlockLayout } from 'react-table';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { VariableSizeList } from 'react-window';
+import { FixedSizeList as List } from 'react-window';
 import { EmptyTable, EmptyText, TableScrollWrapper } from './theme';
 import Loader from '../loader';
 import TableElements, { ALIGNMENTS } from './components/table-elements';
@@ -77,6 +77,7 @@ const Table = (props) => {
     totalColumnsWidth,
   } = useTable(
     {
+      getRowId: (elem => elem.id),
       columns,
       data: filteredData,
       defaultColumn,
@@ -116,7 +117,7 @@ const Table = (props) => {
       if (Row) {
         // Custom row
         return (
-          <Row {...row.getRowProps({ style })} {...row} align={align}>
+          <Row {...row.getRowProps({ style })} {...row} align={align} key={row.original.id}>
             {row.cells.map(cell => (
               <TableElements.TBodyTd {...cell.getCellProps()}>
                 {cell.render('Cell')}
@@ -126,7 +127,7 @@ const Table = (props) => {
         );
       }
       return (
-        <TableElements.TBodyTr {...row.getRowProps({ style })} align={align}>
+        <TableElements.TBodyTr {...row.getRowProps({ style })} align={align} key={row.original.id}>
           {row.cells.map(cell => (
             <TableElements.TBodyTd {...cell.getCellProps()}>
               {cell.render('Cell')}
@@ -135,7 +136,7 @@ const Table = (props) => {
         </TableElements.TBodyTr>
       );
     },
-    [prepareRow, rows],
+    [rows],
   );
 
   return (
@@ -171,15 +172,16 @@ const Table = (props) => {
         </TableElements.THead>
         <TableElements.TBody {...getTableBodyProps()}>
           {rows.length ? (
-            <VariableSizeList
+            <List
               height={!maxHeight ? rows.length * 35 + 1 : maxHeight}
               itemCount={rows.length}
-              itemSize={() => 35}
+              itemId={item => item.id}
+              itemSize={35}
               width={() => (tableRef.current ? tableRef.current.offsetWidth : 10)
               }
             >
               {RenderRow}
-            </VariableSizeList>
+            </List>
           ) : (
             renderEmptyTable()
           )}
