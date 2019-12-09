@@ -282,7 +282,7 @@ const SSEEventsSample = ({
     <Table
       align="left"
       data={tableData}
-      loading={loading}
+      loading={loading || !tableData.length}
       columns={SSE_EVENTS_TABLE_COLUMNS}
       Row={CustomRow}
       maxHeight={400}
