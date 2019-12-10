@@ -106,9 +106,9 @@ const SSEventsContentWrapper = ({
 
 SSEventsContentWrapper.propTypes = {
   fetchData: PropTypes.array.isRequired,
-  loading: PropTypes.boolean.isRequired,
+  loading: PropTypes.bool.isRequired,
   error: PropTypes.object.isRequired,
-  refreshData: PropTypes.Function.isRequired,
+  refreshData: PropTypes.func.isRequired,
   eventType: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
