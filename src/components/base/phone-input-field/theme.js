@@ -106,7 +106,7 @@ export const PhoneInputWrapper = styled.div.attrs(overrides)`
     .search-box {
       font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana",
     "Arial", sans-serif !important;
-      font-size: 14px !important;
+      font-size: 1rem !important;
       margin-left: 6px !important;
       padding: 4px 4px !important;
       width: -webkit-fill-available !important;

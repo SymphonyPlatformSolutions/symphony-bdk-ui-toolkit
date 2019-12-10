@@ -20,7 +20,7 @@ function loadStories() {
 }
 
 const decoratedThemes = THEMES.map(theme => Object.assign({
-  name: theme.mode
+  name: `${theme.mode} ${theme.size}`
 }, theme));
 
 addDecorator(withThemesProvider(decoratedThemes));

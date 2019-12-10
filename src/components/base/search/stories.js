@@ -17,9 +17,9 @@ for (let i = 0; i < 15; i++) {
 }
 
 const SearchWrapper = ({ CustomMenuItem }) => {
-  const [currentContent, setCurrentContent] = useState([]);
+  const [currentdata, setCurrentdata] = useState([]);
   const filterFunc = (searchTerm) => {
-    setCurrentContent(
+    setCurrentdata(
       mockData.filter((el) => {
         if (el.label.toLowerCase().includes(searchTerm.toLowerCase())) {
           return true;
@@ -33,9 +33,9 @@ const SearchWrapper = ({ CustomMenuItem }) => {
     <Box type="secondary">
       <Box horizontal>
         <Search
-          content={currentContent}
+          data={currentdata}
           searchHandler={filterFunc}
-          resultHandler={setCurrentContent}
+          resultHandler={setCurrentdata}
           itemChooseHandler={() => {}}
           CustomMenuItem={CustomMenuItem}
         />
@@ -60,11 +60,11 @@ const ResultCard = (props) => {
 };
 
 const DuckDuckGoWrapper = () => {
-  const [currentContent, setCurrentContent] = useState([]);
+  const [currentdata, setCurrentdata] = useState([]);
   const [chosenResult, setChosenResult] = useState(null);
   const searchFunc = async (searchTerm) => {
     if (!searchTerm) {
-      setCurrentContent([]);
+      setCurrentdata([]);
       return;
     }
     const results = await Axios.get(
@@ -91,7 +91,7 @@ const DuckDuckGoWrapper = () => {
             : el.Topics[0].Text,
       };
     });
-    setCurrentContent(endResults);
+    setCurrentdata(endResults);
   };
 
   return (
@@ -99,10 +99,10 @@ const DuckDuckGoWrapper = () => {
       <Box horizontal style={{ width: '500px' }}>
         <Search
           placeholder="Search DuckDuckGo..."
-          content={currentContent}
+          data={currentdata}
           searchHandler={searchFunc}
-          contentLabel="shortened"
-          resultHandler={setCurrentContent}
+          dataLabel="shortened"
+          resultHandler={setCurrentdata}
           itemChooseHandler={setChosenResult}
         />
       </Box>

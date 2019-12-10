@@ -26,15 +26,15 @@ export const MenuItemContainer = styled.div`
 export const MenuItemTitle = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_900};
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1rem;
   padding: 4px 12px 6px 12px;
-  line-height: 14px;
+  /* line-height: 14px; */
 `;
 export const MenuItemSubtitle = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_500};
-  font-size: 11px;
+  font-size: 0.7rem;
   padding: 0 12px 6px 12px;
-  line-height: 11px;
+  /* line-height: 11px; */
 `;
 export const SimpleItemContainer = styled.div`
   transition: all 0.2s linear;
@@ -46,6 +46,7 @@ export const SimpleItemContainer = styled.div`
     : 'transparent')};
   display: flex;
   justify-content: space-between;
+  box-sizing: border-box;
   cursor: pointer;
 `;
 export const SimpleItemLabel = styled(Text)`
@@ -56,7 +57,7 @@ export const SimpleItemSublabel = styled(Text)`
   padding-left: 9px;
   color: ${({ theme }) => theme.colors.grey_600};
   font-style: italic;
-  font-size: 11px;
+  font-size: 0.8rem;
   line-height: 14px;
 `;
 export const EmptyMessageContainer = styled.div`
@@ -152,13 +153,15 @@ export const ControlInput = styled(StyledInput)`
   width: ${({ hide }) => (hide ? 0 : 'auto')};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
-  margin-left: 4px;
+  margin-left: ${({ size }) => (size === 'large' ? '0' : '4px')};
+  padding-right: ${({ size }) => (size === 'large' ? '0' : undefined)};
   border: none;
 `;
 export const ValueAndControl = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: ${({ size }) => (size === 'large' ? '80%' : '100%')};
+  box-sizing: border-box;
 `;
 export const MenuWrapper = styled.div`
   position: relative;

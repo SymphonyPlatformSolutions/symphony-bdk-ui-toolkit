@@ -85,13 +85,13 @@ export const BaseQuoteTag = styled(Box)`
 `;
 
 export const SideInfo = styled(Text)`
-  font-size: 8px;
+  font-size: 0.6rem;
   margin-right: 4px;
   color: ${props => getTextColor(props)};
 `;
 
 export const MainInfo = styled(Text)`
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: bold;
   text-decoration: ${props => getTextDecorator(props)};
   color: ${props => getTextColor(props)};

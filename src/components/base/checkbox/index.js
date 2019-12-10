@@ -12,7 +12,7 @@ const SIZES = {
 const CheckBoxLabel = styled.label`
   display: flex;
   vertical-align: middle;
-  line-height: 1.3rem;
+  /* line-height: 1.3rem; */
   position: relative;
   user-select: none;
   cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
@@ -62,7 +62,8 @@ const BaseCheckBox = styled.div`
 
 const LabelText = styled(Text)`
   position: relative;
-  top: ${({ checkSize }) => (checkSize === SIZES.REGULAR ? '2px' : '4px')};
+  display: flex;
+  align-items: center;
   opacity: ${({ disabled }) => (disabled ? '0.25' : '1')};
 `;
 
