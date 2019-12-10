@@ -11,12 +11,11 @@ const AutoFetchWrapper = ({ config, children }) => {
     data: results, loading: isDataLoading, error, refreshData,
   });
 };
-
 AutoFetchWrapper.propTypes = {
-  config: PropTypes.shapeOf({
+  config: PropTypes.shape({
     endpoint: PropTypes.string,
     params: PropTypes.object,
-    handleData: PropTypes.Function,
+    handleData: PropTypes.func,
   }).isRequired,
 };
 
