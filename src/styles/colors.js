@@ -2,12 +2,6 @@ export const THEME_TYPES = {
   LIGHT: 'LIGHT',
   DARK: 'DARK',
 };
-export const THEME_SIZES = {
-  XSMALL: 'xsmall',
-  SMALL: 'small',
-  NORMAL: 'normal',
-  LARGE: 'large',
-};
 
 const COMMON_COLORS = {
   primary_900: '#0248AC',
@@ -72,7 +66,7 @@ const COMMON_COLORS = {
   white: '#FFFFFF',
 };
 
-const colorThemes = [
+const THEMES = [
   {
     mode: THEME_TYPES.LIGHT,
     colors: {
@@ -121,12 +115,5 @@ const colorThemes = [
   },
 ];
 
-const THEMES = Object.keys(THEME_SIZES).reduce(
-  (acc, el) => [
-    ...acc,
-    ...colorThemes.map(el2 => ({ ...el2, size: THEME_SIZES[el] })),
-  ],
-  [],
-);
 
 export { THEMES };
