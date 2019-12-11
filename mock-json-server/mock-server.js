@@ -1,5 +1,7 @@
 // This is responsible to create the mock server.
 const jsonServer = require('json-server');
+const MockChartData = require('./data/msft');
+
 const {
   generateSSEDemoData, RandomlyUpdateSSEDemoData, RandomlyCreateSSEDemoData,
   DeleteSSEDemoData,
@@ -41,6 +43,15 @@ server.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
+});
+
+/***
+ * Mock Chart Data
+ */
+
+server.get('/chart-data', (req, res) => {
+  console.log('Got chart Data!');
+  send(() => res.jsonp(MockChartData));
 });
 
 /** *
