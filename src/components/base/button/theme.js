@@ -100,14 +100,14 @@ export const Container = styled(Box)`
   position: relative;
   background: transparent;
   height: 100%;
-  padding: ${props => props.circular ? undefined : '0px 16px'};
+  padding: ${props => (props.circular ? undefined : '0px 16px')};
 `;
 
 export const TextContainer = styled(Text)`
   color: inherit;
   font-size: inherit;
   font-weight: bold;
-  line-height: 1rem;
+  line-height: 14px;
 `;
 
 export const ChildrenContainer = styled(Box)`

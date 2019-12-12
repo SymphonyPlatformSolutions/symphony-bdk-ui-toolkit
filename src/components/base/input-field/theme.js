@@ -33,7 +33,7 @@ export const StyledInput = styled.input`
   padding: ${({ size }) => (size === INPUT_SIZES.LARGE ? '11px 12px 9px 18px' : '9px 5px 9px 7px')};
   border: 0;
   outline: none;
-  font-size: ${({ size }) => (size === INPUT_SIZES.LARGE ? '16px' : '12px')};
+  font-size: ${({ size }) => (size === INPUT_SIZES.LARGE ? '1.2rem' : '1rem')};
   transition: all 0.3s;
   width: 100%;
   background-color: transparent;

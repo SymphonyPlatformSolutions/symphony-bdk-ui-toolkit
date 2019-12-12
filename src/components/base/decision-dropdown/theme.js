@@ -26,15 +26,13 @@ export const MenuItemContainer = styled.div`
 export const MenuItemTitle = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_900};
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1rem;
   padding: 4px 12px 6px 12px;
-  line-height: 14px;
 `;
 export const MenuItemSubtitle = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_500};
-  font-size: 11px;
+  font-size: 0.7rem;
   padding: 0 12px 6px 12px;
-  line-height: 11px;
 `;
 export const SimpleItemContainer = styled.div`
   transition: all 0.2s linear;
@@ -46,6 +44,7 @@ export const SimpleItemContainer = styled.div`
     : 'transparent')};
   display: flex;
   justify-content: space-between;
+  box-sizing: border-box;
   cursor: pointer;
 `;
 export const SimpleItemLabel = styled(Text)`
@@ -56,7 +55,7 @@ export const SimpleItemSublabel = styled(Text)`
   padding-left: 9px;
   color: ${({ theme }) => theme.colors.grey_600};
   font-style: italic;
-  font-size: 11px;
+  font-size: 0.8rem;
   line-height: 14px;
 `;
 export const EmptyMessageContainer = styled.div`
@@ -92,10 +91,10 @@ export const DropdownContainer = styled(Container)`
   position: relative;
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${props => ` ${getBorderColor(props)}`};
+  border: 1px solid ${(props) => ` ${getBorderColor(props)}`};
   box-shadow: ${({ menuIsOpen, theme }) => (menuIsOpen ? (theme.mode === THEME_TYPES.LIGHT ? '0 0 16px -6px rgba(0,0,0,0.2)' : 'none') : 'none')};
   border-bottom: 1px solid
-    ${props => (props.menuIsOpen ? 'transparent' : getBorderColor(props))};
+    ${(props) => (props.menuIsOpen ? 'transparent' : getBorderColor(props))};
   border-bottom-right-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
@@ -110,7 +109,7 @@ export const ChevronContainer = styled.div`
   align-items: center;
 `;
 export const MenuContainer = styled.div`
-  border: 1px solid ${props => getBorderColor({ ...props, menuIsOpen: true })};
+  border: 1px solid ${(props) => getBorderColor({ ...props, menuIsOpen: true })};
   border-top: 0;
   top: -1px;
   border-radius: 4px;
@@ -152,13 +151,15 @@ export const ControlInput = styled(StyledInput)`
   width: ${({ hide }) => (hide ? 0 : 'auto')};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
-  margin-left: 4px;
+  margin-left: ${({ size }) => (size === 'large' ? '0' : '4px')};
+  padding-right: ${({ size }) => (size === 'large' ? '0' : undefined)};
   border: none;
 `;
 export const ValueAndControl = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: ${({ size }) => (size === 'large' ? '80%' : '100%')};
+  box-sizing: border-box;
 `;
 export const MenuWrapper = styled.div`
   position: relative;

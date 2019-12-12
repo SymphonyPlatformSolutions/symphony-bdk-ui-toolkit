@@ -41,8 +41,8 @@ const TableHeaderCell = (props) => {
   } = props;
 
   return (
-    <CellWrapper type="flat">
-      <Box horizontal space={5}>
+    <CellWrapper type="flat" align="center">
+      <Box horizontal space={5} align="center" justify="center">
         <HeaderText
           type="primary"
           isTitle

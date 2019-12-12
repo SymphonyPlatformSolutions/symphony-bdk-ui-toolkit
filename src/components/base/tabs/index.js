@@ -24,7 +24,7 @@ const TabHeader = styled.ol`
 `;
 
 const TabHeaderLabel = styled(Text)`
-  font-size: 18px;
+  font-size: 1.4rem;
   line-height: 22px;
   cursor: pointer;
   font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};

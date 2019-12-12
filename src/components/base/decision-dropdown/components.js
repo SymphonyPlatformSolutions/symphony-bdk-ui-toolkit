@@ -258,7 +258,7 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }}>
+      <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }} size={size}>
         {isMulti && (
         <MultiValueList
           chooseHandler={chooseHandler}
