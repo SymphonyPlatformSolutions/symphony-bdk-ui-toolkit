@@ -2,6 +2,14 @@
 const jsonServer = require('json-server');
 const MockChartData = require('./data/msft');
 
+MockChartData.forEach(entry => {
+  entry.close = parseFloat(entry.close, 10);
+  entry.high = parseFloat(entry.high, 10);
+  entry.low = parseFloat(entry.low, 10);
+  entry.open = parseFloat(entry.open, 10);
+  entry.volume = parseFloat(entry.volume, 10);
+});
+
 const {
   generateSSEDemoData, RandomlyUpdateSSEDemoData, RandomlyCreateSSEDemoData,
   DeleteSSEDemoData,
