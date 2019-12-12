@@ -7,6 +7,7 @@ import AutoFetchWrapper from '.';
 import Box from '../../base/box';
 import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
+import { CellWrapper } from '../../base/table/theme';
 import Table from '../../base/table';
 import Text from '../../base/text';
 import DataGrid from '../../base/data-grid';
@@ -39,7 +40,9 @@ const COLUMNS_WITH_AUTO_FETCH = [{
   tooltip: 'The person Name',
   accessor: 'id',
   Cell: ({ row: { original } }) => (
-    <Text>{original.first_name} {original.last_name}</Text>
+    <CellWrapper>
+      <Text>{original.first_name} {original.last_name}</Text>
+    </CellWrapper>
   ),
   width: 150,
 }, {
