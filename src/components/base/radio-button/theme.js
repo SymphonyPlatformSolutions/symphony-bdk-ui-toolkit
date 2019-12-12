@@ -4,7 +4,6 @@ export const RadioLabel = styled.label`
   position: relative;
   padding-left: 1.4rem;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  /* line-height: 0.9rem; */
   display: inline-block;
 `;
 

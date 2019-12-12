@@ -28,13 +28,11 @@ export const MenuItemTitle = styled(Text)`
   font-weight: bold;
   font-size: 1rem;
   padding: 4px 12px 6px 12px;
-  /* line-height: 14px; */
 `;
 export const MenuItemSubtitle = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_500};
   font-size: 0.7rem;
   padding: 0 12px 6px 12px;
-  /* line-height: 11px; */
 `;
 export const SimpleItemContainer = styled.div`
   transition: all 0.2s linear;
@@ -93,10 +91,10 @@ export const DropdownContainer = styled(Container)`
   position: relative;
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${props => ` ${getBorderColor(props)}`};
+  border: 1px solid ${(props) => ` ${getBorderColor(props)}`};
   box-shadow: ${({ menuIsOpen, theme }) => (menuIsOpen ? (theme.mode === THEME_TYPES.LIGHT ? '0 0 16px -6px rgba(0,0,0,0.2)' : 'none') : 'none')};
   border-bottom: 1px solid
-    ${props => (props.menuIsOpen ? 'transparent' : getBorderColor(props))};
+    ${(props) => (props.menuIsOpen ? 'transparent' : getBorderColor(props))};
   border-bottom-right-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
 `;
@@ -111,7 +109,7 @@ export const ChevronContainer = styled.div`
   align-items: center;
 `;
 export const MenuContainer = styled.div`
-  border: 1px solid ${props => getBorderColor({ ...props, menuIsOpen: true })};
+  border: 1px solid ${(props) => getBorderColor({ ...props, menuIsOpen: true })};
   border-top: 0;
   top: -1px;
   border-radius: 4px;

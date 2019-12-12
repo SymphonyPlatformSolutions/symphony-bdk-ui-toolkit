@@ -17,33 +17,33 @@ import Button from '../../base/button';
 const autoFetchConfig = {
   endpoint: 'https://reqres.in/api/users',
   params: { page: 2 },
-  handleData: results => results.data,
+  handleData: (results) => results.data,
 };
 
 const duckDuckGoFetchConfig = {
   endpoint: 'https://api.duckduckgo.com',
   params: { format: 'json', q: null },
-  handleData: results => results.RelatedTopics,
+  handleData: (results) => results.RelatedTopics,
 };
 
 const COLUMNS_WITH_AUTO_FETCH = [{
-  Header: 'Picture',
+  header: 'Picture',
   tooltip: 'The person picture',
   accessor: 'avatar',
-  Cell: row => (
-    <img src={row.value} width={32} />
+  Cell: ({ cell }) => (
+    <img src={cell.value} width={32} />
   ),
   width: 100,
 }, {
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The person Name',
   accessor: 'id',
-  Cell: ({ original }) => (
+  Cell: ({ row: { original } }) => (
     <Text>{original.first_name} {original.last_name}</Text>
   ),
   width: 150,
 }, {
-  Header: 'Email address',
+  header: 'Email address',
   tooltip: 'The person email address',
   accessor: 'email',
 }];

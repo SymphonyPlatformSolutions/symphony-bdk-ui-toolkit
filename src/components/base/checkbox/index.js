@@ -12,10 +12,9 @@ const SIZES = {
 const CheckBoxLabel = styled.label`
   display: flex;
   vertical-align: middle;
-  /* line-height: 1.3rem; */
   position: relative;
   user-select: none;
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   width: fit-content;
   margin: 5px 0;
 `;
@@ -25,7 +24,7 @@ const Checkmark = styled.svg`
   stroke: white;
   stroke-linecap: round;
   stroke-width: ${({ size }) => (size === SIZES.REGULAR ? '2px' : '3px')};;
-  opacity: ${props => (props.isChecked ? '1' : '0')};
+  opacity: ${(props) => (props.isChecked ? '1' : '0')};
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 `;
@@ -42,21 +41,21 @@ const BaseCheckBox = styled.div`
   align-self:center;
   width: ${({ size }) => (size === SIZES.REGULAR ? '16px' : '20px')};
   height: ${({ size }) => (size === SIZES.REGULAR ? '16px' : '20px')};
-  background: ${props => getBackgroundColor(props, false)};
-  border: ${props => getBorderColor(props, false)};
+  background: ${(props) => getBackgroundColor(props, false)};
+  border: ${(props) => getBorderColor(props, false)};
   border-radius: 3px;
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 
   ${CheckBoxLabel}:hover & {
-    background: ${props => getBackgroundColor(props, true)};
-    border: ${props => getBorderColor(props, true)};
+    background: ${(props) => getBackgroundColor(props, true)};
+    border: ${(props) => getBorderColor(props, true)};
   }
 
   ${CheckBoxInput}:focus ~ & {
-    background: ${props => getBackgroundColor(props, true)};
-    border: ${props => getBorderColor(props, true)};
+    background: ${(props) => getBackgroundColor(props, true)};
+    border: ${(props) => getBorderColor(props, true)};
   }
 `;
 
