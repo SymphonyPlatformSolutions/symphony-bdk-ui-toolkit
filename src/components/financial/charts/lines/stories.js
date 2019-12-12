@@ -5,7 +5,7 @@ import { timeParse } from 'd3-time-format';
 
 import { storiesOf } from '@storybook/react';
 
-import CandleStickChart from './index';
+import LineChart from './index';
 import Box from '../../../base/box';
 import Text from '../../../base/text';
 import { StoryWrapper } from '../../../base/wrappers';
@@ -38,12 +38,12 @@ const Example = () => {
     results, isDataLoading, error, refreshData,
   } = useAutoFetch(autoFetchConfig);
 
-  return <CandleStickChart loading={isDataLoading} data={results} />;
+  return <LineChart loading={isDataLoading} data={results} />;
 };
 
 
 storiesOf('Financial/Charts', module)
-  .add('Candlestick', () => (
+  .add('Lines', () => (
     <StoryWrapper p={15}>
       <Box type="primary">
         <Text isTitle>Candlestick Chart</Text>
