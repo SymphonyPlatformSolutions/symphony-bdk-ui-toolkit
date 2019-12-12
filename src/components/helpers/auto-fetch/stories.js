@@ -32,7 +32,9 @@ const COLUMNS_WITH_AUTO_FETCH = [{
   tooltip: 'The person picture',
   accessor: 'avatar',
   Cell: ({ cell }) => (
-    <img src={cell.value} width={32} />
+    <CellWrapper>
+      <img src={cell.value} width={32} />
+    </CellWrapper>
   ),
   width: 100,
 }, {
