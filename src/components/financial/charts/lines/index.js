@@ -1,20 +1,7 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { format } from 'd3-format';
-
-import styled, { withTheme } from 'styled-components';
+import React, { useCallback } from 'react';
+import { Chart, ZoomButtons } from 'react-stockcharts';
 import PropTypes from 'prop-types';
-import { scaleTime } from 'd3-scale';
-import { utcDay } from 'd3-time';
-
-import { ChartCanvas, Chart } from 'react-stockcharts';
 import {
-  CandlestickSeries,
   ScatterSeries,
   SquareMarker,
   TriangleMarker,
@@ -22,54 +9,66 @@ import {
   LineSeries,
 } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
-import { fitDimensions } from 'react-stockcharts/lib/helper';
-import { last, timeIntervalBarWidth } from 'react-stockcharts/lib/utils';
 import {
-  CrossHairCursor,
   MouseCoordinateX,
   MouseCoordinateY,
+  EdgeIndicator,
 } from 'react-stockcharts/lib/coordinates';
-import { useDebouncedCallback } from 'use-debounce';
-import { timeFormat } from 'd3-time-format';
 import {
   OHLCTooltip,
 } from 'react-stockcharts/lib/tooltip';
-import Loader from '../../../base/loader';
+import { numberFormat, dateFormat, tooltipContentHelper } from '../helpers';
 import ChartContainer from '../components/base-chart';
 
-const test = d => [d.high, d.low];
+const zoomConfig = {
+  panEvent: true,
+  enabled: true,
+};
 
 const LineChart = ({
-  loading, data, ...rest
+  loading, data, theme, hasTooltip, hasZoom, ...rest
 }) => {
-
+  const yExtents = useCallback(d => [d.high, d.low, d.AAPLClose, d.GEClose]);
+  zoomConfig.panEvent = hasZoom;
+  zoomConfig.enabled = hasZoom;
+  const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
   return (
-    <ChartContainer loading={loading} data={data}>
-      {({gridCoordinates}) => (
+    <ChartContainer
+      loading={loading}
+      data={data}
+      hasZoom={zoomConfig}
+      tooltipContent={tooltipConfig}
+      {...rest}
+    >
+      {({
+        gridCoordinates, zoomEnabled, hasEdgeIndicator, resetZoom,
+      }) => (
         <Chart
           id={1}
-          yExtents={d => [d.high, d.low, d.AAPLClose, d.GEClose]}
+          yExtents={yExtents}
         >
           <XAxis
             axisAt="bottom"
             orient="bottom"
+            zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
           />
           <YAxis
             axisAt="right"
             orient="right"
             ticks={5}
+            zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
           />
           <MouseCoordinateX
             at="bottom"
             orient="bottom"
-            displayFormat={timeFormat('%Y-%m-%d')}
+            displayFormat={dateFormat('%Y-%m-%d')}
           />
           <MouseCoordinateY
             at="right"
             orient="right"
-            displayFormat={format('.2f')}
+            displayFormat={numberFormat('.2f')}
           />
 
           <LineSeries
@@ -101,7 +100,18 @@ const LineChart = ({
             markerProps={{ r: 3 }}
           />
           <OHLCTooltip forChart={1} origin={[-40, 0]} />
-          <CrossHairCursor />
+          { hasEdgeIndicator
+          && (
+            <EdgeIndicator
+              itemType="last"
+              orient="right"
+              edgeAt="right"
+              yAccessor={d => d.close}
+              fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+            />
+          )
+          }
+          { zoomEnabled && (<ZoomButtons onReset={resetZoom} />) }
         </Chart>
       )}
     </ChartContainer>
@@ -109,8 +119,18 @@ const LineChart = ({
 };
 
 LineChart.defaultProps = {
-  hasGrid: true,
+  loading: false,
+  hasTooltip: false,
+  hasZoom: false,
 };
 
+LineChart.propTypes = {
+  data: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
+  theme: PropTypes.object.isRequired,
+  hasTooltip: PropTypes.bool,
+  hasZoom: PropTypes.bool,
+  loading: PropTypes.bool,
+};
 
 export default LineChart;

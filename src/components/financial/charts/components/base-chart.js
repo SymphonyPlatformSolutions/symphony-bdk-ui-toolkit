@@ -1,49 +1,42 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import { scaleTime } from 'd3-scale';
-import { utcDay } from 'd3-time';
-
-import { ChartCanvas, Chart } from 'react-stockcharts';
-import { CandlestickSeries } from 'react-stockcharts/lib/series';
-import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
-import { fitDimensions } from 'react-stockcharts/lib/helper';
-import { last, timeIntervalBarWidth } from 'react-stockcharts/lib/utils';
+import { ChartCanvas } from 'react-stockcharts';
+import { last } from 'react-stockcharts/lib/utils';
 import {
   CrossHairCursor,
-  MouseCoordinateX,
-  MouseCoordinateY,
 } from 'react-stockcharts/lib/coordinates';
 import { useDebouncedCallback } from 'use-debounce';
+import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import Loader from '../../../base/loader';
+import { LoadingContainer } from '../candlestick/themes';
 
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.grey_100};
-`;
-
-
-const ChartBuilder = ({
-  data, width, height, ratio = 1, hasGrid, children,
+const ChartBuilder = withTheme(({
+  theme, data, width, height, ratio = 1,
+  hasGrid, clampType, hasEdgeIndicator,
+  tooltipContent, mouseMoveEvent, hasCrossHair,
+  hasZoom, margin, hasOHLCTooltip,
+  children,
 }) => {
-
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
-  const xAccessor = d => d.date;
+  const [suffix, setSuffix] = useState(0);
+  const xAccessor = useCallback(d => d.date);
 
   const xExtends = [
     xAccessor(last(data)),
     xAccessor(data[data.length - 100]),
   ];
+
+  const resetZoom = useCallback(() => {
+    setSuffix(suffix + 1);
+  });
 
   useEffect(() => {
     if (hasGrid) {
@@ -57,38 +50,102 @@ const ChartBuilder = ({
           tickStrokeOpacity: 0.1,
         },
       });
+    } else {
+      setGridCoordinates({
+        xGrid: {},
+        yGrid: {},
+      });
     }
-  }, [width, height]);
+  }, [width, height, hasGrid]);
+
+  const CanvasRef = useRef();
 
   return (
     <ChartCanvas
+      ref={CanvasRef}
       ratio={ratio}
       height={height}
       width={width}
-      margin={{
-        left: 50,
-        right: 50,
-        top: 10,
-        bottom: 30,
-      }}
+      margin={margin}
       type="hybrid"
-      seriesName="MSFT"
+      seriesName={`MSFT_${suffix}`}
       data={data}
       xAccessor={xAccessor}
       xScale={scaleTime()}
       xExtents={xExtends}
+
+      mouseMoveEvent={mouseMoveEvent}
+      panEvent={hasZoom.panEvent}
+      zoomEvent={hasZoom.enabled}
+      clam={clampType}
+
     >
       {children({
-        width, height, ratio, gridCoordinates, data,
+        width,
+        height,
+        ratio,
+        gridCoordinates,
+        data,
+        zoomEnabled: hasZoom.enabled,
+        hasEdgeIndicator,
+        resetZoom,
+        hasOHLCTooltip,
       })}
+      {tooltipContent && (
+        <HoverTooltip
+          tooltipContent={tooltipContent}
+          fontSize={15}
+        />
+      )}
+      {hasCrossHair && <CrossHairCursor /> }
     </ChartCanvas>
   );
-};
+});
 
 ChartBuilder.defaultProps = {
-  hasGrid: true,
+  hasGrid: false,
+  hasCrossHair: false,
+  hasEdgeIndicator: false,
+  tooltipContent: null,
+  mouseMoveEvent: true,
+  hasOHLCTooltip: false,
+  hasZoom: {
+    panEvent: false,
+    enabled: false,
+  },
+  clampType: null,
+  margin: {
+    left: 50,
+    right: 50,
+    top: 10,
+    bottom: 30,
+  },
 };
 
+ChartBuilder.propTypes = {
+  hasGrid: PropTypes.bool,
+  hasCrossHair: PropTypes.bool,
+  hasEdgeIndicator: PropTypes.bool,
+  tooltipContent: PropTypes.func,
+  mouseMoveEvent: PropTypes.bool,
+  hasOHLCTooltip: PropTypes.bool,
+  hasZoom: PropTypes.shape({
+    panEvent: PropTypes.bool,
+    enabled: PropTypes.bool,
+  }),
+  clampType: PropTypes.oneOf([
+    'mouseBasedZoomAnchor',
+    'lastVisibleItemBasedZoomAnchor',
+    'rightDomainBasedZoomAnchor',
+    null,
+  ]),
+  margin: PropTypes.shape({
+    left: PropTypes.number,
+    right: PropTypes.number,
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
+};
 
 const ChartContainer = ({
   loading, data, children, ...rest
@@ -124,7 +181,7 @@ const ChartContainer = ({
       );
     }
     return (
-      <ChartBuilder data={data} width={size.width} height={size.height}>
+      <ChartBuilder data={data} width={size.width} height={size.height} {...rest}>
         {children}
       </ChartBuilder>
     );
@@ -135,6 +192,16 @@ const ChartContainer = ({
       {Memoized}
     </div>
   );
+};
+
+ChartContainer.defaultProps = {
+  loading: false,
+};
+
+ChartContainer.propTypes = {
+  data: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default ChartContainer;
