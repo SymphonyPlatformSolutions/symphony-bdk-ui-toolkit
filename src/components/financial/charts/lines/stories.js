@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import { storiesOf } from '@storybook/react';
+import { withTheme } from 'styled-components';
 import LineChart from './index';
 import Box from '../../../base/box';
 import Text from '../../../base/text';
@@ -28,7 +29,7 @@ const autoFetchConfig = {
 };
 
 
-const Example = () => {
+const Example = withTheme(({ theme }) => {
   const {
     results, isDataLoading, error, refreshData,
   } = useAutoFetch(autoFetchConfig);
@@ -37,6 +38,12 @@ const Example = () => {
   const [hasCrossHair, setCrossHair] = useState(true);
   const [hasZoom, setZoom] = useState(true);
   const [hasTooltip, setTooltip] = useState(true);
+  const lineColors = [
+    theme.colors.misc_14,
+    theme.colors.misc_15,
+    theme.colors.oldprimary_600,
+    theme.colors.error_400,
+  ];
 
   return (
     <Box type="flat" vertical>
@@ -67,7 +74,7 @@ const Example = () => {
             <CheckBox
               onChange={({ target: { checked } }) => setTooltip(checked)}
               checked={hasTooltip}
-            >Series Tooltip
+            >Tooltip
             </CheckBox>
           </Box>
         </Box>
@@ -77,21 +84,31 @@ const Example = () => {
           datePars
           loading={isDataLoading}
           data={results}
+          lineColors={lineColors}
+          tickSizeX={5}
+          tickSizeY={10}
           hasGrid={hasGrid}
           hasCrossHair={hasCrossHair}
           hasTooltip={hasTooltip}
+          margin={{
+            left: 1,
+            right: 50,
+            top: 30,
+            bottom: 30,
+          }}
+          title="US Treasury Yield 2Y 5Y 10Y 30Y"
           hasZoom={hasZoom}
         />
       </Box>
     </Box>
   );
-};
+});
 
 storiesOf('Financial/Charts', module)
   .add('Lines', () => (
     <StoryWrapper p={15}>
       <Box type="primary">
-        <Text isTitle>Candlestick Chart</Text>
+        <Text isTitle>Line Series Chart</Text>
         <Box style={{ width: '100%', height: 'calc(100vh - 100px)' }}>
           <Example />
         </Box>

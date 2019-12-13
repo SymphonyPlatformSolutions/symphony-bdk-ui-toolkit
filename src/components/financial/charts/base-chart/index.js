@@ -15,6 +15,7 @@ import {
 } from 'react-stockcharts/lib/coordinates';
 import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
+import { Label } from 'react-stockcharts/lib/annotation';
 import Loader from '../../../base/loader';
 import { ChartBackground, LoadingContainer } from '../candlestick/themes';
 
@@ -23,7 +24,7 @@ const ChartBuilder = withTheme(({
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
   hasZoom, margin, hasOHLCTooltip, shownWindow,
-  children,
+  title, children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
@@ -101,6 +102,16 @@ const ChartBuilder = withTheme(({
         />
       )}
       {hasCrossHair && <CrossHairCursor /> }
+      {title && (
+      <Label
+        x={(width - margin.left - margin.right) / 2}
+        y={30}
+        fill={theme.colors.grey_600}
+        fontSize="30"
+        opacity={0.5}
+        text={title}
+      />
+      )}
     </ChartCanvas>
   );
 });
@@ -123,6 +134,7 @@ ChartBuilder.defaultProps = {
     top: 30,
     bottom: 30,
   },
+  title: null,
   shownWindow: 100,
 };
 
@@ -150,6 +162,7 @@ ChartBuilder.propTypes = {
     bottom: PropTypes.number,
   }),
   shownWindow: PropTypes.number,
+  title: PropTypes.string,
 };
 
 const ChartContainer = ({

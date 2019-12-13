@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Chart, ZoomButtons } from 'react-stockcharts';
 import PropTypes from 'prop-types';
 import {
-  LineSeries,
+  LineSeries, ScatterSeries, CircleMarker,
 } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import {
   MouseCoordinateX,
   MouseCoordinateY,
 } from 'react-stockcharts/lib/coordinates';
+import { withTheme } from 'styled-components';
+import { Label } from 'react-stockcharts/lib/annotation';
 import { buildDateFormat, buildNumberFormat } from '../helpers';
 import ChartContainer from '../base-chart';
 
@@ -45,10 +47,10 @@ const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
 
 
 const LineChart = ({
-  loading, data, theme, hasTooltip, hasZoom, ...rest
+  loading, data, theme,
+  hasTooltip, hasZoom, tickSizeY,
+  lineColors, yAxisLabel, margin, ...rest
 }) => {
-  const [lines, setNumberOfLines] = useState([]);
-
   const yExtents = useCallback(d => d.prices.reduce((acc, curr) => {
     acc.push(curr.close);
     return acc;
@@ -57,17 +59,11 @@ const LineChart = ({
   zoomConfig.enabled = hasZoom;
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
 
-  useEffect(() => {
-    if (data.length) {
-      setNumberOfLines(Array(data[0].prices.length).fill(null));
-    }
-  }, [data]);
-
-
   return (
     <ChartContainer
       loading={loading}
       data={data}
+      margin={margin}
       hasZoom={zoomConfig}
       tooltipContent={tooltipConfig}
       shownWindow={10}
@@ -77,23 +73,51 @@ const LineChart = ({
         gridCoordinates, zoomEnabled, resetZoom,
       }) => (
         <Chart
-          fill="0000"
           id={1}
           yExtents={yExtents}
         >
           <XAxis
             axisAt="bottom"
             orient="bottom"
+            stroke={theme.colors.grey_400}
+            zoomEvent={zoomEnabled}
+            {...gridCoordinates.xGrid}
+          />
+          <XAxis
+            axisAt="top"
+            orient="top"
+            stroke={theme.colors.grey_400}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
           />
           <YAxis
-            axisAt="right"
-            orient="right"
-            ticks={5}
+            axisAt="left"
+            orient="left"
+            stroke={theme.colors.grey_400}
+            ticks={tickSizeY}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
           />
+          <YAxis
+            axisAt="right"
+            orient="right"
+            stroke={theme.colors.grey_400}
+            ticks={tickSizeY}
+            zoomEvent={zoomEnabled}
+            {...gridCoordinates.yGrid}
+          />
+          { yAxisLabel
+          && (
+          <Label
+            x={gridCoordinates.width - margin.left - 40}
+            y={(gridCoordinates.height - margin.bottom) * 0.5}
+            fill={theme.colors.grey_900}
+            rotate={-90}
+            fontSize="12"
+            text={yAxisLabel}
+          />
+          )
+          }
           <MouseCoordinateX
             at="bottom"
             orient="bottom"
@@ -105,12 +129,18 @@ const LineChart = ({
             displayFormat={numberFormat}
           />
 
-          { lines.map((entry, i) => (
+          { lineColors.map((entry, i) => (
             <React.Fragment>
               <LineSeries
+                highlightOnHover={true}
                 yAccessor={d => d.prices[i].close}
-                stroke="#ff7f0e"
+                stroke={entry}
                 strokeDasharray="Solid"
+              />
+              <ScatterSeries
+                yAccessor={d => d.prices[i].close}
+                marker={CircleMarker}
+                markerProps={{ r: 3 }}
               />
             </React.Fragment>
           ))}
@@ -125,15 +155,20 @@ LineChart.defaultProps = {
   loading: false,
   hasTooltip: false,
   hasZoom: false,
+  yAxisLabel: null,
 };
 
 LineChart.propTypes = {
   data: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
+  tickSizeX: PropTypes.number.isRequired,
+  tickSizeY: PropTypes.number.isRequired,
+  lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,
+  yAxisLabel: PropTypes.string,
 };
 
-export default LineChart;
+export default withTheme(LineChart);
