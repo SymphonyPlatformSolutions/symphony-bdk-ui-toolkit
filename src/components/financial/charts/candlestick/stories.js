@@ -25,7 +25,7 @@ const parseData = parse => (d) => {
 };
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:3000/chart-data',
+  endpoint: 'http://localhost:3000/chart-candlestick-data',
   handleData: results => results.map(parseData(timeParser)),
 };
 
@@ -46,48 +46,53 @@ const Example = () => {
   return (
     <Box type="flat" vertical>
       <Card>
-        <Box horizontal justify="flex-end" align="center">
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setHasGrid(checked)}
-              checked={hasGrid}
-            >Grid
-            </CheckBox>
+        <Box horizontal justify="space-between" align="center">
+          <Box horizontal justify="flex-start" align="center">
+            <Text isTitle>Controls</Text>
           </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setCrossHair(checked)}
-              checked={hasCrossHair}
-            >CrossHair
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setHLCTooltip(checked)}
-              checked={hasOHLCTooltip}
-            >OHLCTooltip
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setZoom(checked)}
-              checked={hasZoom}
-            >Zoom
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setEdgeIndicator(checked)}
-              checked={hasEdgeIndicator}
-            >Edge Indicator
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setTooltip(checked)}
-              checked={hasTooltip}
-            >Series Tooltip
-            </CheckBox>
+          <Box horizontal justify="flex-end" align="center">
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setHasGrid(checked)}
+                checked={hasGrid}
+              >Grid
+              </CheckBox>
+            </Box>
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setCrossHair(checked)}
+                checked={hasCrossHair}
+              >CrossHair
+              </CheckBox>
+            </Box>
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setHLCTooltip(checked)}
+                checked={hasOHLCTooltip}
+              >OHLCTooltip
+              </CheckBox>
+            </Box>
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setZoom(checked)}
+                checked={hasZoom}
+              >Zoom
+              </CheckBox>
+            </Box>
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setEdgeIndicator(checked)}
+                checked={hasEdgeIndicator}
+              >Edge Indicator
+              </CheckBox>
+            </Box>
+            <Box type="flat">
+              <CheckBox
+                onChange={({ target: { checked } }) => setTooltip(checked)}
+                checked={hasTooltip}
+              >Series Tooltip
+              </CheckBox>
+            </Box>
           </Box>
         </Box>
       </Card>

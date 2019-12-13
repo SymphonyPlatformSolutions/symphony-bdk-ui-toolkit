@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import { storiesOf } from '@storybook/react';
-
 import LineChart from './index';
 import Box from '../../../base/box';
 import Text from '../../../base/text';
@@ -12,22 +11,20 @@ import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import CheckBox from '../../../base/checkbox';
 import Card from '../../../base/card/index';
-import { timeParser } from '../helpers';
+import { sortByDateAscending } from '../../../../utils/helpers';
+import { buildDateParser } from '../helpers';
+
+
+const timeParser = buildDateParser('%b %d, %Y');
 
 const parseData = parser => (d) => {
   d.date = parser(d.date);
-  d.open = +d.open;
-  d.high = +d.high;
-  d.low = +d.low;
-  d.close = +d.close;
-  d.volume = +d.volume;
-
   return d;
 };
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:3000/chart-data',
-  handleData: results => results.map(parseData(timeParser)),
+  endpoint: 'http://localhost:3000/chart-lines-data',
+  handleData: results => results.map(parseData(timeParser)).sort(sortByDateAscending),
 };
 
 
@@ -38,11 +35,8 @@ const Example = () => {
 
   const [hasGrid, setHasGrid] = useState(true);
   const [hasCrossHair, setCrossHair] = useState(true);
-  const [hasOHLCTooltip, setHLCTooltip] = useState(true);
   const [hasZoom, setZoom] = useState(true);
-  const [hasEdgeIndicator, setEdgeIndicator] = useState(true);
   const [hasTooltip, setTooltip] = useState(true);
-
 
   return (
     <Box type="flat" vertical>
@@ -64,23 +58,9 @@ const Example = () => {
           </Box>
           <Box type="flat">
             <CheckBox
-              onChange={({ target: { checked } }) => setHLCTooltip(checked)}
-              checked={hasOHLCTooltip}
-            >OHLCTooltip
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
               onChange={({ target: { checked } }) => setZoom(checked)}
               checked={hasZoom}
             >Zoom
-            </CheckBox>
-          </Box>
-          <Box type="flat">
-            <CheckBox
-              onChange={({ target: { checked } }) => setEdgeIndicator(checked)}
-              checked={hasEdgeIndicator}
-            >Edge Indicator
             </CheckBox>
           </Box>
           <Box type="flat">
@@ -94,14 +74,13 @@ const Example = () => {
       </Card>
       <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
         <LineChart
+          datePars
           loading={isDataLoading}
           data={results}
           hasGrid={hasGrid}
           hasCrossHair={hasCrossHair}
-          hasOHLCTooltip={hasOHLCTooltip}
           hasTooltip={hasTooltip}
           hasZoom={hasZoom}
-          hasEdgeIndicator={hasEdgeIndicator}
         />
       </Box>
     </Box>

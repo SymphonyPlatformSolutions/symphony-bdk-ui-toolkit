@@ -70,3 +70,12 @@ export {
 } from './base/icons';
 export { default as DecisionDropdown } from './base/decision-dropdown';
 export { THEMES, THEME_TYPES } from '../styles/colors';
+export {
+  default as BaseChart,
+} from './financial/charts/components/base-chart';
+// export {
+//   default as CandleStickChart,
+// } from './financial/charts/candlestick';
+// export {
+//   default as LineChart,
+// } from './financial/charts/lines';

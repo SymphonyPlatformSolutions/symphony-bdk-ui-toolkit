@@ -22,7 +22,7 @@ const ChartBuilder = withTheme(({
   theme, data, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
-  hasZoom, margin, hasOHLCTooltip,
+  hasZoom, margin, hasOHLCTooltip, shownWindow,
   children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
@@ -31,7 +31,7 @@ const ChartBuilder = withTheme(({
 
   const xExtends = [
     xAccessor(last(data)),
-    xAccessor(data[data.length - 100]),
+    xAccessor(data[data.length - shownWindow]),
   ];
 
   const resetZoom = useCallback(() => {
@@ -120,6 +120,7 @@ ChartBuilder.defaultProps = {
     top: 10,
     bottom: 30,
   },
+  shownWindow: 100,
 };
 
 ChartBuilder.propTypes = {
@@ -145,6 +146,7 @@ ChartBuilder.propTypes = {
     top: PropTypes.number,
     bottom: PropTypes.number,
   }),
+  shownWindow: PropTypes.number,
 };
 
 const ChartContainer = ({

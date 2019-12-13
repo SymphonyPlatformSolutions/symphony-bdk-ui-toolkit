@@ -1,23 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Chart, ZoomButtons } from 'react-stockcharts';
 import PropTypes from 'prop-types';
 import {
-  ScatterSeries,
-  SquareMarker,
-  TriangleMarker,
-  CircleMarker,
   LineSeries,
 } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import {
   MouseCoordinateX,
   MouseCoordinateY,
-  EdgeIndicator,
 } from 'react-stockcharts/lib/coordinates';
-import {
-  OHLCTooltip,
-} from 'react-stockcharts/lib/tooltip';
-import { numberFormat, dateFormat, tooltipContentHelper } from '../helpers';
+import { buildDateFormat, buildNumberFormat } from '../helpers';
 import ChartContainer from '../components/base-chart';
 
 const zoomConfig = {
@@ -25,23 +17,64 @@ const zoomConfig = {
   enabled: true,
 };
 
+const numberFormat = buildNumberFormat();
+const dateFormat = buildDateFormat('%b %d, %Y');
+
+const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
+  x: dateFormat(xAccessor(currentItem)),
+  y: currentItem.prices.reduce((acc, price) => {
+    acc.push({
+      label: `${price.label}`,
+      value: ' ',
+    }, {
+      label: '  low',
+      value: price.low && numberFormat(price.low),
+    },
+    {
+      label: '  high',
+      value: price.high && numberFormat(price.high),
+    },
+    {
+      label: '  close',
+      value: price.close && numberFormat(price.close),
+    });
+    return acc;
+  }, [])
+    .filter(line => line.value),
+});
+
+
 const LineChart = ({
   loading, data, theme, hasTooltip, hasZoom, ...rest
 }) => {
-  const yExtents = useCallback(d => [d.high, d.low, d.AAPLClose, d.GEClose]);
+  const [lines, setNumberOfLines] = useState([]);
+
+  const yExtents = useCallback(d => d.prices.reduce((acc, curr) => {
+    acc.push(curr.close);
+    return acc;
+  }, []));
   zoomConfig.panEvent = hasZoom;
   zoomConfig.enabled = hasZoom;
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
+
+  useEffect(() => {
+    if (data.length) {
+      setNumberOfLines(Array(data[0].prices.length).fill(null));
+    }
+  }, [data]);
+
+
   return (
     <ChartContainer
       loading={loading}
       data={data}
       hasZoom={zoomConfig}
       tooltipContent={tooltipConfig}
+      shownWindow={10}
       {...rest}
     >
       {({
-        gridCoordinates, zoomEnabled, hasEdgeIndicator, resetZoom,
+        gridCoordinates, zoomEnabled, resetZoom,
       }) => (
         <Chart
           id={1}
@@ -63,54 +96,23 @@ const LineChart = ({
           <MouseCoordinateX
             at="bottom"
             orient="bottom"
-            displayFormat={dateFormat('%Y-%m-%d')}
+            displayFormat={dateFormat}
           />
           <MouseCoordinateY
             at="right"
             orient="right"
-            displayFormat={numberFormat('.2f')}
+            displayFormat={numberFormat}
           />
 
-          <LineSeries
-            yAccessor={d => d.AAPLClose}
-            stroke="#ff7f0e"
-            strokeDasharray="Dot"
-          />
-          <ScatterSeries
-            yAccessor={d => d.AAPLClose}
-            marker={SquareMarker}
-            markerProps={{ width: 6, stroke: '#ff7f0e', fill: '#ff7f0e' }}
-          />
-          <LineSeries
-            yAccessor={d => d.GEClose}
-            stroke="#2ca02c"
-          />
-          <ScatterSeries
-            yAccessor={d => d.GEClose}
-            marker={TriangleMarker}
-            markerProps={{ width: 8, stroke: '#2ca02c', fill: '#2ca02c' }}
-          />
-          <LineSeries
-            yAccessor={d => d.close}
-            strokeDasharray="LongDash"
-          />
-          <ScatterSeries
-            yAccessor={d => d.close}
-            marker={CircleMarker}
-            markerProps={{ r: 3 }}
-          />
-          <OHLCTooltip forChart={1} origin={[-40, 0]} />
-          { hasEdgeIndicator
-          && (
-            <EdgeIndicator
-              itemType="last"
-              orient="right"
-              edgeAt="right"
-              yAccessor={d => d.close}
-              fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
-            />
-          )
-          }
+          { lines.map((entry, i) => (
+            <React.Fragment>
+              <LineSeries
+                yAccessor={d => d.prices[i].close}
+                stroke="#ff7f0e"
+                strokeDasharray="Solid"
+              />
+            </React.Fragment>
+          ))}
           { zoomEnabled && (<ZoomButtons onReset={resetZoom} />) }
         </Chart>
       )}

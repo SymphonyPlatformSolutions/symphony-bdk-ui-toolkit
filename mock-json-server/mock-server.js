@@ -1,8 +1,13 @@
 // This is responsible to create the mock server.
 const jsonServer = require('json-server');
-const MockChartData = require('./data/msft');
+const MockCandlestickChartData = require('./data/msft');
 
-MockChartData.forEach(entry => {
+const US_BOND_2_YR_DATA = require('./data/us-bond-2yr-daily');
+const US_BOND_5_YR_DATA = require('./data/us-bond-5yr-daily');
+const US_BOND_10_YR_DATA = require('./data/us-bond-10yr-daily');
+const US_BOND_30_YR_DATA = require('./data/us-bond-30yr-daily');
+
+MockCandlestickChartData.forEach((entry) => {
   entry.close = parseFloat(entry.close, 10);
   entry.high = parseFloat(entry.high, 10);
   entry.low = parseFloat(entry.low, 10);
@@ -24,6 +29,38 @@ const SSE_EVENT_TYPES = {
   REMOVE: 'remove',
   AUTO: 'auto',
 };
+const LINES_CHART_DATA = [];
+for (let i = 0; i < US_BOND_2_YR_DATA.length - 1; i++) {
+  LINES_CHART_DATA.push({
+    date: US_BOND_2_YR_DATA[i].date,
+    prices: [
+      {
+        label: '2 YR',
+        high: US_BOND_2_YR_DATA[i].high,
+        low: US_BOND_2_YR_DATA[i].low,
+        close: US_BOND_2_YR_DATA[i].price,
+      },
+      {
+        label: '5 YR',
+        high: US_BOND_5_YR_DATA[i].high,
+        low: US_BOND_5_YR_DATA[i].low,
+        close: US_BOND_5_YR_DATA[i].price,
+      },
+      {
+        label: '10 YR',
+        high: US_BOND_10_YR_DATA[i].high,
+        low: US_BOND_10_YR_DATA[i].low,
+        close: US_BOND_10_YR_DATA[i].price,
+      },
+      {
+        label: '30 YR',
+        high: US_BOND_30_YR_DATA[i].high,
+        low: US_BOND_30_YR_DATA[i].low,
+        close: US_BOND_30_YR_DATA[i].price,
+      },
+    ],
+  });
+}
 
 // Mock delay, for testing loading states. Units are in ms.
 const MOCK_DELAY = 1000;
@@ -53,13 +90,18 @@ server.use((req, res, next) => {
   next();
 });
 
-/***
+/** *
  * Mock Chart Data
  */
 
-server.get('/chart-data', (req, res) => {
-  console.log('Got chart Data!');
-  send(() => res.jsonp(MockChartData));
+server.get('/chart-candlestick-data', (req, res) => {
+  console.log('Got Candlestick chart Data!');
+  send(() => res.jsonp(MockCandlestickChartData));
+});
+
+server.get('/chart-lines-data', (req, res) => {
+  console.log('Got Line chart Data!');
+  send(() => res.jsonp(LINES_CHART_DATA));
 });
 
 /** *
