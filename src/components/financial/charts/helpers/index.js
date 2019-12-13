@@ -1,9 +1,9 @@
 import { format } from 'd3-format';
 import { timeFormat, timeParse } from 'd3-time-format';
 
-export const buildDateFormat = pattern => timeFormat(pattern);
-export const buildDateParser = pattern => timeParse(pattern);
-export const buildNumberFormat = pattern => format(pattern);
+export const buildDateFormat = (pattern = '%Y-%m-%d') => timeFormat(pattern);
+export const buildDateParser = (pattern = '%Y-%m-%d') => timeParse(pattern);
+export const buildNumberFormat = (pattern = '.2f') => format(pattern);
 
 export const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
   x: buildDateFormat()(xAccessor(currentItem)),

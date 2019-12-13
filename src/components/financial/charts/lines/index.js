@@ -10,7 +10,7 @@ import {
   MouseCoordinateY,
 } from 'react-stockcharts/lib/coordinates';
 import { buildDateFormat, buildNumberFormat } from '../helpers';
-import ChartContainer from '../components/base-chart';
+import ChartContainer from '../base-chart';
 
 const zoomConfig = {
   panEvent: true,
@@ -77,6 +77,7 @@ const LineChart = ({
         gridCoordinates, zoomEnabled, resetZoom,
       }) => (
         <Chart
+          fill="0000"
           id={1}
           yExtents={yExtents}
         >

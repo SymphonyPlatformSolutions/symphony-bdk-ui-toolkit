@@ -11,7 +11,9 @@ import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import CheckBox from '../../../base/checkbox';
 import Card from '../../../base/card/index';
-import { timeParser } from '../helpers';
+import { buildDateParser } from '../helpers';
+
+const timeParser = buildDateParser();
 
 const parseData = parse => (d) => {
   d.date = parse(d.date);
@@ -48,7 +50,6 @@ const Example = () => {
       <Card>
         <Box horizontal justify="space-between" align="center">
           <Box horizontal justify="flex-start" align="center">
-            <Text isTitle>Controls</Text>
           </Box>
           <Box horizontal justify="flex-end" align="center">
             <Box type="flat">
@@ -90,7 +91,7 @@ const Example = () => {
               <CheckBox
                 onChange={({ target: { checked } }) => setTooltip(checked)}
                 checked={hasTooltip}
-              >Series Tooltip
+              >Series
               </CheckBox>
             </Box>
           </Box>
@@ -98,6 +99,7 @@ const Example = () => {
       </Card>
       <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
         <CandleStickChart
+          tickSizeX={10}
           loading={isDataLoading}
           data={results}
           hasGrid={hasGrid}

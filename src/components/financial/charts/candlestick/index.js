@@ -15,8 +15,9 @@ import {
   OHLCTooltip,
 } from 'react-stockcharts/lib/tooltip';
 
-import ChartContainer from '../components/base-chart';
+import ChartContainer from '../base-chart';
 import { tooltipContentHelper } from '../helpers';
+import { THEME_TYPES } from '../../../..';
 
 const zoomConfig = {
   panEvent: true,
@@ -24,12 +25,18 @@ const zoomConfig = {
 };
 
 const CandleStickChart = ({
-  loading, data, theme, hasTooltip, hasZoom, ...rest
+  loading, data, theme,
+  tickSizeX, tickSizeY, hasTooltip,
+  hasZoom, ...rest
 }) => {
   const yExtents = useCallback(d => [d.high, d.low]);
   zoomConfig.panEvent = hasZoom;
   zoomConfig.enabled = hasZoom;
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
+
+  const edgeColorRed = theme.mode === THEME_TYPES.DARK ? theme.colors.error_500 : theme.colors.error_700;
+  const edgeColorGreen = theme.mode === THEME_TYPES.DARK ? theme.colors.success_500 : theme.colors.success_700;
+  const candleBarFill = d => (d.close > d.open ? theme.colors.success_500 : theme.colors.misc_20);
   return (
     <ChartContainer
       loading={loading}
@@ -45,29 +52,56 @@ const CandleStickChart = ({
           <XAxis
             axisAt="bottom"
             orient="bottom"
-            ticks={6}
+            ticks={tickSizeX}
+            stroke={theme.colors.grey_400}
+            zoomEnabled={zoomEnabled}
+            {...gridCoordinates.xGrid}
+          />
+          <XAxis
+            axisAt="top"
+            orient="top"
+            ticks={tickSizeX}
+            stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.xGrid}
           />
           <YAxis
-            axisAt="left"
-            orient="left"
-            ticks={5}
+            axisAt="right"
+            orient="right"
+            ticks={tickSizeY}
+            stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.yGrid}
           />
-          { hasOHLCTooltip && <OHLCTooltip forChart={1} origin={[-40, 0]} /> }
+          <YAxis
+            showTicks={false}
+            axisAt="left"
+            orient="left"
+            ticks={tickSizeY}
+            stroke={theme.colors.grey_400}
+            zoomEnabled={zoomEnabled}
+            {...gridCoordinates.yGrid}
+          />
+          { hasOHLCTooltip && (
+          <OHLCTooltip
+            textFill={theme.colors.grey_700}
+            forChart={1}
+            fontSize={14}
+            origin={[10, 15]}
+          />
+          )
+          }
           { hasEdgeIndicator && (
           <EdgeIndicator
             itemType="last"
             orient="right"
             edgeAt="right"
             yAccessor={d => d.close}
-            fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+            fill={d => (d.close > d.open ? edgeColorGreen : edgeColorRed)}
           />
           )
           }
-          <CandlestickSeries width={timeIntervalBarWidth(utcDay)} />
+          <CandlestickSeries opacity={1} wickStroke={theme.colors.grey_600} fill={candleBarFill} width={timeIntervalBarWidth(utcDay)} />
           { zoomEnabled && (<ZoomButtons onReset={resetZoom} />) }
         </Chart>
       )}
@@ -85,6 +119,8 @@ CandleStickChart.propTypes = {
   data: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
+  tickSizeX: PropTypes.number.isRequired,
+  tickSizeY: PropTypes.number.isRequired,
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,

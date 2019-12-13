@@ -16,7 +16,7 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import Loader from '../../../base/loader';
-import { LoadingContainer } from '../candlestick/themes';
+import { ChartBackground, LoadingContainer } from '../candlestick/themes';
 
 const ChartBuilder = withTheme(({
   theme, data, width, height, ratio = 1,
@@ -42,12 +42,16 @@ const ChartBuilder = withTheme(({
     if (hasGrid) {
       setGridCoordinates({
         xGrid: {
-          innerTickSize: -1 * height,
-          tickStrokeOpacity: 0.1,
+          innerTickSize: -1 * (height - (margin.top + margin.bottom)),
+          tickStrokeOpacity: 0.2,
+          tickStroke: theme.colors.grey_900,
+          tickStrokeDasharray: 'Dot',
         },
         yGrid: {
-          innerTickSize: -1 * width,
-          tickStrokeOpacity: 0.1,
+          innerTickSize: -1 * (width - (margin.right + margin.left)),
+          tickStroke: theme.colors.grey_900,
+          tickStrokeOpacity: 0.2,
+          tickStrokeDasharray: 'Dot',
         },
       });
     } else {
@@ -56,7 +60,7 @@ const ChartBuilder = withTheme(({
         yGrid: {},
       });
     }
-  }, [width, height, hasGrid]);
+  }, [width, height, hasGrid, theme]);
 
   const CanvasRef = useRef();
 
@@ -73,7 +77,6 @@ const ChartBuilder = withTheme(({
       xAccessor={xAccessor}
       xScale={scaleTime()}
       xExtents={xExtends}
-
       mouseMoveEvent={mouseMoveEvent}
       panEvent={hasZoom.panEvent}
       zoomEvent={hasZoom.enabled}
@@ -115,9 +118,9 @@ ChartBuilder.defaultProps = {
   },
   clampType: null,
   margin: {
-    left: 50,
+    left: 0,
     right: 50,
-    top: 10,
+    top: 30,
     bottom: 30,
   },
   shownWindow: 100,
@@ -150,7 +153,7 @@ ChartBuilder.propTypes = {
 };
 
 const ChartContainer = ({
-  loading, data, children, ...rest
+  loading, data, children, margin, ...rest
 }) => {
   const mRef = useRef();
   const [size, setSize] = useState(null);
@@ -183,27 +186,48 @@ const ChartContainer = ({
       );
     }
     return (
-      <ChartBuilder data={data} width={size.width} height={size.height} {...rest}>
+      <ChartBuilder
+        data={data}
+        width={size.width}
+        height={size.height}
+        margin={margin}
+        {...rest}
+      >
         {children}
       </ChartBuilder>
     );
   }, [data, loading, size, mRef, children]);
-
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
   return (
     <div style={{ width: '100%', height: '100%' }} ref={mRef}>
+      <ChartBackground width={width} height={height} margin={margin} />
       {Memoized}
     </div>
   );
 };
 
+
 ChartContainer.defaultProps = {
   loading: false,
+  margin: {
+    left: 0,
+    right: 50,
+    top: 30,
+    bottom: 30,
+  },
 };
 
 ChartContainer.propTypes = {
   data: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
   loading: PropTypes.bool,
+  margin: PropTypes.shape({
+    left: PropTypes.number,
+    right: PropTypes.number,
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
 };
 
 export default ChartContainer;
