@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Chart, ZoomButtons } from 'react-stockcharts';
+import { Chart } from 'react-stockcharts';
 import PropTypes from 'prop-types';
 import {
   LineSeries, ScatterSeries, CircleMarker,
@@ -11,9 +11,12 @@ import {
 } from 'react-stockcharts/lib/coordinates';
 import { withTheme } from 'styled-components';
 import { Label } from 'react-stockcharts/lib/annotation';
+import { darken } from 'polished';
 import { buildDateFormat, buildNumberFormat } from '../helpers';
 import ChartContainer from '../base-chart';
 import { LineChartLegend } from '../components/line-legend';
+import { ChartZoom } from '../components/chart-zoom';
+import { THEME_TYPES } from '../../../..';
 
 const zoomConfig = {
   panEvent: true,
@@ -29,13 +32,6 @@ const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
     acc.push({
       label: `${price.label}`,
       value: ' ',
-    }, {
-      label: '  low',
-      value: price.low && numberFormat(price.low),
-    },
-    {
-      label: '  high',
-      value: price.high && numberFormat(price.high),
     },
     {
       label: '  close',
@@ -43,7 +39,7 @@ const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
     });
     return acc;
   }, [])
-    .filter(line => line.value),
+    .filter((line) => line.value),
 });
 
 
@@ -52,13 +48,14 @@ const LineChart = ({
   hasTooltip, hasZoom, tickSizeY,
   lineColors, yAxisLabel, margin, ...rest
 }) => {
-  const yExtents = useCallback(d => d.prices.reduce((acc, curr) => {
+  const yExtents = useCallback((d) => d.prices.reduce((acc, curr) => {
     acc.push(curr.close);
     return acc;
   }, []));
   zoomConfig.panEvent = hasZoom;
   zoomConfig.enabled = hasZoom;
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
+  const textColor = theme.mode === THEME_TYPES.DARK ? theme.colors.oldprimary_100 : darken(0.7, theme.colors.oldprimary_100);
 
   return (
     <ChartContainer
@@ -71,7 +68,7 @@ const LineChart = ({
       {...rest}
     >
       {({
-        gridCoordinates, zoomEnabled, resetZoom, height,
+        gridCoordinates, zoomEnabled, resetZoom, height, fontFamily,
       }) => (
         <Chart
           id={1}
@@ -80,51 +77,55 @@ const LineChart = ({
           <XAxis
             axisAt="bottom"
             orient="bottom"
-            stroke={theme.colors.grey_400}
+            fontFamily={fontFamily}
+            stroke={theme.colors.primary_050}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
-            tickStroke={theme.colors.grey_900}
+            tickStroke={textColor}
 
           />
           <XAxis
             axisAt="top"
             orient="top"
-            stroke={theme.colors.grey_400}
+            fontFamily={fontFamily}
+            stroke={theme.colors.primary_050}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
-            tickStroke={theme.colors.grey_900}
+            tickStroke={textColor}
 
           />
           <YAxis
             axisAt="left"
             orient="left"
-            stroke={theme.colors.grey_400}
+            fontFamily={fontFamily}
+            stroke={theme.colors.primary_050}
             ticks={tickSizeY}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
-            tickStroke={theme.colors.grey_900}
+            tickStroke={textColor}
           />
           <YAxis
             axisAt="right"
             orient="right"
-            stroke={theme.colors.grey_400}
+            fontFamily={fontFamily}
+            stroke={theme.colors.primary_050}
             ticks={tickSizeY}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
-            tickStroke={theme.colors.grey_900}
+            tickStroke={textColor}
           />
           { yAxisLabel
           && (
           <Label
             x={gridCoordinates.width - margin.left - 40}
             y={(gridCoordinates.height - margin.bottom) * 0.5}
+            fontFamily={fontFamily}
             fill={theme.colors.grey_900}
             rotate={-90}
             fontSize="12"
             text={yAxisLabel}
           />
-          )
-          }
+          )}
           <MouseCoordinateX
             at="bottom"
             orient="bottom"
@@ -137,22 +138,23 @@ const LineChart = ({
           />
 
           { lineColors.map((entry, i) => (
-            <React.Fragment>
+            <>
               <LineSeries
                 highlightOnHover
-                yAccessor={d => d.prices[i].close}
+                yAccessor={(d) => d.prices[i].close}
                 stroke={entry}
                 strokeDasharray="Solid"
               />
               <ScatterSeries
-                yAccessor={d => d.prices[i].close}
+                yAccessor={(d) => d.prices[i].close}
                 marker={CircleMarker}
                 markerProps={{ r: 3 }}
               />
-            </React.Fragment>
+            </>
           ))}
-          { zoomEnabled && (<ZoomButtons onReset={resetZoom} />) }
+          { zoomEnabled && (<ChartZoom onReset={resetZoom} />) }
           <LineChartLegend
+            fontFamily={fontFamily}
             containerHeight={height}
             margin={margin}
             lineColors={lineColors}

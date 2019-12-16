@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
+import { darken } from 'polished';
+import { THEME_TYPES } from '../../../..';
 
 export const LineChartLegend = withTheme(({
-  theme, height, containerHeight, margin, lineColors, padding, data,
+  theme, height, fontFamily, containerHeight, margin, lineColors, padding, data,
 }) => {
   const [rect, setRect] = useState({
     x: padding,
@@ -20,12 +22,15 @@ export const LineChartLegend = withTheme(({
       height,
     });
   }, [height, containerHeight, margin, lineColors]);
+
+  const bgColor = theme.mode === THEME_TYPES.DARK ? theme.colors.secondary_400 : theme.colors.secondary_100;
+  const textColor = theme.mode === THEME_TYPES.DARK ? theme.colors.primary_050 : theme.colors.secondary_900;
   return (
     <g transform={`translate(${rect.x}, ${rect.y})`}>
       <rect
         width={rect.width}
         height={rect.height}
-        fill={`${theme.colors.grey_300}E9`}
+        fill={bgColor}
       />
       {lineColors.map((stroke, i) => (
         <g
@@ -41,11 +46,12 @@ export const LineChartLegend = withTheme(({
               y="50%"
               strokeWidth={1}
               textAnchor="middle"
+              fontWeight={200}
               fontSize={12}
               fill="none"
-              fontFamily="Verdana"
+              fontFamily={fontFamily}
               dominantBaseline="middle"
-              stroke={theme.colors.grey_600}
+              stroke={textColor}
             >
               {data.prices[i].label}
             </text>

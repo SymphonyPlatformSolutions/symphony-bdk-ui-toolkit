@@ -15,7 +15,7 @@ import { buildDateParser } from '../helpers';
 
 const timeParser = buildDateParser();
 
-const parseData = parse => (d) => {
+const parseData = (parse) => (d) => {
   d.date = parse(d.date);
   d.open = +d.open;
   d.high = +d.high;
@@ -28,7 +28,7 @@ const parseData = parse => (d) => {
 
 const autoFetchConfig = {
   endpoint: 'http://localhost:3000/chart-candlestick-data',
-  handleData: results => results.map(parseData(timeParser)),
+  handleData: (results) => results.map(parseData(timeParser)),
 };
 
 
@@ -49,8 +49,7 @@ const Example = () => {
     <Box type="flat" vertical>
       <Card>
         <Box horizontal justify="space-between" align="center">
-          <Box horizontal justify="flex-start" align="center">
-          </Box>
+          <Box horizontal justify="flex-start" align="center" />
           <Box horizontal justify="flex-end" align="center">
             <Box type="flat">
               <CheckBox
@@ -102,6 +101,7 @@ const Example = () => {
           tickSizeX={10}
           loading={isDataLoading}
           data={results}
+          title="MFST"
           hasGrid={hasGrid}
           hasCrossHair={hasCrossHair}
           hasOHLCTooltip={hasOHLCTooltip}

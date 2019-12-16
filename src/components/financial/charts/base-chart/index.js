@@ -16,6 +16,7 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import { Label } from 'react-stockcharts/lib/annotation';
+import { darken } from 'polished';
 import Loader from '../../../base/loader';
 import { ChartBackground, LoadingContainer } from '../candlestick/themes';
 
@@ -24,11 +25,11 @@ const ChartBuilder = withTheme(({
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
   hasZoom, margin, hasOHLCTooltip, shownWindow,
-  title, children,
+  title, fontFamily, children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
-  const xAccessor = useCallback(d => d.date);
+  const xAccessor = useCallback((d) => d.date);
 
   const xExtends = [
     xAccessor(last(data)),
@@ -70,7 +71,7 @@ const ChartBuilder = withTheme(({
       height={height}
       width={width}
       margin={margin}
-      type="hybrid"
+      type="svg"
       seriesName={`MSFT_${suffix}`}
       data={data}
       xAccessor={xAccessor}
@@ -90,19 +91,29 @@ const ChartBuilder = withTheme(({
         zoomEnabled: hasZoom.enabled,
         hasEdgeIndicator,
         resetZoom,
+        fontFamily,
         hasOHLCTooltip,
       })}
       {tooltipContent && (
         <HoverTooltip
+          bgFill={theme.colors.oldprimary_400}
+          fontFill={darken(0.7, theme.colors.oldprimary_100)}
           tooltipContent={tooltipContent}
-          fontSize={15}
+          fontFamily={fontFamily}
+          opacity={0.8}
+          stroke="none"
+          fontSize={14}
         />
       )}
-      {hasCrossHair && <CrossHairCursor stroke={theme.colors.grey_900} opacity={0.8} /> }
+      {hasCrossHair &&
+      <CrossHairCursor
+        stroke={theme.colors.secondary_400}
+        opacity={0.8} /> }
       {title && (
       <Label
         x={(width - margin.left - margin.right) / 2}
-        y={30}
+        y={50}
+        fontFamily={fontFamily}
         fill={theme.colors.grey_600}
         fontSize="30"
         opacity={0.5}
@@ -133,6 +144,7 @@ ChartBuilder.defaultProps = {
   },
   title: null,
   shownWindow: 100,
+  fontFamily: '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif',
 };
 
 ChartBuilder.propTypes = {
@@ -160,6 +172,7 @@ ChartBuilder.propTypes = {
   }),
   shownWindow: PropTypes.number,
   title: PropTypes.string,
+  fontFamily: PropTypes.string,
 };
 
 const ChartContainer = ({
