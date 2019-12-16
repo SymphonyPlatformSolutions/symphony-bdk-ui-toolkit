@@ -4,7 +4,6 @@ export const RadioLabel = styled.label`
   position: relative;
   padding-left: 1.4rem;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  line-height: 0.9rem;
   display: inline-block;
 `;
 
@@ -107,5 +106,6 @@ export const RadioContainer = styled.div`
   margin: 9px 0;
   opacity: ${({ disabled }) => (disabled ? '0.25' : '1')};
   align-items: center;
-    display: flex;
+  display: flex;
+  line-height: 15px;
 `;

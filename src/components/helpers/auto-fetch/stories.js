@@ -7,6 +7,7 @@ import AutoFetchWrapper from '.';
 import Box from '../../base/box';
 import { StoryWrapper } from '../../base/wrappers';
 import Info from './info.md';
+import { CellWrapper } from '../../base/table/theme';
 import Table from '../../base/table';
 import Text from '../../base/text';
 import DataGrid from '../../base/data-grid';
@@ -17,33 +18,37 @@ import Button from '../../base/button';
 const autoFetchConfig = {
   endpoint: 'https://reqres.in/api/users',
   params: { page: 2 },
-  handleData: results => results.data,
+  handleData: (results) => results.data,
 };
 
 const duckDuckGoFetchConfig = {
   endpoint: 'https://api.duckduckgo.com',
   params: { format: 'json', q: null },
-  handleData: results => results.RelatedTopics,
+  handleData: (results) => results.RelatedTopics,
 };
 
 const COLUMNS_WITH_AUTO_FETCH = [{
-  Header: 'Picture',
+  header: 'Picture',
   tooltip: 'The person picture',
   accessor: 'avatar',
-  Cell: row => (
-    <img src={row.value} width={32} />
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <img src={cell.value} width={32} />
+    </CellWrapper>
   ),
   width: 100,
 }, {
-  Header: 'Name',
+  header: 'Name',
   tooltip: 'The person Name',
   accessor: 'id',
-  Cell: ({ original }) => (
-    <Text>{original.first_name} {original.last_name}</Text>
+  Cell: ({ row: { original } }) => (
+    <CellWrapper>
+      <Text>{original.first_name} {original.last_name}</Text>
+    </CellWrapper>
   ),
   width: 150,
 }, {
-  Header: 'Email address',
+  header: 'Email address',
   tooltip: 'The person email address',
   accessor: 'email',
 }];

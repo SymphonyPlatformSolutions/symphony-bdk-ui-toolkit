@@ -44,6 +44,7 @@ Text.propTypes = {
   underline: PropTypes.bool,
   children: PropTypes.node.isRequired,
   tooltip: PropTypes.string,
+  isLink: PropTypes.bool,
 };
 
 Text.defaultProps = {
@@ -56,4 +57,5 @@ Text.defaultProps = {
   underline: false,
   type: 'secondary',
   tooltip: null,
+  isLink: false,
 };

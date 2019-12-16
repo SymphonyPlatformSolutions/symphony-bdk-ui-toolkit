@@ -74,13 +74,13 @@ export const MenuArea = styled.div`
 `;
 
 export const QuoteShortCodeLabel = styled.span`
-  font-size: 10px;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.8);
 `;
 
 export const QuoteShortCodeName = styled.span`
   margin-top: 4px;
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #FFFFFF;
 `;
@@ -124,7 +124,7 @@ export const ContextMenuItem = styled.button`
   border: none;
   background: none;
   text-align: start;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: bold;
   color: ${props => getContextMenuItemColor(props)};
   cursor: pointer;

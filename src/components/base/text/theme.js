@@ -1,28 +1,16 @@
 import styled from 'styled-components';
 
 const FONTSIZE = {
-  tiny: '10px',
-  small: '12px',
-  regular: '14px',
-  large: '18px',
+  tiny: '0.8rem',
+  small: '0.9rem',
+  regular: '1rem',
+  large: '1.4rem',
 };
 const FONTSIZETITLE = {
-  tiny: '14px',
-  small: '18px',
-  regular: '24px',
-  large: '40px',
-};
-const LINEHEIGHT = {
-  tiny: '16px',
-  small: '14px',
-  regular: '20px',
-  large: '24px',
-};
-const LINEHEIGHTTITLE = {
-  tiny: '20px',
-  small: '24px',
-  regular: '24px',
-  large: '28px',
+  tiny: '1rem',
+  small: '1.3rem',
+  regular: '1.7rem',
+  large: '2.8rem',
 };
 
 const getTextColor = ({ type, theme, isTitle }) => {
