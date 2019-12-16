@@ -143,6 +143,7 @@ const LineChart = ({
                 highlightOnHover
                 yAccessor={(d) => d.prices[i].close}
                 stroke={entry}
+                strokeWidth={3}
                 strokeDasharray="Solid"
               />
               <ScatterSeries
