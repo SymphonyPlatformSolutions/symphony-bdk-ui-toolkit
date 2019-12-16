@@ -81,7 +81,6 @@ const Example = withTheme(({ theme }) => {
       </Card>
       <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
         <LineChart
-          datePars
           loading={isDataLoading}
           data={results}
           lineColors={lineColors}
