@@ -45,12 +45,10 @@ const ChartBuilder = withTheme(({
         xGrid: {
           innerTickSize: -1 * (height - (margin.top + margin.bottom)),
           tickStrokeOpacity: 0.2,
-          tickStroke: theme.colors.grey_900,
           tickStrokeDasharray: 'Dot',
         },
         yGrid: {
           innerTickSize: -1 * (width - (margin.right + margin.left)),
-          tickStroke: theme.colors.grey_900,
           tickStrokeOpacity: 0.2,
           tickStrokeDasharray: 'Dot',
         },
@@ -82,7 +80,6 @@ const ChartBuilder = withTheme(({
       panEvent={hasZoom.panEvent}
       zoomEvent={hasZoom.enabled}
       clam={clampType}
-
     >
       {children({
         width,
@@ -101,7 +98,7 @@ const ChartBuilder = withTheme(({
           fontSize={15}
         />
       )}
-      {hasCrossHair && <CrossHairCursor /> }
+      {hasCrossHair && <CrossHairCursor stroke={theme.colors.grey_900} opacity={0.8} /> }
       {title && (
       <Label
         x={(width - margin.left - margin.right) / 2}

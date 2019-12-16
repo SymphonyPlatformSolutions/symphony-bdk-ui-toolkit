@@ -13,6 +13,7 @@ import { withTheme } from 'styled-components';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { buildDateFormat, buildNumberFormat } from '../helpers';
 import ChartContainer from '../base-chart';
+import { LineChartLegend } from '../components/line-legend';
 
 const zoomConfig = {
   panEvent: true,
@@ -70,7 +71,7 @@ const LineChart = ({
       {...rest}
     >
       {({
-        gridCoordinates, zoomEnabled, resetZoom,
+        gridCoordinates, zoomEnabled, resetZoom, height,
       }) => (
         <Chart
           id={1}
@@ -82,6 +83,8 @@ const LineChart = ({
             stroke={theme.colors.grey_400}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
+            tickStroke={theme.colors.grey_900}
+
           />
           <XAxis
             axisAt="top"
@@ -89,6 +92,8 @@ const LineChart = ({
             stroke={theme.colors.grey_400}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.xGrid}
+            tickStroke={theme.colors.grey_900}
+
           />
           <YAxis
             axisAt="left"
@@ -97,6 +102,7 @@ const LineChart = ({
             ticks={tickSizeY}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
+            tickStroke={theme.colors.grey_900}
           />
           <YAxis
             axisAt="right"
@@ -105,6 +111,7 @@ const LineChart = ({
             ticks={tickSizeY}
             zoomEvent={zoomEnabled}
             {...gridCoordinates.yGrid}
+            tickStroke={theme.colors.grey_900}
           />
           { yAxisLabel
           && (
@@ -132,7 +139,7 @@ const LineChart = ({
           { lineColors.map((entry, i) => (
             <React.Fragment>
               <LineSeries
-                highlightOnHover={true}
+                highlightOnHover
                 yAccessor={d => d.prices[i].close}
                 stroke={entry}
                 strokeDasharray="Solid"
@@ -145,6 +152,12 @@ const LineChart = ({
             </React.Fragment>
           ))}
           { zoomEnabled && (<ZoomButtons onReset={resetZoom} />) }
+          <LineChartLegend
+            containerHeight={height}
+            margin={margin}
+            lineColors={lineColors}
+            data={data[0]}
+          />
         </Chart>
       )}
     </ChartContainer>

@@ -91,7 +91,7 @@ const Example = () => {
               <CheckBox
                 onChange={({ target: { checked } }) => setTooltip(checked)}
                 checked={hasTooltip}
-              >Series
+              >Tooltip
               </CheckBox>
             </Box>
           </Box>

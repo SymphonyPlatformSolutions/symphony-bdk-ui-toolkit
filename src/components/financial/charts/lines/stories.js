@@ -39,10 +39,10 @@ const Example = withTheme(({ theme }) => {
   const [hasZoom, setZoom] = useState(true);
   const [hasTooltip, setTooltip] = useState(true);
   const lineColors = [
-    theme.colors.misc_14,
-    theme.colors.misc_15,
-    theme.colors.oldprimary_600,
-    theme.colors.error_400,
+    '#990099',
+    '#009900',
+    '#009999',
+    '#990000',
   ];
 
   return (
@@ -96,7 +96,7 @@ const Example = withTheme(({ theme }) => {
             top: 30,
             bottom: 30,
           }}
-          title="US Treasury Yield 2Y 5Y 10Y 30Y"
+          title="US Treasury Yield"
           hasZoom={hasZoom}
         />
       </Box>

@@ -56,6 +56,7 @@ const CandleStickChart = ({
             stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.xGrid}
+            tickStroke={theme.colors.grey_900}
           />
           <XAxis
             axisAt="top"
@@ -64,6 +65,7 @@ const CandleStickChart = ({
             stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.xGrid}
+            tickStroke={theme.colors.grey_900}
           />
           <YAxis
             axisAt="right"
@@ -72,6 +74,7 @@ const CandleStickChart = ({
             stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.yGrid}
+            tickStroke={theme.colors.grey_900}
           />
           <YAxis
             showTicks={false}
@@ -81,6 +84,7 @@ const CandleStickChart = ({
             stroke={theme.colors.grey_400}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.yGrid}
+            tickStroke={theme.colors.grey_900}
           />
           { hasOHLCTooltip && (
           <OHLCTooltip
