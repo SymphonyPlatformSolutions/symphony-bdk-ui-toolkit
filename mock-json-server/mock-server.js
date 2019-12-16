@@ -193,6 +193,6 @@ server.get('/sse-events', (req, res) => {
   res.send();
 });
 
-server.listen(3000, () => {
+server.listen(9999, () => {
   console.log('JSON Server is running');
 });
