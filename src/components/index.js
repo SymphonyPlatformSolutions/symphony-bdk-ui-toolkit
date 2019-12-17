@@ -20,6 +20,7 @@ export { default as TextLink } from './base/text-link';
 export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
 export { default as QuoteCard } from './financial/quote-card';
+export { default as DealerTag } from './financial/dealer-tags';
 export {
   default as FormBox,
   FormGroup,
@@ -68,7 +69,10 @@ export {
   PricingIcon,
   SearchIcon,
 } from './base/icons';
+export { default as Search } from './base/search';
+export { default as Toggle } from './base/toggle';
 export { default as DecisionDropdown } from './base/decision-dropdown';
+export { default as ProgressIndicator } from './base/progress-indicator';
 export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,
