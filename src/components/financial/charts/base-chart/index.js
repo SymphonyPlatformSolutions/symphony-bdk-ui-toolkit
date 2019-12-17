@@ -18,7 +18,7 @@ import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { darken } from 'polished';
 import Loader from '../../../base/loader';
-import { ChartBackground, LoadingContainer } from '../candlestick/themes';
+import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
 const ChartBuilder = withTheme(({
   theme, data, width, height, ratio = 1,

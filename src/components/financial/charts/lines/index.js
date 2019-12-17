@@ -138,7 +138,7 @@ const LineChart = ({
           />
 
           { lineColors.map((entry, i) => (
-            <>
+            <React.Fragment>
               <LineSeries
                 highlightOnHover
                 yAccessor={(d) => d.prices[i].close}
@@ -151,7 +151,7 @@ const LineChart = ({
                 marker={CircleMarker}
                 markerProps={{ r: 3 }}
               />
-            </>
+            </React.Fragment>
           ))}
           { zoomEnabled && (<ChartZoom onReset={resetZoom} />) }
           <LineChartLegend
@@ -167,24 +167,24 @@ const LineChart = ({
   );
 };
 
-LineChart.defaultProps = {
-  loading: false,
-  hasTooltip: false,
-  hasZoom: false,
-  yAxisLabel: null,
-};
-
-LineChart.propTypes = {
-  data: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
-  theme: PropTypes.object.isRequired,
-  tickSizeX: PropTypes.number.isRequired,
-  tickSizeY: PropTypes.number.isRequired,
-  lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hasTooltip: PropTypes.bool,
-  hasZoom: PropTypes.bool,
-  loading: PropTypes.bool,
-  yAxisLabel: PropTypes.string,
-};
+// LineChart.defaultProps = {
+//   loading: false,
+//   hasTooltip: false,
+//   hasZoom: false,
+//   yAxisLabel: null,
+// };
+//
+// LineChart.propTypes = {
+//   data: PropTypes.array.isRequired,
+//   children: PropTypes.node.isRequired,
+//   theme: PropTypes.object.isRequired,
+//   tickSizeX: PropTypes.number.isRequired,
+//   tickSizeY: PropTypes.number.isRequired,
+//   lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+//   hasTooltip: PropTypes.bool,
+//   hasZoom: PropTypes.bool,
+//   loading: PropTypes.bool,
+//   yAxisLabel: PropTypes.string,
+// };
 
 export default withTheme(LineChart);

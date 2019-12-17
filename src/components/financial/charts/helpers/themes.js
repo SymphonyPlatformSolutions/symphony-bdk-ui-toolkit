@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { THEME_TYPES } from '../../../..';
+import { THEME_TYPES } from '../../../../index';
 
 export const LoadingContainer = styled.div`
   display: flex;
