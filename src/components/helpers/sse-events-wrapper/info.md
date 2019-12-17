@@ -35,7 +35,7 @@ const autoFetchConfig = {
   params: { page: 2 },
   handleData: results => results.data,
 };
-const sseEndpoint = http://localhost:3000/sse-events;
+const sseEndpoint = http://localhost:9999/sse-events;
 ```
 
 ##Injected Properties
@@ -68,7 +68,7 @@ const autoFetchConfig = {
   handleData: results => results.data,
 };
 
-const sseEndpoint = http://localhost:3000/sse-events;
+const sseEndpoint = http://localhost:9999/sse-events;
 
 const SSEEventsSample = ({
   data, loading, error, refreshData,

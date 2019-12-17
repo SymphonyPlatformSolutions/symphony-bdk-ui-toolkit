@@ -6,6 +6,8 @@ object.
 
 ##Configuration
 The configuration object should follow this strucutre:
+
+
 ```jsx
 const autoFetchConfig = {
   endpoint: 'https://reqres.in/api/users',
@@ -21,6 +23,8 @@ const autoFetchConfig = {
 - is a  wrapper component that fetches data for you, and injects into the first child component
 
 These are the injected properties:
+
+
 ```jsx
 {
   results: PropTypes.array,
@@ -31,8 +35,18 @@ These are the injected properties:
 ```
 
 and this is how you use it:
+
+
 ```jsx
-  const MyComp = ({results,isDataLoading, error, handleData}) => {
+
+const duckDuckGoFetchConfig = {
+  endpoint: 'https://api.duckduckgo.com',
+  params: { format: 'json', q: null },
+  handleData: (results) => results.RelatedTopics,
+};
+
+
+const MyComp = ({results,isDataLoading, error, handleData}) => {
     return (
         ....
     )
@@ -180,6 +194,8 @@ const RefreshExample = ({ data, loading, refreshData }) => {
 };
 ```
 ## Proptypes
+
+
 ```jsx
 AutoFetchWrapper.propTypes = {
   config: PropTypes.shapeOf({

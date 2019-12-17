@@ -188,7 +188,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
 ];
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:3000/financial-demo',
+  endpoint: 'http://localhost:9999/financial-demo',
   params: {},
   handleData: results => results,
 };
@@ -219,7 +219,7 @@ const CustomRow = (props) => {
 const postDemo = async (action, isAuto = null, interval = null) => {
   try {
     await RestClient.post(
-      'http://localhost:3000/financial-demo',
+      'http://localhost:9999/financial-demo',
       { action, isAuto, interval },
       {},
       false,
@@ -362,7 +362,7 @@ storiesOf('Helpers', module)
             </ul>
           </Box>
           <SSEventsListWrapper
-            sseEndpoint="http://localhost:3000/sse-events"
+            sseEndpoint="http://localhost:9999/sse-events"
             autoFetchConfig={autoFetchConfig}
           >
             <ThemedSample />
