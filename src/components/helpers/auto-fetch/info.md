@@ -67,7 +67,7 @@ this is how you use it:
 
 ```jsx
 const MyComp = () => {
-    connst {results,isDataLoading, error, handleData} = useAutoFetch(duckDuckGoFetchConfig);
+    const {results,isDataLoading, error, handleData} = useAutoFetch(duckDuckGoFetchConfig);
     return (
         ....
     )
