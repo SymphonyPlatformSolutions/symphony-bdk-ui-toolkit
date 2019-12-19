@@ -121,7 +121,7 @@ const CandleStickChart = ({
             opacity={1}
             wickStroke={theme.colors.grey_600}
             fill={candleBarFill}
-            width={timeIntervalBarWidth(utcDay)}
+            // width={timeIntervalBarWidth(utcDay)}
           />
           { zoomEnabled && <ChartZoom onReset={resetZoom} /> }
         </Chart>

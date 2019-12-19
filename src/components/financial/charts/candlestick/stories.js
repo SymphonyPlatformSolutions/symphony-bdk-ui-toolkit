@@ -119,7 +119,7 @@ storiesOf('Financial/Charts', module)
     <StoryWrapper p={15}>
       <Box type="primary">
         <Text isTitle>Candlestick Chart</Text>
-        <Box style={{ width: '100%', height: '100vh - 100px' }}>
+        <Box style={{ width: '100%', height: 'calc(100vh - 100px)' }}>
           <Example />
         </Box>
       </Box>

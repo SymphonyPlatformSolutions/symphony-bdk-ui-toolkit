@@ -17,11 +17,12 @@ import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { darken } from 'polished';
+import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
 import Loader from '../../../base/loader';
 import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
 const ChartBuilder = withTheme(({
-  theme, data, width, height, ratio = 1,
+  theme, results, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
   hasZoom, margin, hasOHLCTooltip, shownWindow,
@@ -29,12 +30,21 @@ const ChartBuilder = withTheme(({
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
-  const xAccessor = useCallback((d) => d.date);
 
-  const xExtends = [
-    xAccessor(last(data)),
-    xAccessor(data[data.length - shownWindow]),
-  ];
+  	const xScaleProvider = discontinuousTimeScaleProvider
+    .inputDateAccessor((d) => d.date);
+  const {
+    data,
+    xScale,
+    xAccessor,
+    displayXAccessor,
+  } = xScaleProvider(results);
+
+
+  const start = xAccessor(last(data));
+  const end = xAccessor(data[Math.max(0, data.length - 150)]);
+  const xExtents = [start, end];
+
 
   const resetZoom = useCallback(() => {
     setSuffix(suffix + 1);
@@ -74,9 +84,9 @@ const ChartBuilder = withTheme(({
       type="svg"
       seriesName={`MSFT_${suffix}`}
       data={data}
+      xScale={xScale}
       xAccessor={xAccessor}
-      xScale={scaleTime()}
-      xExtents={xExtends}
+      displayXAccessor={displayXAccessor}
       mouseMoveEvent={mouseMoveEvent}
       panEvent={hasZoom.panEvent}
       zoomEvent={hasZoom.enabled}
@@ -105,10 +115,13 @@ const ChartBuilder = withTheme(({
           fontSize={14}
         />
       )}
-      {hasCrossHair &&
+      {hasCrossHair
+      && (
       <CrossHairCursor
         stroke={theme.colors.secondary_400}
-        opacity={0.8} /> }
+        opacity={0.8}
+      />
+      ) }
       {title && (
       <Label
         x={(width - margin.left - margin.right) / 2}
@@ -210,7 +223,7 @@ const ChartContainer = ({
     }
     return (
       <ChartBuilder
-        data={data}
+        results={data}
         width={size.width}
         height={size.height}
         margin={margin}

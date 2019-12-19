@@ -1,6 +1,8 @@
 // This is responsible to create the mock server.
 const jsonServer = require('json-server');
+const Faker = require('faker');
 const MockCandlestickChartData = require('./data/msft');
+const MockCandlestickIntradayData = require('./data/msft');
 
 const US_BOND_2_YR_DATA = require('./data/us-bond-2yr-daily');
 const US_BOND_5_YR_DATA = require('./data/us-bond-5yr-daily');
@@ -15,9 +17,23 @@ MockCandlestickChartData.forEach((entry) => {
   entry.volume = parseFloat(entry.volume, 10);
 });
 
+MockCandlestickIntradayData.forEach((entry) => {
+  entry.id = Faker.finance.account();
+  entry.high = parseFloat(entry.high, 10);
+  entry.low = parseFloat(entry.low, 10);
+  entry.open = parseFloat(entry.open, 10);
+  entry.volume = parseFloat(entry.volume, 10);
+});
+
+MockCandlestickIntradayData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
 const {
-  generateSSEDemoData, RandomlyUpdateSSEDemoData, RandomlyCreateSSEDemoData,
+  generateSSEDemoData,
+  RandomlyUpdateSSEDemoData,
+  RandomlyCreateSSEDemoData,
   DeleteSSEDemoData,
+  createChartData,
+  updateChartData,
 } = require('./mock-file');
 
 const server = jsonServer.create();
@@ -68,8 +84,11 @@ let sseEventId = 0;
 const SSE_DEMO_DATA = generateSSEDemoData();
 
 let actionList = [];
-
 let autoPilot = false;
+
+let chartActionList = [];
+let chartAutoPilot = false;
+
 
 function send(callback, delay = MOCK_DELAY) {
   if (MOCK_DELAY) {
@@ -93,6 +112,7 @@ server.use((req, res, next) => {
 /** *
  * Mock Chart Data
  */
+// createChartData(MockCandlestickIntradayData);
 
 server.get('/chart-candlestick-data', (req, res) => {
   console.log('Got Candlestick chart Data!');
@@ -104,9 +124,82 @@ server.get('/chart-lines-data', (req, res) => {
   send(() => res.jsonp(LINES_CHART_DATA));
 });
 
-/** *
+const buildSSEEvent = (res, type, data) => {
+  res.write(`id: ${sseEventId}\n`);
+  res.write(`event:${type}\n`);
+  res.write(`data: ${JSON.stringify(data)}`);
+  res.write('\n\n');
+};
+
+/** ****************************************
+ * SSE Intraday Chart Mock
+ **************************************** */
+
+let interval = 4;
+let counter = 0;
+
+server.get('/intraday-chart-demo', (req, res) => {
+  console.log('Got Intraday Chart elements!');
+  send(() => res.jsonp(MockCandlestickIntradayData));
+});
+
+server.post('/intraday-chart-demo', (req, res) => {
+  const payload = req.body;
+  if (payload.action === SSE_EVENT_TYPES.AUTO) {
+    counter = 0;
+    chartAutoPilot = payload.isAuto;
+  } else {
+    chartActionList.push(payload.action);
+  }
+  res.sendStatus(200);
+});
+createChartData(MockCandlestickIntradayData)
+
+server.get('/sse-chart-events', (req, res) => {
+  res.writeHead(200, {
+    Connection: 'keep-alive',
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+  });
+  if (chartAutoPilot) {
+    res.write('retry: 500\n');
+    console.log('AKJSFJHAJ');
+    if (counter === interval) {
+      const createdData = createChartData(MockCandlestickIntradayData);
+      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
+      counter = 0;
+      interval = 10+Math.floor(Math.random() * 5);
+    } else {
+      const updatedData = updateChartData(MockCandlestickChartData);
+      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
+      counter += 1;
+    }
+    sseEventId += 1;
+  } else {
+    res.write('retry: 3000\n');
+    const elementsToUpdate = chartActionList.filter((el) => el === SSE_EVENT_TYPES.UPDATE);
+    const elementsToCreate = chartActionList.filter((el) => el === SSE_EVENT_TYPES.CREATE);
+    chartActionList = [];
+
+    elementsToUpdate.forEach(() => {
+      const updatedData = updateChartData(MockCandlestickIntradayData);
+      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
+      sseEventId += 1;
+    });
+
+    elementsToCreate.forEach(() => {
+      const createdData = createChartData(MockCandlestickIntradayData);
+      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
+      sseEventId += 1;
+    });
+  }
+
+  res.send();
+});
+
+/** ****************************************
  * SSE Events Mock
- */
+ **************************************** */
 
 server.post('/financial-demo', (req, res) => {
   const payload = req.body;
@@ -122,13 +215,6 @@ server.get('/financial-demo', (req, res) => {
   console.log('Got financial elements!');
   send(() => res.jsonp(SSE_DEMO_DATA));
 });
-
-const buildSSEEvent = (res, type, data) => {
-  res.write(`id: ${sseEventId}\n`);
-  res.write(`event:${type}\n`);
-  res.write(`data: ${JSON.stringify(data)}`);
-  res.write('\n\n');
-};
 
 server.get('/sse-events', (req, res) => {
   res.writeHead(200, {
@@ -160,9 +246,9 @@ server.get('/sse-events', (req, res) => {
     }
     sseEventId += 1;
   } else {
-    const elementsToUpdate = actionList.filter(el => el === SSE_EVENT_TYPES.UPDATE);
-    const elementsToCreate = actionList.filter(el => el === SSE_EVENT_TYPES.CREATE);
-    const elementsToRemove = actionList.filter(el => el === SSE_EVENT_TYPES.REMOVE);
+    const elementsToUpdate = actionList.filter((el) => el === SSE_EVENT_TYPES.UPDATE);
+    const elementsToCreate = actionList.filter((el) => el === SSE_EVENT_TYPES.CREATE);
+    const elementsToRemove = actionList.filter((el) => el === SSE_EVENT_TYPES.REMOVE);
     actionList = [];
 
     elementsToUpdate.forEach(() => {
@@ -192,6 +278,7 @@ server.get('/sse-events', (req, res) => {
 
   res.send();
 });
+
 
 server.listen(9999, () => {
   console.log('JSON Server is running');
