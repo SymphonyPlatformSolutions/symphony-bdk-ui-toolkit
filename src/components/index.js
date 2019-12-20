@@ -83,3 +83,6 @@ export {
 export {
   default as LineChart,
 } from './financial/charts/lines';
+export {
+  default as DiscontinousCandlestickChart,
+} from './financial/charts/discontinous-candlestick';

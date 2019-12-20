@@ -334,10 +334,10 @@ const SSEEventsSample = ({
 
 const ThemedSample = withTheme(SSEEventsSample);
 
-storiesOf('Helpers', module)
+storiesOf('Helpers/SSE', module)
   .addDecorator(withKnobs)
   .add(
-    'SSE Events',
+    'Table Events',
     () => (
       <StoryWrapper p={15}>
         <Text isTitle size="small">

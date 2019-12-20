@@ -12,6 +12,7 @@ import {
 import { withTheme } from 'styled-components';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { darken } from 'polished';
+import { last } from 'react-stockcharts/lib/utils';
 import { buildDateFormat, buildNumberFormat } from '../helpers';
 import ChartContainer from '../base-chart';
 import { LineChartLegend } from '../components/line-legend';
@@ -46,10 +47,16 @@ const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
 const LineChart = ({
   loading, data, theme,
   hasTooltip, hasZoom, tickSizeY,
-  lineColors, yAxisLabel, margin, ...rest
+  lineColors, yAxisLabel, yPadding, margin, ...rest
 }) => {
-  const yExtents = useCallback((d) => d.prices.reduce((acc, curr) => {
-    acc.push(curr.close);
+  const yExtents = useCallback((d) => d.prices.reduce((acc, curr, index) => {
+    let value = curr.close;
+    if (index === 0) {
+      value += yPadding.top;
+    } else if (index === d.prices.length - 1) {
+      value -= yPadding.bottom;
+    }
+    acc.push(value);
     return acc;
   }, []));
   zoomConfig.panEvent = hasZoom;
@@ -57,10 +64,19 @@ const LineChart = ({
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
   const textColor = theme.mode === THEME_TYPES.DARK ? theme.colors.oldprimary_100 : darken(0.7, theme.colors.oldprimary_100);
 
+  const xAccessor = useCallback((d) => (d ? d.date : {}));
+
+  const xExtends = [
+    xAccessor(last(data)),
+    xAccessor(data[data.length]),
+  ];
+
   return (
     <ChartContainer
       loading={loading}
       data={data}
+      xAccessor={xAccessor}
+      xExtends={xExtends}
       margin={margin}
       hasZoom={zoomConfig}
       tooltipContent={tooltipConfig}
@@ -167,24 +183,29 @@ const LineChart = ({
   );
 };
 
-// LineChart.defaultProps = {
-//   loading: false,
-//   hasTooltip: false,
-//   hasZoom: false,
-//   yAxisLabel: null,
-// };
-//
-// LineChart.propTypes = {
-//   data: PropTypes.array.isRequired,
-//   children: PropTypes.node.isRequired,
-//   theme: PropTypes.object.isRequired,
-//   tickSizeX: PropTypes.number.isRequired,
-//   tickSizeY: PropTypes.number.isRequired,
-//   lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
-//   hasTooltip: PropTypes.bool,
-//   hasZoom: PropTypes.bool,
-//   loading: PropTypes.bool,
-//   yAxisLabel: PropTypes.string,
-// };
+LineChart.defaultProps = {
+  loading: false,
+  hasTooltip: false,
+  hasZoom: false,
+  yAxisLabel: null,
+  yPadding: { top: 1, bottom: 1 },
+};
+
+LineChart.propTypes = {
+  data: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
+  theme: PropTypes.object.isRequired,
+  tickSizeX: PropTypes.number.isRequired,
+  tickSizeY: PropTypes.number.isRequired,
+  lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  yPadding: PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
+  hasTooltip: PropTypes.bool,
+  hasZoom: PropTypes.bool,
+  loading: PropTypes.bool,
+  yAxisLabel: PropTypes.string,
+};
 
 export default withTheme(LineChart);

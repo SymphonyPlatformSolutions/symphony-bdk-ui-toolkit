@@ -1,5 +1,6 @@
 // Use this file to generated the fake data.
 const Faker = require('faker');
+const { timeParse, timeFormat } = require('d3-time-format');
 
 let lastUpdatedEntries = [];
 
@@ -69,10 +70,10 @@ const generateSSEDemoData = (size = 10) => {
         link: null,
       };
 
-    let bidSize = null,
-      bidPrice = null,
-      askPrice = null,
-      askSize = null;
+    let bidSize = null;
+    let bidPrice = null;
+    let askPrice = null;
+    let askSize = null;
 
     if (type === OPERATION_TYPES[1]) {
       if (Faker.random.boolean()) {
@@ -117,8 +118,8 @@ const RandomlyUpdateSSEDemoData = (data, forceUpdate = false) => {
 
   for (let i = 0; i < numberOfUpdatedEntries;) {
     const index = Faker.random.number(tmpArr.length - 1);
-    const updatedLastCycle = lastUpdatedEntries.findIndex(el => el.id === tmpArr[index].id);
-    const updatedChosenCycle = updatedChosen.findIndex(el => el.id === tmpArr[index].id);
+    const updatedLastCycle = lastUpdatedEntries.findIndex((el) => el.id === tmpArr[index].id);
+    const updatedChosenCycle = updatedChosen.findIndex((el) => el.id === tmpArr[index].id);
 
     if ((updatedLastCycle === -1 && updatedChosenCycle === -1) || forceUpdate) {
       updatedChosen.push(
@@ -147,7 +148,7 @@ const RandomlyUpdateSSEDemoData = (data, forceUpdate = false) => {
   });
 
   updatedChosen.forEach((entry) => {
-    const index = data.findIndex(elem => elem.id === entry.id);
+    const index = data.findIndex((elem) => elem.id === entry.id);
     data[index] = entry;
   });
 
@@ -170,9 +171,53 @@ const RandomlyCreateSSEDemoData = (data) => {
   return created;
 };
 
+const parseDateTime = timeParse('%Y-%m-%d');
+const formatTime = timeFormat('%Y-%m-%d');
+
+
+const createChartData = (data, bias) => {
+  const lastElement = data[data.length - 1];
+  const lastTime = parseDateTime(lastElement.date);
+  const newTime = lastTime.setHours(lastTime.getHours() + 24);
+
+  const value = (0.5) * Faker.random.number({ min: 1, max: 3, precision: 1 });
+  lastElement.open = lastElement.close + (value * bias);
+
+  const newEntry = {
+    id: Faker.finance.account(),
+    date: formatTime(newTime),
+    close: lastElement.open,
+    high: lastElement.open,
+    low: lastElement.open,
+    open: lastElement.open,
+    volume: 0,
+  };
+
+  data.push(newEntry);
+  return newEntry;
+};
+
+
+const updateChartData = (data, bias) => {
+  const entryToBeUpdated = data[data.length - 1];
+
+  const value = (0.05) * Faker.random.number({ min: 1, max: 3, precision: 1 });
+  entryToBeUpdated.close += (value * bias);
+
+  if (entryToBeUpdated.close < entryToBeUpdated.low) {
+    entryToBeUpdated.low = entryToBeUpdated.close;
+  } else if (entryToBeUpdated.close > entryToBeUpdated.high) {
+    entryToBeUpdated.high = entryToBeUpdated.close;
+  }
+
+  return entryToBeUpdated;
+};
+
 module.exports = {
   generateSSEDemoData,
   RandomlyUpdateSSEDemoData,
   DeleteSSEDemoData,
   RandomlyCreateSSEDemoData,
+  createChartData,
+  updateChartData,
 };

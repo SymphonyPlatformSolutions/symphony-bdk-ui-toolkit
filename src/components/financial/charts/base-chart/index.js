@@ -9,7 +9,6 @@ import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import { scaleTime } from 'd3-scale';
 import { ChartCanvas } from 'react-stockcharts';
-import { last } from 'react-stockcharts/lib/utils';
 import {
   CrossHairCursor,
 } from 'react-stockcharts/lib/coordinates';
@@ -24,17 +23,13 @@ const ChartBuilder = withTheme(({
   theme, data, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
-  hasZoom, margin, hasOHLCTooltip, shownWindow,
+  hasZoom, margin, hasOHLCTooltip,
+  displayXAccessor, xScale, xAccessor, xExtents,
+  xPadding, yPadding,
   title, fontFamily, children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
-  const xAccessor = useCallback((d) => d.date);
-
-  const xExtends = [
-    xAccessor(last(data)),
-    xAccessor(data[data.length - shownWindow]),
-  ];
 
   const resetZoom = useCallback(() => {
     setSuffix(suffix + 1);
@@ -66,6 +61,7 @@ const ChartBuilder = withTheme(({
 
   return (
     <ChartCanvas
+      padding={xPadding}
       ref={CanvasRef}
       ratio={ratio}
       height={height}
@@ -75,12 +71,13 @@ const ChartBuilder = withTheme(({
       seriesName={`MSFT_${suffix}`}
       data={data}
       xAccessor={xAccessor}
-      xScale={scaleTime()}
-      xExtents={xExtends}
+      xScale={xScale}
+      xExtents={xExtents}
+      displayXAccessor={displayXAccessor}
       mouseMoveEvent={mouseMoveEvent}
       panEvent={hasZoom.panEvent}
       zoomEvent={hasZoom.enabled}
-      clam={clampType}
+      clamp={clampType}
     >
       {children({
         width,
@@ -91,6 +88,11 @@ const ChartBuilder = withTheme(({
         zoomEnabled: hasZoom.enabled,
         hasEdgeIndicator,
         resetZoom,
+        displayXAccessor,
+        xScale,
+        xAccessor,
+        xExtents,
+        yPadding,
         fontFamily,
         hasOHLCTooltip,
       })}
@@ -105,10 +107,13 @@ const ChartBuilder = withTheme(({
           fontSize={14}
         />
       )}
-      {hasCrossHair &&
+      {hasCrossHair
+      && (
       <CrossHairCursor
         stroke={theme.colors.secondary_400}
-        opacity={0.8} /> }
+        opacity={0.8}
+      />
+      ) }
       {title && (
       <Label
         x={(width - margin.left - margin.right) / 2}
@@ -142,8 +147,17 @@ ChartBuilder.defaultProps = {
     top: 30,
     bottom: 30,
   },
+  xPadding: {
+    left: 0,
+    right: 0,
+  },
+  yPadding: {
+    top: 0,
+    bottom: 0,
+  },
   title: null,
-  shownWindow: 100,
+  displayXAccessor: null,
+  xScale: scaleTime(),
   fontFamily: '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif',
 };
 
@@ -170,9 +184,20 @@ ChartBuilder.propTypes = {
     top: PropTypes.number,
     bottom: PropTypes.number,
   }),
-  shownWindow: PropTypes.number,
   title: PropTypes.string,
   fontFamily: PropTypes.string,
+  xPadding: PropTypes.shape({
+    left: PropTypes.number,
+    right: PropTypes.number,
+  }),
+  yPadding: PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
+  displayXAccessor: PropTypes.object,
+  xScale: PropTypes.object,
+  xAccessor: PropTypes.object,
+  xExtents: PropTypes.array,
 };
 
 const ChartContainer = ({

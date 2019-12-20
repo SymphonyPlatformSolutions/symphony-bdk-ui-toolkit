@@ -101,24 +101,23 @@ const Example = withTheme(({ theme }) => {
 
   return (
       <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
-        <LineChart
-          datePars
+         <LineChart
           loading={isDataLoading}
           data={results}
           lineColors={lineColors}
           tickSizeX={5}
           tickSizeY={10}
-          hasGrid={true}
-          hasCrossHair={true}
-          hasTooltip={true}
+          hasGrid={hasGrid}
+          hasCrossHair={hasCrossHair}
+          hasTooltip={hasTooltip}
           margin={{
             left: 1,
             right: 50,
             top: 30,
             bottom: 30,
           }}
-          title="My Custom Chart!"
-          hasZoom={true}
+          title="US Treasury Yield"
+          hasZoom={hasZoom}
         />
       </Box>
   );
@@ -133,6 +132,7 @@ LineChart.defaultProps = {
   hasTooltip: false,
   hasZoom: false,
   yAxisLabel: null,
+  yPadding: { top: 1, bottom: 1 },
 };
 
 LineChart.propTypes = {
@@ -142,6 +142,10 @@ LineChart.propTypes = {
   tickSizeX: PropTypes.number.isRequired,
   tickSizeY: PropTypes.number.isRequired,
   lineColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  yPadding: PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,
