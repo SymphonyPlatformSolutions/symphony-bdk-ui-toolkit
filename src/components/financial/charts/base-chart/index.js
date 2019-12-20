@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { scaleTime } from 'd3-scale';
 import { ChartCanvas } from 'react-stockcharts';
 import { last } from 'react-stockcharts/lib/utils';
 import {
@@ -25,7 +24,7 @@ const ChartBuilder = withTheme(({
   theme, results, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
-  hasZoom, margin, hasOHLCTooltip, shownWindow,
+  hasZoom, margin, hasOHLCTooltip,
   title, fontFamily, children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
@@ -76,6 +75,8 @@ const ChartBuilder = withTheme(({
 
   return (
     <ChartCanvas
+      padding={{left: 0, right: 100}}
+      clip={false}
       ref={CanvasRef}
       ratio={ratio}
       height={height}
@@ -84,13 +85,14 @@ const ChartBuilder = withTheme(({
       type="svg"
       seriesName={`MSFT_${suffix}`}
       data={data}
+      xExtents={xExtents}
       xScale={xScale}
       xAccessor={xAccessor}
       displayXAccessor={displayXAccessor}
       mouseMoveEvent={mouseMoveEvent}
       panEvent={hasZoom.panEvent}
       zoomEvent={hasZoom.enabled}
-      clam={clampType}
+      clamp={clampType}
     >
       {children({
         width,

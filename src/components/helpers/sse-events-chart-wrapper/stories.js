@@ -73,9 +73,11 @@ const SSEEventsIntradayChartSample = ({
   const ChartRenderer = useMemo(() => (
     <CandleStickChart
       tickSizeX={5}
+      tickSizeY={10}
       loading={loading}
       data={data}
-      title="XBTUSD"
+      title="MSFT"
+      chartMarginY={2}
       hasGrid
       hasCrossHair
       hasOHLCTooltip
