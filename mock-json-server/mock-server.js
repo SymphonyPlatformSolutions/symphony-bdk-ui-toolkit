@@ -86,7 +86,7 @@ const SSE_DEMO_DATA = generateSSEDemoData();
 let actionList = [];
 let autoPilot = false;
 
-let chartActionList = [];
+const chartActionList = [];
 let chartAutoPilot = false;
 
 
@@ -137,6 +137,7 @@ const buildSSEEvent = (res, type, data) => {
 
 let interval = 4;
 let counter = 0;
+let bias = 1;
 
 server.get('/intraday-chart-demo', (req, res) => {
   console.log('Got Intraday Chart elements!');
@@ -145,15 +146,16 @@ server.get('/intraday-chart-demo', (req, res) => {
 
 server.post('/intraday-chart-demo', (req, res) => {
   const payload = req.body;
+
   if (payload.action === SSE_EVENT_TYPES.AUTO) {
     counter = 0;
     chartAutoPilot = payload.isAuto;
   } else {
     chartActionList.push(payload.action);
   }
+
   res.sendStatus(200);
 });
-createChartData(MockCandlestickIntradayData)
 
 server.get('/sse-chart-events', (req, res) => {
   res.writeHead(200, {
@@ -161,39 +163,56 @@ server.get('/sse-chart-events', (req, res) => {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
   });
+  const lastEntry = MockCandlestickChartData[MockCandlestickChartData.length - 1];
+  bias = lastEntry.close >= 66 ? -1 : lastEntry.close <= 58 ? 1 : bias;
+
   if (chartAutoPilot) {
-    res.write('retry: 500\n');
-    console.log('AKJSFJHAJ');
+    res.write('retry: 1000\n');
     if (counter === interval) {
-      const createdData = createChartData(MockCandlestickIntradayData);
-      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
+      const createdData = createChartData(MockCandlestickIntradayData, bias);
+      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, [createdData]);
       counter = 0;
-      interval = 10+Math.floor(Math.random() * 5);
+      interval = 10 + Math.floor(Math.random() * 5);
+      bias *= -1;
     } else {
-      const updatedData = updateChartData(MockCandlestickChartData);
-      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
+      const updatedData = updateChartData(MockCandlestickChartData, bias);
+      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, [updatedData]);
       counter += 1;
     }
     sseEventId += 1;
   } else {
-    res.write('retry: 3000\n');
+    res.write('retry: 1000\n');
+
     const elementsToUpdate = chartActionList.filter((el) => el === SSE_EVENT_TYPES.UPDATE);
     const elementsToCreate = chartActionList.filter((el) => el === SSE_EVENT_TYPES.CREATE);
-    chartActionList = [];
+    let i = 0;
+    let arr = [];
 
-    elementsToUpdate.forEach(() => {
-      const updatedData = updateChartData(MockCandlestickIntradayData);
-      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, updatedData);
-      sseEventId += 1;
-    });
+    if (elementsToCreate.length) {
+      elementsToCreate.forEach((entry) => {
+        const index = chartActionList.findIndex((obj) => obj === entry);
+        chartActionList.splice(index, 1);
+      });
 
-    elementsToCreate.forEach(() => {
-      const createdData = createChartData(MockCandlestickIntradayData);
-      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, createdData);
+      for (i = 0; i < elementsToCreate.length; i++) {
+        arr.push(createChartData(MockCandlestickIntradayData, bias));
+      }
+
       sseEventId += 1;
-    });
+      buildSSEEvent(res, SSE_EVENT_TYPES.CREATE, arr);
+    } else if (elementsToUpdate) {
+      elementsToUpdate.forEach((entry) => {
+        const index = chartActionList.findIndex((obj) => obj === entry);
+        chartActionList.splice(index, 1);
+      });
+      for (i = 0; i < elementsToUpdate.length; i++) {
+        arr.push(updateChartData(MockCandlestickIntradayData, bias));
+      }
+      sseEventId += 1;
+      buildSSEEvent(res, SSE_EVENT_TYPES.UPDATE, arr);
+      arr = [];
+    }
   }
-
   res.send();
 });
 

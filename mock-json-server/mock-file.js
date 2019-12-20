@@ -175,38 +175,34 @@ const parseDateTime = timeParse('%Y-%m-%d');
 const formatTime = timeFormat('%Y-%m-%d');
 
 
-const createChartData = (data) => {
+const createChartData = (data, bias) => {
   const lastElement = data[data.length - 1];
   const lastTime = parseDateTime(lastElement.date);
   const newTime = lastTime.setHours(lastTime.getHours() + 24);
-  lastElement.close = Faker.random.boolean() ? lastElement.high : lastElement.low;
+
+  const value = (0.5) * Faker.random.number({ min: 1, max: 3, precision: 1 });
+  lastElement.open = lastElement.close + (value * bias);
 
   const newEntry = {
     id: Faker.finance.account(),
     date: formatTime(newTime),
-    close: lastElement.close + Faker.random.number({ min: 0, max: 1, precision: 0.01 }),
-    high: lastElement.close + Faker.random.number({ min: 0, max: 1, precision: 0.01 }),
-    low: lastElement.close + Faker.random.number({ min: 0, max: 1, precision: 0.01 }),
-    open: lastElement.close + Faker.random.number({ min: 0, max: 1, precision: 0.01 }),
+    close: lastElement.open,
+    high: lastElement.open,
+    low: lastElement.open,
+    open: lastElement.open,
     volume: 0,
   };
 
   data.push(newEntry);
-  return [newEntry];
+  return newEntry;
 };
 
 
-const updateChartData = (data) => {
+const updateChartData = (data, bias) => {
   const entryToBeUpdated = data[data.length - 1];
-  let value = 0;
 
-  while (value === 0) {
-    value = Faker.random.boolean()
-      ? +Faker.random.number({ min: 0, max: 0.10, precision: 0.05 })
-      : -Faker.random.number({ min: 0, max: 0.10, precision: 0.05 });
-  }
-
-  entryToBeUpdated.close += value;
+  const value = (0.05) * Faker.random.number({ min: 1, max: 3, precision: 1 });
+  entryToBeUpdated.close += (value * bias);
 
   if (entryToBeUpdated.close < entryToBeUpdated.low) {
     entryToBeUpdated.low = entryToBeUpdated.close;
@@ -214,7 +210,7 @@ const updateChartData = (data) => {
     entryToBeUpdated.high = entryToBeUpdated.close;
   }
 
-  return [entryToBeUpdated];
+  return entryToBeUpdated;
 };
 
 module.exports = {

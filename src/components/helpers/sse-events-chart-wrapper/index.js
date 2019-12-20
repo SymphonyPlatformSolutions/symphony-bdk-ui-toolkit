@@ -24,7 +24,6 @@ const SSEventsContentWrapper = ({
 }) => {
   const updatedState = useSSE(SSE_EVENT_TYPES.UPDATE);
   const createdState = useSSE(SSE_EVENT_TYPES.CREATE);
-  const removedState = useSSE(SSE_EVENT_TYPES.REMOVE);
 
   const [latestData, setLatestData] = useState(fetchData);
   const [latestMessageType, setMessageType] = useState(null);
@@ -37,23 +36,17 @@ const SSEventsContentWrapper = ({
   useEffect(() => {
     setMessageType(SSE_EVENT_TYPES.UPDATE);
     if (isStateValid(updatedState, latestData)) {
-      let hasUpdated = false;
-      latestData.forEach((elem) => {
-        elem.updated = false;
-      });
-
       updatedState.data.forEach((element) => {
         const index = latestData.findIndex((value) => element.id === value.id);
+        element.date = timeParser(element.date);
+        element.updated = true;
         if (index !== -1) {
-          element.date = timeParser(element.date);
-          element.updated = true;
           latestData[index] = element;
-          hasUpdated = true;
+        } else {
+          latestData.push(element);
         }
       });
-      if (hasUpdated) {
-        setLatestData(Array.from(latestData));
-      }
+      setLatestData(Array.from(latestData));
     }
   }, [updatedState]);
 
