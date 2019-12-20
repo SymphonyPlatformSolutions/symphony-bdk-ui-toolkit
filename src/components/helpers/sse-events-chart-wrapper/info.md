@@ -62,39 +62,114 @@ Here's the usage:
 
 ```jsx
 
-const autoFetchConfig = {
-  endpoint: 'https://reqres.in/api/users',
-  params: { page: 2 },
-  handleData: results => results.data,
+import DiscontinousCandleStick from '../../financial/charts/discontinous-candlestick';
+
+const timeParser = buildDateParser('%Y-%m-%d');
+
+const parseData = (parse) => (d) => {
+  d.date = parse(d.date);
+  d.open = +d.open;
+  d.high = +d.high;
+  d.low = +d.low;
+  d.close = +d.close;
+  d.volume = +d.volume;
+  return d;
 };
 
-const sseEndpoint = http://localhost:9999/sse-events;
+const autoFetchConfig = {
+  endpoint: 'http://localhost:9999/intraday-chart-demo',
+  params: {},
+  handleData: (results) => results.map(parseData(timeParser)),
+};
 
-const SSEEventsSample = ({
-  data, loading, error, refreshData,
+const postDemo = async (action, isAuto = null, interval = null) => {
+  try {
+    await RestClient.post(
+      'http://localhost:9999/intraday-chart-demo',
+      { action, isAuto, interval },
+      {},
+      false,
+    );
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const SSEEventsIntradayChartSample = ({
+  data, loading, refreshData, eventType,
 }) => {
-  const [tableData, setTableData] = useState([]);
+  const [chartData, setChartData] = useState(data);
+  const [autoPilot, setAutoPilot] = useState(false);
 
   useEffect(() => {
-    setTableData(data);  
-  }, [data])
-  
-  return (
-    <Table
-      data={tableData}
-      loading={loading}
-      columns={SSE_EVENTS_TABLE_COLUMNS}
-    />
-  )
-};
+    if (eventType === 'fetch') {
+      setChartData(data);
+    } else {
+      setChartData(Array.from(data));
+    }
+  }, [data]);
 
-...
-<SSEventsListWrapper
-  sseEndpoint={sshEndpoint}
-  autoFetchConfig={autoFetchConfig}
->
-  <SSEEventsSample />
-</SSEventsListWrapper>
+  const handleAutoPilot = async (toggled) => {
+    setAutoPilot(toggled);
+    postDemo('auto', toggled);
+  };
+
+  const onRefresh = () => {
+    setChartData([]);
+    refreshData();
+  };
+
+  const ChartRenderer = useMemo(() => (
+    <DiscontinousCandleStick
+      tickSizeX={5}
+      tickSizeY={10}
+      loading={loading}
+      data={data}
+      title="MFST"
+      hasGrid
+      hasOHLCTooltip
+      hasTooltip
+      hasZoom
+      hasEdgeIndicator
+    />
+  ), [chartData, loading]);
+
+
+  return useMemo(() => (
+    <Box type="flat" vertical>
+      <Box>
+        <MessageBox type="info">{`Last Message: ${eventType}`}</MessageBox>
+      </Box>
+      <Box align="end">
+        <Card>
+          <Box horizontal justify="space-between" align="center">
+            <Box>
+              <Button onClick={onRefresh}>Refresh</Button>
+            </Box>
+            <Box horizontal justify="flex-end" align="center">
+              <Button disabled={autoPilot} onClick={() => postDemo('create')}>
+                    Add data
+              </Button>
+              <Button
+                disabled={autoPilot || !chartData.length}
+                onClick={() => postDemo('update')}
+              >
+                    Update Data
+              </Button>
+              <Box vertical align="center" type="flat">
+                <Text>Auto Pilot</Text>
+                <Toggle toggled={autoPilot} onChange={handleAutoPilot} />
+              </Box>
+            </Box>
+          </Box>
+        </Card>
+      </Box>
+      <div style={{ width: '100%', height: 'calc(100vh - 150px)' }}>
+        {ChartRenderer}
+      </div>
+    </Box>
+  ), [autoPilot, chartData, loading]);
+};
 ```
 
 ## Proptypes

@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
+import { scaleTime } from 'd3-scale';
 import { ChartCanvas } from 'react-stockcharts';
-import { last } from 'react-stockcharts/lib/utils';
 import {
   CrossHairCursor,
 } from 'react-stockcharts/lib/coordinates';
@@ -16,34 +16,20 @@ import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { darken } from 'polished';
-import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
 import Loader from '../../../base/loader';
 import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
 const ChartBuilder = withTheme(({
-  theme, results, width, height, ratio = 1,
+  theme, data, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
   hasZoom, margin, hasOHLCTooltip,
+  displayXAccessor, xScale, xAccessor, xExtents,
+  xPadding, yPadding,
   title, fontFamily, children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
-
-  	const xScaleProvider = discontinuousTimeScaleProvider
-    .inputDateAccessor((d) => d.date);
-  const {
-    data,
-    xScale,
-    xAccessor,
-    displayXAccessor,
-  } = xScaleProvider(results);
-
-
-  const start = xAccessor(last(data));
-  const end = xAccessor(data[Math.max(0, data.length - 150)]);
-  const xExtents = [start, end];
-
 
   const resetZoom = useCallback(() => {
     setSuffix(suffix + 1);
@@ -75,8 +61,7 @@ const ChartBuilder = withTheme(({
 
   return (
     <ChartCanvas
-      padding={{left: 0, right: 100}}
-      clip={false}
+      padding={xPadding}
       ref={CanvasRef}
       ratio={ratio}
       height={height}
@@ -85,9 +70,9 @@ const ChartBuilder = withTheme(({
       type="svg"
       seriesName={`MSFT_${suffix}`}
       data={data}
-      xExtents={xExtents}
-      xScale={xScale}
       xAccessor={xAccessor}
+      xScale={xScale}
+      xExtents={xExtents}
       displayXAccessor={displayXAccessor}
       mouseMoveEvent={mouseMoveEvent}
       panEvent={hasZoom.panEvent}
@@ -103,6 +88,11 @@ const ChartBuilder = withTheme(({
         zoomEnabled: hasZoom.enabled,
         hasEdgeIndicator,
         resetZoom,
+        displayXAccessor,
+        xScale,
+        xAccessor,
+        xExtents,
+        yPadding,
         fontFamily,
         hasOHLCTooltip,
       })}
@@ -157,8 +147,17 @@ ChartBuilder.defaultProps = {
     top: 30,
     bottom: 30,
   },
+  xPadding: {
+    left: 0,
+    right: 0,
+  },
+  yPadding: {
+    top: 0,
+    bottom: 0,
+  },
   title: null,
-  shownWindow: 100,
+  displayXAccessor: null,
+  xScale: scaleTime(),
   fontFamily: '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif',
 };
 
@@ -185,9 +184,20 @@ ChartBuilder.propTypes = {
     top: PropTypes.number,
     bottom: PropTypes.number,
   }),
-  shownWindow: PropTypes.number,
   title: PropTypes.string,
   fontFamily: PropTypes.string,
+  xPadding: PropTypes.shape({
+    left: PropTypes.number,
+    right: PropTypes.number,
+  }),
+  yPadding: PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
+  displayXAccessor: PropTypes.object,
+  xScale: PropTypes.object,
+  xAccessor: PropTypes.object,
+  xExtents: PropTypes.array,
 };
 
 const ChartContainer = ({
@@ -225,7 +235,7 @@ const ChartContainer = ({
     }
     return (
       <ChartBuilder
-        results={data}
+        data={data}
         width={size.width}
         height={size.height}
         margin={margin}

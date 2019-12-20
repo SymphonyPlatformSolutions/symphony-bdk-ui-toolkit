@@ -1,4 +1,4 @@
-# Candlestick Chart
+# Discontinous Candlestick Chart
 
 Its a auto resizable component that renders financial charts. Its based on
 https://github.com/rrag/react-stockcharts.
@@ -76,8 +76,9 @@ const Example = () => {
 
   return (
     <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
-        <CandleStickChart
-          tickSizeX={10}
+       <DiscontinousCandlestick
+          tickSizeX={5}
+          tickSizeY={10}
           loading={isDataLoading}
           data={results}
           title="MFST"
@@ -88,20 +89,23 @@ const Example = () => {
           hasZoom={hasZoom}
           hasEdgeIndicator={hasEdgeIndicator}
         />
-      </Box>
+    </Box>
   );
 };
 ```
 
 ##Proptypes
 ```jsx
-CandleStickChart.defaultProps = {
+DiscontinousCandleStick.defaultProps = {
   loading: false,
   hasTooltip: false,
   hasZoom: false,
+  yPadding: { top: 2, bottom: 2 },
+  xPadding: { right: 50, left: 0 },
+  shownWindow: 150,
 };
 
-CandleStickChart.propTypes = {
+DiscontinousCandleStick.propTypes = {
   data: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
@@ -110,5 +114,8 @@ CandleStickChart.propTypes = {
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,
+  shownWindow: PropTypes.number,
+  yPadding: PropTypes.object,
+  xPadding: PropTypes.object,
 };
 ```

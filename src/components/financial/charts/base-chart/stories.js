@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { withTheme } from 'styled-components';
@@ -6,7 +6,7 @@ import { withTheme } from 'styled-components';
 import { Chart } from 'react-stockcharts';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import { AreaSeries } from 'react-stockcharts/lib/series';
-import { createVerticalLinearGradient, hexToRGBA } from 'react-stockcharts/lib/utils';
+import { createVerticalLinearGradient, hexToRGBA, last } from 'react-stockcharts/lib/utils';
 import { curveMonotoneX } from 'd3-shape';
 import Box from '../../../base/box';
 import Text from '../../../base/text';
@@ -18,7 +18,7 @@ import BaseChart from './index';
 
 const timeParser = buildDateParser();
 
-const parseData = parse => (d) => {
+const parseData = (parse) => (d) => {
   d.date = parse(d.date);
   d.open = +d.open;
   d.high = +d.high;
@@ -32,7 +32,7 @@ const parseData = parse => (d) => {
 
 const autoFetchConfig = {
   endpoint: 'http://localhost:9999/chart-candlestick-data',
-  handleData: results => results.map(parseData(timeParser)),
+  handleData: (results) => results.map(parseData(timeParser)),
 };
 
 const canvasGradient = createVerticalLinearGradient([
@@ -44,12 +44,21 @@ const canvasGradient = createVerticalLinearGradient([
 
 const Example = withTheme(({ theme }) => {
   const {
-    results, isDataLoading, error, refreshData,
+    results, isDataLoading,
   } = useAutoFetch(autoFetchConfig);
+
+  const xAccessor = useCallback((d) => (d ? d.date : {}));
+
+  const xExtends = [
+    xAccessor(last(results)),
+    xAccessor(results[results.length]),
+  ];
   return (
     <Box type="flat" vertical>
       <Box style={{ width: '100%', height: 'calc(100vh - 240px)' }}>
         <BaseChart
+          xAccessor={xAccessor}
+          xExtends={xExtends}
           loading={isDataLoading}
           data={results}
           margin={{
@@ -62,7 +71,7 @@ const Example = withTheme(({ theme }) => {
           title="Area chart"
         >
           {() => (
-            <Chart id={0} yExtents={d => d.close}>
+            <Chart id={0} yExtents={(d) => d.close}>
               	<defs>
                 <linearGradient id="MyGradient" x1="0" y1="100%" x2="0" y2="0%">
                   <stop offset="0%" stopColor="#b5d0ff" stopOpacity={0.2} />
@@ -86,7 +95,7 @@ const Example = withTheme(({ theme }) => {
                 tickStroke={theme.colors.grey_900}
               />
               <AreaSeries
-                yAccessor={d => d.close}
+                yAccessor={(d) => d.close}
                 fill="url(#MyGradient)"
                 strokeWidth={2}
                 interpolation={curveMonotoneX}

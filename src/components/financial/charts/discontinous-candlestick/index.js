@@ -3,11 +3,10 @@ import React, {
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { utcDay } from 'd3-time';
 import { Chart } from 'react-stockcharts';
 import { CandlestickSeries } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
-import { last, timeIntervalBarWidth } from 'react-stockcharts/lib/utils';
+import { last } from 'react-stockcharts/lib/utils';
 import {
   EdgeIndicator,
 } from 'react-stockcharts/lib/coordinates';
@@ -16,6 +15,8 @@ import {
 } from 'react-stockcharts/lib/tooltip';
 
 import { darken } from 'polished';
+import { format } from 'd3-format';
+import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
 import ChartContainer from '../base-chart';
 import { tooltipContentHelper } from '../helpers';
 import { ChartZoom } from '../components/chart-zoom';
@@ -26,12 +27,13 @@ const zoomConfig = {
   enabled: true,
 };
 
-const CandleStickChart = ({
-  loading, data, theme,
-  tickSizeX, tickSizeY, hasTooltip,
+const DiscontinousCandleStick = ({
+  loading, data: results, theme,
+  tickSizeX, yPadding, xPadding,
+  tickSizeY, hasTooltip, shownWindow,
   hasZoom, ...rest
 }) => {
-  const yExtents = useCallback((d) => [d.high, d.low]);
+  const yExtents = useCallback((d) => [(d.high + yPadding.top), (d.low - yPadding.bottom)]);
   zoomConfig.panEvent = hasZoom;
   zoomConfig.enabled = hasZoom;
   const tooltipConfig = hasTooltip ? tooltipContentHelper : null;
@@ -41,19 +43,30 @@ const CandleStickChart = ({
   const candleBarFill = (d) => (d.close > d.open ? theme.colors.success_500 : theme.colors.misc_20);
   const textColor = theme.mode === THEME_TYPES.DARK ? theme.colors.oldprimary_100 : darken(0.7, theme.colors.oldprimary_100);
 
-  const xAccessor = useCallback((d) => (d ? d.date : {}));
+  const xScaleProvider = discontinuousTimeScaleProvider
+    .inputDateAccessor((d) => d.date);
+  const {
+    data,
+    xScale,
+    xAccessor,
+    displayXAccessor,
+  } = xScaleProvider(results);
 
-  const xExtends = [
-    xAccessor(last(data)),
-    xAccessor(data[data.length]),
-  ];
+
+  const start = xAccessor(last(data));
+  const end = xAccessor(data[Math.max(0, data.length - shownWindow)]);
+  const xExtents = [start, end];
+
 
   return (
     <ChartContainer
       loading={loading}
-      data={data}
+      xPadding={xPadding}
+      xScale={xScale}
       xAccessor={xAccessor}
-      xExtends={xExtends}
+      xExtents={xExtents}
+      displayXAccessor={displayXAccessor}
+      data={data}
       hasZoom={zoomConfig}
       tooltipContent={tooltipConfig}
       {...rest}
@@ -65,7 +78,8 @@ const CandleStickChart = ({
           <XAxis
             axisAt="bottom"
             orient="bottom"
-            ticks={tickSizeX}
+            showTicks={false}
+            ticks={360}
             fontFamily={fontFamily}
             stroke={theme.colors.primary_050}
             zoomEnabled={zoomEnabled}
@@ -76,17 +90,20 @@ const CandleStickChart = ({
             axisAt="top"
             orient="top"
             fontFamily={fontFamily}
-            ticks={tickSizeX}
+            ticks={12}
             stroke={theme.colors.primary_050}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.xGrid}
             tickStroke={textColor}
           />
           <YAxis
+            outerTickSize={10}
             axisAt="right"
             orient="right"
+            tickFormat={format('.4s')}
+            displayFormat={format('.4f')}
             fontFamily={fontFamily}
-            ticks={tickSizeY}
+            ticks={20}
             stroke={theme.colors.primary_050}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.yGrid}
@@ -97,7 +114,7 @@ const CandleStickChart = ({
             axisAt="left"
             orient="left"
             fontFamily={fontFamily}
-            ticks={tickSizeY}
+            ticks={10}
             stroke={theme.colors.primary_050}
             zoomEnabled={zoomEnabled}
             {...gridCoordinates.yGrid}
@@ -122,6 +139,7 @@ const CandleStickChart = ({
             lineOpacity={0.8}
             rectWidth={55}
             arrowWidth={12}
+            displayFormat={format('.2f')}
             yAccessor={(d) => d.close}
             fill={(d) => (d.close > d.open ? edgeColorGreen : edgeColorRed)}
           />
@@ -130,7 +148,6 @@ const CandleStickChart = ({
             opacity={1}
             wickStroke={theme.colors.grey_600}
             fill={candleBarFill}
-            width={timeIntervalBarWidth(utcDay)}
           />
           { zoomEnabled && <ChartZoom onReset={resetZoom} /> }
         </Chart>
@@ -139,13 +156,16 @@ const CandleStickChart = ({
   );
 };
 
-CandleStickChart.defaultProps = {
+DiscontinousCandleStick.defaultProps = {
   loading: false,
   hasTooltip: false,
   hasZoom: false,
+  yPadding: { top: 2, bottom: 2 },
+  xPadding: { right: 50, left: 0 },
+  shownWindow: 150,
 };
 
-CandleStickChart.propTypes = {
+DiscontinousCandleStick.propTypes = {
   data: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
@@ -154,6 +174,9 @@ CandleStickChart.propTypes = {
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,
+  shownWindow: PropTypes.number,
+  yPadding: PropTypes.object,
+  xPadding: PropTypes.object,
 };
 
-export default withTheme(CandleStickChart);
+export default withTheme(DiscontinousCandleStick);

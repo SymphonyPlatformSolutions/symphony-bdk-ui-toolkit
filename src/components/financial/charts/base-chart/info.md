@@ -91,14 +91,24 @@ const canvasGradient = createVerticalLinearGradient([
 ]);
 
 
+
 const Example = withTheme(({ theme }) => {
   const {
-    results, isDataLoading, error, refreshData,
+    results, isDataLoading,
   } = useAutoFetch(autoFetchConfig);
+
+  const xAccessor = useCallback((d) => (d ? d.date : {}));
+
+  const xExtends = [
+    xAccessor(last(results)),
+    xAccessor(results[results.length]),
+  ];
   return (
     <Box type="flat" vertical>
       <Box style={{ width: '100%', height: 'calc(100vh - 240px)' }}>
         <BaseChart
+          xAccessor={xAccessor}
+          xExtends={xExtends}
           loading={isDataLoading}
           data={results}
           margin={{
@@ -111,7 +121,7 @@ const Example = withTheme(({ theme }) => {
           title="Area chart"
         >
           {() => (
-            <Chart id={0} yExtents={d => d.close}>
+            <Chart id={0} yExtents={(d) => d.close}>
               	<defs>
                 <linearGradient id="MyGradient" x1="0" y1="100%" x2="0" y2="0%">
                   <stop offset="0%" stopColor="#b5d0ff" stopOpacity={0.2} />
@@ -135,7 +145,7 @@ const Example = withTheme(({ theme }) => {
                 tickStroke={theme.colors.grey_900}
               />
               <AreaSeries
-                yAccessor={d => d.close}
+                yAccessor={(d) => d.close}
                 fill="url(#MyGradient)"
                 strokeWidth={2}
                 interpolation={curveMonotoneX}
@@ -180,28 +190,6 @@ ChartContainer.propTypes = {
   }),
 };
 
-ChartBuilder.defaultProps = {
-  hasGrid: false,
-  hasCrossHair: false,
-  hasEdgeIndicator: false,
-  tooltipContent: null,
-  mouseMoveEvent: true,
-  hasOHLCTooltip: false,
-  hasZoom: {
-    panEvent: false,
-    enabled: false,
-  },
-  clampType: null,
-  margin: {
-    left: 0,
-    right: 50,
-    top: 30,
-    bottom: 30,
-  },
-  title: null,
-  shownWindow: 100,
-};
-
 ChartBuilder.propTypes = {
   hasGrid: PropTypes.bool,
   hasCrossHair: PropTypes.bool,
@@ -225,7 +213,51 @@ ChartBuilder.propTypes = {
     top: PropTypes.number,
     bottom: PropTypes.number,
   }),
-  shownWindow: PropTypes.number,
   title: PropTypes.string,
+  fontFamily: PropTypes.string,
+  xPadding: PropTypes.shape({
+    left: PropTypes.number,
+    right: PropTypes.number,
+  }),
+  yPadding: PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+  }),
+  displayXAccessor: PropTypes.object,
+  xScale: PropTypes.object,
+  xAccessor: PropTypes.object,
+  xExtents: PropTypes.array,
+};
+
+ChartBuilder.defaultProps = {
+  hasGrid: false,
+  hasCrossHair: false,
+  hasEdgeIndicator: false,
+  tooltipContent: null,
+  mouseMoveEvent: true,
+  hasOHLCTooltip: false,
+  hasZoom: {
+    panEvent: false,
+    enabled: false,
+  },
+  clampType: null,
+  margin: {
+    left: 0,
+    right: 50,
+    top: 30,
+    bottom: 30,
+  },
+  xPadding: {
+    left: 0,
+    right: 0,
+  },
+  yPadding: {
+    top: 0,
+    bottom: 0,
+  },
+  title: null,
+  displayXAccessor: null,
+  xScale: scaleTime(),
+  fontFamily: '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif',
 };
 ```

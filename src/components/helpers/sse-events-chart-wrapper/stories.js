@@ -13,7 +13,7 @@ import Button from '../../base/button';
 import MessageBox from '../../base/message-box';
 import Toggle from '../../base/toggle';
 import { buildDateParser } from '../../financial/charts/helpers';
-import CandleStickChart from '../../financial/charts/candlestick';
+import DiscontinousCandleStick from '../../financial/charts/discontinous-candlestick';
 
 const timeParser = buildDateParser('%Y-%m-%d');
 
@@ -71,15 +71,13 @@ const SSEEventsIntradayChartSample = ({
   };
 
   const ChartRenderer = useMemo(() => (
-    <CandleStickChart
+    <DiscontinousCandleStick
       tickSizeX={5}
       tickSizeY={10}
       loading={loading}
       data={data}
-      title="MSFT"
-      chartMarginY={2}
+      title="MFST"
       hasGrid
-      hasCrossHair
       hasOHLCTooltip
       hasTooltip
       hasZoom
@@ -117,7 +115,7 @@ const SSEEventsIntradayChartSample = ({
           </Box>
         </Card>
       </Box>
-      <div style={{ width: '100%', height: 'calc(100vh - 150px)' }}>
+      <div style={{ width: '100%', height: 'calc(100vh - 320px)' }}>
         {ChartRenderer}
       </div>
     </Box>
@@ -126,12 +124,33 @@ const SSEEventsIntradayChartSample = ({
 
 const ThemedSample = withTheme(SSEEventsIntradayChartSample);
 
-storiesOf('Helpers', module)
+storiesOf('Helpers/SSE', module)
   .addDecorator(withKnobs)
   .add(
-    'SSE Intraday Chart',
+    'Intraday Chart',
     () => (
-      <Box style={{ margin: '20px 20px 0px 20px' }}>
+      <StoryWrapper style={{ margin: '20px 10px 0px 20px' }}>
+        <Text isTitle size="small">
+          SSEventsListWrapper with table
+        </Text>
+        <Box p={15}>
+          <Box vertical>
+            <Text>
+              This is an example implementation of SSEEventsListWrapper within a
+              Chart
+            </Text>
+            <ul>
+              <Text>
+                <li>The mock server sends an event every 1 second when auto is toggled</li>
+              </Text>
+              <Text>
+                <li>
+                  The events are always coming in this order: update times N, n being a number between 10 and 15 , create, restart.
+                </li>
+              </Text>
+            </ul>
+          </Box>
+        </Box>
         <SSEventsListWrapper
           style={{ height: '100%' }}
           sseEndpoint="http://localhost:9999/sse-chart-events"
@@ -139,7 +158,7 @@ storiesOf('Helpers', module)
         >
           <ThemedSample />
         </SSEventsListWrapper>
-      </Box>
+      </StoryWrapper>
     ),
     {
       notes: {
