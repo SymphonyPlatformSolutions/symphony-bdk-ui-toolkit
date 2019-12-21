@@ -15,66 +15,247 @@ const CONTENT = [{
   title: 'Full decision tree',
   subtitle: 'A big example of navigation',
   suboptions: [
-    { label: 'Thing 1', value: 'thing1' },
+    { label: 'Cripto Currencies', value: 'thing1' },
     {
-      label: 'Thing 2',
-      sublabel: 'With more stuff',
+      label: 'Fixed Income',
+      sublabel: 'Bonds, GICs, MBS',
       value: 'thing2',
       options: [
         {
-          label: 'Thing 1-A',
-          sublabel: '(Has sublevels)',
+          label: 'Dealer A',
+          sublabel: 'Offices in Europe and Americas',
           options: [
-            { label: 'Thing 2-A', value: 'thing2a' },
-            { label: 'Thing 2-B', value: 'thing2b' },
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'London office', value: 'alpha1',
+              }, {
+                label: 'Frankfurt office', value: 'alpha2',
+              }, {
+                label: 'Paris office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'New York office', value: 'alpha1',
+              }, {
+                label: 'San Francisco office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
           ],
           value: 'thing1a',
         },
         {
-          label: 'Thing 1-B',
-          sublabel: '(Has sublevels)',
-          value: 'thing1b',
+          label: 'Dealer B',
+          sublabel: 'Offices in Europe and Americas',
           options: [
             {
-              title: 'Sub Card Alpha',
+              title: 'Europe',
               suboptions: [{
-                label: 'Alpha 1', value: 'alpha1',
+                label: 'Warsaw office', value: 'alpha1',
               }, {
-                label: 'Alpha 2', value: 'alpha2', sublabel: 'Some more info on alpha 2',
+                label: 'Lisbon office', value: 'alpha2',
               }, {
-                label: 'Alpha 3', value: 'alpha3',
+                label: 'Gibraltar office', value: 'alpha3',
               }],
             },
             {
+              title: 'Americas',
               suboptions: [{
-                label: 'Beta 1', value: 'beta1',
-              }],
-            },
-            {
-              subtitle: 'Sub Card Gamma, but only as subtitle',
-              suboptions: [{
-                label: 'Gamma 1', value: 'gamma1',
+                label: 'Sao Paulo office', value: 'alpha1',
               }, {
-                label: 'Gamma 2', value: 'gamma2',
+                label: 'Lima office', value: 'alpha2', sublabel: 'subsidiary',
               }, {
-                label: 'Gamma 3', value: 'gamma3',
-              },
-              {
-                label: 'Gamma 4', value: 'gamma4',
               }],
             },
           ],
+          value: 'thing1a',
         },
-        { label: 'Thing 1-C', value: 'thing1c' },
       ],
     }],
 },
 {
   title: 'More content',
   suboptions: [
-    { label: 'Thing A', value: 'thinga' },
-    { label: 'Thing B', value: 'thingb' },
-    { label: 'Thing C', value: 'thingc' },
+    {
+      label: 'Cash Equivalent',
+      sublabel: 'Commercial papers, etc..',
+      value: 'thing2',
+      options: [
+        {
+          label: 'Dealer C',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'London office', value: 'alpha1',
+              }, {
+                label: 'Frankfurt office', value: 'alpha2',
+              }, {
+                label: 'Paris office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'New York office', value: 'alpha1',
+              }, {
+                label: 'San Francisco office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+        {
+          label: 'Dealer D',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'Warsaw office', value: 'alpha1',
+              }, {
+                label: 'Lisbon office', value: 'alpha2',
+              }, {
+                label: 'Gibraltar office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'Sao Paulo office', value: 'alpha1',
+              }, {
+                label: 'Lima office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+      ],
+    },
+    {
+      label: 'Equity',
+      sublabel: '',
+      value: 'thing2',
+      options: [
+        {
+          label: 'Dealer C',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'London office', value: 'alpha1',
+              }, {
+                label: 'Frankfurt office', value: 'alpha2',
+              }, {
+                label: 'Paris office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'New York office', value: 'alpha1',
+              }, {
+                label: 'San Francisco office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+        {
+          label: 'Dealer D',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'Warsaw office', value: 'alpha1',
+              }, {
+                label: 'Lisbon office', value: 'alpha2',
+              }, {
+                label: 'Gibraltar office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'Sao Paulo office', value: 'alpha1',
+              }, {
+                label: 'Lima office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+      ],
+    },
+    {
+      label: 'Commodities',
+      sublabel: 'Steel, Silver, Gold, etc.',
+      value: 'thing2',
+      options: [
+        {
+          label: 'Dealer C',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'London office', value: 'alpha1',
+              }, {
+                label: 'Frankfurt office', value: 'alpha2',
+              }, {
+                label: 'Paris office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'New York office', value: 'alpha1',
+              }, {
+                label: 'San Francisco office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+        {
+          label: 'Dealer D',
+          sublabel: 'Offices in Europe and Americas',
+          options: [
+            {
+              title: 'Europe',
+              suboptions: [{
+                label: 'Warsaw office', value: 'alpha1',
+              }, {
+                label: 'Lisbon office', value: 'alpha2',
+              }, {
+                label: 'Gibraltar office', value: 'alpha3',
+              }],
+            },
+            {
+              title: 'Americas',
+              suboptions: [{
+                label: 'Sao Paulo office', value: 'alpha1',
+              }, {
+                label: 'Lima office', value: 'alpha2', sublabel: 'subsidiary',
+              }, {
+              }],
+            },
+          ],
+          value: 'thing1a',
+        },
+      ],
+    },
   ],
 }, {
   title: 'Empty content',
