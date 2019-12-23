@@ -177,8 +177,7 @@ const Table = (props) => {
               itemCount={rows.length}
               itemId={item => item.id}
               itemSize={35}
-              width={() => (tableRef.current ? tableRef.current.offsetWidth : 10)
-              }
+              width={() => (tableRef.current ? tableRef.current.offsetWidth : 10)}
             >
               {RenderRow}
             </List>

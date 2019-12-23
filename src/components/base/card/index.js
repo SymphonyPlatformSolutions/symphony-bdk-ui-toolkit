@@ -20,8 +20,7 @@ export default function Card(props) {
           </Box>
           <Separator />
         </CardTitle>
-        )
-        }
+        )}
         <Box type="flat">{children}</Box>
       </Box>
     </BaseCard>

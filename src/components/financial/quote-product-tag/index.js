@@ -48,8 +48,7 @@ const QuoteProductTag = (props) => {
   return (
     <BaseQuoteTag horizontal type="flat" align="center" tagState={tagState} {...rest}>
       {sideInfo
-        && <SideInfo tagState={tagState}>{sideInfo.toUpperCase()}</SideInfo>
-      }
+        && <SideInfo tagState={tagState}>{sideInfo.toUpperCase()}</SideInfo>}
       <MainInfo tagState={tagState}>{mainInfo.toUpperCase()}</MainInfo>
       {renderIcon()}
     </BaseQuoteTag>

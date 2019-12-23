@@ -26,7 +26,7 @@ export const FavoriteButton = (props) => {
   const { onClick, isFavorite, size } = props;
   return (
     <ButtonBG onClick={onClick} size={size}>
-      {isFavorite ? <StarIcon style={{transform: 'translate(0px, -0.4px)'}} /> : <EmptyStarIcon />}
+      {isFavorite ? <StarIcon style={{ transform: 'translate(0px, -0.4px)' }} /> : <EmptyStarIcon />}
     </ButtonBG>
   );
 };

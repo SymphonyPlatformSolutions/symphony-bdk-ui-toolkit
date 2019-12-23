@@ -41,8 +41,7 @@ const MessageBox = (props) => {
             <CloseButton />
           </MessageBoxButton>
         </MessageBoxButtonContainer>
-        )
-        }
+        )}
     </StyledMessageBox>
   );
 };
