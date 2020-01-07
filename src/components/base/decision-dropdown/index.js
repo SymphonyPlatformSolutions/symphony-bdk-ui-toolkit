@@ -37,6 +37,7 @@ const DecisionDropdown = (props) => {
     tooltip,
     ...rest
   } = props;
+
   const [labeledData, setLabeledData] = useState(null);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');

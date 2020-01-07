@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { StyledInput, Container } from '../input-field/theme';
+import { StyledInput, Container, InputWrapper } from '../input-field/theme';
+
 
 export const BorderContainer = styled.div`
   display: flex;
@@ -23,23 +24,27 @@ export const SearchWrapper = styled.div`
   width: 100%;
   position: relative;
 `;
+export const FloatWrapper = styled.div`
+  position: relative;
+`;
 export const MenuContainer = styled.div`
   padding: 7px 0 5px 0;
   margin: -3px -1px -1px -1px;
   background-color: ${({ theme }) => theme.colors.mainbackground};
   border: 1px solid ${({ theme }) => (theme.colors.oldprimary_400)};
-  top: ${({ isLarge }) => (isLarge ? '47px' : '40px')};
   border-top: none;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   width: inherit;
   position: absolute;
-
+  z-index: 8;
 `;
 export const MenuItem = styled.div`
   padding: 4px 8px 4px 12px;
   transition: all 0.2s;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
   background-color: ${({ theme, lightFocused }) => (lightFocused ? theme.colors.grey_200 : 'transparent')};
 `;
 export const ShrinkingBorder = styled.span`
@@ -56,4 +61,12 @@ export const SearchIconWrapper = styled.div`
   position: absolute;
   top: ${({ isLarge }) => (isLarge ? '12px' : '9px')};
   left: ${({ isLarge }) => (isLarge ? '10px' : '12px')};
+`;
+export const SearchInputWrapper = styled(InputWrapper)`
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
+  position: ${({ hide }) => (hide ? 'absolute' : undefined)};
+  height:${({ hide }) => (hide ? 0 : undefined)}; 
+  width: ${({ hide }) => (hide ? 0 : 'auto')};
+  z-index: ${({ hide }) => (hide ? -1 : 2)};
+  transition: ${({ hide }) => (hide ? 'none' : undefined)};
 `;

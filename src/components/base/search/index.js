@@ -3,7 +3,7 @@ import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Text from '../text';
 import Box from '../box';
-import { InputWrapper } from '../input-field/theme';
+
 import {
   StyledSearch,
   SearchWrapper,
@@ -13,7 +13,10 @@ import {
   ShrinkingBorder,
   BorderContainer,
   SearchIconWrapper,
+  FloatWrapper,
+  SearchInputWrapper,
 } from './theme';
+import { MultiValueList, MultiSelectTick } from './components';
 import {
   SearchIcon,
 } from '../icons';
@@ -22,12 +25,34 @@ const INIT_DEBOUNCE = 500;
 const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
+const ESC_KEY = 27;
+const BACKSPACE_KEY = 8;
+
+const chooseItem = (item, isMulti, value, isStack) => {
+  if (!isMulti) {
+    return item;
+  }
+  if (!value) {
+    return [item];
+  }
+  const chosenIndex = value.findIndex(l => l.value === item.value);
+
+  if (chosenIndex >= 0) {
+    if (isStack && chosenIndex !== value.length - 1) {
+      return value;
+    }
+    return value.filter(l => l.value !== item.value);
+  }
+
+  return [...value, item];
+};
 
 const Menu = (props) => {
   const {
+    isStack,
     data,
     dataLabel,
-    itemChooseHandler,
+    clickHandler,
     theme,
     noResultsMessage,
     lightFocus,
@@ -35,7 +60,11 @@ const Menu = (props) => {
     CustomMenuItem,
     typedTerm,
     isLarge,
+    isMulti,
+    value,
   } = props;
+
+  const hasValues = !!(isMulti && value && value.length);
 
   if (!data.length) {
     return (
@@ -51,21 +80,28 @@ const Menu = (props) => {
 
   return (
     <MenuContainer theme={theme} isLarge={isLarge}>
-      {data.map((el, index) => (
-        <MenuItem
-          theme={theme}
-          key={el[dataLabel]}
-          onMouseDown={() => itemChooseHandler(el)}
-          onMouseEnter={() => setLightFocus(index)}
-          lightFocused={index === lightFocus}
-        >
-          {CustomMenuItem ? (
-            <CustomMenuItem item={el} typedTerm={typedTerm} />
-          ) : (
-            <Text>{el[dataLabel]}</Text>
-          )}
-        </MenuItem>
-      ))}
+      <FloatWrapper>
+        {data.map((el, index) => (
+          <MenuItem
+            theme={theme}
+            key={el[dataLabel]}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              clickHandler(el);
+            }}
+            onMouseEnter={() => setLightFocus(index)}
+            lightFocused={index === lightFocus}
+          >
+            {CustomMenuItem ? (
+              <CustomMenuItem item={el} typedTerm={typedTerm} />
+            ) : (
+              <Text>{el[dataLabel]}</Text>
+            )}
+            {hasValues && !!value.find(vEl => vEl.value === el.value)
+            && (<MultiSelectTick />)}
+          </MenuItem>
+        ))}
+      </FloatWrapper>
     </MenuContainer>
   );
 };
@@ -84,6 +120,9 @@ const Search = (props) => {
     itemChooseHandler,
     CustomMenuItem,
     disabled,
+    isMulti,
+    value,
+    isStack,
     ...rest
   } = props;
 
@@ -94,10 +133,10 @@ const Search = (props) => {
   const inputRef = useRef(null);
 
   const executeSearch = () => {
-    if (memo[typedTerm]) {
-      resultHandler(memo[typedTerm]);
-      return;
-    }
+    // if (memo[typedTerm]) {
+    //   resultHandler(memo[typedTerm]);
+    //   return;
+    // }
     searchHandler(typedTerm);
   };
 
@@ -120,9 +159,15 @@ const Search = (props) => {
   }, [typedTerm]);
 
   const choseItem = (item) => {
-    setTypedTerm(item[dataLabel]);
-    itemChooseHandler(item);
-    inputRef.current.blur();
+    itemChooseHandler(chooseItem(item, isMulti, value, isStack));
+    if (!isMulti) {
+      setTypedTerm(item[dataLabel]);
+      inputRef.current.blur();
+    }
+  };
+
+  const removeHandler = (removeValue) => {
+    itemChooseHandler(value.filter(l => l.value !== removeValue));
   };
 
   const specialKeyHandler = ({ keyCode }) => {
@@ -133,6 +178,13 @@ const Search = (props) => {
         return setLightFocus(
           lightFocus - 1 < 0 ? data.length - 1 : lightFocus - 1,
         );
+      case ESC_KEY:
+        return inputRef.current.blur();
+      case BACKSPACE_KEY:
+        if (!typedTerm && value && value.length) {
+          return choseItem(value[value.length - 1]);
+        }
+        return null;
       case ENTER_KEY:
         return choseItem(data[lightFocus]);
       default:
@@ -140,11 +192,25 @@ const Search = (props) => {
     }
   };
 
+  const hideInput = isMulti && value && value.length && !isMenuOpen;
+
   return (
     <SearchWrapper>
       <BorderContainer>
-        <SearchContainer disabled={disabled}>
-          <InputWrapper>
+        <SearchContainer
+          disabled={disabled}
+          onClick={() => hideInput && inputRef.current.focus()}
+        >
+          {isMulti && (
+          <MultiValueList
+            isStack={isStack}
+            value={value}
+            removeHandler={removeHandler}
+          />
+          )}
+          <SearchInputWrapper
+            hide={hideInput}
+          >
             <SearchIconWrapper isLarge={size === 'large'}>
               <SearchIcon size={size === 'large' ? 18 : 14} />
             </SearchIconWrapper>
@@ -155,7 +221,7 @@ const Search = (props) => {
               onKeyDown={specialKeyHandler}
               size={size}
               value={typedTerm}
-              onChange={({ target: { value } }) => setTypedTerm(value)}
+              onChange={({ target }) => setTypedTerm(target.value)}
               onFocus={() => {
                 setLightFocus(-1);
                 setisMenuOpen(true);
@@ -166,12 +232,14 @@ const Search = (props) => {
               }}
               placeholder={placeholder}
             />
-          </InputWrapper>
+          </SearchInputWrapper>
         </SearchContainer>
         <ShrinkingBorder theme={theme} show={isMenuOpen} />
       </BorderContainer>
       {isMenuOpen && (
         <Menu
+          isStack={isStack}
+          isMulti={isMulti}
           isLarge={size === 'large'}
           typedTerm={typedTerm}
           CustomMenuItem={CustomMenuItem}
@@ -179,9 +247,10 @@ const Search = (props) => {
           setLightFocus={setLightFocus}
           theme={theme}
           data={data}
-          itemChooseHandler={choseItem}
+          clickHandler={choseItem}
           dataLabel={dataLabel}
           noResultsMessage={noResultsMessage}
+          value={value}
         />
       )}
     </SearchWrapper>
@@ -213,6 +282,9 @@ Search.propTypes = {
   noResultsMessage: PropTypes.string,
   itemChooseHandler: PropTypes.func.isRequired,
   CustomMenuItem: PropTypes.node,
+  disabled: PropTypes.bool,
+  isMulti: PropTypes.bool,
+  isStack: PropTypes.bool,
 };
 Search.defaultProps = {
   debouncePeriod: INIT_DEBOUNCE,
@@ -222,6 +294,9 @@ Search.defaultProps = {
   data: [],
   size: 'regular',
   CustomMenuItem: null,
+  disabled: false,
+  isMulti: false,
+  isStack: false,
 };
 
 export default withTheme(Search);
