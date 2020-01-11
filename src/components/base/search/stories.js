@@ -110,53 +110,6 @@ const DATA = {
   ],
 };
 
-const MultiAsync = () => {
-  const [currentData, setCurrentData] = useState([]);
-  const [value, setValue] = useState(null);
-
-  const searchFunc = async (searchTerm) => setTimeout(() => {
-    let currentLayer;
-    if (!value || !value.length) {
-      currentLayer = DATA.init;
-    } else {
-      // Omg this is so ugly
-      currentLayer = DATA[value[value.length - 1].value];
-    }
-    console.log(value, currentLayer);
-    setCurrentData(currentLayer.filter((el) => {
-      if (el.label.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return true;
-      }
-      return false;
-    }));
-  }, 500);
-
-  useEffect(() => {
-    if (value && value.length) {
-      console.log('Getting layer!!', value);
-      searchFunc();
-    }
-  }, [value]);
-
-  return (
-    <Box type="secondary">
-      <Box horizontal style={{ width: '500px' }}>
-        <Search
-          isMulti
-          isStack
-          placeholder="Layered Search..."
-          data={currentData}
-          searchHandler={searchFunc}
-          dataLabel="value"
-          resultHandler={setCurrentData}
-          value={value}
-          itemChooseHandler={setValue}
-        />
-      </Box>
-    </Box>
-  );
-};
-
 const DuckDuckGoWrapper = () => {
   const [currentdata, setCurrentdata] = useState([]);
   const [chosenResult, setChosenResult] = useState(null);
@@ -251,10 +204,6 @@ storiesOf('Base', module)
           <Box vertical space={20}>
             <Text isTitle>Search with custom Menu Item</Text>
             <SearchWrapper CustomMenuItem={CustomItem} />
-          </Box>
-          <Box vertical space={20}>
-            <Text isTitle>Layered Async Search</Text>
-            <MultiAsync />
           </Box>
           <Box vertical space={20}>
             <Text isTitle>Async Search</Text>

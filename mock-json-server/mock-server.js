@@ -298,6 +298,35 @@ server.get('/sse-events', (req, res) => {
   res.send();
 });
 
+const FOOD = [
+  { label: 'Burger', value: 'burger' },
+  { label: 'Salad', value: 'salad' },
+];
+
+const INGREDIENTS = {
+  burger: [
+    { label: 'Meat', value: 'meat' },
+    { label: 'Bun', value: 'bun' },
+    { label: 'Cheese', value: 'cheese' },
+    { label: 'Onions', value: 'onions' },
+  ],
+  salad: [
+    { label: 'Lettuce', value: 'lettuce' },
+    { label: 'Tomatoes', value: 'tomatoes' },
+    { label: 'Heart of Palm', value: 'heart-of-palm' },
+  ],
+};
+
+server.get('/food', (req, res) => {
+  console.log('Got food!');
+  send(() => res.jsonp(FOOD));
+});
+
+server.get('/ingredients', (req, res) => {
+  const { query, food } = req.query;
+
+  send(() => res.jsonp(INGREDIENTS[food]));
+});
 
 server.listen(9999, () => {
   console.log('JSON Server is running');

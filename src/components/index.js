@@ -73,6 +73,7 @@ export { default as Search } from './base/search';
 export { default as Toggle } from './base/toggle';
 export { default as DecisionDropdown } from './base/decision-dropdown';
 export { default as ProgressIndicator } from './base/progress-indicator';
+export { default as MultiValueInput } from './base/multi-value-input';
 export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,
