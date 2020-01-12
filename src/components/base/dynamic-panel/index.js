@@ -1,146 +1,120 @@
 import React, {
-  useState, useEffect, createRef, useRef,
+  useState, useEffect,
 } from 'react';
-import PropTypes from 'prop-types';
-import styled, { withTheme, createGlobalStyle } from 'styled-components';
+import PropTypes, { arrayOf } from 'prop-types';
+import { withTheme } from 'styled-components';
 import Tabs from 'react-responsive-tabs';
-import Box from '../box';
-import Text from '../text';
 import {
-  getHeaderIndicatorBackground,
-  getTabHeaderIndicatorMarginLeft,
-  getHeaderIndicatorWidth,
-  getTabItemAlign,
+  StyledPanelContainer,
+  RRTStyleOverride,
+  TabHeader,
+  CloseIconWrapper,
 } from './theme';
 
 import 'react-responsive-tabs/styles.css';
-import { THEME_TYPES } from '../../..';
+import { CloseIcon } from '../../..';
+import { NoOp } from '../../../utils/helpers';
+import Text from '../text';
 
-
-const StyledPanel = styled.div`
-  border-radius: 2px;
-  padding: 1px;
-  border: ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT ? `1px solid ${theme.colors.grey_100}` : '1px solid #494b4e7a')}
-  width: 100%;
-  box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.DARK ? '' : '0 1px 16px -6px rgba(0, 0, 0, 0.1)')};
-`;
-
-const GlobalStyle = createGlobalStyle`
-  .RRT__removable {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .RRT__removable-icon {
-    background-color: #f0f0f0;
-    color: #868686;
-    margin-left: 10px;
-        font-size: larger;
-    font-weight: 900;
-    font-size: unset;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center
-  }
-  .RRT__tab {
-    border-color: transparent;
-    margin-right: 1px;
-    margin-top: 1px;
-    border: none !important;
-  }
-  .RRT__tab--selected {
-    margin-right: inherit;
-    margin-top: inherit;
-  }
-  .RRT__tab--selected .RRT__removable-icon {
-    position: relative !important;
-    font-size: 1rem !important;
-    right: 0 !important;
-    top: 0 !important;
-    margin-left: 0px;
-  }
-  .RRT__showmore {
-    background: #eee;
-    border: none !important;
-    margin-top: 1px !important;
-    cursor: pointer;
-    z-index: 1;
-    white-space: nowrap;
-    position: relative;
-    margin-left: 0px !important;
-  }
-  :focus {
-    outline: 0;
-  }
-  .RRT__panel {
-    border: none !important;
-  }
-`;
-const presidents = [{ name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }, { name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }, { name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }, { name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }, { name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }, { name: 'George Washington', biography: '...' }, { name: 'Theodore Roosevelt', biography: '...' }];
-
-function getTabs() {
-  return presidents.map((president, index) => ({
-    title: president.name,
-    getContent: () => president.biography,
-    /* Optional parameters */
-    key: index,
-  }));
-}
-
-
-const DynamicPanel = ({
+const DynamicTabs = ({
   theme,
+  tabs,
   isResponsive,
+  onRemove,
   responsiveBreakpoint,
   wrapTabs,
-  selectedTabRemovableOnly,
   showSelectedTabIndicator,
   tabsRemovable,
   activeTab,
 }) => {
+  const [currentTabs, setCurrentTabs] = useState(tabs);
+  const [currentTab, setCurrentTab] = useState(0);
+  const [mkey, setMkey] = useState(0);
+
   const handleChange = (e) => {
-    console.log('change');
-    console.log(e);
+    setCurrentTab(e);
+  };
+  const handleRemove = (tabIndex) => (e) => {
+    e.stopPropagation();
+    onRemove(tabIndex);
   };
 
-  const handleRemove = (e) => {
-    console.log('remove');
-    console.log(e);
-  };
+  useEffect(() => {
+    const newTabs = tabs.map((tab) => {
+      let decoratedTitle;
+      if (tabsRemovable) {
+        decoratedTitle = (
+          <TabHeader>
+            <Text>{tab.title}</Text>
+            <CloseIconWrapper onClick={handleRemove(tab.key)}>
+              <CloseIcon size={10} color={theme.colors.secondary_300} />
+            </CloseIconWrapper>
+          </TabHeader>
+        );
+      } else {
+        decoratedTitle = (
+          <Text>
+            {tab.title}
+          </Text>
+        );
+      }
+      tab.title = decoratedTitle;
+      return tab;
+    });
+
+    setCurrentTabs(newTabs);
+    setMkey(mkey + 1);
+  }, [tabs, activeTab]);
+
+  useEffect(() => {
+    setCurrentTab(activeTab);
+    setMkey(mkey + 1);
+  }, [activeTab]);
+
   return (
-    <StyledPanel>
-      <GlobalStyle />
+    <StyledPanelContainer key={mkey} theme={theme}>
+      <RRTStyleOverride theme={theme} />
       <Tabs
+        items={currentTabs}
         onChange={handleChange}
-        onRemove={handleRemove}
-        items={getTabs()}
         showMore={wrapTabs}
-        allowRemove={tabsRemovable}
         transformWidth={responsiveBreakpoint}
         transform={isResponsive}
-        removeActiveOnly={selectedTabRemovableOnly}
         showInkBar={showSelectedTabIndicator}
-        selectedTabKey={activeTab}
+        selectedTabKey={currentTab}
       />
-    </StyledPanel>
+    </StyledPanelContainer>
   );
 };
 
-// DynamicPanel.propTypes = {
-//   activeTab: PropTypes.number,
-//   children: PropTypes.node.isRequired,
-// };
-//
-DynamicPanel.defaultProps = {
+DynamicTabs.propTypes = {
+  theme: PropTypes.shape({
+    mode: PropTypes.string,
+    colors: arrayOf(PropTypes.object),
+  }).isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.oneOf([PropTypes.node, PropTypes.string]),
+    getContent: PropTypes.func,
+    key: PropTypes.number,
+  })),
+  onRemove: PropTypes.func,
+  isResponsive: PropTypes.bool,
+  responsiveBreakpoint: PropTypes.number,
+  wrapTabs: PropTypes.bool,
+  showSelectedTabIndicator: PropTypes.bool,
+  tabsRemovable: PropTypes.bool,
+  activeTab: PropTypes.number,
+};
+
+DynamicTabs.defaultProps = {
+  tabs: [],
+  onRemove: NoOp,
   isResponsive: false,
-  responsiveBreakpoint: 800,
+  responsiveBreakpoint: 1400,
   wrapTabs: true,
   showSelectedTabIndicator: false,
-  tabsRemovable: true,
-  selectedTabRemovableOnly: false,
+  tabsRemovable: false,
   activeTab: 0,
 };
 
-export default withTheme(DynamicPanel);
+export default withTheme(DynamicTabs);
