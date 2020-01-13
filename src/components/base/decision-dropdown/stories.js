@@ -10,6 +10,7 @@ import Text from '../text';
 import Button from '../button';
 import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
+import QuoteProductTag from '../../financial/quote-product-tag';
 
 const CONTENT = [{
   title: 'Full decision tree',
@@ -289,13 +290,34 @@ const CUSTOM_EMPTY = [{
   suboptions: [],
   CustomEmptyComponent: <CustomEmptyComponent />,
 }];
-
+const CustomItem = ({ children }) => (
+  <QuoteProductTag mainInfo={children} />
+);
+const CustomValue = ({ value: { label } }) => (
+  <div
+    style={{ padding: '4px' }}
+  ><QuoteProductTag mainInfo={label} />
+  </div>
+);
 const SIMPLE_CONTENT = [
   { label: 'Content 1', value: 'content1' },
   { label: 'Content 2', value: 'content2' },
   { label: 'Content 3', value: 'content3' },
   { label: 'Content 4', value: 'content4' },
   { label: 'Content 5', value: 'content5' },
+];
+
+const SIMPLE_CUSTOM_ITEM_CONTENT = [
+  {
+    title: 'Tags',
+    suboptions: [
+      { label: 'Content 1', value: 'content1', CustomItem },
+      { label: 'Content 2', value: 'content2', CustomItem },
+      { label: 'Content 3', value: 'content3', CustomItem },
+      { label: 'Content 4', value: 'content4', CustomItem },
+      { label: 'Content 5', value: 'content5', CustomItem },
+    ],
+  },
 ];
 
 const DropdownHandler = (props) => {
@@ -417,6 +439,20 @@ storiesOf('Base', module)
               <Box style={{ width: '300px' }}>
                 <DropdownHandler hasBackButton data={CONTENT} />
                 <DropdownHandler hasBackButton data={CONTENT} size="large" />
+              </Box>
+            </Box>
+            <Box>
+              <Text isTitle size="small">Custom Item</Text>
+              <Box style={{ width: '300px' }}>
+                <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} CustomValue={CustomValue} />
+                <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} CustomValue={CustomValue} size="large" />
+              </Box>
+            </Box>
+            <Box>
+              <Text isTitle size="small">Custom Item, Multiselect</Text>
+              <Box style={{ width: '300px' }}>
+                <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} isMulti CustomValue={CustomValue} />
+                <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} isMulti CustomValue={CustomValue} size="large" />
               </Box>
             </Box>
           </Box>

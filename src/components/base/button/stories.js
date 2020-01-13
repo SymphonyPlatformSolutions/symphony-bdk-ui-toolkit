@@ -282,23 +282,23 @@ storiesOf('Base', module)
       </Box>
       <Box>
         <Text isTitle>Circular Button</Text>
-          <Box horizontal type="secondary">
-            <Button size="small" type="primary" circular onClick={action('clicked')}>+</Button>
-            <Button size="regular" type="primary" circular onClick={action('clicked')}>+</Button>
-            <Button size="large" type="primary" circular onClick={action('clicked')}>+</Button>
+        <Box horizontal type="secondary">
+          <Button size="small" type="primary" circular onClick={action('clicked')}>+</Button>
+          <Button size="regular" type="primary" circular onClick={action('clicked')}>+</Button>
+          <Button size="large" type="primary" circular onClick={action('clicked')}>+</Button>
 
-            <Button disabled size="small" type="primary" circular onClick={action('clicked')}>+</Button>
-            <Button disabled size="regular" type="primary" circular onClick={action('clicked')}>+</Button>
-            <Button disabled size="large" type="primary" circular onClick={action('clicked')}>+</Button>
+          <Button disabled size="small" type="primary" circular onClick={action('clicked')}>+</Button>
+          <Button disabled size="regular" type="primary" circular onClick={action('clicked')}>+</Button>
+          <Button disabled size="large" type="primary" circular onClick={action('clicked')}>+</Button>
 
-            <Button size="small" fill="outlined" circular onClick={action('clicked')}>+</Button>
-            <Button size="regular" fill="outlined" circular onClick={action('clicked')}>+</Button>
-            <Button size="large" fill="outlined" circular onClick={action('clicked')}>+</Button>
+          <Button size="small" fill="outlined" circular onClick={action('clicked')}>+</Button>
+          <Button size="regular" fill="outlined" circular onClick={action('clicked')}>+</Button>
+          <Button size="large" fill="outlined" circular onClick={action('clicked')}>+</Button>
 
-            <Button disabled size="small" fill="outlined" circular onClick={action('clicked')}>+</Button>
-            <Button disabled size="regular" fill="outlined" circular onClick={action('clicked')}>+</Button>
-            <Button disabled size="large" fill="outlined" circular onClick={action('clicked')}>+</Button>
-          </Box>
+          <Button disabled size="small" fill="outlined" circular onClick={action('clicked')}>+</Button>
+          <Button disabled size="regular" fill="outlined" circular onClick={action('clicked')}>+</Button>
+          <Button disabled size="large" fill="outlined" circular onClick={action('clicked')}>+</Button>
+        </Box>
         <Box>
           <Box horizontal space={20}>
             <Button size="small" type="danger" circular onClick={action('clicked')}>+</Button>

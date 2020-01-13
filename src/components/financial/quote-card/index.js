@@ -101,18 +101,16 @@ const QuoteCard = (props) => {
   );
 
   const openContextMenu = (e) => {
-    const rtlEvent = Object.assign(
-      {},
-      {
-        x: e.x - 180,
-        y: e.y,
-        clientX: e.clientX - 180,
-        clientY: e.clientY,
-        stopPropagation: () => {
-          e.stopPropagation();
-        },
+    const rtlEvent = {
+
+      x: e.x - 180,
+      y: e.y,
+      clientX: e.clientX - 180,
+      clientY: e.clientY,
+      stopPropagation: () => {
+        e.stopPropagation();
       },
-    );
+    };
     contextMenu.show({ id: menuId, event: rtlEvent });
   };
 
