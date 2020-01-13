@@ -87,3 +87,6 @@ export {
 export {
   default as DiscontinousCandlestickChart,
 } from './financial/charts/discontinous-candlestick';
+export {
+  default as DynamicTabs,
+} from './base/dynamic-panel';

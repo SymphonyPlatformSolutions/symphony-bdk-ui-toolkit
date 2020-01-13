@@ -42,7 +42,7 @@ const canvasGradient = createVerticalLinearGradient([
 ]);
 
 
-const Example = withTheme(({ theme }) => {
+export const AreaChartExample = withTheme(({ theme, offset = 240 }) => {
   const {
     results, isDataLoading,
   } = useAutoFetch(autoFetchConfig);
@@ -53,9 +53,10 @@ const Example = withTheme(({ theme }) => {
     xAccessor(last(results)),
     xAccessor(results[results.length]),
   ];
+  const heightOffset = `calc(100vh - ${offset}px)`;
   return (
     <Box type="flat" vertical>
-      <Box style={{ width: '100%', height: 'calc(100vh - 240px)' }}>
+      <Box style={{ width: '100%', height: heightOffset }}>
         <BaseChart
           xAccessor={xAccessor}
           xExtends={xExtends}
@@ -128,7 +129,7 @@ storiesOf('Financial/Charts', module)
           </ul>
         </Box>
         <Box style={{ width: '100%', height: 'calc(100vh - 27a5px)' }}>
-          <Example />
+          <AreaChartExample />
         </Box>
       </Box>
     </StoryWrapper>
