@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import Faker from 'faker';
@@ -10,14 +10,19 @@ import { StoryWrapper } from '../wrappers';
 import Info from './info.md';
 
 const mockData = [];
+let nameValue;
 for (let i = 0; i < 15; i++) {
+  nameValue = Faker.name.firstName();
   mockData.push({
-    label: Faker.name.firstName(),
+    label: nameValue,
+    value: nameValue,
   });
 }
 
-const SearchWrapper = ({ CustomMenuItem }) => {
+const SearchWrapper = ({ CustomMenuItem, isMulti, isStack }) => {
   const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
   const filterFunc = (searchTerm) => {
     setCurrentdata(
       mockData.filter((el) => {
@@ -33,11 +38,14 @@ const SearchWrapper = ({ CustomMenuItem }) => {
     <Box type="secondary">
       <Box horizontal>
         <Search
+          isStack={isStack}
+          value={currentValue}
           data={currentdata}
           searchHandler={filterFunc}
           resultHandler={setCurrentdata}
-          itemChooseHandler={() => {}}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
           CustomMenuItem={CustomMenuItem}
+          isMulti={isMulti}
         />
       </Box>
     </Box>
@@ -59,6 +67,49 @@ const ResultCard = (props) => {
   );
 };
 
+const DATA = {
+  init: [
+    { label: 'Drinks', value: 'drinks' },
+    { label: 'Food', value: 'food' },
+  ],
+  drinks: [
+    { label: 'Juice', value: 'juice' },
+    { label: 'Cocktails', value: 'cocktails' },
+    { label: 'Soda', value: 'soda' },
+  ],
+  juice: [
+    { label: 'Orange', value: 'orange' },
+    { label: 'Apple', value: 'apple' },
+  ],
+  cocktails: [
+    { label: 'Old Fashioned', value: 'old-fashioned' },
+    { label: 'Highball', value: 'highball' },
+    { label: 'Caipirinha', value: 'caipirinha' },
+    { label: 'Sangria', value: 'sangria' },
+  ],
+  soda: [
+    { label: 'Cola', value: 'cola' },
+    { label: 'Cream Soda', value: 'cream-soda' },
+    { label: 'Lemon Seltzer', value: 'lemon' },
+  ],
+  food: [
+    { label: 'Mains', value: 'main' },
+    { label: 'Sweet', value: 'sweet' },
+  ],
+  sweet: [
+    { label: 'Flan', value: 'flan' },
+    { label: 'Parfait', value: 'parfait' },
+    { label: 'Pie Slice', value: 'pie' },
+  ],
+  mains: [
+    { label: 'Steak and Fries', value: 'steak-fries' },
+    { label: 'Burger', value: 'burger' },
+    { label: 'Falafel Wrap', value: 'falafel-wrap' },
+    { label: 'Fried Eggs', value: 'fried-eggs' },
+    { label: 'Sushi', value: 'sushi' },
+  ],
+};
+
 const DuckDuckGoWrapper = () => {
   const [currentdata, setCurrentdata] = useState([]);
   const [chosenResult, setChosenResult] = useState(null);
@@ -67,11 +118,13 @@ const DuckDuckGoWrapper = () => {
       setCurrentdata([]);
       return;
     }
+
     const results = await Axios.get(
       `https://api.duckduckgo.com/?q=${encodeURIComponent(
         searchTerm,
       )}&format=json`,
     );
+
     const STRING_CUT = 50;
     const endResults = results.data.RelatedTopics.map((el) => {
       if (el.Text) {
@@ -135,6 +188,18 @@ storiesOf('Base', module)
           <Box vertical space={20}>
             <Text isTitle>Search</Text>
             <SearchWrapper />
+            <Box vertical space={20}>
+              <Text isTitle>Search</Text>
+              <SearchWrapper />
+            </Box>
+          </Box>
+          <Box vertical space={20}>
+            <Text isTitle>Search Multiselect</Text>
+            <SearchWrapper isMulti />
+            <Box vertical space={20}>
+              <Text isTitle>Search Multiselect</Text>
+              <SearchWrapper isMulti isStack />
+            </Box>
           </Box>
           <Box vertical space={20}>
             <Text isTitle>Search with custom Menu Item</Text>

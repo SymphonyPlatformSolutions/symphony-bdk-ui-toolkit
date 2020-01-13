@@ -16,9 +16,10 @@ export const SearchContainer = styled(Container)`
     border-bottom: 1px solid transparent;
   }
   width: inherit;
+  display: flex;
 `;
 export const StyledSearch = styled(StyledInput)`
-  padding: ${({ size }) => (size === 'large' ? '10px 12px 11px 33px' : '9px 5px 9px 30px')};
+  padding: ${({ size }) => (size === 'large' ? '10px 12px 11px 12px' : '9px 5px 9px 10px')};
 `;
 export const SearchWrapper = styled.div`
   width: 100%;
@@ -66,7 +67,12 @@ export const SearchInputWrapper = styled(InputWrapper)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
   position: ${({ hide }) => (hide ? 'absolute' : undefined)};
   height:${({ hide }) => (hide ? 0 : undefined)}; 
-  width: ${({ hide }) => (hide ? 0 : 'auto')};
+  width: ${({ hide }) => (hide ? 0 : '100%')};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
+`;
+export const LoaderWrapper = styled.div`
+  padding: 14px 0 8px 0;
+  display: flex;
+  justify-content: center;
 `;
