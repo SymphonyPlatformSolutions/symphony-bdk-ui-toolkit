@@ -142,7 +142,7 @@ const DynamicTabsSample = () => {
             />
             <InputField
               type="number"
-              label="activeTabs"
+              label="Active Tabs"
               placeholder="0"
               value={activeTab}
               onChange={handleActiveTab}
