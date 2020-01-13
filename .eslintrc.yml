@@ -19,4 +19,4 @@ rules:
   no-underscore-dangle: off
   import/prefer-default-export: off
   react/jsx-props-no-spreading: off
-  arrow-parens: off 
+  arrow-parens: off

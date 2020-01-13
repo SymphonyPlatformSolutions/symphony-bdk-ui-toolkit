@@ -58,6 +58,7 @@ const SimpleItem = (props) => {
     lightFocusHandler,
     uid,
     multiChosen,
+    CustomItem,
   } = props;
   return (
     <SimpleItemContainer
@@ -68,10 +69,15 @@ const SimpleItem = (props) => {
         clickHandler();
       }}
     >
-      <LabelContainer>
-        {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
-        {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
-      </LabelContainer>
+      {CustomItem
+        ? <CustomItem>{label}</CustomItem>
+        : (
+          <LabelContainer>
+            {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
+            {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
+          </LabelContainer>
+        )}
+
       {multiChosen && (
         <MultiChosenCheck>
           <TickIcon />
@@ -95,6 +101,7 @@ export const MenuItem = (props) => {
     lightFocusHandler,
     valueList,
     selectableArray,
+    CustomItem,
     CustomEmptyComponent,
   } = props;
 
@@ -119,6 +126,7 @@ export const MenuItem = (props) => {
           filteredOptions.map(el => (
             <SimpleItem
               {...el}
+              CustomItem={el.CustomItem}
               lightFocused={lightFocusedUid === el.uid}
               lightFocusHandler={lightFocusHandler}
               uid={el.uid}
@@ -138,6 +146,7 @@ export const MenuItem = (props) => {
     return (
       <SimpleItem
         {...props}
+        CustomItem={CustomItem}
         lightFocused={lightFocusedUid === uid}
         lightFocusHandler={lightFocusHandler}
         clickHandler={() => chooseHandler(props)}
@@ -170,7 +179,9 @@ const MultiSelectValue = ({ children, removeHandler }) => (
 );
 
 const MultiValueList = (props) => {
-  const { value, chooseHandler, size } = props;
+  const {
+    value, chooseHandler, size, CustomValue,
+  } = props;
 
   if (!value || !value.length) {
     return null;
@@ -179,14 +190,22 @@ const MultiValueList = (props) => {
   return (
     <ValueContainer size={size}>
       <MultiValueContainer>
-        {value.map(l => (
-          <MultiSelectValue
-            removeHandler={() => chooseHandler(l)}
-            key={l.value}
-          >
-            {l.label}
-          </MultiSelectValue>
-        ))}
+        {value.map(l => (CustomValue
+          ? (
+            <CustomValue
+              removeHandler={() => chooseHandler(l)}
+              key={l.value}
+              value={l}
+            />
+          )
+          : (
+            <MultiSelectValue
+              removeHandler={() => chooseHandler(l)}
+              key={l.value}
+            >
+              {l.label}
+            </MultiSelectValue>
+          )))}
       </MultiValueContainer>
     </ValueContainer>
   );
@@ -208,6 +227,7 @@ export const DropdownControl = forwardRef((props, ref) => {
     theme,
     tooltip,
     filterQueryHandler,
+    CustomValue,
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
@@ -249,7 +269,9 @@ export const DropdownControl = forwardRef((props, ref) => {
   };
 
   const shouldRenderClear = isMulti ? !!(value && value.length) : value;
-  const hideInput = value && value.length && isMulti && !menuIsOpen;
+  const hideInput = isMulti
+    ? value && value.length && !menuIsOpen
+    : value && !!CustomValue && !menuIsOpen;
 
   return (
     <DropdownContainer
@@ -261,10 +283,14 @@ export const DropdownControl = forwardRef((props, ref) => {
       <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }} size={size}>
         {isMulti && (
         <MultiValueList
+          CustomValue={CustomValue}
           chooseHandler={chooseHandler}
           value={value}
           size={size}
         />
+        )}
+        {!isMulti && CustomValue && value && !menuIsOpen && (
+          <CustomValue value={value} />
         )}
         <ControlInput
           hide={hideInput}
@@ -418,6 +444,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
       return currentData.map((el, index) => (
         <MenuItem
           {...el}
+          CustomItem={el.CustomItem}
           selectableArray={selectableArray}
           lightFocusHandler={lightFocusHandler}
           lightFocusedUid={

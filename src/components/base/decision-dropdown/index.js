@@ -35,6 +35,7 @@ const DecisionDropdown = (props) => {
     isMulti,
     theme,
     tooltip,
+    CustomValue,
     ...rest
   } = props;
 
@@ -126,6 +127,7 @@ const DecisionDropdown = (props) => {
             focusBlurHandler={focusBlurHandler}
             theme={theme}
             tooltip={tooltip}
+            CustomValue={CustomValue}
           />
           <MenuWrapper error={!!errorMessage}>
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
@@ -163,6 +165,7 @@ DecisionDropdown.propTypes = {
   isMulti: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
   tooltip: PropTypes.string,
+  CustomValue: PropTypes.node,
 };
 
 DecisionDropdown.defaultProps = {
@@ -177,6 +180,7 @@ DecisionDropdown.defaultProps = {
   isMulti: false,
   size: 'regular',
   tooltip: null,
+  CustomValue: null,
 };
 
 export default withTheme(DecisionDropdown);

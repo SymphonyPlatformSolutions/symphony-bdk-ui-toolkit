@@ -51,11 +51,11 @@ class RestClient {
 
   setJwt(jwt) {
     this.jwt = jwt;
-    this.headers = Object.assign(
-      {},
-      this.headers,
-      { Authorization: `Bearer ${jwt}` },
-    );
+    this.headers = {
+
+      ...this.headers,
+      Authorization: `Bearer ${jwt}`,
+    };
   }
 
   getJwt() {
