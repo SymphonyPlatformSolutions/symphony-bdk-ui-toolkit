@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Box from '../../base/box';
-import Text from '../../base/text';
+import Box from '../../layout/box';
+import Text from '../../misc/text';
 import { THEME_TYPES } from '../../../styles/colors';
 
 const darkCloseIcon = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNC4xMjkwM0w0IDEyLjM4NzEiIHN0cm9rZT0iIzAwMDAyOCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNCA0LjEyOTAzTDEyIDEyLjM4NzEiIHN0cm9rZT0iIzAwMDAyOCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=';

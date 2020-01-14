@@ -5,12 +5,12 @@ import {
 import { storiesOf } from '@storybook/react';
 import Faker from 'faker';
 import { linkTo } from '@storybook/addon-links';
-import Tabs from '../../base/tabs';
-import Box from '../../base/box';
-import { StoryWrapper } from '../../base/wrappers';
-import Text from '../../base/text';
-import Button from '../../base/button';
-import Table from '../../base/table';
+import Tabs from '../../layout/tabs';
+import Box from '../../layout/box';
+import { StoryWrapper } from '../../misc/wrappers';
+import Text from '../../misc/text';
+import Button from '../../misc/button';
+import Table from '../../data/table';
 import { NoOp } from '../../../utils/helpers';
 import HelpPageBuilder from '../../helpers/help-page-builder';
 import { PAGE_DATA_TWO_LEVELS } from '../../helpers/help-page-builder/stories';

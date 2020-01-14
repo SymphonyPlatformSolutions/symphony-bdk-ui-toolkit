@@ -3,9 +3,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import DealerTag from './index';
-import Box from '../../base/box';
-import Text from '../../base/text';
-import { StoryWrapper } from '../../base/wrappers';
+import Box from '../../layout/box';
+import Text from '../../misc/text';
+import { StoryWrapper } from '../../misc/wrappers';
 import Info from './info.md';
 
 

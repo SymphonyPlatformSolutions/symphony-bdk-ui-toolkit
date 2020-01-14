@@ -4,13 +4,13 @@ import React, {
 import { storiesOf } from '@storybook/react';
 
 import DiscontinousCandlestick from './index';
-import Box from '../../../base/box';
-import Text from '../../../base/text';
-import { StoryWrapper } from '../../../base/wrappers';
+import Box from '../../../layout/box';
+import Text from '../../../misc/text';
+import { StoryWrapper } from '../../../misc/wrappers';
 import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
-import CheckBox from '../../../base/checkbox';
-import Card from '../../../base/card/index';
+import CheckBox from '../../../inputs/checkbox';
+import Card from '../../../layout/card/index';
 import { buildDateParser } from '../helpers';
 
 const timeParser = buildDateParser();

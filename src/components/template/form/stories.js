@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import Tabs from '../../base/tabs';
-import Box from '../../base/box';
-import { StoryWrapper } from '../../base/wrappers';
-import Text from '../../base/text';
-import Button from '../../base/button';
-import Table from '../../base/table';
+import Tabs from '../../layout/tabs';
+import Box from '../../layout/box';
+import { StoryWrapper } from '../../misc/wrappers';
+import Text from '../../misc/text';
+import Button from '../../misc/button';
+import Table from '../../data/table';
 import {
   Card, FormBox, FormGroup, Label, LabelText,
 } from '../../index';
@@ -16,7 +16,7 @@ import {
   CheckboxController,
   EmailController,
   RadioController,
-} from '../../base/form-box/stories';
+} from '../../inputs/form-box/stories';
 
 const FormPage = () => (
   <Box vertical space={10} style={{ width: '100%' }}>

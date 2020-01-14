@@ -4,15 +4,15 @@ import {
   withKnobs,
 } from '@storybook/addon-knobs';
 import AutoFetchWrapper from '.';
-import Box from '../../base/box';
-import { StoryWrapper } from '../../base/wrappers';
+import Box from '../../layout/box';
+import { StoryWrapper } from '../../misc/wrappers';
 import Info from './info.md';
-import { CellWrapper } from '../../base/table/theme';
-import Table from '../../base/table';
-import Text from '../../base/text';
-import DataGrid from '../../base/data-grid';
-import Search from '../../base/search';
-import Button from '../../base/button';
+import { CellWrapper } from '../../data/table/theme';
+import Table from '../../data/table';
+import Text from '../../misc/text';
+import DataGrid from '../../data/data-grid';
+import Search from '../../inputs/search';
+import Button from '../../misc/button';
 
 
 const autoFetchConfig = {

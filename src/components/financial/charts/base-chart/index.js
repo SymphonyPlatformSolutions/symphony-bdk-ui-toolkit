@@ -16,7 +16,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { HoverTooltip } from 'react-stockcharts/lib/tooltip';
 import { Label } from 'react-stockcharts/lib/annotation';
 import { darken } from 'polished';
-import Loader from '../../../base/loader';
+import Loader from '../../../misc/loader';
 import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
 const ChartBuilder = withTheme(({

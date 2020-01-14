@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Text from '../../base/text';
-import Box from '../../base/box';
-import Button from '../../base/button';
-import Separator from '../../base/separator';
+import Text from '../../misc/text';
+import Box from '../../layout/box';
+import Button from '../../misc/button';
+import Separator from '../../misc/separator';
 import {
   HelpPageContainer,
   HelperLink,
