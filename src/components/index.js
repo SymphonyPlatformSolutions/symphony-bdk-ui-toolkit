@@ -3,7 +3,7 @@ export { default as Button } from './misc/button';
 export { default as Card } from './layout/card';
 export { default as Loader } from './misc/loader';
 export { default as Separator } from './misc/separator';
-export { default as Tabs } from './layout/tabs';
+export { default as NavTabs } from './layout/nav-tabs';
 export { default as Text } from './misc/text';
 export { default as InputField } from './inputs/input-field';
 export { default as Checkbox } from './inputs/checkbox';

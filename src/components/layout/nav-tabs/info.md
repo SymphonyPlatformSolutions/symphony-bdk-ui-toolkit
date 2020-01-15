@@ -1,10 +1,13 @@
-#Tabs
+#Nav Tabs
 Tabs component, able to handle multiple tabs
+ - Static
+ - Self adjusted
+ - LTR support
 
 ##Sample
 
 ```jsx　
-<Tabs activeTab={1}>
+<NabTabs activeTab={1}>
     <div label="Info">
       <Text small>This is a content for Info</Text>
     </div>
@@ -14,26 +17,26 @@ Tabs component, able to handle multiple tabs
     <div label="Admin" align="right">
       <Text small>This is a content for Admin</Text>
     </div>
-</Tabs>
+</NabTabs>
 ```
 
 ##Overriding styles
 ```jsx
 import styled from 'styled-components';
 
-const MyCustomButton = styled(Tabs)`
+const MyCustomButton = styled(NavTabs)`
     color: red;
 `
 ```
 
 ##Proptypes
 ```jsx
-Tabs.propTypes = {
+NavTabs.propTypes = {
   activeTab: PropTypes.number,
   children: PropTypes.node.isRequired,
 };
 
-Tabs.defaultProps = {
+NavTabs.defaultProps = {
   activeTab: 0,
 };
 ```

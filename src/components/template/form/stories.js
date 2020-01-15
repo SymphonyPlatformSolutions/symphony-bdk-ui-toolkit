@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import Tabs from '../../layout/tabs';
+import Tabs from '../../layout/nav-tabs';
 import Box from '../../layout/box';
 import { StoryWrapper } from '../../misc/wrappers';
 import Text from '../../misc/text';

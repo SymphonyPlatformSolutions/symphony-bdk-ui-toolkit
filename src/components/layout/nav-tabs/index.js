@@ -61,7 +61,7 @@ const TabHeaderIndicator = styled.div`
   transition-timing-function: ease;
 `;
 
-export default function Tabs({ children, activeTab, ...rest }) {
+export default function NavTabs({ children, activeTab, ...rest }) {
   const elRef = useRef([...Array(children.length)].map(() => createRef()));
   const [currentRef, setCurrentRef] = useState(null);
   const [selectedTab, setActiveTab] = useState(children[activeTab].props.label);
@@ -121,11 +121,11 @@ export default function Tabs({ children, activeTab, ...rest }) {
   );
 }
 
-Tabs.propTypes = {
+NavTabs.propTypes = {
   activeTab: PropTypes.number,
   children: PropTypes.node.isRequired,
 };
 
-Tabs.defaultProps = {
+NavTabs.defaultProps = {
   activeTab: 0,
 };

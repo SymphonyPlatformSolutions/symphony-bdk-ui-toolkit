@@ -5,7 +5,7 @@ import {
 import { storiesOf } from '@storybook/react';
 import Faker from 'faker';
 import { linkTo } from '@storybook/addon-links';
-import Tabs from '../../layout/tabs';
+import Tabs from '../../layout/nav-tabs';
 import Box from '../../layout/box';
 import { StoryWrapper } from '../../misc/wrappers';
 import Text from '../../misc/text';

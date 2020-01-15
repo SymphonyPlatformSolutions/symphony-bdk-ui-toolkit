@@ -1,8 +1,10 @@
 #Dynamic Tabs
 Dynamic Tabs component, able to handle multiple tabs.
+
  - Add tabs Dynamically
  - Remove tabs Dynamically
  - Rename tabs Dynamically
+
 
 ##Sample
 
