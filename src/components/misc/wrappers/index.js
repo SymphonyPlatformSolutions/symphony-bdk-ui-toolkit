@@ -3,8 +3,10 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Box from '../../layout/box';
 
 const Wrapper = styled(Box)`
-  padding: 20px 20px 20px 20px;
-  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: -webkit-fill-available;
   background-color: ${({ theme }) => (theme.colors.mainbackground)};
 `;
 const getFontSize = ({ theme }) => {
