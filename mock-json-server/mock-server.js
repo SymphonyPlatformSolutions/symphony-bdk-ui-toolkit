@@ -301,6 +301,9 @@ server.get('/sse-events', (req, res) => {
 const FOOD = [
   { label: 'Burger', value: 'burger' },
   { label: 'Salad', value: 'salad' },
+  { label: 'Milkshake', value: 'milkshake' },
+  { label: 'Sides', value: 'sides' },
+  { label: 'Pie', value: 'pie' },
 ];
 
 const INGREDIENTS = {
@@ -315,18 +318,94 @@ const INGREDIENTS = {
     { label: 'Tomatoes', value: 'tomatoes' },
     { label: 'Heart of Palm', value: 'heart-of-palm' },
   ],
+  milkshake: [
+    { label: 'Vanilla', value: 'vanilla' },
+    { label: 'Chocolate', value: 'chocolate' },
+    { label: 'Strawberry', value: 'strawberry' },
+    { label: 'Cookies and Cream', value: 'cookies' },
+  ],
+  sides: [
+    { label: 'Fries', value: 'fries' },
+    { label: 'Onion Rings', value: 'onion-rings' },
+    { label: 'Sweet Potato Fries', value: 'sweet-potato-fries' },
+    { label: 'Chips', value: 'chips' },
+    { label: 'Nachos', value: 'nachos' },
+    { label: 'Carrot Sticks', value: 'carrot-sticks' },
+  ],
+  pie: [
+    { label: 'Cherry', value: 'cherry' },
+    { label: 'Apple', value: 'apple' },
+    { label: 'Pumpkin', value: 'pumpkin' },
+    { label: 'Key Lime', value: 'key-lime' },
+  ],
 };
 
+const getByValue = (values, query) => values.filter(el => el.label.toLowerCase().includes(query));
+
 server.get('/food', (req, res) => {
-  console.log('Got food!');
-  send(() => res.jsonp(FOOD));
+  const { query } = req.query;
+  if (!query) {
+    send(() => res.jsonp(FOOD));
+  } else {
+    console.log(getByValue(FOOD, query.toLowerCase()));
+    send(() => res.jsonp(getByValue(FOOD, query.toLowerCase())));
+  }
 });
 
 server.get('/ingredients', (req, res) => {
   const { query, food } = req.query;
-
-  send(() => res.jsonp(INGREDIENTS[food]));
+  if (!query) {
+    send(() => res.jsonp(INGREDIENTS[food]));
+  } else {
+    send(() => res.jsonp(getByValue(INGREDIENTS[food], query.toLowerCase())));
+  }
 });
+
+const MULTI1 = [
+  { label: 'Thing 1', value: '1' },
+  { label: 'Thing 2', value: '2' },
+];
+
+const MULTI2 = [
+  { label: 'Thing 1-1', value: '1-1' },
+  { label: 'Thing 1-2', value: '1-2' },
+];
+
+const MULTI3 = [
+  { label: 'Thing 2-1', value: '2-1' },
+  { label: 'Thing 2-2', value: '2-2' },
+];
+
+server.get('/multi', (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    send(() => res.jsonp(MULTI1));
+  } else {
+    send(() => res.jsonp(getByValue(MULTI1, query.toLowerCase())));
+  }
+});
+
+server.get('/multi2', (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    send(() => res.jsonp(MULTI2));
+  } else {
+    send(() => res.jsonp(getByValue(MULTI2, query.toLowerCase())));
+  }
+});
+
+server.get('/multi3', (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    send(() => res.jsonp(MULTI3));
+  } else {
+    send(() => res.jsonp(getByValue(MULTI3, query.toLowerCase())));
+  }
+});
+
 
 server.listen(9999, () => {
   console.log('JSON Server is running');

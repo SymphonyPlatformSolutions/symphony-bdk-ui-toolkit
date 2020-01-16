@@ -25,8 +25,36 @@ const SearchWrapper = (props) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   const endpoints = [
-    'http://localhost:9999/food',
-    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}`,
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '400px' }}>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+const MultiLayerSearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/multi?query=${encodeURIComponent(typedTerm)}`,
+    [
+      (value, typedTerm) => `http://localhost:9999/multi2?chosen=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/multi3?query=${encodeURIComponent(typedTerm)}`,
+    ],
   ];
 
   return (
@@ -77,6 +105,10 @@ storiesOf('Base', module)
           <Box vertical space={20}>
             <Text isTitle>Custom Tags</Text>
             <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
+          </Box>
+          <Box vertical space={20}>
+            <Text isTitle>MultiLayer</Text>
+            <MultiLayerSearchWrapper />
           </Box>
         </Box>
       </StoryWrapper>
