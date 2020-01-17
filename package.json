@@ -88,6 +88,7 @@
     "uuid": "^3.3.3"
   },
   "dependencies": {
+    "@storybook/addon-docs": "^5.3.4",
     "@storybook/preset-create-react-app": "^1.5.1",
     "d3-dsv": "^1.2.0",
     "microbundle": "0.11.0",

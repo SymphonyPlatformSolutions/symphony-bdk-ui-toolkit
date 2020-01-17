@@ -1,5 +1,6 @@
 import React from 'react';
-import { configure, addDecorator, addParameters } from '@storybook/react';
+import { addDecorator, addParameters } from '@storybook/react';
+import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
 import { withThemesProvider } from 'storybook-addon-styled-component-theme';
 import { ThemeProvider } from 'styled-components';
 import {THEMES} from "../src/styles/colors";
@@ -23,28 +24,31 @@ const decoratedThemes = THEMES.map(theme => Object.assign({
 
 const sizes = ['small', 'normal'];
 
-const CustomThemeProvider = ({ theme, children }) => {
-  return (
-    <SizeContext.Consumer>
-      {(value) => {
-        return (
-        <ThemeProvider theme={{...theme, size: value}}>
-           <StoryWrapper p={15}>
-            {children}
-           </StoryWrapper>
-        </ThemeProvider>);
-      }}
-    </SizeContext.Consumer>
-  )
-};
-
+const CustomThemeProvider = ({ theme, children }) => (
+  <SizeContext.Consumer>
+    {(value) => {
+      return (
+      <ThemeProvider theme={{...theme, size: value}}>
+         <StoryWrapper p={15}>
+          {children}
+         </StoryWrapper>
+      </ThemeProvider>);
+    }}
+  </SizeContext.Consumer>
+);
 
 addParameters({
-options: {
-	theme: themes.dark,
-	}
-})
+  docs: {
+    container: DocsContainer,
+    page: DocsPage,
+  },
+});
 
+addParameters({
+  options: {
+	  theme: themes.dark,
+	}
+});
 
 addDecorator(withThemesProvider(decoratedThemes, CustomThemeProvider));
 addDecorator(withTextSizer(sizes));
