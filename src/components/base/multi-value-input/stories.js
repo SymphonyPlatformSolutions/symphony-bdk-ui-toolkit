@@ -50,16 +50,20 @@ const MultiLayerSearchWrapper = (props) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   const endpoints = [
-    (value, typedTerm) => `http://localhost:9999/multi?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
     [
-      (value, typedTerm) => `http://localhost:9999/multi2?chosen=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
-      (value, typedTerm) => `http://localhost:9999/multi3?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+    ],
+    [
+      (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
     ],
   ];
 
   return (
     <Box type="secondary">
-      <Box horizontal style={{ width: '400px' }}>
+      <Box horizontal style={{ width: '800px' }}>
         <MultiValueInput
           {...props}
           value={currentValue}
@@ -79,6 +83,19 @@ const TagContainer = styled.div`
 
 const Tag = (props) => {
   const { hasClose, removeHandler, element } = props;
+
+  if (Array.isArray(element)) {
+    return (
+      <TagContainer>
+        <QuoteProductTag
+          sideInfo={element[0].label}
+          mainInfo={element[1] ? element[1].label : ''}
+          tagState={hasClose ? 'active' : 'default'}
+          onClose={() => removeHandler(element.value)}
+        />
+      </TagContainer>
+    );
+  }
 
   return (
     <TagContainer>
@@ -106,10 +123,10 @@ storiesOf('Base', module)
             <Text isTitle>Custom Tags</Text>
             <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
           </Box>
-          <Box vertical space={20}>
-            <Text isTitle>MultiLayer</Text>
-            <MultiLayerSearchWrapper />
-          </Box>
+        </Box>
+        <Box vertical space={20}>
+          <Text isTitle>MultiLayer</Text>
+          <MultiLayerSearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
         </Box>
       </StoryWrapper>
     ),

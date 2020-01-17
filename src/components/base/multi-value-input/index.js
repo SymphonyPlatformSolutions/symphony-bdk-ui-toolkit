@@ -18,7 +18,9 @@ import {
   LoaderWrapper,
 } from './theme';
 import { MultiValueList, MultiSelectTick, ClearButton } from './components';
-import { buildBackReference, flattenArray } from './helpers';
+import {
+  buildBackReference, flattenArray, deepInsert, deepReplaceLast,
+} from './helpers';
 
 const INIT_DEBOUNCE = 500;
 const UP_KEY = 38;
@@ -37,29 +39,11 @@ const removeLast = values => {
 };
 
 const chooseItem = (item, value, endpoints) => {
-  if (!value || !value.length) {
-    return [item];
+  const [newSet, included] = deepInsert(item, value, endpoints);
+  if (!included) {
+    return deepReplaceLast(item, newSet);
   }
-
-  if (value.length !== endpoints.length) {
-    if (Array.isArray(endpoints[value.length])) {
-      return [...value, [item]];
-    }
-    return [...value, item];
-  }
-
-  const withoutLast = value.slice(0, value.length - 1);
-
-  if (Array.isArray(endpoints[value.length - 1])) {
-    const subArray = chooseItem(
-      item,
-      value[value.length - 1],
-      endpoints[value.length - 1],
-    );
-    return [...withoutLast, subArray];
-  }
-
-  return [...withoutLast, item];
+  return newSet;
 };
 
 const Menu = props => {
@@ -73,7 +57,6 @@ const Menu = props => {
     CustomMenuItem,
     typedTerm,
     isLarge,
-    value,
     loading,
   } = props;
 
@@ -122,8 +105,6 @@ const Menu = props => {
             ) : (
               <Text>{el.label}</Text>
             )}
-            {/* {hasValues && !!value.find(vEl => vEl.value === el.value)
-            && (<MultiSelectTick />)} */}
           </MenuItem>
         ))}
       </FloatWrapper>

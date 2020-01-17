@@ -361,51 +361,58 @@ server.get('/ingredients', (req, res) => {
   }
 });
 
-const MULTI1 = [
-  { label: 'Thing 1', value: '1' },
-  { label: 'Thing 2', value: '2' },
+const SIZES = [
+  { label: 'Small', value: 'small' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'Large', value: 'large' },
+  { label: 'Family', value: 'family' },
 ];
 
-const MULTI2 = [
-  { label: 'Thing 1-1', value: '1-1' },
-  { label: 'Thing 1-2', value: '1-2' },
+const SWEETS = [
+  { label: 'Pie', value: 'sweet-pie' },
+  { label: 'Cake', value: 'sweet-cake' },
+  { label: 'Cheesecake', value: 'sweet-cheesecake' },
 ];
 
-const MULTI3 = [
-  { label: 'Thing 2-1', value: '2-1' },
-  { label: 'Thing 2-2', value: '2-2' },
-];
-
-server.get('/multi', (req, res) => {
+server.get('/size', (req, res) => {
   const { query } = req.query;
 
   if (!query) {
-    send(() => res.jsonp(MULTI1));
+    send(() => res.jsonp(SIZES));
   } else {
-    send(() => res.jsonp(getByValue(MULTI1, query.toLowerCase())));
+    send(() => res.jsonp(getByValue(SIZES, query.toLowerCase())));
   }
 });
 
-server.get('/multi2', (req, res) => {
+server.get('/sweets', (req, res) => {
   const { query } = req.query;
 
   if (!query) {
-    send(() => res.jsonp(MULTI2));
+    send(() => res.jsonp(SWEETS));
   } else {
-    send(() => res.jsonp(getByValue(MULTI2, query.toLowerCase())));
+    send(() => res.jsonp(getByValue(SWEETS, query.toLowerCase())));
   }
 });
 
-server.get('/multi3', (req, res) => {
+server.get('/sides', (req, res) => {
   const { query } = req.query;
 
   if (!query) {
-    send(() => res.jsonp(MULTI3));
+    send(() => res.jsonp(INGREDIENTS.sides));
   } else {
-    send(() => res.jsonp(getByValue(MULTI3, query.toLowerCase())));
+    send(() => res.jsonp(getByValue(INGREDIENTS.sides, query.toLowerCase())));
   }
 });
 
+server.get('/flavors', (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    send(() => res.jsonp(INGREDIENTS.pie));
+  } else {
+    send(() => res.jsonp(getByValue(INGREDIENTS.pie, query.toLowerCase())));
+  }
+});
 
 server.listen(9999, () => {
   console.log('JSON Server is running');

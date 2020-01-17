@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import uuid from 'uuid';
 import {
   MultiSelectText,
   MultiSelectContainer,
@@ -42,6 +43,7 @@ export const MultiValueList = props => {
           if (CustomTag) {
             return (
               <CustomTag
+                key={uuid.v4()}
                 element={l}
                 index={index}
                 hasClose={index === value.length - 1}
