@@ -95,6 +95,7 @@ export const MainInfo = styled(Text)`
   font-weight: bold;
   text-decoration: ${props => getTextDecorator(props)};
   color: ${props => getTextColor(props)};
+  white-space: nowrap;
 `;
 
 export const IconButton = styled.button`  

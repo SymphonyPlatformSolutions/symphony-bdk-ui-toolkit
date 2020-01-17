@@ -16,10 +16,11 @@ import {
   FloatWrapper,
   SearchInputWrapper,
   LoaderWrapper,
+  ClearText,
 } from './theme';
-import { MultiValueList, MultiSelectTick, ClearButton } from './components';
+import { MultiValueList } from './components';
 import {
-  buildBackReference, flattenArray, deepInsert, deepReplaceLast,
+  buildBackReference, deepInsert, deepReplaceLast,
 } from './helpers';
 
 const INIT_DEBOUNCE = 500;
@@ -139,6 +140,7 @@ const MultiValueInput = props => {
     CustomMenuItem,
     CustomTag,
     disabled,
+    clearMessage,
     value,
     ...rest
   } = props;
@@ -150,7 +152,7 @@ const MultiValueInput = props => {
   const [innerData, setInnerData] = useState(data);
   const [nextEndpointIndex, setNextEndpointIndex] = useState(0);
   const [backReference] = useState(buildBackReference(endpoints, 0));
-  const [flatEndpoints] = useState(flattenArray(endpoints));
+  const [flatEndpoints] = useState(endpoints.flat(Infinity));
   const [singleGet] = useState(() => makeRequestCreator());
 
   const inputRef = useRef(null);
@@ -188,17 +190,17 @@ const MultiValueInput = props => {
 
   // Debounce
   useEffect(() => {
-    if (value || typedTerm) {
-      const handler = setTimeout(() => {
-        executeSearch();
-      }, debouncePeriod);
-      return () => clearTimeout(handler);
-    }
-    return undefined;
+    const handler = setTimeout(() => {
+      executeSearch();
+    }, debouncePeriod);
+    return () => clearTimeout(handler);
+
+    // return undefined;
   }, [typedTerm]);
 
   const choseItem = item => {
     setTypedTerm('');
+    setLightFocus(-1);
     if (nextEndpointIndex < flatEndpoints.length) {
       setNextEndpointIndex(nextEndpointIndex + 1);
     }
@@ -232,6 +234,9 @@ const MultiValueInput = props => {
         }
         return null;
       case ENTER_KEY:
+        if (lightFocus < 0) {
+          return null;
+        }
         return choseItem(innerData[lightFocus]);
       default:
         return null;
@@ -274,7 +279,7 @@ const MultiValueInput = props => {
               />
             </SearchInputWrapper>
           </Box>
-          {!!value && value.length > 0 && <ClearButton onMouseDown={wipeHandler} />}
+          {!!value && value.length > 0 && <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>}
         </SearchContainer>
         <ShrinkingBorder theme={theme} show={isMenuOpen} />
       </BorderContainer>
@@ -311,6 +316,7 @@ MultiValueInput.propTypes = {
   CustomTag: PropTypes.node,
   disabled: PropTypes.bool,
   value: PropTypes.array,
+  clearMessage: PropTypes.string,
 };
 
 MultiValueInput.defaultProps = {
@@ -318,6 +324,7 @@ MultiValueInput.defaultProps = {
   placeholder: 'Select values...',
   size: 'regular',
   data: null,
+  clearMessage: 'clear filter',
   noResultsMessage: 'No results found',
   CustomMenuItem: null,
   CustomTag: null,

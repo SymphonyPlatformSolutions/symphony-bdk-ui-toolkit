@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-import { StyledInput, Container, InputWrapper } from '../input-field/theme';
+import {
+  StyledInput, Container, InputWrapper,
+  ToggleButtonText,
+} from '../input-field/theme';
 
-
+export const ClearText = styled(ToggleButtonText)`
+  white-space: nowrap;
+  display: flex;
+  padding-right: 8px;
+  align-items: center;
+`;
 export const BorderContainer = styled.div`
   display: flex;
   flex-direction: column;

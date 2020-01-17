@@ -1,10 +1,3 @@
-export const flattenArray = arr => arr.reduce((acc, el) => {
-  if (!Array.isArray(el)) {
-    return [...acc, el];
-  }
-  return [...acc, ...flattenArray(el)];
-}, []);
-
 export const buildBackReference = (arr, startPoint) => {
   let globalIndex = startPoint;
   let currSmartSize = 0;
