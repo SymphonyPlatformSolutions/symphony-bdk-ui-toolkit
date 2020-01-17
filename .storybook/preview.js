@@ -10,6 +10,7 @@ import './config.css';
 import { SizeContext } from './custom-addons/text-sizer/text-size-provider';
 import { StoryWrapper } from '../src/components/misc/wrappers';
 import { themes } from '@storybook/theming'
+import theme from './theme';
 
 Logger.setEnv({
   appTitle: 'MS Storybook',
@@ -37,16 +38,23 @@ const CustomThemeProvider = ({ theme, children }) => (
   </SizeContext.Consumer>
 );
 
+const Test = (args) =>  {
+  const themes = withThemesProvider(decoratedThemes);
+  console.log(args)
+    console.log(themes);
+  return DocsContainer;
+}
+
 addParameters({
   docs: {
-    container: DocsContainer,
+    container: Test,
     page: DocsPage,
   },
 });
 
 addParameters({
   options: {
-	  theme: themes.dark,
+	  theme: theme,
 	}
 });
 

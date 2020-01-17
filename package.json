@@ -8,7 +8,7 @@
   "unpkg": "dist/index.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006 & nodemon mock-json-server/mock-server.js",
+    "storybook": "start-storybook -p 6006 -s ./public & nodemon mock-json-server/mock-server.js",
     "mock": "nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
     "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts && rm dist/index.module.js dist/index.module.js.map",

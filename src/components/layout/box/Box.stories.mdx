@@ -1,13 +1,24 @@
-<Meta title='MDX|Box' component={Box} />
+import Text from '../../misc/text';
+import Box from './index';
 
-# Hello Docs
+<Meta title='Layout|Box' component={Box} />
 
-Welcome to the future of Storybook!
+# Box Layout
+
+<Story name="Complex">
+  <ComplexExample/>
+</Story>
 
 <Story name="hello">
-  <Box onClick={() => {}}>Hello button!</Box>
+  <Box onClick={() => {}}>
+    <Text>
+    Hello button!
+    </Text>
+  </Box>
 </Story>
 
 <Story name="with emoji">
-  <Box onClick={() => {}}>🤘🚀💯</Box>
+  <Box onClick={() => {}}>
+    <Text>🤘🚀💯</Text>
+  </Box>
 </Story>
