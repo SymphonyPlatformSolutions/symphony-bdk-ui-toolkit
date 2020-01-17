@@ -4,11 +4,44 @@ A Search typehead component that triggers a sequence of GET requests depending o
 
 ## Use
 
-The component needs an "Endpoints" prop, that is an array that specifies the GET search/query endpoints. They can be specified either as a fixed string, or a callback that returns a string.
+The component needs an "Endpoints" prop, that is an array that specifies the GET search/query endpoints. They can be specified either as a fixed string, a callback that returns a string, or a recursive array of the any of the 3.
+
+Endpoints that are specified as an array will be sent to the parent component as an array. Meaning, the values are structured into the array like to follow the endpoints.
+
+For example, if the endpoints are defined as
+
+```javascript
+const endpoints = [
+  (value, typedTerm) => 'endpoint1',
+  (value, typedTerm) => 'endpoint2',
+  [
+    (value, typedTerm) => 'endpoint3',
+    (value, typedTerm) => 'endpoint4',
+  ],
+  (value, typedTerm) => 'endpoint5',
+]
+```
+
+then the values (once selected) will follow the structure
+
+```javascript
+value = [
+  { value: 'value1' },
+  { value: 'value2' },
+  [
+    { value: 'value3' },
+    { value: 'value4' },
+  ],
+  { value: 'value5' },
+]
+```
 
 This callback will receive two arguments: the current values, and the current typed term.
 
 The GET endpoint is called as soon as either the Value array changes (that is, an option is selected or deleted), or after a debouncing period that follows a typing event in the search input.
+
+To change the "clear message" button, that wipes all current values, you can utilize the ```clearMessage``` prop.
+Additionally, you can alter the "no results found" message by passing a ```noResultsMessage``` prop.
 
 ### Custom Components
 #### ```CustomTag```
@@ -98,6 +131,7 @@ MultiValueInput.propTypes = {
   CustomTag: PropTypes.node,
   disabled: PropTypes.bool,
   value: PropTypes.array,
+  clearMessage: PropTypes.string,
 };
 
 MultiValueInput.defaultProps = {
@@ -109,6 +143,7 @@ MultiValueInput.defaultProps = {
   CustomMenuItem: null,
   CustomTag: null,
   disabled: false,
-  value: null,
+  value: [],
+  clearMessage: 'reset',
 };
 ```

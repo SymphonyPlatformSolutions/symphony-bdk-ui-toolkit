@@ -25,13 +25,45 @@ const SearchWrapper = (props) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   const endpoints = [
-    'http://localhost:9999/food',
-    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}`,
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
   ];
 
   return (
     <Box type="secondary">
       <Box horizontal style={{ width: '400px' }}>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+const MultiLayerSearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    [
+      (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+    ],
+    [
+      (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
+    ],
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '800px' }}>
         <MultiValueInput
           {...props}
           value={currentValue}
@@ -51,6 +83,19 @@ const TagContainer = styled.div`
 
 const Tag = (props) => {
   const { hasClose, removeHandler, element } = props;
+
+  if (Array.isArray(element)) {
+    return (
+      <TagContainer>
+        <QuoteProductTag
+          sideInfo={element[0].label}
+          mainInfo={element[1] ? element[1].label : ''}
+          tagState={hasClose ? 'active' : 'default'}
+          onClose={() => removeHandler(element.value)}
+        />
+      </TagContainer>
+    );
+  }
 
   return (
     <TagContainer>
@@ -76,8 +121,12 @@ storiesOf('Base', module)
           </Box>
           <Box vertical space={20}>
             <Text isTitle>Custom Tags</Text>
-            <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
+            <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} clearMessage="clear filter" />
           </Box>
+        </Box>
+        <Box vertical space={20}>
+          <Text isTitle>MultiLayer</Text>
+          <MultiLayerSearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} clearMessage="clear filter" />
         </Box>
       </StoryWrapper>
     ),

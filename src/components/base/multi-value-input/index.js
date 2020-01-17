@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useState, useRef,
-} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
@@ -18,8 +16,10 @@ import {
   FloatWrapper,
   SearchInputWrapper,
   LoaderWrapper,
+  ClearText,
 } from './theme';
-import { MultiValueList, MultiSelectTick } from './components';
+import { MultiValueList } from './components';
+import { buildBackReference, deepInsert, deepReplaceLast } from './helpers';
 
 const INIT_DEBOUNCE = 500;
 const UP_KEY = 38;
@@ -28,26 +28,24 @@ const ENTER_KEY = 13;
 const ESC_KEY = 27;
 const BACKSPACE_KEY = 8;
 
-const chooseItem = (item, value, isLastLayer = false) => {
-  if (!value) {
-    return [item];
+const removeLast = values => {
+  if (!values || !values.length) {
+    return null;
   }
-  const chosenIndex = value.findIndex(l => l.value === item.value);
+  const withoutLast = values.filter((el, index) => index !== values.length - 1);
 
-  if (chosenIndex >= 0) {
-    if (chosenIndex !== value.length - 1) {
-      return value;
-    }
-    return value.filter(l => l.value !== item.value);
-  }
-  if (isLastLayer) {
-    const withoutLast = value.slice(0, value.length - 1);
-    return [...withoutLast, item];
-  }
-  return [...value, item];
+  return withoutLast;
 };
 
-const Menu = (props) => {
+const chooseItem = (item, value, endpoints) => {
+  const [newSet, included] = deepInsert(item, value, endpoints);
+  if (!included) {
+    return deepReplaceLast(item, newSet);
+  }
+  return newSet;
+};
+
+const Menu = props => {
   const {
     data,
     clickHandler,
@@ -58,11 +56,8 @@ const Menu = (props) => {
     CustomMenuItem,
     typedTerm,
     isLarge,
-    value,
     loading,
   } = props;
-
-  const hasValues = !!(value && value.length);
 
   if (loading) {
     return (
@@ -97,7 +92,7 @@ const Menu = (props) => {
           <MenuItem
             theme={theme}
             key={el.label}
-            onMouseDown={(e) => {
+            onMouseDown={e => {
               e.preventDefault();
               clickHandler(el);
             }}
@@ -109,8 +104,6 @@ const Menu = (props) => {
             ) : (
               <Text>{el.label}</Text>
             )}
-            {hasValues && !!value.find(vEl => vEl.value === el.value)
-            && (<MultiSelectTick />)}
           </MenuItem>
         ))}
       </FloatWrapper>
@@ -132,7 +125,7 @@ const makeRequestCreator = () => {
   };
 };
 
-const MultiValueInput = (props) => {
+const MultiValueInput = props => {
   const {
     theme,
     data,
@@ -145,6 +138,7 @@ const MultiValueInput = (props) => {
     CustomMenuItem,
     CustomTag,
     disabled,
+    clearMessage,
     value,
     ...rest
   } = props;
@@ -154,21 +148,26 @@ const MultiValueInput = (props) => {
   const [lightFocus, setLightFocus] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [innerData, setInnerData] = useState(data);
+  const [nextEndpointIndex, setNextEndpointIndex] = useState(0);
+  const [backReference] = useState(buildBackReference(endpoints, 0));
+  const [flatEndpoints] = useState(endpoints.flat(Infinity));
   const [singleGet] = useState(() => makeRequestCreator());
 
   const inputRef = useRef(null);
 
   const executeSearch = async () => {
-    const currSearchIndex = value ? value.length : 0;
-
     let currSearchEndpoint;
-    if (endpoints[currSearchIndex]) {
-      if (typeof endpoints[currSearchIndex] === 'string') {
-        currSearchEndpoint = endpoints[currSearchIndex];
-      } else {
-        currSearchEndpoint = endpoints[currSearchIndex](value, typedTerm);
-      }
+    const currIndex = nextEndpointIndex >= flatEndpoints.length
+      ? nextEndpointIndex - 1
+      : nextEndpointIndex;
 
+    if (typeof flatEndpoints[currIndex] === 'string') {
+      currSearchEndpoint = flatEndpoints[currIndex];
+    } else {
+      currSearchEndpoint = flatEndpoints[currIndex](value, typedTerm);
+    }
+
+    if (currSearchEndpoint) {
       setLoading(true);
       try {
         const newData = await singleGet(currSearchEndpoint);
@@ -184,29 +183,37 @@ const MultiValueInput = (props) => {
   };
 
   useEffect(() => {
-    if (!value || value.length < endpoints.length) {
-      executeSearch();
-    }
+    executeSearch();
   }, [value]);
 
   // Debounce
   useEffect(() => {
-    if (value || typedTerm) {
-      const handler = setTimeout(() => {
-        executeSearch();
-      }, debouncePeriod);
-      return () => clearTimeout(handler);
-    }
-    return undefined;
+    const handler = setTimeout(() => {
+      executeSearch();
+    }, debouncePeriod);
+    return () => clearTimeout(handler);
+
+    // return undefined;
   }, [typedTerm]);
 
-  const choseItem = (item) => {
+  const choseItem = item => {
     setTypedTerm('');
-    itemChooseHandler(chooseItem(item, value, value && (value.length === endpoints.length)));
+    setLightFocus(-1);
+    if (nextEndpointIndex < flatEndpoints.length) {
+      setNextEndpointIndex(nextEndpointIndex + 1);
+    }
+    itemChooseHandler(chooseItem(item, value, endpoints));
   };
 
-  const removeHandler = (removeValue) => {
-    itemChooseHandler(value.filter(l => l.value !== removeValue));
+  const removeHandler = () => {
+    setNextEndpointIndex(backReference[nextEndpointIndex]);
+    itemChooseHandler(removeLast(value));
+  };
+
+  const wipeHandler = () => {
+    setNextEndpointIndex(0);
+    itemChooseHandler(null);
+    setTypedTerm('');
   };
 
   const specialKeyHandler = ({ keyCode }) => {
@@ -221,10 +228,13 @@ const MultiValueInput = (props) => {
         return inputRef.current.blur();
       case BACKSPACE_KEY:
         if (!typedTerm && value && value.length) {
-          return choseItem(value[value.length - 1]);
+          return removeHandler();
         }
         return null;
       case ENTER_KEY:
+        if (lightFocus < 0) {
+          return null;
+        }
         return choseItem(innerData[lightFocus]);
       default:
         return null;
@@ -240,33 +250,36 @@ const MultiValueInput = (props) => {
           disabled={disabled}
           onClick={() => hideInput && inputRef.current.focus()}
         >
-          <MultiValueList
-            CustomTag={CustomTag}
-            value={value}
-            removeHandler={removeHandler}
-          />
-          <SearchInputWrapper
-            hide={hideInput}
-          >
-            <StyledSearch
-              {...rest}
-              disabled={disabled}
-              ref={inputRef}
-              onKeyDown={specialKeyHandler}
-              size={size}
-              value={typedTerm}
-              onChange={({ target }) => setTypedTerm(target.value)}
-              onFocus={() => {
-                setLightFocus(-1);
-                setisMenuOpen(true);
-              }}
-              onBlur={() => {
-                setLightFocus(-1);
-                setisMenuOpen(false);
-              }}
-              placeholder={placeholder}
+          <Box type="flat" style={{ width: '100%' }} horizontal>
+            <MultiValueList
+              CustomTag={CustomTag}
+              value={value}
+              removeHandler={removeHandler}
             />
-          </SearchInputWrapper>
+            <SearchInputWrapper hide={hideInput}>
+              <StyledSearch
+                {...rest}
+                disabled={disabled}
+                ref={inputRef}
+                onKeyDown={specialKeyHandler}
+                size={size}
+                value={typedTerm}
+                onChange={({ target }) => setTypedTerm(target.value)}
+                onFocus={() => {
+                  setLightFocus(-1);
+                  setisMenuOpen(true);
+                }}
+                onBlur={() => {
+                  setLightFocus(-1);
+                  setisMenuOpen(false);
+                }}
+                placeholder={placeholder}
+              />
+            </SearchInputWrapper>
+          </Box>
+          {!!value && value.length > 0 && (
+            <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
+          )}
         </SearchContainer>
         <ShrinkingBorder theme={theme} show={isMenuOpen} />
       </BorderContainer>
@@ -303,6 +316,7 @@ MultiValueInput.propTypes = {
   CustomTag: PropTypes.node,
   disabled: PropTypes.bool,
   value: PropTypes.array,
+  clearMessage: PropTypes.string,
 };
 
 MultiValueInput.defaultProps = {
@@ -310,11 +324,12 @@ MultiValueInput.defaultProps = {
   placeholder: 'Select values...',
   size: 'regular',
   data: null,
+  clearMessage: 'reset',
   noResultsMessage: 'No results found',
   CustomMenuItem: null,
   CustomTag: null,
   disabled: false,
-  value: null,
+  value: [],
 };
 
 export default withTheme(MultiValueInput);
