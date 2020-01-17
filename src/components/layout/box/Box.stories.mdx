@@ -1,24 +1,47 @@
 import Text from '../../misc/text';
 import Box from './index';
+import styled from 'styled-components';
+import ComplexExample from './samples/complex';
+import { Story, Meta, Preview, Props, Heading, SubHeading, Subtitle, Title, Wrapper, Primary } from '@storybook/addon-docs/blocks';
 
-<Meta title='Layout|Box' component={Box} />
 
-# Box Layout
+<Meta title='Layout/Box' component={Box} />
 
-<Story name="Complex">
-  <ComplexExample/>
+## Box
+<hr/>
+
+<Heading>
+Aweo
+</Heading>
+<Subtitle>
+gas
+</Subtitle>
+<Title>
+fa
+</Title>
+
+
+<Story name="ComplexExample">
+    <ComplexExample />
 </Story>
 
-<Story name="hello">
-  <Box onClick={() => {}}>
-    <Text>
-    Hello button!
-    </Text>
-  </Box>
-</Story>
+<Preview>
+  <Story name="hello">
+     <ShowCaseCard>
+          <Box horizontal type="secondary">
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          </Box>
+        </ShowCaseCard>
+  </Story>
+</Preview>
 
 <Story name="with emoji">
   <Box onClick={() => {}}>
     <Text>🤘🚀💯</Text>
   </Box>
 </Story>
+
+
+<Props of={Box} />

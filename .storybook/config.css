@@ -73,3 +73,9 @@ html, body {
 .sb-show-main {
   margin: 0;
 }
+
+.sbdocs-hr {
+  background: white;
+  margin: 0 0 15px 0;
+  height: 1px !important;
+}

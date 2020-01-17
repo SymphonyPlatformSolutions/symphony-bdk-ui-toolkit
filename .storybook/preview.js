@@ -38,16 +38,15 @@ const CustomThemeProvider = ({ theme, children }) => (
   </SizeContext.Consumer>
 );
 
-const Test = (args) =>  {
-  const themes = withThemesProvider(decoratedThemes);
-  console.log(args)
-    console.log(themes);
-  return DocsContainer;
-}
+const DocsPageWrapper = (args) =>  (
+  <ThemeProvider theme={THEMES[1]}>
+      <DocsContainer {...args}/>
+  </ThemeProvider>
+);
 
 addParameters({
   docs: {
-    container: Test,
+    container: DocsPageWrapper,
     page: DocsPage,
   },
 });
@@ -56,6 +55,12 @@ addParameters({
   options: {
 	  theme: theme,
 	}
+});
+
+addParameters({
+  options: {
+    showRoots: true,
+  },
 });
 
 addDecorator(withThemesProvider(decoratedThemes, CustomThemeProvider));
