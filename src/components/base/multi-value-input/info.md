@@ -40,6 +40,9 @@ This callback will receive two arguments: the current values, and the current ty
 
 The GET endpoint is called as soon as either the Value array changes (that is, an option is selected or deleted), or after a debouncing period that follows a typing event in the search input.
 
+To change the "clear message" button, that wipes all current values, you can utilize the ```clearMessage``` prop.
+Additionally, you can alter the "no results found" message by passing a ```noResultsMessage``` prop.
+
 ### Custom Components
 #### ```CustomTag```
 
@@ -136,11 +139,11 @@ MultiValueInput.defaultProps = {
   placeholder: 'Select values...',
   size: 'regular',
   data: null,
-  clearMessage: 'reset',
   noResultsMessage: 'No results found',
   CustomMenuItem: null,
   CustomTag: null,
   disabled: false,
   value: [],
+  clearMessage: 'reset',
 };
 ```
