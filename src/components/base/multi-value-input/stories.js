@@ -121,12 +121,12 @@ storiesOf('Base', module)
           </Box>
           <Box vertical space={20}>
             <Text isTitle>Custom Tags</Text>
-            <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
+            <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} clearMessage="clear filter" />
           </Box>
         </Box>
         <Box vertical space={20}>
           <Text isTitle>MultiLayer</Text>
-          <MultiLayerSearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
+          <MultiLayerSearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} clearMessage="clear filter" />
         </Box>
       </StoryWrapper>
     ),

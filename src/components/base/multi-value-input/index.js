@@ -19,9 +19,7 @@ import {
   ClearText,
 } from './theme';
 import { MultiValueList } from './components';
-import {
-  buildBackReference, deepInsert, deepReplaceLast,
-} from './helpers';
+import { buildBackReference, deepInsert, deepReplaceLast } from './helpers';
 
 const INIT_DEBOUNCE = 500;
 const UP_KEY = 38;
@@ -279,7 +277,9 @@ const MultiValueInput = props => {
               />
             </SearchInputWrapper>
           </Box>
-          {!!value && value.length > 0 && <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>}
+          {!!value && value.length > 0 && (
+            <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
+          )}
         </SearchContainer>
         <ShrinkingBorder theme={theme} show={isMenuOpen} />
       </BorderContainer>
@@ -324,7 +324,7 @@ MultiValueInput.defaultProps = {
   placeholder: 'Select values...',
   size: 'regular',
   data: null,
-  clearMessage: 'clear filter',
+  clearMessage: 'reset',
   noResultsMessage: 'No results found',
   CustomMenuItem: null,
   CustomTag: null,
