@@ -1,14 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { storiesOf } from '@storybook/react';
-import {
-  withKnobs,
-} from '@storybook/addon-knobs';
 import Faker from 'faker';
 import Table from './index';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
 import Text from '../../misc/text';
 import TextLink from '../../misc/text-link';
 import TableElements from './components/table-elements';
@@ -214,84 +208,75 @@ const CustomRow = (props) => {
   );
 };
 
-storiesOf('Data', module)
-  .addDecorator(withKnobs)
-  .add('Table', () => (
-    <StoryWrapper p={15}>
-      <Box p={15}>
-        <Box>
-          <Text isTitle>Filled Table</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={DATA}
-              columns={COLUMNS}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Custom Row component</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={DATA}
-              columns={COLUMNS}
-              Row={CustomRow}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Actions</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={DATA_WITH_ACTIONS}
-              columns={COLUMNS_WITH_ACTIONS}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Searchable Table, and max Height</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              searchable
-              data={LARGE_DATA_SET}
-              columns={COLUMNS_WITH_ACTIONS}
-              maxHeight={350}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Huge Data set, and max Height</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={HUGE_DATA_SET}
-              columns={COLUMNS}
-              maxHeight={350}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Empty Table</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={[]}
-              columns={[]}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <Text isTitle>Loading Table</Text>
-          <Box space={60} p="0 16px 0 0">
-            <Table
-              data={[]}
-              columns={[]}
-              loading
-            />
-          </Box>
-        </Box>
+export const TableDemo = () => (
+  <Box p={15}>
+    <Box>
+      <Text isTitle>Filled Table</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={DATA}
+          columns={COLUMNS}
+        />
       </Box>
-    </StoryWrapper>
-  ),
-  {
-    notes: {
-      markdown: Info,
-    },
-  });
+    </Box>
+    <Box>
+      <Text isTitle>Custom Row component</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={DATA}
+          columns={COLUMNS}
+          Row={CustomRow}
+        />
+      </Box>
+    </Box>
+    <Box>
+      <Text isTitle>Actions</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={DATA_WITH_ACTIONS}
+          columns={COLUMNS_WITH_ACTIONS}
+        />
+      </Box>
+    </Box>
+    <Box>
+      <Text isTitle>Searchable Table, and max Height</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          searchable
+          data={LARGE_DATA_SET}
+          columns={COLUMNS_WITH_ACTIONS}
+          maxHeight={350}
+        />
+      </Box>
+    </Box>
+    <Box>
+      <Text isTitle>Huge Data set, and max Height</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={HUGE_DATA_SET}
+          columns={COLUMNS}
+          maxHeight={350}
+        />
+      </Box>
+    </Box>
+    <Box>
+      <Text isTitle>Empty Table</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={[]}
+          columns={[]}
+        />
+      </Box>
+    </Box>
+    <Box>
+      <Text isTitle>Loading Table</Text>
+      <Box space={60} p="0 16px 0 0">
+        <Table
+          data={[]}
+          columns={[]}
+          loading
+        />
+      </Box>
+    </Box>
+  </Box>
+);

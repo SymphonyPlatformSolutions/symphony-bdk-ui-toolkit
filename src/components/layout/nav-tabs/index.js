@@ -81,7 +81,7 @@ export default function NavTabs({ children, activeTab, ...rest }) {
     }
     if (!hasRefs) return;
     setCurrentRef(elRef.current[activeTabIndex]);
-  }, [elRef, elRef.current, activeTabIndex]);
+  }, [elRef, activeTabIndex]);
 
   return (
     <BaseTabs {...rest}>

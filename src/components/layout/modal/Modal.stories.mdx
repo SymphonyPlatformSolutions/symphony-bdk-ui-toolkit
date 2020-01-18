@@ -1,0 +1,15 @@
+import Modal from '.'
+import Box from '../box';
+import Text from '../../misc/text';
+import ModalRoot, { DangerConfirmationModal } from './index';
+import Button from '../../misc/button';
+import { ModalConsumer, ModalProvider } from './modal-context';
+import { ModalDemo } from './templates';
+
+<Meta title='Layout|Modal' component={Modal} />
+
+<Story name="Base">
+  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+    <ModalDemo />
+  </Box>
+</Story>

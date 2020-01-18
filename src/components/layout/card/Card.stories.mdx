@@ -1,0 +1,26 @@
+import Card from '.';
+import Box from '../box';
+import Text from '../../misc/text';
+
+<Meta title='Layout|Card' component={Card} />
+
+<Story name="Base">
+  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+    <Text isTitle size="large">Cards</Text>
+    <Card titleText="Card with title">
+      <Box type="flat" p="10px">
+        <Text size="small">Lorem ipsum dolor</Text>
+      </Box>
+    </Card>
+    <Card>
+      <Box type="flat" p="10px">
+        <Text size="small">Card without title</Text>
+      </Box>
+    </Card>
+    <Card hoverEffect>
+      <Box type="flat" p="10px">
+        <Text size="small">Card with Hover</Text>
+      </Box>
+    </Card>
+  </Box>
+</Story>

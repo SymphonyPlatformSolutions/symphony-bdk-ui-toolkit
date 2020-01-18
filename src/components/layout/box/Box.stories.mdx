@@ -1,5 +1,6 @@
 import Text from '../../misc/text';
 import Box from './index';
+import { ComplexExample, Showcase } from './templates';
 
 <Meta title='Layout|Box' component={Box} />
 
@@ -9,7 +10,7 @@ import Box from './index';
   <ComplexExample/>
 </Story>
 
-<Story name="hello">
+<Story name="Hello">
   <Box onClick={() => {}}>
     <Text>
     Hello button!
@@ -17,8 +18,13 @@ import Box from './index';
   </Box>
 </Story>
 
-<Story name="with emoji">
+<Story name="With Emoji">
   <Box onClick={() => {}}>
     <Text>🤘🚀💯</Text>
   </Box>
+</Story>
+
+
+<Story name="Showcase">
+  <Showcase />
 </Story>

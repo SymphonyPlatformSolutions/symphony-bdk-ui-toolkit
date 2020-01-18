@@ -2,12 +2,22 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Box from '../../layout/box';
 
+const Background = styled(Box)`
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: ${({ theme }) => (theme.colors.mainbackground)};
+`;
+
 const Wrapper = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: -webkit-fill-available;
-  background-color: ${({ theme }) => (theme.colors.mainbackground)};
+  margin: 40px 0;
 `;
 const getFontSize = ({ theme }) => {
   switch (theme.size) {
@@ -29,8 +39,10 @@ const RemChanger = createGlobalStyle`
 `;
 
 export const StoryWrapper = ({ children }) => (
-  <Wrapper>
-    <RemChanger />
-    {children}
-  </Wrapper>
+  <Background>
+    <Wrapper>
+      <RemChanger />
+      {children}
+    </Wrapper>
+  </Background>
 );

@@ -1,0 +1,21 @@
+import { DynamicTabsSample } from './templates';
+import DynamicTabs from '.'
+import Box from '../box';
+import Text from '../../misc/text';
+
+<Meta title='Layout|Dynamic Panel' component={DynamicTabs} />
+
+<Story name="Base">
+  <div>
+    <Text isTitle>Dynamic Tabs</Text>
+    <Box p={15}>
+      <Box vertical>
+        <Text>
+          This component dynamically builds contexts which holds any component in them.
+          they can be dynamically added, removed and updated.
+        </Text>
+      </Box>
+    </Box>
+    <DynamicTabsSample />
+  </div>
+</Story>

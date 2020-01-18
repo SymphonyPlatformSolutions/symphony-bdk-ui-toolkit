@@ -85,7 +85,7 @@ const getTabs = () => dynamicTabs.map((tab, index) => ({
   key: index,
 }));
 
-const DynamicTabsSample = () => {
+export const DynamicTabsSample = () => {
   const [data, setData] = useState(getTabs());
 
   const [activeTab, setActiveTab] = useState(0);
@@ -189,25 +189,3 @@ const DynamicTabsSample = () => {
     </Box>
   );
 };
-
-storiesOf('Layout', module)
-  .add('Dynamic Tabs', () => (
-    <StoryWrapper p={15}>
-      <Box space={20}>
-        <Text isTitle>Dynamic Tabs</Text>
-        <Box p={15}>
-          <Box vertical>
-            <Text>
-              This component dynamically builds contexts which holds any component in them.
-              they can be dynamically added, removed and updated.
-            </Text>
-          </Box>
-        </Box>
-        <DynamicTabsSample />
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });

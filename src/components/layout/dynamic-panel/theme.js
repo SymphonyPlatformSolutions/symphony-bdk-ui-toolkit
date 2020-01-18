@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { THEME_TYPES } from '../../../index';
+import { THEME_TYPES } from '../../../styles/colors';
 
 export const StyledPanelContainer = styled.div`
   border-radius: 2px;

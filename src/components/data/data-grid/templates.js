@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import {
-  withKnobs,
-} from '@storybook/addon-knobs';
 import DataGrid from './index';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
 import Text from '../../misc/text';
 
 const DATA = [{
@@ -128,31 +122,23 @@ const GridWithError = () => {
   );
 };
 
-
-storiesOf('Data', module)
-  .addDecorator(withKnobs)
-  .add('DataGrid', () => (
-    <StoryWrapper p={15}>
-      <Box p={15}>
-        <Box>
-          <Text isTitle>DataGrid</Text>
-          <Box horizontal space={15}>
-            <GridHandler />
-          </Box>
-        </Box>
-      </Box>
+export const DataGridDemo = () => (
+  <div>
+    <Box p={15}>
       <Box>
-        <Box>
-          <Text isTitle>DataGrid with cell highlight</Text>
-          <Box horizontal space={15}>
-            <GridWithError />
-          </Box>
+        <Text isTitle>DataGrid</Text>
+        <Box horizontal space={15}>
+          <GridHandler />
         </Box>
       </Box>
-    </StoryWrapper>
-  ),
-  {
-    notes: {
-      markdown: Info,
-    },
-  });
+    </Box>
+    <Box>
+      <Box>
+        <Text isTitle>DataGrid with cell highlight</Text>
+        <Box horizontal space={15}>
+          <GridWithError />
+        </Box>
+      </Box>
+    </Box>
+  </div>
+);
