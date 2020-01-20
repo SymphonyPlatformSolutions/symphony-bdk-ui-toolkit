@@ -88,7 +88,24 @@ html, body {
 
 .sbdocs-preview {
   box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+  width: auto !important;
 }
+
+.sbdocs-wrapper {
+  width: 850px;
+}
+
+@media (max-width: 700px) {
+  .sbdocs-wrapper  {
+    width: 500px;
+  }
+ }
+
+@media (max-width: 900px) {
+  .sbdocs-wrapper  {
+    width: 850px;
+  }
+ }
 
 .docblock-propstable {
     box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
