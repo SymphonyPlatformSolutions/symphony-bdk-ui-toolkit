@@ -7,12 +7,12 @@ import {
 
 const Loader = (props) => {
   const {
-    size, type, theme, color, ...rest
+    size, type, theme, color, background, ...rest
   } = props;
 
 
   if (type === 'v2') {
-    return <InnerRing {...rest} size={size} theme={theme} />;
+    return <InnerRing {...rest} size={size} theme={theme} color={color} background={background}/>;
   }
 
   return (
@@ -23,14 +23,18 @@ const Loader = (props) => {
 };
 
 Loader.propTypes = {
-  type: PropTypes.string,
-  size: PropTypes.oneOf(Object.keys(SPINNER_SIZES).map(el => SPINNER_SIZES[el])),
+  type: PropTypes.oneOf(['v1', 'v2']),
+  size: PropTypes.oneOf(['small', 'regular', 'large']),
   theme: PropTypes.object.isRequired,
+  color: PropTypes.string,
+  background: PropTypes.string,
 };
 
 Loader.defaultProps = {
   type: 'v1',
   size: SPINNER_SIZES.REGULAR,
+  color: null,
+  background: null,
 };
 
 export default withTheme(Loader);

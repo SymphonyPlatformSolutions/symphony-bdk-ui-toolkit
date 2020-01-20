@@ -21,32 +21,35 @@ Logger.setEnv({
 
 const decoratedThemes = THEMES.map(theme => Object.assign({
   name: theme.mode,
-}, theme));
+}, theme)).reverse();
 
 const sizes = ['small', 'normal'];
 
-const CustomThemeProvider = ({ theme, children }) => (
-  <SizeContext.Consumer>
-    {(value) => {
-      return (
-      <ThemeProvider theme={{...theme, size: value}}>
-         <StoryWrapper p={15}>
-          {children}
-         </StoryWrapper>
-      </ThemeProvider>);
-    }}
-  </SizeContext.Consumer>
-);
+const CustomThemeProvider = ({ theme, children, args }) => {
+  console.log(args);
+  return (
+    <SizeContext.Consumer>
+      {(value) => {
+        return (
+          <ThemeProvider theme={{...theme, size: value}}>
+            <StoryWrapper p={15}>
+              {children}
+            </StoryWrapper>
+          </ThemeProvider>);
+      }}
+    </SizeContext.Consumer>
+  );
+}
 
 const DocsPageWrapper = (args) =>  (
-  <ThemeProvider theme={THEMES[1]}>
+  <ThemeProvider theme={THEMES[0]}>
       <DocsContainer {...args}/>
   </ThemeProvider>
 );
 
 addParameters({
   docs: {
-    container: DocsPageWrapper,
+    container: DocsContainer,
     page: DocsPage,
   },
 });

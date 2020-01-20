@@ -1,12 +1,50 @@
 import Text from '../../misc/text';
 import Loader from './index.js';
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 
-<Meta title='Misc|Loader' component={Loader} />
-
-# Box
+<Meta title='Misc/Loader' component={Loader} />
 
 
-<Story name="Complex">
-awd
-  <Loader size="large" />
-</Story>
+# Loader
+This is a Basic Loading Component, it ships in two versions, **v1** `default`, its a predefined loading
+icon that ships in two sizes, `large` or `small`. In its second form, **v2**, it allows you to set its size
+background and color.
+
+
+## V1
+### Small
+
+<Preview>
+  <Story name="Small">
+    <Loader size="small"/>
+  </Story>
+</Preview>
+
+### Regular
+
+<Preview>
+  <Story name="Regular">
+    <Loader size="regular"/>
+  </Story>
+</Preview>
+
+### Large
+
+<Preview>
+  <Story name="Large">
+    <Loader size="large"/>
+  </Story>
+</Preview>
+
+## V2
+
+### Custom
+
+<Preview>
+  <Story name="Custom">
+    <Loader type="v2" size="small" color="#ff0057" />
+  </Story>
+</Preview>
+
+
+<Props of={Loader} />
