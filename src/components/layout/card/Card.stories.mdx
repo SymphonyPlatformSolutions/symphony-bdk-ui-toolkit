@@ -1,26 +1,58 @@
-import Card from '.';
-import Box from '../box';
-import Text from '../../misc/text';
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Card from './index.js';
 
-<Meta title='Layout|Card' component={Card} />
+<Meta title='Layout/Card' component={Card} />
 
-<Story name="Base">
-  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
-    <Text isTitle size="large">Cards</Text>
-    <Card titleText="Card with title">
-      <Box type="flat" p="10px">
-        <Text size="small">Lorem ipsum dolor</Text>
-      </Box>
-    </Card>
-    <Card>
-      <Box type="flat" p="10px">
-        <Text size="small">Card without title</Text>
-      </Box>
-    </Card>
-    <Card hoverEffect>
-      <Box type="flat" p="10px">
-        <Text size="small">Card with Hover</Text>
-      </Box>
-    </Card>
-  </Box>
-</Story>
+# Card
+
+<hr />
+
+Card separates components in a page, harboring them in an interface module.
+
+## With title
+<Preview withSource="open">
+  <Story name="Base">
+    <Box style={{ padding: '35px', width: '100%' }} horizontal>
+      <Card titleText="Card with title">
+        <Box type="flat" p="10px">
+          <Text size="small">Lorem ipsum dolor</Text>
+        </Box>
+      </Card>
+    </Box>
+  </Story>
+</Preview>
+
+## No Title
+<Preview withSource="open">
+  <Story name="No Title">
+    <Box style={{ padding: '35px', width: '100%' }} horizontal>
+      <Card>
+        <Box type="flat" p="10px">
+          <Text size="small">Card without title</Text>
+        </Box>
+      </Card>
+    </Box>
+  </Story>
+</Preview>
+
+## With Hover Effect
+<Preview withSource="open">
+  <Story name="Hover">
+    <Box style={{ padding: '35px', width: '100%' }} horizontal>
+      <Card hoverEffect>
+        <Box type="flat" p="10px">
+          <Text size="small">Card with Hover</Text>
+        </Box>
+      </Card>  
+    </Box>
+  </Story>
+</Preview>
+
