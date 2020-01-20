@@ -1,0 +1,131 @@
+import Text from '../../misc/text';
+import Box from '../../layout/box';
+import Button from './index.js';
+import { FavoriteButton, CloseButton, MoreButton } from './icon-buttons';
+
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title='Misc/Button' component={Button} />
+
+# Button
+This button component supports several configurations, its very customizable, features are:
+  - **3** Types
+  - **3** Sizes
+  - **3** Filling methods
+  - Asynchronous side effect after click
+  - Circular
+
+### Types
+
+There are **3** types of buttons:
+
+- Primary: Which has a default background color, border and shape.
+- Danger: Which has a set of colors and contrast to make the button outstand
+- Submit: Based on the primary type, but with the functionality of a submit form button.
+
+<Preview>
+  <Story name="Types">
+     <Box horizontal>
+          <Button type="primary">Primary</Button>
+          <Button type="danger">Danger</Button>
+          <Button type="submit">Submit</Button>
+     </Box>
+  </Story>
+</Preview>
+
+### Sizes
+
+Each size has a different configuration regarding dimensions, paddings and font size.
+
+There are currently **3** Sizes of buttons:
+
+- Large: font sizes are `16px`, `min-heights` are `36px`, `min-width` is `140px`
+- Regular: font sizes are `14px`, `min-heights` are `32px`, `min-width` is `100px`
+- Small: font sizes are `12px`, `min-heights` are `25px`, `min-width` is `80px`
+
+<Preview>
+  <Story name="Sizes">
+     <Box horizontal>
+          <Button type="primary" size="small">Small</Button>
+          <Button type="danger" size="regular">Regular</Button>
+          <Button type="submit" size="large">Large</Button>
+     </Box>
+  </Story>
+</Preview>
+
+### Filling Methods
+
+Each method defines how borders, background and text will be coloured
+There are currently **3** filling methods:
+
+- Filled: Button shape is filled with color.
+- Outlined: Only borders and text are colored.
+- Ghost: Only Text is coloured
+
+<Preview>
+  <Story name="Filled">
+     <Box horizontal>
+          <Button type="primary" size="small" fill="filled">Filled</Button>
+          <Button type="danger" size="regular" fill="outlined">Outlined</Button>
+          <Button type="submit" size="large" fill="ghost">Ghost</Button>
+     </Box>
+  </Story>
+</Preview>
+
+### Circular Buttons
+
+Circular buttons can be used with a reach of a property. Set `circular` to the button and the button
+will be round. Not only that, that button accepts the same attributes for type, fill method and sizes.
+
+<Preview>
+  <Story name="Circular">
+     <Box horizontal>
+          <Button size="small" type="primary" circular>+</Button>
+          <Button size="regular" type="primary" disabled circular>+</Button>
+          <Button size="large" fill="outlined" circular>+</Button>
+          <Button size="large" disabled fill="outlined" circular>+</Button>
+     </Box>
+  </Story>
+</Preview>
+
+### Asynchronous
+
+Buttons supports Promises, so if you provide a async callback to a onClick listener, then once you click it,
+the loading gauge is going to start spinning and stop when that promise resolve.
+
+<Preview>
+  <Story name="Async">
+   <Box horizontal>
+      <Button type="primary" fill="filled" onClick={ async () => new Promise(success => setTimeout(success, 2000))}>
+        <span>Next</span>
+      </Button>
+      <Button type="danger" fill="outlined" onClick={ async () => new Promise(success => setTimeout(success, 2000))}>
+        <span>Delete</span>
+      </Button>
+      <Button fill="filled" type="secondary" onClick={ async () => new Promise(success => setTimeout(success, 2000))}>
+        <span>Submit</span>
+      </Button>
+      <Button fill="filled" type="primary" circular onClick={ async () => new Promise(success => setTimeout(success, 2000))}>
+        <span>+</span>
+      </Button>
+   </Box>
+  </Story>
+</Preview>
+
+### Icons
+
+There are a **4** custom icons that you can use as a button.
+
+<Preview>
+  <Story name="Icons">
+   <Box horizontal>
+      <FavoriteButton />
+       <FavoriteButton isFavorite />
+       <CloseButton />
+       <MoreButton />
+   </Box>
+  </Story>
+</Preview>
+
+
+<Props of={Button} />

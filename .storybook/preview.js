@@ -25,21 +25,18 @@ const decoratedThemes = THEMES.map(theme => Object.assign({
 
 const sizes = ['small', 'normal'];
 
-const CustomThemeProvider = ({ theme, children, args }) => {
-  console.log(args);
-  return (
-    <SizeContext.Consumer>
-      {(value) => {
-        return (
-          <ThemeProvider theme={{...theme, size: value}}>
-            <StoryWrapper p={15}>
-              {children}
-            </StoryWrapper>
-          </ThemeProvider>);
-      }}
-    </SizeContext.Consumer>
-  );
-}
+const CustomThemeProvider = ({ theme, children, args }) => (
+  <SizeContext.Consumer>
+    {(value) => {
+      return (
+        <ThemeProvider theme={{...theme, size: value}}>
+          <StoryWrapper p={15}>
+            {children}
+          </StoryWrapper>
+        </ThemeProvider>);
+    }}
+  </SizeContext.Consumer>
+);
 
 const DocsPageWrapper = (args) =>  (
   <ThemeProvider theme={THEMES[0]}>
@@ -49,7 +46,7 @@ const DocsPageWrapper = (args) =>  (
 
 addParameters({
   docs: {
-    container: DocsContainer,
+    container: DocsPageWrapper,
     page: DocsPage,
   },
 });
