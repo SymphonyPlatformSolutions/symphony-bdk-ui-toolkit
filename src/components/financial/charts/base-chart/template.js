@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 
-import { storiesOf } from '@storybook/react';
 import { withTheme } from 'styled-components';
 
 import { Chart } from 'react-stockcharts';
@@ -11,7 +10,6 @@ import { curveMonotoneX } from 'd3-shape';
 import Box from '../../../layout/box';
 import Text from '../../../misc/text';
 import { StoryWrapper } from '../../../misc/wrappers';
-import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import { buildDateParser } from '../helpers';
 import BaseChart from './index';
@@ -42,7 +40,7 @@ const canvasGradient = createVerticalLinearGradient([
 ]);
 
 
-export const AreaChartExample = withTheme(({ theme, offset = 240 }) => {
+export const AreaChartExample = withTheme(({ theme, height }) => {
   const {
     results, isDataLoading,
   } = useAutoFetch(autoFetchConfig);
@@ -53,10 +51,10 @@ export const AreaChartExample = withTheme(({ theme, offset = 240 }) => {
     xAccessor(last(results)),
     xAccessor(results[results.length]),
   ];
-  const heightOffset = `calc(100vh - ${offset}px)`;
+
   return (
     <Box type="flat" vertical>
-      <Box style={{ width: '100%', height: heightOffset }}>
+      <Box style={{ width: '100%', height }}>
         <BaseChart
           xAccessor={xAccessor}
           xExtends={xExtends}
@@ -110,31 +108,8 @@ export const AreaChartExample = withTheme(({ theme, offset = 240 }) => {
   );
 });
 
-storiesOf('Financial/Charts', module)
-  .add('Base Chart', () => (
-    <StoryWrapper p={15}>
-      <Box type="primary">
-        <Text isTitle>Base Chart</Text>
-        <Box vertical>
-          <Text>
-            This is an Wrapper of React stockcharts. it is meant to help you creating charts rapidly
-            with no or very little friction.
-            These are the charts supported:
-          </Text>
-          <ul>
-            <Text><li>Area</li></Text>
-            <Text><li>Line</li></Text>
-            <Text><li>Candlestick</li></Text>
-            <Text><li>and many more, see here: https://github.com/rrag/react-stockcharts</li></Text>
-          </ul>
-        </Box>
-        <Box style={{ width: '100%', height: 'calc(100vh - 27a5px)' }}>
-          <AreaChartExample />
-        </Box>
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });
+export default () => (
+  <Box style={{ width: '100%', marginRight: '5px' }}>
+    <AreaChartExample height="400px" />
+  </Box>
+);

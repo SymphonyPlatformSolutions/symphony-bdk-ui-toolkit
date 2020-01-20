@@ -1,0 +1,49 @@
+import Text from '../../misc/text';
+import Box from '../../layout/box';
+import BaseChart, { ChartBuilder } from './base-chart/index.js'
+import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
+
+<Meta title="Financial/Charts/introduction" component={ChartBuilder} />
+
+# Charts
+<hr />
+
+A auto resizable component that renders financial charts. Its based on this component is a wrapper and is meant to be used to compose charts.
+[react-stockcharts](https://github.com/rrag/react-stockcharts).
+
+## Minimum Requirements
+
+In order to use these components a few adjustments are required. You'll have to add these dependencies
+to your project:
+
+```json
+"dependencies": {
+    "react-stockcharts": "^0.7.8",
+    "d3-scale": "^3.2.1",
+    "d3-time": "^1.1.0",
+    "d3-shape": "^1.3.7",
+    "d3-time-format": "^2.2.2",
+    ...
+}
+```
+
+Based on that you can build pretty much any chart you want.
+
+There are Two main Strucutures to follow, **`BaseChart`** which is the component in which you'll build your custom chart
+upon, and it wrapps a component called **`ChartBuilder`**, These two components have their own properties, and every
+property passed to **`BaseChart`** will be propagated to  **`ChartBuilder`**.
+
+It is meant to help you creating charts rapidly with no or very little frictionThese are the charts supported:
+  - Area
+  - Line
+  - Candlestick
+  - and many more, see here: [react-stockcharts](https://github.com/rrag/react-stockcharts)
+
+### BaseChart
+
+<Props of={BaseChart} />
+
+
+### ChartBuilder
+
+<Props of={ChartBuilder} />

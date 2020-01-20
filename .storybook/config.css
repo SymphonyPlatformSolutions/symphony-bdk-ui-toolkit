@@ -108,7 +108,11 @@ html, body {
  }
 
 .docblock-propstable {
-    box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+}
+
+.sbdocs-pre {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
 }
 
 .sbdocs-hr {
