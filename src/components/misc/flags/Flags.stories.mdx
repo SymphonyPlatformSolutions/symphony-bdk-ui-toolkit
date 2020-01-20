@@ -1,0 +1,25 @@
+import Text from '../../misc/text';
+import Box from '../../layout/box';
+import Flags from './index.js';
+import { FlagMatrix } from './templates';
+
+import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
+
+
+<Meta title='Misc/Flags' component={Flags} />
+
+# Flags
+
+
+These flags comes from a sprite sheet bundled with this library, to make use of it, use the
+`Flag` component and pass it its code. The contry codes can be found in this [link](https://www.nationsonline.org/oneworld/country_code_list.htm) use
+the code is always apha 2 coding.
+
+<Props of={Flags} />
+
+<Preview>
+  <Story name="codes">
+    <FlagMatrix />
+  </Story>
+</Preview>
+
