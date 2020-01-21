@@ -1,13 +1,8 @@
 import React, {
   useState,
 } from 'react';
-import { storiesOf } from '@storybook/react';
-
 import DiscontinousCandlestick from './index';
 import Box from '../../../layout/box';
-import Text from '../../../misc/text';
-import { StoryWrapper } from '../../../misc/wrappers';
-import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import CheckBox from '../../../inputs/checkbox';
 import Card from '../../../layout/card/index';
@@ -87,7 +82,7 @@ const Example = () => {
           </Box>
         </Box>
       </Card>
-      <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
+      <Box style={{ width: '100%', height: '500px' }}>
         <DiscontinousCandlestick
           tickSizeX={5}
           tickSizeY={10}
@@ -105,18 +100,8 @@ const Example = () => {
   );
 };
 
-storiesOf('Financial/Charts', module)
-  .add('Discontinous Candlestick', () => (
-    <StoryWrapper p={15}>
-      <Box type="primary">
-        <Text isTitle>Candlestick Chart</Text>
-        <Box style={{ width: '100%', height: 'calc(100vh - 100px)' }}>
-          <Example />
-        </Box>
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });
+export default () => (
+  <Box style={{ width: '100%' }}>
+    <Example />
+  </Box>
+);

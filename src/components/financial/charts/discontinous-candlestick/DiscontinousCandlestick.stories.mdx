@@ -1,18 +1,18 @@
 import Text from '../../../misc/text';
 import Box from '../../../layout/box';
-import Candlestick from './index.js';
-import CandlestickTemplate from './template'
+import DiscontinuousCandlestick from './index.js';
+import DiscontinuousCandlestickTemplate from './template'
 import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
 
-<Meta title='Financial/Charts/Candlestick' component={Candlestick} />
+<Meta title='Financial/Charts/Discontinuous Candlestick' component={DiscontinuousCandlestick} />
 
-# Candlestick
+# Discontinuous Candlestick
 <hr />
 
-This is a Candlestick implementation of **`BaseChart`** component.
+This is a DiscontinousCandlestick implementation of **`BaseChart`** component.
 
 <Story name="Sample">
-  <CandlestickTemplate />
+  <DiscontinuousCandlestickTemplate />
 </Story>
 
 ## Data
@@ -37,12 +37,11 @@ is expecting a data structure following this:
 please note that data types here **matter**. Please make so that the dates are in that format
 Y-M-D and that the other properties are numbers, just like shown above.
 
+### Sample
 
-## Example
 ```jsx
 import React from 'react';
-
-import CandleStickChart from './index';
+import DiscontinuousCandlestick from './index';
 import Box from '../../../layout/box';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import CheckBox from '../../../inputs/checkbox';
@@ -67,36 +66,35 @@ const autoFetchConfig = {
   handleData: (results) => results.map(parseData(timeParser)),
 };
 
-
 const Example = () => {
   const {
     results, isDataLoading,
   } = useAutoFetch(autoFetchConfig);
 
   return (
-  <Box style={{ width: '100%', height: '500px' }}>
-    <CandleStickChart
-      tickSizeX={10}
-      loading={isDataLoading}
-      data={results}
-      title="MFST"
-      hasGrid
-      hasCrossHair
-      hasOHLCTooltip
-      hasTooltip
-      hasZoom
-      hasEdgeIndicator
-    />
-  </Box>
-);
+    <Box style={{ width: '100%', height: '500px' }}>
+      <DiscontinuousCandlestick
+        tickSizeX={5}
+        tickSizeY={10}
+        loading={isDataLoading}
+        data={results}
+        title="MFST"
+        hasGrid
+        hasOHLCTooltip
+        hasTooltip
+        hasZoom
+        hasEdgeIndicator
+      />
+    </Box>
+  );
 };
 
 export default () => (
-  <Box style={{ width: '100%', padding: '4px'}}>
+  <Box style={{ width: '100%' }}>
     <Example />
   </Box>
 );
 ```
 
 ## Props
-<Props of={Candlestick} />
+<Props of={DiscontinuousCandlestick} />

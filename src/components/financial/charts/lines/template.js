@@ -1,20 +1,14 @@
 import React, {
   useState,
 } from 'react';
-
-import { storiesOf } from '@storybook/react';
 import { withTheme } from 'styled-components';
 import LineChart from './index';
 import Box from '../../../layout/box';
-import Text from '../../../misc/text';
-import { StoryWrapper } from '../../../misc/wrappers';
-import Info from './info.md';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import CheckBox from '../../../inputs/checkbox';
 import Card from '../../../layout/card/index';
 import { sortByDateAscending } from '../../../../utils/helpers';
 import { buildDateParser } from '../helpers';
-
 
 const timeParser = buildDateParser('%b %d, %Y');
 
@@ -79,7 +73,7 @@ const Example = withTheme(({ theme }) => {
           </Box>
         </Box>
       </Card>
-      <Box style={{ width: '100%', height: 'calc(100vh - 190px)' }}>
+      <Box style={{ width: '100%', height: '500px' }}>
         <LineChart
           loading={isDataLoading}
           data={results}
@@ -103,18 +97,8 @@ const Example = withTheme(({ theme }) => {
   );
 });
 
-storiesOf('Financial/Charts', module)
-  .add('Lines', () => (
-    <StoryWrapper p={15}>
-      <Box type="primary">
-        <Text isTitle>Line Series Chart</Text>
-        <Box style={{ width: '100%', height: 'calc(100vh - 100px)' }}>
-          <Example />
-        </Box>
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });
+export default () => (
+  <Box style={{ width: '100%' }}>
+    <Example />
+  </Box>
+);

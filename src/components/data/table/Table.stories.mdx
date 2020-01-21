@@ -81,7 +81,7 @@ const COLUMNS = [{
 />
 ```
 
-<Preview>
+<Preview withSource="none">
   <Story name="Base">
     <TableDemo />
   </Story>
@@ -130,7 +130,7 @@ const CustomRow = (props) => {
 />
 ```
 
-<Preview>
+<Preview withSource="none">
   <Story name="Custom Row">
     <Box>
       <Text>Hover the mouse on the row to see its custom activity!</Text>
@@ -142,7 +142,7 @@ const CustomRow = (props) => {
 ## Actions Menu
 
 Actions are added as small ellipsis icon, that once clicked, open a floating context menu.
-Each item of the menu boasts of the following colors: 
+Each item of the menu boasts of the following colors:
 - neutral
 - info
 - error
@@ -233,7 +233,7 @@ const COLUMNS_WITH_ACTIONS = [{
 />
 ```
 
-<Preview>
+<Preview withSource="none">
   <Story name="Action Menu">
     <TableWithActionsDemo />
   </Story>
@@ -254,7 +254,7 @@ Once activated, the Table with have a searchbar on top right, that searches text
 />
 ```
 
-<Preview>
+<Preview withSource="none">
   <Story name="Searchable">
     <SearchableTableDemo />
   </Story>
@@ -264,7 +264,7 @@ Once activated, the Table with have a searchbar on top right, that searches text
 
 As mentioned before, the Table has a Virtualized window for displaying data. This example below has 100000 lines to show, but does it relateively effortlessly.
 
-<Preview>
+<Preview withSource="none">
   <Story name="Huge Data (virtualization)">
     <HugeTableDemo />
   </Story>
@@ -291,7 +291,7 @@ In similar fashion, whenever the Table has a ```loading``` prop, it will be show
 />
 ```
 
-<Preview>
+<Preview withSource="none">
   <Story name="Loading and Empty">
     <StaticTableDemo />
   </Story>
