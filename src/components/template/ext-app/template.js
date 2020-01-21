@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import {
-  text,
-} from '@storybook/addon-knobs';
 import Faker from 'faker';
 import { linkTo } from '@storybook/addon-links';
 import Tabs from '../../layout/nav-tabs';
@@ -175,13 +172,13 @@ export const ExtApp = () => (
   <Box space={20}>
     <Box horizontal space={60} style={{ maxWidth: '50rem' }}>
       <Tabs activeTab={0}>
-        <div label={text('Tab 1 title', 'Set Up')}>
+        <div label="Set Up">
           <PageOne />
         </div>
-        <div label={text('Tab 2 title', 'Manage Notification')}>
+        <div label="Manage Notification">
           <PageTwo />
         </div>
-        <div label={text('Tab 5 title', 'Help')} align="right">
+        <div label="Help" align="right">
           <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />
         </div>
       </Tabs>
