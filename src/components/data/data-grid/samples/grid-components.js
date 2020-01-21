@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import DataGrid from './index';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
+import DataGrid from '../index';
 
 const DATA = [{
   email: '4@domain.com',
@@ -65,7 +63,7 @@ const COLUMNS = [{
   editable: true,
 }];
 
-const GridHandler = () => {
+export const GridHandler = () => {
   const [list, setList] = useState(DATA);
   const onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
     // update based on invite list
@@ -94,7 +92,7 @@ const GridHandler = () => {
 };
 
 
-const GridWithError = () => {
+export const GridWithError = () => {
   const [list, setList] = useState(ERROR_DATA);
   const onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
     // update based on invite list
@@ -121,24 +119,3 @@ const GridWithError = () => {
     />
   );
 };
-
-export const DataGridDemo = () => (
-  <div>
-    <Box p={15}>
-      <Box>
-        <Text isTitle>DataGrid</Text>
-        <Box horizontal space={15}>
-          <GridHandler />
-        </Box>
-      </Box>
-    </Box>
-    <Box>
-      <Box>
-        <Text isTitle>DataGrid with cell highlight</Text>
-        <Box horizontal space={15}>
-          <GridWithError />
-        </Box>
-      </Box>
-    </Box>
-  </div>
-);

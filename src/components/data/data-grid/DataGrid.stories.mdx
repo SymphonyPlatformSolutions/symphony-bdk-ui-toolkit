@@ -1,12 +1,116 @@
 import DataGrid from '.';
 import Box from '../../layout/box';
 import Text from '../../misc/text';
-import { DataGridDemo } from './templates';
+import { GridHandler, GridWithError } from './samples/grid-components';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
 
-<Meta title='Data|Data Grid' component={DataGrid} />
+<Meta title='Data/Data Grid' component={DataGrid} />
 
-<Story name="Base">
-  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
-    <DataGridDemo />
-  </Box>
-</Story>
+# DataGrid
+
+<hr />
+
+An Excel-like grid component, that wraps the basic functionalities of 
+https://adazzle.github.io/react-data-grid/, but includes the toolbox's own styling and Components.
+
+To facilitate use, the ```data``` prop has been created, and it will act the same way the Table component does, rather than passing in a ```rowGetter```.
+
+Please for further customization please follow the above documentation,
+everything passed to DataGrid will be propagated and **override** any prop.
+
+<Preview>
+  <Story name="Base">
+    <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+      <GridHandler />
+    </Box>
+  </Story>
+</Preview>
+
+## ```rowGetter``` Sample
+```jsx
+const columns = [{
+  name: 'Name',
+  key: 'name',
+  editable: true,
+}, {
+  name: 'Email',
+  key: 'email',
+  editable: true,
+}, {
+  name: 'Link',
+  key: 'link',
+  editable: true,
+}];
+
+return (<DataGrid
+  columns={columns}
+  rowGetter={row => data[row]}
+/>);
+```
+
+## ```data``` Sample
+```jsx
+const data = [{
+  email: '4@domain.com',
+  name: 'A',
+  link: 'http://a.com',
+  rowId: 1,
+}, {
+   email: '4@domain.com',
+  name: 'A',
+  error: { email: true },
+  link: 'http://a.com',
+  rowId: 2,
+}, {
+  email: '4@domain.com',
+  name: 'A',
+  link: 'http://a.com',
+  rowId: 3,
+}];
+
+return (<DataGrid
+  columns={columns}
+  data={data}
+/>);
+```
+
+## Custom cell handler Sample
+```jsx
+const columns = [{
+  name: 'Name',
+  key: 'name',
+  editable: true,
+}, {
+  name: 'Email',
+  key: 'email',
+  editable: true,
+}, {
+  name: 'Link',
+  key: 'link',
+  editable: true,
+  formatter: row => (<a href={row.value}>{row.value}</a>),
+}];
+
+return (<DataGrid
+  columns={columns}
+  data={data}
+/>);
+```
+
+## Example with Error
+
+<Preview>
+  <Story name="With Error">
+    <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+      <GridWithError />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={DataGrid} />

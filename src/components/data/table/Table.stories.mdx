@@ -1,12 +1,300 @@
 import Table from '.';
 import Box from '../../layout/box';
 import Text from '../../misc/text';
-import { TableDemo } from './templates';
+import { TableDemo } from './samples/main-demo';
+import { CustomRowDemo } from './samples/custom-row';
+import { TableWithActionsDemo } from './samples/with-actions';
+import { SearchableTableDemo } from './samples/searchable'
+import { HugeTableDemo } from './samples/huge-data';
+import { StaticTableDemo } from './samples/static-tables';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
 
-<Meta title='Data|Table' component={Table} />
+<Meta title='Data/Table' component={Table} />
 
-<Story name="Base">
-  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+# Table
+
+<hr />
+
+A table component that displays all data separated by rows and columns.
+It wraps this component:
+https://github.com/tannerlinsley/react-table
+
+For further customization, please follow the above documentation,
+everything passed to Table will be propagated and **override** any prop.
+
+The Table Component also contains a Virtualized window for showing the content, thus boosting speed for rendering large portions of data.
+
+More on this can be found at https://github.com/bvaughn/react-window.
+
+## Use
+
+The Table takes in, primarily, a ```data``` array, and a ```columns``` array.
+The ```columns``` array describes how the Table is organized, while the ```data``` array contains the actual data.
+
+The objects that make up the Columns array follow that of [react-table](https://github.com/tannerlinsley/react-table/blob/master/docs/examples.md).
+
+## Simple table
+
+```jsx
+const DATA = [
+  {
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
+  link: 'http://a.com',
+},
+/* ... */
+];
+
+const COLUMNS = [{
+  header: 'Name',
+  tooltip: 'This column is not sortable',
+  accessor: 'name',
+  sortable: false,
+}, {
+  header: 'Email',
+  accessor: 'email',
+  tooltip: 'This column is sortable!',
+}, {
+  header: 'Link',
+  accessor: 'link',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
+  ),
+},
+];
+```
+
+```jsx
+<Table
+  data={DATA}
+  columns={COLUMNS}
+/>
+```
+
+<Preview>
+  <Story name="Base">
     <TableDemo />
-  </Box>
-</Story>
+  </Story>
+</Preview>
+
+## Custom Components
+
+Custom Components can be passed to the table, to override the visual interface.
+
+The default Table components are packaged as TableElements, and can be easily be extended with the ```styled-components``` library. These can be accessed as:
+
+- ```StyledTable```
+- ```THead```
+- ```THeadTr```
+- ```THeadTh```
+- ```TBodyTr```
+- ```TBody```
+- ```TBodyTd```
+
+For example, we overrode the Row Component below, extending all positioning and spacing that's offered through the ```TBodyTr``` Component.
+
+```jsx
+/* == Using the same Data and Columns from the last example == */
+
+const CustomRowStyle = styled(TableElements.TBodyTr)`
+  &:hover {
+    /* Rainbow CSS animation */
+  }
+`;
+
+const CustomRow = (props) => {
+  const { children, ...rest } = props;
+  return (
+    <CustomRowStyle {...rest}>
+      {children}
+    </CustomRowStyle>
+  );
+};
+```
+
+```jsx
+<Table
+  data={DATA}
+  columns={COLUMNS}
+  Row={CustomRow}
+/>
+```
+
+<Preview>
+  <Story name="Custom Row">
+    <Box>
+      <Text>Hover the mouse on the row to see its custom activity!</Text>
+      <CustomRowDemo />
+    </Box>
+  </Story>
+</Preview>
+
+## Actions Menu
+
+Actions are added as small ellipsis icon, that once clicked, open a floating context menu.
+Each item of the menu boasts of the following colors: 
+- neutral
+- info
+- error
+- warning
+- success
+
+To trigger the actions menu, the Data that comes to the table must have an ```actionsMenu``` key in the desired elements.
+This key must be associated with an array of objects that follow the ensuing object:
+
+```javascript
+{
+  // ...
+  actionsMenu: [
+    label: 'LABEL',
+    callback: onClickFunction,
+    type: 'TYPE'
+  ],
+}
+```
+
+```jsx
+const handleTestEdit = (item) => {
+  console.log(item);
+};
+
+const handleTestDelete = (item) => {
+  console.log(item);
+};
+
+const DATA_WITH_ACTIONS = [
+  /* .... */
+  {
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
+  link: 'http://a.com',
+  // Will not have the actions menu
+}, {
+  email: Faker.internet.email(),
+  name: Faker.name.firstName(),
+  link: 'http://b.com',
+  actionsMenu: [ // Has actions menu
+    {
+      label: 'Edit',
+      callback: handleTestEdit,
+      type: 'info',
+    },
+    {
+      label: 'Delete',
+      callback: handleTestDelete,
+      type: 'error',
+    },
+  ],
+}];
+
+const COLUMNS_WITH_ACTIONS = [{
+  header: 'Name',
+  tooltip: 'The name',
+  accessor: 'name',
+  id: 'name',
+}, {
+  header: 'Email',
+  accessor: 'email',
+  tooltip: 'Or some other non-obvious descriptor for your table',
+  id: 'email',
+}, {
+  header: 'Link',
+  accessor: 'link',
+  id: 'link',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <TextLink href={cell.value} target="_blank" rel="noopener noreferrer">
+        {cell.value}
+      </TextLink>
+    </CellWrapper>
+  ),
+},
+{
+  id: 'actions',
+  sortable: false,
+  width: 50,
+  hasActions: true,
+}];
+```
+```jsx
+<Table
+  data={DATA_WITH_ACTIONS}
+  columns={COLUMNS_WITH_ACTIONS}
+/>
+```
+
+<Preview>
+  <Story name="Action Menu">
+    <TableWithActionsDemo />
+  </Story>
+</Preview>
+
+## Searchable Table and Max Height
+
+Search can be activated with the ```searchable``` prop. It's set to false by default.
+
+Once activated, the Table with have a searchbar on top right, that searches text values in all the table data. It has a 300ms debouncing period, and boasts of memoization.
+
+```jsx
+<Table
+  searchable
+  data={LARGE_DATA_SET}
+  columns={COLUMNS_WITH_ACTIONS}
+  maxHeight={350}
+/>
+```
+
+<Preview>
+  <Story name="Searchable">
+    <SearchableTableDemo />
+  </Story>
+</Preview>
+
+## Huge Data set and Max Height
+
+As mentioned before, the Table has a Virtualized window for displaying data. This example below has 100000 lines to show, but does it relateively effortlessly.
+
+<Preview>
+  <Story name="Huge Data (virtualization)">
+    <HugeTableDemo />
+  </Story>
+</Preview>
+
+## Loading and Empty
+
+When the Table has nothing to show, it will be shown as greyed out, and a message will appear. This message can be customized via the ```emptyMessage``` prop.
+
+In similar fashion, whenever the Table has a ```loading``` prop, it will be shown with a Spinner.
+
+```jsx
+// Empty
+<Table
+  data={[]}
+  columns={[]}
+/>
+
+// Loading
+<Table
+  data={[]}
+  columns={[]}
+  loading
+/>
+```
+
+<Preview>
+  <Story name="Loading and Empty">
+    <StaticTableDemo />
+  </Story>
+</Preview>
+
+<Props of={Table} />
