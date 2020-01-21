@@ -1,0 +1,62 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Checkbox from './index.js';
+import { CheckBoxComponent, IndeterminateCheckbox } from './samples/wrappers';
+
+<Meta title='Inputs/Checkbox' component={Checkbox} />
+
+# Checkbox
+
+<hr />
+
+Basic checkbox component, with on/off toggling, and an optional *indeterminate* state.
+
+<Preview withSource="none">
+  <Story name="Base">
+    <CheckBoxComponent />
+  </Story>
+</Preview>
+
+## States
+
+<Preview withSource="none">
+  <Story name="States">
+    <Box>
+      <CheckBoxComponent>Active</CheckBoxComponent>
+      <CheckBoxComponent checked disabled>Checked Disabled</CheckBoxComponent>
+      <CheckBoxComponent checked={false} disabled>Unchecked Disabled</CheckBoxComponent>
+    </Box>
+  </Story>
+</Preview>
+
+## Indeterminate
+
+<Preview withSource="none">
+  <Story name="Indeterminate">
+    <Box>
+      <IndeterminateCheckbox>Indeterminate Checkbox</IndeterminateCheckbox>
+      <IndeterminateCheckbox forceIndeterminate disabled>Indeterminate Disabled</IndeterminateCheckbox>
+    </Box>
+  </Story>
+</Preview>
+
+## Sizes
+
+<Preview withSource="none">
+  <Story name="Sizes">
+    <Box>
+      <CheckBoxComponent size="large">Large Checkbox</CheckBoxComponent>
+      <IndeterminateCheckbox size="large">Large Indeterminate Checkbox</IndeterminateCheckbox>
+      <CheckBoxComponent checked disabled size="large">Large Disabled Checkbox</CheckBoxComponent>
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Checkbox} />

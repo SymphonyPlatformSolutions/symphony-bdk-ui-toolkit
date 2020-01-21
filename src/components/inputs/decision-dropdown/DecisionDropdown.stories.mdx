@@ -1,0 +1,371 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import DecisionDropdown from './index.js';
+import { DropdownHandler, CONTENT } from './samples/full-example';
+import { SIMPLE_CONTENT } from './samples/simple-content';
+import { CUSTOM_EMPTY } from './samples/custom-empty';
+import { AsyncDropdownHandler } from './samples/async';
+import { SIMPLE_CUSTOM_ITEM_CONTENT, CustomValue } from './samples/custom-value';
+
+<Meta title='Inputs/Decision Dropdown' component={DecisionDropdown} />
+
+# Decision Dropdown
+
+<hr />
+
+A Dropdown component that lets the user navigate through a tree of possible options, ultimately being able to choose one.
+
+It comes out-of-the-box with value filtering by typing.
+
+<Preview>
+    <Story name="Base">
+      <Box align="center">
+        <Box type="secondary" style={{ borderRadius: '6px', backgroundColor: 'rgba(53, 56, 62, 0.35)', padding: '10px' }}>
+          <Text>Type out values in the dropdown search to filter the options by value.</Text>
+          <Text>You can also use the ENTER and arrow keys to navigate the dropdown options!</Text>
+        </Box>
+        <Box style={{ height: '400px'}}>
+          <DropdownHandler data={CONTENT} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Decision Tree structure
+
+The data to be passed to the component has two basic elements: options, and groups of options.
+
+- **Options** can recursively lead to more options, which leads to menu navigation.
+- **Groups** basically fit options into a single menu card.
+
+> **Option structure:**
+> 
+> ```jsx
+> {
+>   value: 'Internal, unique value. Usually and ID', /* required */
+>   label: 'Label to rendered as the option', /* required */
+>   sublabel: 'Small description', /* optional */
+>   options: ['Array of more options'], /* optional */
+> }
+> ```
+
+> **Group structure:**
+> 
+> ```jsx
+> {
+>   title: 'Group title', /* optional */
+>   subtitle: 'Group description', /* optional */
+>   emptyMessage: 'Message to show for when the group is empty', /* optional */
+>   CustomEmptyComponent: <SomeCustomComponent />, /* optional */
+>   suboptions: ['Array of options'], /* optional */
+> }
+> ```
+
+## Example
+```jsx
+const CONTENT = [{
+  title: 'Full decision tree',
+  subtitle: 'A big example of navigation',
+  suboptions: [
+    { label: 'Thing 1', value: 'thing1' },
+    {
+      label: 'Thing 2',
+      sublabel: 'With more stuff',
+      value: 'thing2',
+      options: [
+        {
+          label: 'Thing 1-A',
+          sublabel: '(Has sublevels)',
+          options: [
+            { label: 'Thing 2-A', value: 'thing2a' },
+            { label: 'Thing 2-B', value: 'thing2b' },
+          ],
+          value: 'thing1a',
+        },
+        {
+          label: 'Thing 1-B',
+          sublabel: '(Has sublevels)',
+          value: 'thing1b',
+          options: [
+            {
+              title: 'Sub Card Alpha',
+              suboptions: [{
+                label: 'Alpha 1', value: 'alpha1',
+              }, {
+                label: 'Alpha 2', value: 'alpha2', sublabel: 'Some more info on alpha 2',
+              }, {
+                label: 'Alpha 3', value: 'alpha3',
+              }],
+            },
+            {
+              suboptions: [{
+                label: 'Beta 1', value: 'beta1',
+              }],
+            },
+            {
+              subtitle: 'Sub Card Gamma, but only as subtitle',
+              suboptions: [{
+                label: 'Gamma 1', value: 'gamma1',
+              }, {
+                label: 'Gamma 2', value: 'gamma2',
+              }, {
+                label: 'Gamma 3', value: 'gamma3',
+              },
+              {
+                label: 'Gamma 4', value: 'gamma4',
+              }],
+            },
+          ],
+        },
+        { label: 'Thing 1-C', value: 'thing1c' },
+      ],
+    }],
+},
+{
+  title: 'More content',
+  suboptions: [
+    { label: 'Thing A', value: 'thinga' },
+    { label: 'Thing B', value: 'thingb' },
+    { label: 'Thing C', value: 'thingc' },
+  ],
+}, {
+  title: 'Empty content',
+  suboptions: [],
+  emptyMessage: 'Dropdown region temporarily under maintenance',
+}];
+
+const DropdownHandler = (props) => {
+  const [chosen, changeChosen] = useState(null);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <DecisionDropdown onChange={changeChosen} value={chosen} data={CONTENT} />
+    </Box>
+  );
+};
+```
+## Simple branch-less dropdown
+
+The Component can also be used as a simple Dropdown, that contains no tree-routing logic. To do so, simply pass in a shallow data array.
+
+```javascript
+const SIMPLE_CONTENT = [
+  { label: 'Content 1', value: 'content1' },
+  { label: 'Content 2', value: 'content2' },
+  { label: 'Content 3', value: 'content3' },
+  { label: 'Content 4', value: 'content4' },
+  { label: 'Content 5', value: 'content5' },
+];
+```
+
+<Preview withSource="none">
+  <Story name="Simple Content">
+    <Box type="flat" style={{ height: '220px'}}>
+      <DropdownHandler data={SIMPLE_CONTENT} />
+    </Box>
+  </Story>
+</Preview>
+
+
+## States
+
+The error state can be triggered by passing an error message through the ```errorMessage``` prop.
+
+<Preview>
+    <Story name="States">
+      <Box>
+        <Box type="flat">
+          <Text isTitle size="small">Disabled</Text>
+          <DropdownHandler disabled data={CONTENT} />
+        </Box>
+        <Box align="center" horizontal>
+          <Box type="flat" style={{ height: '400px'}}>
+            <Text isTitle size="small">Default</Text>
+            <DropdownHandler data={CONTENT} />
+          </Box>
+          <Box type="flat" style={{ height: '400px'}}>
+            <Text isTitle size="small">Error</Text>
+            <DropdownHandler errorMessage="My custom error message" data={CONTENT} />
+          </Box>
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Sizes
+
+<Preview>
+    <Story name="Sizes">
+      <Box>
+        <Box align="center" horizontal justify="flex-start">
+          <Box type="flat" style={{ height: '420px'}}>
+            <Text isTitle size="small">Default</Text>
+            <DropdownHandler data={CONTENT} />
+          </Box>
+          <Box type="flat" style={{ height: '420px'}}>
+            <Text isTitle size="small">Large</Text>
+            <DropdownHandler size="large" data={CONTENT} />
+          </Box>
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Empty
+
+Whenever a given layer of the decision tree is empty, its empty message can be set with the ```emptyMessage``` key, as shown in the sample under the Example chapter. It's set to *No Data* by default.
+
+If needed, instead of the ```emptyMessage``` key, a Custom component can also be passed through the ```CustomEmptyComponent``` key.
+
+For example: 
+
+```jsx
+const CustomEmptyComponent = withTheme(({ theme }) => (
+  <Box
+    style={{
+      margin: '8px', padding: '8px', borderRadius: '4px', backgroundColor: theme.colors.grey_200,
+    }}
+    justify="center"
+    align="center"
+    type="secondary"
+  >
+    <Text type="primary">My Custom component with a demo button!</Text>
+    <Box horizontal>
+      <Button onMouseDown={() => alert('Custom empty!')}>This button!</Button>
+    </Box>
+  </Box>
+));
+const CUSTOM_EMPTY = [{
+  title: 'More content',
+  suboptions: [
+    { label: 'Thing A', value: 'thinga' },
+    { label: 'Thing B', value: 'thingb' },
+    { label: 'Thing C', value: 'thingc' },
+  ],
+}, {
+  title: 'Empty content',
+  suboptions: [],
+  CustomEmptyComponent: <CustomEmptyComponent />,
+}];
+```
+
+<Preview>
+    <Story name="Empty">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '345px'}}>
+          <Text isTitle size="small">Default</Text>
+          <DropdownHandler data={{ emptyMessage: 'My custom empty message'}} />
+        </Box>
+        <Box type="flat" style={{ height: '345px'}}>
+          <Text isTitle size="small">Custom Empty Component</Text>
+          <DropdownHandler data={CUSTOM_EMPTY} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Loading and Async
+
+For Asynchronous data requests, the ```clickHandler``` prop can be used. This allows the user to pass a callback that runs everytime the Dropdown is clicked. This can be used in conjuntion with the ```loading``` prop, to set the Dropdown in an intermediate loading state.
+
+### Loading
+<Preview>
+    <Story name="Loading">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '90px'}}>
+          <DropdownHandler loading />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+### Async Calls
+<Preview>
+    <Story name="Async">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '220px'}}>
+          <AsyncDropdownHandler data={SIMPLE_CONTENT} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Multiselect
+
+Multiselect is supported by passing the ```isMulti``` flag to the Component. The Values are then specified as an array.
+
+<Preview>
+    <Story name="Multiselect">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '400px'}}>
+          <DropdownHandler isMulti data={CONTENT} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Custom Value Component
+
+The Component also supports the use of Custom Components through the ```CustomValue``` prop, and the ```CustomItem``` key in the data array.
+
+The ```CustomValue``` component substitutes the Component that represents the chosen value, while the ```CustomItem``` overrides the Component listed in the Dropdown.
+
+```jsx
+const CustomItem = ({ children }) => (
+  <QuoteProductTag mainInfo={children} />
+);
+
+const SIMPLE_CUSTOM_ITEM_CONTENT = [
+  {
+    title: 'Tags',
+    suboptions: [
+      { label: 'Content 1', value: 'content1', CustomItem },
+      { label: 'Content 2', value: 'content2', CustomItem },
+      { label: 'Content 3', value: 'content3', CustomItem },
+      { label: 'Content 4', value: 'content4', CustomItem },
+      { label: 'Content 5', value: 'content5', CustomItem },
+    ],
+  },
+];
+```
+
+<Preview>
+    <Story name="Custom Components">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '400px'}}>
+          <Text isTitle size="small">Regular</Text>
+          <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} CustomValue={CustomValue} />
+        </Box>
+        <Box type="flat" style={{ height: '400px'}}>
+          <Text isTitle size="small">Multiselect</Text>
+          <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} isMulti CustomValue={CustomValue} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Misc
+
+<Preview>
+    <Story name="Misc">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '400px'}}>
+          <Text isTitle size="small">Tooltip</Text>
+          <DropdownHandler data={CONTENT} tooltip="My tooltip message" />
+        </Box>
+        <Box type="flat" style={{ height: '400px'}}>
+          <Text isTitle size="small">With Back Button</Text>
+          <DropdownHandler hasBackButton data={CONTENT} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+<Props of={DecisionDropdown} />
