@@ -15,7 +15,48 @@ const StyledComp = styled.div`
    margin: 30px 30px;
 `;
 
-const ThemeShowCase = () => {
+
+export const LightTheme = () => {
+  const light = THEMES[0];
+  const lightColorsMap = Object.keys(light.colors).map((key) => ({
+    key,
+    value: light.colors[key],
+  }));
+  return (
+    <Card>
+      <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
+        {lightColorsMap.map((entry) => (
+          <Box align="center" space={4}>
+            <Text size="tiny">{entry.key}</Text>
+            <StyledComp color={entry.value} />
+          </Box>
+        ))}
+      </Box>
+    </Card>
+  );
+};
+
+export const DarkTheme = () => {
+  const dark = THEMES[1];
+  const darkColorsMap = Object.keys(dark.colors).map((key) => ({
+    key,
+    value: dark.colors[key],
+  }));
+  return (
+    <Card>
+      <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
+        {darkColorsMap.map((entry) => (
+          <Box align="center" space={4}>
+            <Text size="tiny">{entry.key}</Text>
+            <StyledComp color={entry.value} />
+          </Box>
+        ))}
+      </Box>
+    </Card>
+  );
+};
+
+export const ThemeShowCase = () => {
   const light = THEMES[0];
   const dark = THEMES[1];
   const lightColorsMap = Object.keys(light.colors).map((key) => ({
@@ -63,16 +104,16 @@ const ThemeShowCase = () => {
     </Box>
   );
 };
-
-storiesOf('Layout', module)
-  .add('Themes', () => (
-    <StoryWrapper p={15}>
-      <Box space={20}>
-        <ThemeShowCase />
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });
+//
+// storiesOf('Layout', module)
+//   .add('Themes', () => (
+//     <StoryWrapper p={15}>
+//       <Box space={20}>
+//         <ThemeShowCase />
+//       </Box>
+//     </StoryWrapper>
+//   ), {
+//     notes: {
+//       markdown: Info,
+//     },
+//   });

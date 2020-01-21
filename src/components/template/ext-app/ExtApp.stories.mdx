@@ -1,13 +1,31 @@
+import { ExtApp } from './template';
+
+import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
+
+<Meta title='Templates' />
+
+# Integration Extension App
+<hr />
+
+An Example of a simple implementation of a Enterprise configuration Extension app.
+
+<Preview>
+  <Story name="ExtApp">
+    <ExtApp />
+  </Story>
+</Preview>
+
+### Sample
+
+```jsx
 import React, { useState } from 'react';
 import {
-  withKnobs, text,
+  text,
 } from '@storybook/addon-knobs';
-import { storiesOf } from '@storybook/react';
 import Faker from 'faker';
 import { linkTo } from '@storybook/addon-links';
 import Tabs from '../../layout/nav-tabs';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
 import Text from '../../misc/text';
 import Button from '../../misc/button';
 import Table from '../../data/table';
@@ -173,7 +191,7 @@ const PageTwo = () => {
   );
 };
 
-const ExtApp = () => (
+export const ExtApp = () => (
   <Box space={20}>
     <Box horizontal space={60} style={{ maxWidth: '50rem' }}>
       <Tabs activeTab={0}>
@@ -191,10 +209,4 @@ const ExtApp = () => (
   </Box>
 );
 
-storiesOf('Templates', module)
-  .addDecorator(withKnobs)
-  .add('Extension App', () => (
-    <StoryWrapper p={15}>
-      <ExtApp />
-    </StoryWrapper>
-  ));
+```
