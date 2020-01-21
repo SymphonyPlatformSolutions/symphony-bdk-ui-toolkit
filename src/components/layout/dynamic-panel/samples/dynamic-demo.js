@@ -33,7 +33,7 @@ const autoFetchConfig = {
 const DiscontinousChart = () => {
   const { results, isDataLoading } = useAutoFetch(autoFetchConfig);
   return (
-    <Box style={{ width: '100%', height: 'calc(100vh - 350px)' }}>
+    <Box style={{ width: '100%', height: '400px' }}>
       <DiscontinousCandleStick
         tickSizeX={5}
         tickSizeY={10}
@@ -51,7 +51,7 @@ const DiscontinousChart = () => {
 };
 
 const ExampleTab = () => (
-  <Box horizontal style={{ height: '400px' }}>
+  <Box style={{ width: '100%', height: '400px' }}>
     <Box>
       <Text title>This is a Sample Panel</Text>
       <Text>{Faker.lorem.paragraph()}</Text>
@@ -63,7 +63,7 @@ const ExampleTab = () => (
 const dynamicTabs = [
   {
     title: 'MSFT Area chart',
-    body: <AreaChartExample offset={350} />,
+    body: <AreaChartExample height={400} />,
   },
   {
     title: 'MSFT Intraday',
@@ -193,7 +193,7 @@ export const DynamicTabsSample = () => {
   };
 
   return (
-    <Box vertical space={30} style={{ width: '100%', padding: '0 30px' }}>
+    <Box vertical space={30} style={{ width: '100%', padding: '0 30px', height: '-webkit-fill-available' }}>
       <ControlPanel
         responsiveBreakpoint={responsiveBreakpoint}
         setResponsiveBreakpoint={setResponsiveBreakpoint}

@@ -16,12 +16,114 @@ import {
 
 <hr />
 
-Dynamic Panels separate the Application into specific tabs for better navigation and organizing, dynamically building contexts which holds any component in them. They can be dynamically added, removed and updated.
+Dynamic Panels separate the Application into specific tabs for better navigation and organizing,
+dynamically building contexts which holds any component in them. They can be dynamically added, removed and updated.
 
-<Preview>
-  <Story name="Dynamic Sample">
+<Preview withSource="none" style={{height: '800px'}}>
+  <Story name="Sample">
     <DynamicTabsSample />
   </Story>
 </Preview>
+
+## Usage
+
+You'll need to provide an array to the **`tabs`** property, that array will include objects that describe
+a tab:
+
+``` jsx
+const tabs = [
+  {
+    title: 'MSFT Area chart',
+    body: <AreaChartExample height={400} />,
+  },
+  {
+    title: 'MSFT Intraday',
+    body: <DiscontinousChart />,
+  },
+];
+```
+
+You can either add,remove or update existing items in this array, and all changes will be reflected
+in the component.
+
+This component also allows you to define a set of funcionalities, each of these will be accessible
+through props in the component. As follows:
+
+- **isResponsive**: Changes how the tabs get displayed when a particular breakpoint is reached,
+in this mode tabs get stacked as a pile, more suitable for smaller screens or mobile devices.
+- **responsiveBreakpoint**: available when *responsive* is set to `true`,
+defines the minimum width required to go in responsive mode.
+- **wrapTabs**: Defines if the elipsis (see more) will be used instead of stacking all available tabs.
+- **tabsRemovable**: Defines if the close tab button will be displyed, if so, an callback will be called
+whenever a user clicks the close tab, that callback will carry the tab index so you can take action and remove
+from your list.
+
+### Sample code
+
+```jsx
+const dynamicTabs = [
+  {
+    title: 'MSFT Area chart',
+    body: <AreaChartExample height={400} />,
+  },
+  {
+    title: 'MSFT Intraday',
+    body: <DiscontinousChart />,
+  },
+];
+
+const getTabs = () => dynamicTabs.map((tab, index) => ({
+  title: tab.title,
+  getContent: () => tab.body,
+  key: index,
+}));
+
+export const DynamicTabsSample = () => {
+  const [data, setData] = useState(getTabs());
+  const [activeTab, setActiveTab] = useState(0);
+
+  const onAddElement = () => {
+    dynamicTabs.push({ title: 'Example Tab', body: <ExampleTab /> });
+    setData(getTabs());
+  };
+
+  const handleRemove = index => {
+    dynamicTabs.splice(index, 1);
+    setData(getTabs());
+  };
+
+  useEffect(() => {
+    setData(getTabs());
+  }, [activeTab]);
+
+  const handleActiveTab = ({ target }) => {
+    const value = parseInt(target.value, 10);
+    if (value <= 0) {
+      setActiveTab(0);
+    } else if (value >= data.length) {
+      setActiveTab(data.length - 1);
+    } else {
+      setActiveTab(value);
+    }
+  };
+
+  return (
+    <Box type="flat">
+      <DynamicTabs
+        tabs={data}
+        activeTab={activeTab}
+        onRemove={handleRemove}
+        responsiveBreakpoint={1400}
+        isResponsive={false}
+        wrapTabs
+        showSelectedTabIndicator
+        tabsRemovable
+      />
+    </Box>
+  );
+};
+```
+
+
 
 <Props of={DynamicTabs} />
