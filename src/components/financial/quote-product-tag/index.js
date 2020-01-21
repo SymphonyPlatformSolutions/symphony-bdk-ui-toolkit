@@ -19,7 +19,7 @@ const QuoteProductTag = (props) => {
       case 'active':
         return (
           <IconButton
-            onClick={onClose}
+            onMouseDown={onClose}
           >
             <img src={getCloseIcon(props)} alt="icon" />
           </IconButton>

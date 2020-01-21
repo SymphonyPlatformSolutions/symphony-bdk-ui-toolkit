@@ -175,9 +175,9 @@ export const LabelContainer = styled.div`
   align-items: flex-end;
 `;
 export const MultiSelectContainer = styled.div`
-  margin-top: 4px;
-  margin-right: 5px;
-  padding: 4px 7px 4px 4px;
+  margin-top: ${({ ignorePadding }) => (ignorePadding ? undefined : '4px')};
+  margin-right: ${({ ignorePadding }) => (ignorePadding ? undefined : '5px')};
+  padding: ${({ ignorePadding }) => (ignorePadding ? undefined : '4px 7px 4px 4px')};
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.grey_200};
