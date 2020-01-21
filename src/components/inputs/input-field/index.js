@@ -170,7 +170,7 @@ InputField.propTypes = {
   errorMessage: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  type: PropTypes.oneOf(Object.keys(INPUT_TYPES).map(l => INPUT_TYPES[l])),
+  type: PropTypes.oneOf(['password', 'textarea', 'copy', 'text']),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
 };
