@@ -1,14 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { BookBookmark, Bookmark } from 'styled-icons/boxicons-regular';
 import Faker from 'faker';
 import styled from 'styled-components';
 import Box from '../../layout/box';
 import Text from '../../misc/text';
-import Info from './info.md';
-import { StoryWrapper } from '../../misc/wrappers';
 import HelpPageBuilder from './index';
-import { Separator } from '../../index';
 import { HelperLink } from './theme';
 
 const StyledBookBookmarkIcon = styled(BookBookmark)`
@@ -106,25 +102,15 @@ for (let i = 0; i < 3; i++) {
   PAGE_DATA_TWO_LEVELS.topics.push(data);
 }
 
+export const OneLevel = () => (
+  <Box horizontal space={20}>
+    <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
+  </Box>
+);
 
-storiesOf('Helpers', module)
-  .add('Help Page Builder', () => (
-    <StoryWrapper p={15}>
-      <Box space={20}>
-        <Text isTitle size="small">1 Level helper</Text>
-        <Box horizontal space={20}>
-          <HelpPageBuilder config={PAGE_DATA_ONE_LEVEL} />
-        </Box>
-        <Separator />
-        <Text isTitle>Help Page Builder</Text>
-        <Text isTitle size="small">2 Level helper</Text>
-        <Box horizontal space={20}>
-          <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />
-        </Box>
-      </Box>
-    </StoryWrapper>
-  ), {
-    notes: {
-      markdown: Info,
-    },
-  });
+
+export const TwoLevels = () => (
+  <Box horizontal space={20}>
+    <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />
+  </Box>
+);

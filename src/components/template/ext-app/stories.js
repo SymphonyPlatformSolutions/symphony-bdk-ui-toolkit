@@ -13,7 +13,7 @@ import Button from '../../misc/button';
 import Table from '../../data/table';
 import { NoOp } from '../../../utils/helpers';
 import HelpPageBuilder from '../../helpers/help-page-builder';
-import { PAGE_DATA_TWO_LEVELS } from '../../helpers/help-page-builder/stories';
+import { PAGE_DATA_TWO_LEVELS } from '../../helpers/help-page-builder/template';
 
 const getFullName = () => `${Faker.name.firstName()} ${Faker.name.lastName()}`;
 const mockData = [];
