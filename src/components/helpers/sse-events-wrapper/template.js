@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import styled, { keyframes, withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { UpArrow } from 'styled-icons/boxicons-solid';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
 import Table from '../../data/table';
 import Text from '../../misc/text';
 import SSEventsListWrapper from './index';
@@ -334,45 +330,13 @@ const SSEEventsSample = ({
 
 const ThemedSample = withTheme(SSEEventsSample);
 
-storiesOf('Helpers/SSE', module)
-  .addDecorator(withKnobs)
-  .add(
-    'Table Events',
-    () => (
-      <StoryWrapper p={15}>
-        <Text isTitle size="small">
-          SSEventsListWrapper with table
-        </Text>
-        <Box p={15}>
-          <Box vertical>
-            <Text>
-              This is an example implementation of SSEEventsListWrapper within a
-              table
-            </Text>
-            <ul>
-              <Text>
-                <li>The mock server sends an event every 2 seconds</li>
-              </Text>
-              <Text>
-                <li>
-                  The events are always coming in this order: update, create,
-                  remove and then restart
-                </li>
-              </Text>
-            </ul>
-          </Box>
-          <SSEventsListWrapper
-            sseEndpoint="http://localhost:9999/sse-events"
-            autoFetchConfig={autoFetchConfig}
-          >
-            <ThemedSample />
-          </SSEventsListWrapper>
-        </Box>
-      </StoryWrapper>
-    ),
-    {
-      notes: {
-        markdown: Info,
-      },
-    },
-  );
+export const SSEEventsTableDemo = () => (
+  <Box style={{ width: '100%', padding: '10px' }}>
+    <SSEventsListWrapper
+      sseEndpoint="http://localhost:9999/sse-events"
+      autoFetchConfig={autoFetchConfig}
+    >
+      <ThemedSample />
+    </SSEventsListWrapper>
+  </Box>
+);
