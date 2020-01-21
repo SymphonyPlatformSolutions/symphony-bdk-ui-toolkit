@@ -1,9 +1,14 @@
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="Layout/Theme/documentation" />
+
 # Themes
+<hr />
 
-Whenever you want to override your themes on your extension app, make sure to describe them like so:
+Whenever you want to override your themes on your extension app.
+make sure to describe them like so:
 
-
-# Setting themes
+## Setting themes
 On your project, use `ThemeProvider' from styled components in order to have your components
 using the defined themes, like so:
 
@@ -23,8 +28,10 @@ const currentTheme = Themes[0];
 </ContainerWrapper>
 ```
 
-
 ## Theme Object
+
+If you wish to Created your own theme, simply copy the theme
+structure, and reuse the theme property keys, then simply assign them new values;
 
 ```jsx
 export const THEME_TYPES = {

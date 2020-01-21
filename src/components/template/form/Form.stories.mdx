@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs';
-import Tabs from '../../layout/nav-tabs';
+import { Form } from './template';
+
+import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
+
+<Meta title='Templates' />
+
+# Form
+<hr />
+
+An Example of a simple implementation of a rather complex form.
+
+<Preview>
+  <Story name="Form">
+    <Form />
+  </Story>
+</Preview>
+
+
+### Sample code
+
+```jsx
+import React from 'react';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
 import Text from '../../misc/text';
 import Button from '../../misc/button';
-import Table from '../../data/table';
 import {
-  Card, FormBox, FormGroup, Label, LabelText,
+  Card, FormBox, FormGroup, Label,
 } from '../../index';
 import {
   InputController,
@@ -74,26 +90,19 @@ const FormPage = () => (
         <RadioController />
       </FormGroup>
       <Box horizontal justify="flex-end" align="flex-end">
-        <Button> Create</Button>
+        <Button type="submit"> Create</Button>
       </Box>
     </FormBox>
   </Box>
 );
 
-const Form = () => (
-  <Box space={20}>
-    <Box horizontal space={60} style={{ maxWidth: '35rem' }}>
+export const Form = () => (
+  <Box style={{ width: '100%' }} align="center" justify="center">
+    <Box horizontal style={{ width: '100%', maxWidth: '35rem' }}>
       <Card>
         <FormPage />
       </Card>
     </Box>
   </Box>
 );
-
-storiesOf('Templates', module)
-  .addDecorator(withKnobs)
-  .add('Form', () => (
-    <StoryWrapper p={15}>
-      <Form />
-    </StoryWrapper>
-  ));
+```
