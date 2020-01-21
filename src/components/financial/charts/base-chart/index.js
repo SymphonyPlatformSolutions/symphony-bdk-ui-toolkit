@@ -4,8 +4,9 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useContext,
 } from 'react';
-import { withTheme } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 import PropTypes from 'prop-types';
 import { scaleTime } from 'd3-scale';
 import { ChartCanvas } from 'react-stockcharts';
@@ -19,7 +20,7 @@ import { darken } from 'polished';
 import Loader from '../../../misc/loader';
 import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
-const ChartBuilder = withTheme(({
+export const ChartBuilder = ({
   theme, data, width, height, ratio = 1,
   hasGrid, clampType, hasEdgeIndicator,
   tooltipContent, mouseMoveEvent, hasCrossHair,
@@ -127,7 +128,7 @@ const ChartBuilder = withTheme(({
       )}
     </ChartCanvas>
   );
-});
+};
 
 ChartBuilder.defaultProps = {
   hasGrid: false,
@@ -205,6 +206,7 @@ const ChartContainer = ({
 }) => {
   const mRef = useRef();
   const [size, setSize] = useState(null);
+  const theme = useContext(ThemeContext);
 
   const [setDimensions] = useDebouncedCallback(
     () => {
@@ -228,13 +230,14 @@ const ChartContainer = ({
   const Memoized = useMemo(() => {
     if (loading || !data || !data.length || !size) {
       return (
-        <LoadingContainer>
+        <LoadingContainer theme={theme}>
           <Loader />
         </LoadingContainer>
       );
     }
     return (
       <ChartBuilder
+        theme={theme}
         data={data}
         width={size.width}
         height={size.height}
@@ -249,7 +252,7 @@ const ChartContainer = ({
   const height = size ? size.height : 0;
   return (
     <div style={{ width: '100%', height: '100%' }} ref={mRef}>
-      <ChartBackground width={width} height={height} margin={margin} />
+      <ChartBackground theme={theme} width={width} height={height} margin={margin} />
       {Memoized}
     </div>
   );
