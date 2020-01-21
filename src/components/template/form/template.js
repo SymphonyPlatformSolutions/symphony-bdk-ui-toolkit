@@ -11,7 +11,7 @@ import {
   CheckboxController,
   EmailController,
   RadioController,
-} from '../../inputs/form-box/stories';
+} from '../../inputs/form-box/samples/controllers';
 
 const FormPage = () => (
   <Box vertical space={10} style={{ width: '100%' }}>
