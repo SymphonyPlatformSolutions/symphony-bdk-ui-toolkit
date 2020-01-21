@@ -1,47 +1,128 @@
-import Text from '../../misc/text';
-import Box from './index';
-import styled from 'styled-components';
-import ComplexExample from './samples/complex';
-import { Story, Meta, Preview, Props, Heading, SubHeading, Subtitle, Title, Wrapper, Primary } from '@storybook/addon-docs/blocks';
+import Text from "../../misc/text";
+import Box from "./index";
+import styled from "styled-components";
+import ComplexExample from "./samples/complex";
+import HilighterBox from './samples/structure';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Heading,
+  SubHeading,
+  Subtitle,
+  Title,
+  Wrapper,
+  Primary
+} from "@storybook/addon-docs/blocks";
 
+<Meta title="Layout/Box" component={Box} />
 
-<Meta title='Layout/Box' component={Box} />
+# Box
 
-## Box
-<hr/>
+<hr />
 
-<Heading>
-Aweo
-</Heading>
-<Subtitle>
-gas
-</Subtitle>
-<Title>
-fa
-</Title>
+**Box** is our main structuring component, wrapping any content with a div with predetermined (but extensible) dimentions. Close to all other components in the toolbox use Box.
 
+Most props for the Box are a simplified relay of common CSS flex-box positioning (such as direction and padding).
 
-<Story name="ComplexExample">
-    <ComplexExample />
+<Story name="Full Example">
+  <ComplexExample />
 </Story>
 
+
+## Main properties
+
+### Types
+
 <Preview>
-  <Story name="hello">
-     <ShowCaseCard>
-          <Box horizontal type="secondary">
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
-            <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
-          </Box>
-        </ShowCaseCard>
+  <Story name="Types">
+    <Box justify="center">
+      <HilighterBox horizontal align="center" justify="space-between" >
+        <Text isTitle>
+          Primary <Text>(default)</Text>
+        </Text>
+        <Box horizontal type="primary" >
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </Box>
+      </HilighterBox>
+      <HilighterBox horizontal align="center" justify="space-between">
+        <Text isTitle>Secondary</Text>
+        <Box horizontal type="secondary">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </Box>
+      </HilighterBox>
+      <HilighterBox horizontal align="center" justify="space-between">
+        <Text isTitle>Flat</Text>
+        <Box horizontal type="flat">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </Box>
+      </HilighterBox>
+    </Box>
   </Story>
 </Preview>
 
-<Story name="with emoji">
-  <Box onClick={() => {}}>
-    <Text>🤘🚀💯</Text>
-  </Box>
-</Story>
+### Positioning
+#### Horizontal
+<Preview>
+  <Story name="Horizontal Positioning">
+    <Box style={{ width: "100%", padding: "0 35px" }}>
+      <Box type="flat">
+          <Text isTitle size="small">Flex-Start</Text>
+          <Text>(default)</Text>
+        <HilighterBox align="flex-start">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+      <Box type="flat">
+        <Text isTitle size="small">Center</Text>
+        <HilighterBox align="center">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+      <Box type="flat">
+        <Text isTitle size="small">Flex-End</Text>
+        <HilighterBox align="flex-end">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
 
+#### Horizontal
+<Preview>
+  <Story name="Vertical Positioning">
+    <Box horizontal style={{ height: '500px', padding: "0 35px" }}>
+      <Box type="flat" align="center">
+        <Box horizontal type="secondary">
+          <Text isTitle size="small">Flex-Start </Text>
+          <Text>(default)</Text>
+        </Box>
+        <HilighterBox style={{ height: '600px'}}direction="row" justify="flex-start">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+      <Box type="flat" align="center">
+        <Text isTitle size="small">Center</Text>
+        <HilighterBox style={{ height: '600px'}}direction="row" justify="center">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+      <Box type="flat" align="center">
+        <Text isTitle size="small">Flex-End</Text>
+        <HilighterBox style={{ height: '600px'}}direction="row" justify="flex-end">
+          <img src="https://i.imgur.com/PAotv9Sg.jpg" width="120" height="90" />
+        </HilighterBox>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
 
 <Props of={Box} />

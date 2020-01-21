@@ -4,12 +4,13 @@ import Box from '../index';
 import Text from '../../../misc/text';
 
 const ExampleViewport = styled(Box)`
-  width: 1000px;
-  height: 500px;
+  width: 800px;
+  padding: 20px;
+  height: 550px;
 `;
 
 const SideBar = styled(Box)`
-  width: 200px;
+  width: 150px;
   padding: 10px;
   background-color: ${({ theme }) => theme.colors.secondary_400};
 `;
@@ -28,6 +29,7 @@ const ContentHeader = styled(Box)`
 const ContentBody = styled(Box)`
   padding: 10px;
   height: 100%;
+  justify-content: space-evenly;
   background-color: ${({ theme }) => theme.colors.secondary_200};
 `;
 
@@ -61,8 +63,8 @@ const LeftListElement = styled(Box)`
 `;
 
 const RightListElement = styled(LeftListElement)`
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   border: ${({ theme }) => `1px solid ${theme.colors.grey_500}`};
 `;
 
@@ -94,24 +96,24 @@ export default () => (
         <Box align="center">
           <Title isTitle>Body</Title>
         </Box>
-        <Box horizontal>
+        <Box horizontal align="center">
           <VerticalList vertical>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
-            <LeftListElement align="center">
+            <LeftListElement justify="center" align="center">
               <ElementText>element</ElementText>
             </LeftListElement>
           </VerticalList>

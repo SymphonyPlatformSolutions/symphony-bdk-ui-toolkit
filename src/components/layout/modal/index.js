@@ -56,7 +56,7 @@ const Close = (props) => {
   );
 };
 
-const TitleBar = (props) => {
+export const TitleBar = (props) => {
   const {
     titleSize = 'regular',
     hasClose = true,
@@ -90,6 +90,18 @@ const TitleBar = (props) => {
     </TitleContainer>
   );
 };
+TitleBar.propTypes = {
+  titleSize: PropTypes.oneOf(['small', 'regular', 'large']),
+  hasClose: PropTypes.bool,
+  modalTitle: PropTypes.string,
+  filledTitle: PropTypes.bool,
+};
+TitleBar.defaultProps = {
+  hasClose: true,
+  filledTitle: false,
+  modalTitle: null,
+  titleSize: 'regular',
+};
 
 const ModalRoot = ({ theme }) => (
   <ModalConsumer>
@@ -98,7 +110,7 @@ const ModalRoot = ({ theme }) => (
     }) => (
       <Overlay open={!!Component}>
         <Modal theme={theme} open={!!Component} {...modalProps}>
-          <TitleBar {...modalProps} theme={theme} clickHandler={hideModal} />
+          <TitleBar {...modalProps} clickHandler={hideModal} />
           <Padder>
             {Component ? <Component {...props} hideModal={hideModal} /> : null}
           </Padder>
@@ -114,7 +126,7 @@ ModalRoot.propTypes = {
 
 export default withTheme(ModalRoot);
 
-const ThemelessDangerConfirmationModal = (props) => {
+export const ThemelessDangerConfirmationModal = (props) => {
   const {
     message,
     modalTitle,

@@ -1,0 +1,76 @@
+import Box from "../../layout/box";
+import Toaster from "./index.js";
+import { ToasterDocWrapper } from './template';
+import { ToasterProvider, ToasterConsumer } from './toaster-context';
+import Button from '../button';
+
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+
+<Meta title="Misc/Toaster" component={Toaster} />
+
+# Toaster
+<hr />
+
+Toaster pops out a Message Box from the top of the screen, that lasts 5 seconds.
+It consists of a Provider and Consumer, the Provider serving as the anchor point for holding up Message Box, and the Consumer as the Toast's trigger mechanism.
+To use, simply consume the context's ```showToast``` function, passing an Object with your ```message``` and Message Box ```type```. An example is provided below.
+
+### Success
+<Preview withSource="open">
+  <Story name="Success">
+     <ToasterProvider>
+      <ToasterConsumer>
+        {context => (
+          <Button onClick={() => context.showToast({ message: 'An absolute success!', type: 'success' })}>Success</Button>
+        )}
+      </ToasterConsumer>
+    </ToasterProvider>
+  </Story>
+</Preview>
+
+### Error
+<Preview withSource="open">
+  <Story name="Error">
+     <ToasterProvider>
+      <ToasterConsumer>
+        {context => (
+          <Button type="danger" onClick={() => context.showToast({ message: 'A resounding failure!', type: 'error' })}>Error</Button>
+        )}
+      </ToasterConsumer>
+    </ToasterProvider>
+  </Story>
+</Preview>
+
+### Info
+<Preview withSource="open">
+  <Story name="Info">
+     <ToasterProvider>
+      <ToasterConsumer>
+        {context => (
+          <Button onClick={() => context.showToast({ message: 'An informative excerpt.', type: 'info' })}>Info</Button>
+        )}
+      </ToasterConsumer>
+    </ToasterProvider>
+  </Story>
+</Preview>
+
+### Warning
+<Preview withSource="open">
+  <Story name="Warning">
+     <ToasterProvider>
+      <ToasterConsumer>
+        {context => (
+          <Button onClick={() => context.showToast({ message: 'A friendly warning...!', type: 'warning' })}>Warning</Button>
+        )}
+      </ToasterConsumer>
+    </ToasterProvider>
+  </Story>
+</Preview>
+
+<Props of={Toaster} />

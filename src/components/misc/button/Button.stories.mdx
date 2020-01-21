@@ -27,7 +27,7 @@ There are **3** types of buttons:
 - Danger: Which has a set of colors and contrast to make the button outstand
 - Submit: Based on the primary type, but with the functionality of a submit form button.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Types">
      <Box horizontal>
           <Button type="primary">Primary</Button>
@@ -47,7 +47,7 @@ There are currently **3** Sizes of buttons:
 - Regular: font sizes are `14px`, `min-heights` are `32px`, `min-width` is `100px`
 - Small: font sizes are `12px`, `min-heights` are `25px`, `min-width` is `80px`
 
-<Preview>
+<Preview withSource="open">
   <Story name="Sizes">
      <Box horizontal>
           <Button type="primary" size="small">Small</Button>
@@ -66,7 +66,7 @@ There are currently **3** filling methods:
 - Outlined: Only borders and text are colored.
 - Ghost: Only Text is coloured
 
-<Preview>
+<Preview withSource="open">
   <Story name="Filled">
      <Box horizontal>
           <Button type="primary" size="small" fill="filled">Filled</Button>
@@ -81,7 +81,7 @@ There are currently **3** filling methods:
 Circular buttons can be used with a reach of a property. Set `circular` to the button and the button
 will be round. Not only that, that button accepts the same attributes for type, fill method and sizes.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Circular">
      <Box horizontal>
           <Button size="small" type="primary" circular>+</Button>
@@ -97,7 +97,7 @@ will be round. Not only that, that button accepts the same attributes for type, 
 Buttons supports Promises, so if you provide a async callback to a onClick listener, then once you click it,
 the loading gauge is going to start spinning and stop when that promise resolve.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Async">
    <Box horizontal>
       <Button type="primary" fill="filled" onClick={ async () => new Promise(success => setTimeout(success, 2000))}>
@@ -120,7 +120,7 @@ the loading gauge is going to start spinning and stop when that promise resolve.
 
 There are a **4** custom icons that you can use as a button.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Icons">
    <Box horizontal>
       <FavoriteButton />

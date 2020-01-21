@@ -1,15 +1,204 @@
-import Modal from '.'
-import Box from '../box';
-import Text from '../../misc/text';
-import ModalRoot, { DangerConfirmationModal } from './index';
-import Button from '../../misc/button';
-import { ModalConsumer, ModalProvider } from './modal-context';
-import { ModalDemo } from './templates';
+import Modal from ".";
+import Box from "../box";
+import Text from "../../misc/text";
+import ModalRoot, { ThemelessDangerConfirmationModal, TitleBar } from "./index";
+import Button from "../../misc/button";
+import { ModalConsumer, ModalProvider } from "./modal-context";
+import { SampleModal, Confirmation } from "./samples/modal-components";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
 
-<Meta title='Layout|Modal' component={Modal} />
+<Meta title="Layout/Modal" component={Modal} />
 
-<Story name="Base">
-  <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
-    <ModalDemo />
+# Modal
+
+The Modal component suite provides an easy way to create a modal system inside your application, tethering modal calls to the root of the components to overlap the page with any kind of content that is needed.
+
+It is exported with a ```Provider``` and ```Consumer```, both of which work together to trigger the rendering of the ```ModalRoot```. This component contains the overlay that covers the whole viewing area, and the Modal, set to hover at the approximate center.
+
+## Use
+
+To use the set of components, a few things are needed: The ```ModalProvider``` must encompass the whole application that will use the modal context. It's usually set near your application root. The ```ModalRoot``` must be set just inside the ```ModalProvider```, for this is where the Overlay and Modal will be rendered.
+
+This ensures that any component under the ```ModalProvider``` is able to call it via a Consumer. The ```ModalConsumer``` propagates a context object that contains ```showModal``` and ```hideModal``` handler functions.
+
+```jsx
+const MyModalContentComponent = ({ hideModal, myProp }) => (
+  // hideModal is plugged into props automatically
+  <Box align="center">
+    {myProp}
+    <Button onClick={hideModal}>Close Modal</Button>
   </Box>
-</Story>
+);
+
+/* ----------- */
+
+<ModalProvider>
+  <ModalRoot />
+  {/* Any amount of layers into your App */}
+    <ModalConsumer>
+      {context => (
+        <Button
+          onClick={() => context.showModal(
+            MyModalContentComponent,
+            { /* Props to MyModalContentComponent */ },
+            { /* Modal-specific props and flags */ },
+          )}>
+          Open Modal
+        </Button>
+      )}
+    </ModalConsumer>
+  {/* .... */}
+</ModalProvider>
+```
+### ```showModal```
+
+```showModal``` takes in 3 arguments: 
+- The Component to be rendered in the Modal
+- An object to be passed as props to said Component
+- An object to be passed as props to the Modal Component (shown below)
+
+The ```showModal``` function also plugs in the ```hideModal``` function directly, under the hideModal prop, should that be needed.
+
+## Modal Component
+
+<Props of={TitleBar} />
+
+### Sizes
+
+<Preview>
+  <Story name="Sizes">
+    <ModalProvider>
+      <ModalRoot />
+      <Box horizontal style={{ height: '270px'}} align="center" justify="center" >
+          <ModalConsumer>
+            {context => (
+              <Button
+                onClick={() => context.showModal(
+                    SampleModal, {}, {
+                      modalTitle: "My modal",
+                      titleSize: "large"
+                })}>Large Title</Button>
+            )}
+          </ModalConsumer>
+        <Box align="center" type="flat" style={{paddingTop: '20px'}}>
+          <ModalConsumer>
+            {context => (
+              <Button
+                onClick={() => context.showModal(
+                    SampleModal, {}, {
+                      modalTitle: "My modal",
+                      titleSize: "regular"
+                })}>Regular Title</Button>
+            )}
+          </ModalConsumer>
+          <Text style={{paddingTop: '5px'}}>(default)</Text>
+        </Box>
+        <ModalConsumer>
+          {context => (
+            <Button
+              onClick={() => context.showModal(
+                  SampleModal, {}, {
+                    modalTitle: "My modal",
+                    titleSize: "small"
+              })}>Small Title</Button>
+          )}
+        </ModalConsumer>
+      </Box>
+    </ModalProvider>
+  </Story>
+</Preview>
+
+### Title Types
+
+<Preview>
+  <Story name="Types">
+    <ModalProvider>
+      <ModalRoot />
+      <Box horizontal style={{ height: '270px'}} align="center" justify="center" >
+          <ModalConsumer>
+            {context => (
+              <Button
+                onClick={() => context.showModal(
+                    SampleModal, {}, {
+                      modalTitle: "My modal",
+                      filledTitle: true,
+                })}>Filled</Button>
+            )}
+          </ModalConsumer>
+        <Box align="center" type="flat" style={{paddingTop: '20px'}}>
+          <ModalConsumer>
+            {context => (
+              <Button
+                onClick={() => context.showModal(
+                    SampleModal, {}, {
+                      modalTitle: "My modal",
+                })}>Empty</Button>
+            )}
+          </ModalConsumer>
+          <Text style={{paddingTop: '5px'}}>(default)</Text>
+        </Box>
+        <ModalConsumer>
+          {context => (
+            <Button
+              onClick={() => context.showModal(
+                  SampleModal, {}, {
+                    modalTitle: "My modal",
+                    hasClose: false,
+              })}>No Close</Button>
+          )}
+        </ModalConsumer>
+        <ModalConsumer>
+          {context => (
+            <Button
+              onClick={() => context.showModal(
+                  SampleModal, {}, { hasClose: false })}>No Title</Button>
+          )}
+        </ModalConsumer>
+      </Box>
+    </ModalProvider>
+  </Story>
+</Preview>
+
+## Danger Confirmation Modal
+
+For ease-of-use, the a Danger Confirmation Modal Component is also packaged.
+
+<Props of={ThemelessDangerConfirmationModal} />
+
+As an example, the ```Confirmation``` Component below is implemented as such:
+
+```jsx
+export const Confirmation = props => (
+  <DangerConfirmationModal
+    {...props}
+    confirmButtonText="Yes, I'm sure"
+    message="Doing this action will permanetly change the way you perceive the universe around you."
+    modalTitle="Are you sure?"
+    confirmationHandler={() => console.log('Confirmed')}
+  />
+);
+```
+
+<Preview>
+  <Story name="Danger Confirmation">
+    <ModalProvider>
+      <ModalRoot />
+      <Box horizontal style={{ height: '270px'}} align="center" justify="center" >
+          <ModalConsumer>
+            {context => (
+              <Button
+                type="danger"
+                onClick={() => context.showModal(
+                    Confirmation, {}, {})}>Danger!</Button>
+            )}
+          </ModalConsumer>
+      </Box>
+    </ModalProvider>
+  </Story>
+</Preview>

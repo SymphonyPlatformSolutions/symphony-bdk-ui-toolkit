@@ -1,7 +1,14 @@
-import { DynamicTabsSample } from './templates';
+import { DynamicTabsSample } from './samples/dynamic-demo';
 import DynamicTabs from '.'
 import Box from '../box';
 import Text from '../../misc/text';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
 
 <Meta title='Layout/Dynamic Panel' component={DynamicTabs} />
 
@@ -9,17 +16,12 @@ import Text from '../../misc/text';
 
 <hr />
 
-<Story name="Base">
-  <div>
-    <Text isTitle>Dynamic Tabs</Text>
-    <Box p={15}>
-      <Box vertical>
-        <Text>
-          This component dynamically builds contexts which holds any component in them.
-          they can be dynamically added, removed and updated.
-        </Text>
-      </Box>
-    </Box>
+Dynamic Panels separate the Application into specific tabs for better navigation and organizing, dynamically building contexts which holds any component in them. They can be dynamically added, removed and updated.
+
+<Preview>
+  <Story name="Dynamic Sample">
     <DynamicTabsSample />
-  </div>
-</Story>
+  </Story>
+</Preview>
+
+<Props of={DynamicTabs} />
