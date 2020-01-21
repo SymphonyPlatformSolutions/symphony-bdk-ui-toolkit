@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { withTheme } from 'styled-components';
 import Box from '../../layout/box';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
 import Text from '../../misc/text';
 import SSEventsListWrapper from './index';
 import { RestClient } from '../../../utils';
@@ -115,7 +111,7 @@ const SSEEventsIntradayChartSample = ({
           </Box>
         </Card>
       </Box>
-      <div style={{ width: '100%', height: 'calc(100vh - 320px)' }}>
+      <div style={{ width: '100%', height: '500px' }}>
         {ChartRenderer}
       </div>
     </Box>
@@ -124,45 +120,14 @@ const SSEEventsIntradayChartSample = ({
 
 const ThemedSample = withTheme(SSEEventsIntradayChartSample);
 
-storiesOf('Helpers/SSE', module)
-  .addDecorator(withKnobs)
-  .add(
-    'Intraday Chart',
-    () => (
-      <StoryWrapper style={{ margin: '20px 10px 0px 20px' }}>
-        <Text isTitle size="small">
-          SSEventsListWrapper with table
-        </Text>
-        <Box p={15}>
-          <Box vertical>
-            <Text>
-              This is an example implementation of SSEEventsListWrapper within a
-              Chart
-            </Text>
-            <ul>
-              <Text>
-                <li>The mock server sends an event every 1 second when auto is toggled</li>
-              </Text>
-              <Text>
-                <li>
-                  The events are always coming in this order: update times N, n being a number between 10 and 15 , create, restart.
-                </li>
-              </Text>
-            </ul>
-          </Box>
-        </Box>
-        <SSEventsListWrapper
-          style={{ height: '100%' }}
-          sseEndpoint="http://localhost:9999/sse-chart-events"
-          autoFetchConfig={autoFetchConfig}
-        >
-          <ThemedSample />
-        </SSEventsListWrapper>
-      </StoryWrapper>
-    ),
-    {
-      notes: {
-        markdown: Info,
-      },
-    },
-  );
+export const SSEEventsChartDemo = () => (
+  <Box style={{ width: '100%', padding: '10px' }}>
+    <SSEventsListWrapper
+      style={{ height: '100%' }}
+      sseEndpoint="http://localhost:9999/sse-chart-events"
+      autoFetchConfig={autoFetchConfig}
+    >
+      <ThemedSample />
+    </SSEventsListWrapper>
+  </Box>
+);
