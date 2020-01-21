@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import FormBox, { FormGroup, Label, LabelText } from './index';
-import Checkbox from '../checkbox';
-import InputField from '../input-field';
-import RadioButton from '../radio-button';
-import Dropdown from '../dropdown';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
+import Checkbox from '../../checkbox';
+import InputField from '../../input-field';
+import RadioButton from '../../radio-button';
+import Dropdown from '../../dropdown';
+import Box from '../../../layout/box';
 
 export const InputController = ({ type, ...rest }) => {
   const [value, changeValue] = useState('');
@@ -54,7 +48,6 @@ export const DropdownHandler = (props) => {
     <Dropdown options={OPTIONS} value={chosen} onChange={changeChosen} {...props} />
   );
 };
-
 
 export const CheckboxController = () => {
   const [chosen, changeChosen] = useState({
@@ -134,46 +127,3 @@ export const RadioController = ({ disabled }) => {
     </Box>
   );
 };
-
-storiesOf('Inputs', module)
-  .addDecorator(withKnobs)
-  .add(
-    'Form Box',
-    () => (
-      <StoryWrapper p={15}>
-        <Box>
-          <Text size="large" isTitle>Form Box</Text>
-        </Box>
-        <FormBox style={{ width: '32rem' }}>
-          <FormGroup>
-            <InputController id="normal-input" label="Normal input" />
-          </FormGroup>
-          <FormGroup>
-            <InputController id="normal-input" tooltip="Some piece of relevant info!" label="Input with tooltip" />
-          </FormGroup>
-          <FormGroup>
-            <EmailController id="email-input" label="Input with Email Validation" />
-          </FormGroup>
-          <FormGroup>
-            <InputController type="textarea" id="textarea" label="Text area input" />
-          </FormGroup>
-          <FormGroup>
-            <DropdownHandler label="Dropdown input" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Pick a few</Label>
-            <CheckboxController />
-          </FormGroup>
-          <FormGroup disabled>
-            <Label>And for this, pick just one</Label>
-            <RadioController />
-          </FormGroup>
-        </FormBox>
-      </StoryWrapper>
-    ),
-    {
-      notes: {
-        markdown: Info,
-      },
-    },
-  );

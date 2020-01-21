@@ -79,7 +79,7 @@ const Dropdown = (props) => {
           value={placeValue}
           placeholder={isLoading ? 'Loading...' : placeholder}
           {...rest}
-          noOptionsMessage={() => (isLoading ? 'Loading...' : 'No options')}
+          noOptionsMessage={() => (isLoading ? 'Loading...' : noOptionsMessage)}
         />
       </ErrorWrapper>
     </div>
@@ -110,7 +110,7 @@ Dropdown.defaultProps = {
   onChange: null,
   value: null,
   chosenValue: null,
-  noOptionsMessage: undefined,
+  noOptionsMessage: 'No Data',
   components: null,
   placeholder: undefined,
   isLoading: false,

@@ -1,0 +1,73 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import FormBox, { FormGroup, Label, LabelText } from './index.js';
+import {
+  InputController,
+  DropdownHandler,
+  CheckboxController,
+  EmailController,
+  RadioController,
+} from './samples/controllers';
+
+<Meta title='Inputs/Form Box' component={FormBox} />
+
+# Form Box
+
+<hr />
+
+This Component is used to structure forms and space them accordingly. The library provides 3 Components to be used in unison, as a way to better structure the input fields and their labels.
+
+<Preview withSource="open">
+  <Story name="Base">
+      <FormBox style={{ width: '32rem' }}>
+        <FormGroup>
+          <InputController id="normal-input" label="Normal input" />
+        </FormGroup>
+        <FormGroup>
+          <InputController id="normal-input" tooltip="Some piece of relevant info!" label="Input with tooltip" />
+        </FormGroup>
+        <FormGroup>
+          <EmailController id="email-input" label="Input with Email Validation" />
+        </FormGroup>
+        <FormGroup>
+          <InputController type="textarea" id="textarea" label="Text area input" />
+        </FormGroup>
+        <FormGroup>
+          <DropdownHandler label="Dropdown input" />
+        </FormGroup>
+        <FormGroup>
+          <Label>Pick a few</Label>
+          <CheckboxController />
+        </FormGroup>
+        <FormGroup disabled>
+          <Label>And for this, pick just one (but it's disabled)</Label>
+          <RadioController />
+        </FormGroup>
+      </FormBox>
+  </Story>
+</Preview>
+
+## ```FormBox``` Component
+
+Wraps all children components and spaces them.
+
+<Props of={FormBox} />
+
+## ```FormGroup``` Component
+
+Wraps a desired label and Input.
+
+<Props of={FormGroup} />
+
+## ```Label``` Component
+
+Wraps text with label. The default styled Text (```LabelText```) that is used within is also externalized, for eventual extensions and modifications.
+
+<Props of={Label} />
