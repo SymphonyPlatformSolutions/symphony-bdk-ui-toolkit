@@ -17,8 +17,8 @@ import { AsyncDropdownHandler } from './samples/async';
 
 <hr />
 
-A Dropdown component, that wraps the basic functionalities of 
-https://github.com/JedWatson/react-select, but includes the toolbox's own styling and Components.
+A Dropdown component, that wraps the basic functionalities of
+[react-select](https://github.com/JedWatson/react-select), but includes the toolbox's own styling and Components.
 
 Please for further customization please follow the above documentation,
 everything passed to DataGrid will be propagated and **override** any prop.
@@ -37,30 +37,55 @@ The Dropdown also incorporates loading functionality, that takes in a handler to
   </Story>
 </Preview>
 
-## Sample
-```jsx
-const [value, changeValue] = useState(null);
-const options = [{
-  value: 'option1',
-  label: 'Option 1',
-}, {
-  value: 'option2',
-  label: 'Option 2',
-}, {
-  value: 'option3',
-  label: 'Option 3',
-}];
 
-return (<Dropdown
-  options={options}
-  onChange={changeValue}
-  value={value}
-/>);
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+## Controller examples
+```jsx
+export const DropdownHandler = (props) => {
+  const [chosen, changeChosen] = useState(null);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown {...props} value={chosen} onChange={changeChosen} />
+    </Box>
+  );
+};
+
+export const AsyncDropdownHandler = (props) => {
+  const { options, ...rest } = props;
+  const [chosen, changeChosen] = useState(null);
+  const [isLoading, toggleIsLoading] = useState(false);
+  const [loadedOptions, changeLoadedOptions] = useState([]);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown
+        {...rest}
+        value={chosen}
+        onChange={changeChosen}
+        isLoading={isLoading}
+        clickHandler={() => {
+          toggleIsLoading(true);
+          changeLoadedOptions([]);
+          setTimeout(() => {
+            changeLoadedOptions(options.slice(Math.floor(Math.random() * 3) + 2));
+            toggleIsLoading(false);
+          }, 1000);
+        }}
+        options={loadedOptions}
+      />
+    </Box>
+  );
+};
+
+
 ```
 
 ## States
 
-<Preview>
+<Preview withSource="open">
   <Story name="States">
     <Box horizontal>
       <Box style={{height: '200px'}}>
@@ -77,7 +102,7 @@ return (<Dropdown
 
 The Empty message can be customized via the ```noOptionsMessage``` prop.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Empty">
     <Box horizontal>
       <Box style={{height: '90px'}}>
@@ -91,7 +116,7 @@ The Empty message can be customized via the ```noOptionsMessage``` prop.
 
 For Asynchronous data requests, the ```clickHandler``` prop can be used. This allows the user to pass a callback that runs everytime the Dropdown is clicked. This can be used in conjuntion with the ```isLoading``` prop, to set the Dropdown in an intermediate loading state.
 
-<Preview>
+<Preview withSource="open">
   <Story name="Loading">
     <Box horizontal>
       <Box style={{height: '110px'}}>
@@ -101,7 +126,7 @@ For Asynchronous data requests, the ```clickHandler``` prop can be used. This al
   </Story>
 </Preview>
 
-<Preview>
+<Preview withSource="open">
   <Story name="Async">
     <Box horizontal>
       <Box style={{height: '110px'}}>

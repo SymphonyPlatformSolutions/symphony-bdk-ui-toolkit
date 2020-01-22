@@ -18,15 +18,60 @@ import { CheckBoxComponent, IndeterminateCheckbox } from './samples/wrappers';
 
 Basic checkbox component, with on/off toggling, and an optional *indeterminate* state.
 
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
 <Preview withSource="none">
   <Story name="Base">
     <CheckBoxComponent />
   </Story>
 </Preview>
 
+## Controller examples
+
+```jsx
+const CheckBoxComponent = (props) => {
+  const { children, checked, ...rest } = props;
+  const [isChecked, setCheckMark] = useState(checked);
+
+  return (
+    <Checkbox
+      {...rest}
+      checked={isChecked}
+      onChange={({ target: { checked } }) => setCheckMark(checked)}
+    >{children}
+    </Checkbox>
+  );
+};
+
+const IndeterminateCheckbox = (props) => {
+  const { children, forceIndeterminate, ...rest } = props;
+  const [isChecked, setCheckMark] = useState(true);
+  const [isIndeterminate, setIndeterminate] = useState(!!forceIndeterminate);
+  return (
+    <Checkbox
+      {...rest}
+      indeterminate={isIndeterminate}
+      checked={isChecked}
+      onChange={() => {
+        if (isChecked && isIndeterminate) {
+          setIndeterminate(false);
+        } else if (!isChecked) {
+          setCheckMark(true);
+          setIndeterminate(true);
+        } else {
+          setCheckMark(false);
+        }
+      }}
+    >{children}
+    </Checkbox>
+  );
+};
+```
+
 ## States
 
-<Preview withSource="none">
+<Preview withSource="open">
   <Story name="States">
     <Box>
       <CheckBoxComponent>Active</CheckBoxComponent>
@@ -38,7 +83,7 @@ Basic checkbox component, with on/off toggling, and an optional *indeterminate* 
 
 ## Indeterminate
 
-<Preview withSource="none">
+<Preview withSource="open">
   <Story name="Indeterminate">
     <Box>
       <IndeterminateCheckbox>Indeterminate Checkbox</IndeterminateCheckbox>
@@ -49,7 +94,7 @@ Basic checkbox component, with on/off toggling, and an optional *indeterminate* 
 
 ## Sizes
 
-<Preview withSource="none">
+<Preview withSource="open">
   <Story name="Sizes">
     <Box>
       <CheckBoxComponent size="large">Large Checkbox</CheckBoxComponent>

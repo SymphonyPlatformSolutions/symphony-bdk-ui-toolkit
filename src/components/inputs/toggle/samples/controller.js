@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Toggle from '../index';
 
-export const ToggleComponent = (props) => {
+export const ToggleController = (props) => {
   const [toggled, setToggle] = useState(true);
 
   return (

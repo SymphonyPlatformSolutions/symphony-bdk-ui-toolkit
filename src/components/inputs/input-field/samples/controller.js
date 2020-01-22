@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Box from '../../../layout/box';
 import InputField from '../index';
-import Text from '../../../misc/text';
 
 export const InputFieldController = (props) => {
   const [input, setInput] = useState('');

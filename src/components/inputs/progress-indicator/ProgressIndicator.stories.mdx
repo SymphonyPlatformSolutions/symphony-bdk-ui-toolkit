@@ -21,7 +21,7 @@ Progress Indicator component, showing in which step a certain multi-step action 
 Simply takes in the number of steps, and which step it's currently on. Can be set horizontally as well.
 The length of the Progress Indicator can also be changed, by passing the ```length``` value, as a number prop (in px).
 
-<Preview>
+<Preview withSource="open">
   <Story name="Base">
     <ProgressController steps={3} />
   </Story>
@@ -29,7 +29,7 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
 
 ## More steps
 
-<Preview>
+<Preview withSource="open">
   <Story name="More Steps">
     <Box horizontal>
       <ProgressController steps={3} />
@@ -41,7 +41,7 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
 
 ## Horizontal
 
-<Preview>
+<Preview withSource="open">
   <Story name="Horizontal">
     <Box>
       <ProgressController horizontal steps={3} />
@@ -53,7 +53,7 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
 
 ## Custom length
 
-<Preview>
+<Preview withSource="open">
   <Story name="Custom Length">
     <Box>
       <ProgressController length={200} horizontal steps={3} />

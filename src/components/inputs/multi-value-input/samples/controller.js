@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import Faker from 'faker';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import MultiValueInput from '../index';
 import Box from '../../../layout/box';
-import Text from '../../../misc/text';
-import QuoteProductTag from '../../../financial/quote-product-tag';
 
 export const SearchWrapper = (props) => {
   const [currentdata, setCurrentdata] = useState([]);

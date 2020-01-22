@@ -75,6 +75,96 @@ value = [
 To change the "clear message" button, that wipes all current values, you can utilize the ```clearMessage``` prop.
 Additionally, you can alter the "no results found" message by passing a ```noResultsMessage``` prop.
 
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+## Controller examples
+
+```jsx
+const SearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '400px' }}>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+const Tag = (props) => {
+  const { hasClose, removeHandler, element } = props;
+
+  if (Array.isArray(element)) {
+    return (
+      <TagContainer>
+        <QuoteProductTag
+          sideInfo={element[0].label}
+          mainInfo={element[1] ? element[1].label : ''}
+          tagState={hasClose ? 'active' : 'default'}
+          onClose={() => removeHandler(element.value)}
+        />
+      </TagContainer>
+    );
+  }
+
+  return (
+    <TagContainer>
+      <QuoteProductTag
+        mainInfo={element.label}
+        tagState={hasClose ? 'active' : 'default'}
+        onClose={() => removeHandler(element.value)}
+      />
+    </TagContainer>
+  );
+};
+
+const MultiLayerSearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    [
+      (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+    ],
+    [
+      (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
+    ],
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+```
+
 ## Custom Components
 ### ```CustomTag```
 
@@ -124,7 +214,7 @@ const Tag = (props) => {
 
 For extending the Menu items, you can pass a CustomMenuItem prop.
 
-It receives the following props: 
+It receives the following props:
 
 ```jsx
 element = <Object containing value and label>

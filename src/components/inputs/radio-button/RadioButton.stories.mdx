@@ -24,28 +24,47 @@ Basic checkbox component, that behaves as the vanilla HTML tag. Do keep in mind 
   </Story>
 </Preview>
 
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+### Controler example
+
 ```jsx
-<RadioButton
-  id="radio1"
-  groupName="radiogroup1"
-  onChange={() => setChecked(1)}
->Option 1
-</RadioButton>
-<RadioButton
-  id="radio2"
-  groupName="radiogroup1"
-  onChange={() => setChecked(2)}
->Option 2
-</RadioButton>
-<RadioButton
-  id="radio3"
-  groupName="radiogroup1"
-  onChange={() => setChecked(3)}
->Option 3
-</RadioButton>
+const RadioGroup = ({ disabled, groupNumber }) => {
+  const [checkedId, setChecked] = useState(1);
+
+  return (
+    <Box type="flat">
+      <RadioButton
+        checked={checkedId === 1}
+        id={`radio1${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(1)}
+        disabled={disabled}
+      >Option 1
+      </RadioButton>
+      <RadioButton
+        checked={checkedId === 2}
+        id={`radio2${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(2)}
+        disabled={disabled}
+      >Option 2
+      </RadioButton>
+      <RadioButton
+        checked={checkedId === 3}
+        id={`radio3${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(3)}
+        disabled={disabled}
+      >Option 3
+      </RadioButton>
+    </Box>
+  );
+};
 ```
 
-## Disabled 
+## Disabled
 
 <Preview withSource="none">
   <Story name="Disabled">

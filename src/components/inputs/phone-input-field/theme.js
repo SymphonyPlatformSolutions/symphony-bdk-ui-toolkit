@@ -1,8 +1,6 @@
-import { darken, transparentize } from 'polished';
+import { darken } from 'polished';
 import styled from 'styled-components';
 import Text from '../../misc/text';
-import { THEME_TYPES } from '../../../styles/colors';
-
 
 const getThemedBorderColor = ({ theme, inputState }) => {
   if (inputState === 'error') {

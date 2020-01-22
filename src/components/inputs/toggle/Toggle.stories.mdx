@@ -8,7 +8,7 @@ import {
   Link
 } from "@storybook/addon-docs/blocks";
 import Toggle from './index.js';
-import { ToggleComponent } from './samples/controller';
+import { ToggleController } from './samples/controller';
 
 <Meta title='Inputs/Toggle' component={Toggle} />
 
@@ -20,16 +20,35 @@ Toggle component. Works pretty much like a checkbox.
 
 <Preview withSource="none">
   <Story name="Base">
-    <ToggleComponent />
+    <ToggleController />
   </Story>
 </Preview>
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+### Controller example
+
+```jsx
+const ToggleController = (props) => {
+  const [toggled, setToggle] = useState(true);
+
+  return (
+    <Toggle
+      {...props}
+      toggled={toggled}
+      onChange={setToggle}
+    />
+  );
+};
+```
 
 ## Disabled
 
 <Preview withSource="none">
   <Story name="Disabled">
     <Box align="center">
-      <ToggleComponent disabled />
+      <ToggleController disabled />
       <Toggle disabled />
     </Box>
   </Story>
@@ -42,12 +61,12 @@ Color can be customized via the ```color``` prop, passing any value that is acce
 <Preview>
   <Story name="Custom Color">
     <Box align="center">
-      <ToggleComponent color="#FF9CEE" />
-      <ToggleComponent color="#C5A3FF" />
-      <ToggleComponent color="#A79AFF" />
-      <ToggleComponent color="#85E3FF" />
-      <ToggleComponent color="#AFF8DB" />
-      <ToggleComponent color="#FFABAB" />
+      <ToggleController color="#FF9CEE" />
+      <ToggleController color="#C5A3FF" />
+      <ToggleController color="#A79AFF" />
+      <ToggleController color="#85E3FF" />
+      <ToggleController color="#AFF8DB" />
+      <ToggleController color="#FFABAB" />
     </Box>
   </Story>
 </Preview>

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { withTheme } from 'styled-components';
 import Box from '../../../layout/box';
 import DecisionDropdown from '../index';
-import Text from '../../../misc/text';
-import Button from '../../../misc/button';
-import QuoteProductTag from '../../../financial/quote-product-tag';
 
 export const CONTENT = [{
   title: 'Full decision tree',

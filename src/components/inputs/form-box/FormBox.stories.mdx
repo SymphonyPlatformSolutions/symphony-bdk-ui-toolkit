@@ -16,7 +16,7 @@ import {
   RadioController,
 } from './samples/controllers';
 
-<Meta title='Inputs/Form Box' component={FormBox} />
+<Meta title='Inputs' component={FormBox} />
 
 # Form Box
 
@@ -25,7 +25,7 @@ import {
 This Component is used to structure forms and space them accordingly. The library provides 3 Components to be used in unison, as a way to better structure the input fields and their labels.
 
 <Preview withSource="open">
-  <Story name="Base">
+  <Story name="Form Box">
       <FormBox style={{ width: '32rem' }}>
         <FormGroup>
           <InputController id="normal-input" label="Normal input" />
@@ -53,6 +53,112 @@ This Component is used to structure forms and space them accordingly. The librar
       </FormBox>
   </Story>
 </Preview>
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+## Controller examples
+````jsx
+export const InputController = ({ type, ...rest }) => {
+  const [value, changeValue] = useState('');
+
+  return (
+    <InputField
+      {...rest}
+      type={type}
+      value={value}
+      onChange={({ target: { value } }) => changeValue(value)}
+    />
+  );
+};
+
+export const DropdownHandler = (props) => {
+  const [chosen, changeChosen] = useState(null);
+
+  return (
+    <Dropdown options={OPTIONS} value={chosen} onChange={changeChosen} {...props} />
+  );
+};
+
+export const CheckboxController = () => {
+  const [chosen, changeChosen] = useState({
+    a: false,
+    b: false,
+    c: false,
+  });
+
+  return (
+    <Box type="flat">
+      <Checkbox
+        checked={chosen.a}
+        onChange={() => changeChosen({ ...chosen, a: !chosen.a })}
+      >Option 1
+      </Checkbox>
+      <Checkbox
+        checked={chosen.b}
+        onChange={() => changeChosen({ ...chosen, b: !chosen.b })}
+      >Option 2
+      </Checkbox>
+      <Checkbox
+        checked={chosen.c}
+        onChange={() => changeChosen({ ...chosen, c: !chosen.c })}
+      >Option 3
+      </Checkbox>
+    </Box>
+  );
+};
+
+export const EmailController = (rest) => {
+  const [value, changeValue] = useState('');
+  const checkEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+    value,
+  );
+  const inputState = !checkEmail && value ? 'error' : null;
+  return (
+    <InputField
+      {...rest}
+      placeholder="Email"
+      value={value}
+      inputState={inputState}
+      errorMessage="Not a valid email"
+      onChange={({ target: { value } }) => changeValue(value)}
+    />
+  );
+};
+
+export const RadioController = ({ disabled }) => {
+  const [chosen, changeChosen] = useState('a');
+
+  return (
+    <Box type="flat">
+      <RadioButton
+        checked={chosen === 'a'}
+        groupname="radiogroup"
+        onChange={() => changeChosen('a')}
+        disabled={disabled}
+      >
+        This one
+      </RadioButton>
+      <RadioButton
+        checked={chosen === 'b'}
+        groupname="radiogroup"
+        onChange={() => changeChosen('b')}
+        disabled={disabled}
+      >
+        This other one
+      </RadioButton>
+      <RadioButton
+        checked={chosen === 'c'}
+        groupname="radiogroup"
+        onChange={() => changeChosen('c')}
+        disabled={disabled}
+      >
+        Actually this one
+      </RadioButton>
+    </Box>
+  );
+};
+````
 
 ## ```FormBox``` Component
 
