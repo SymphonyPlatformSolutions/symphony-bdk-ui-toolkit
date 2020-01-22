@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Box from '../box';
-import Text from '../../misc/text';
-import { THEMES } from '../../../styles/colors';
-import Card from '../card';
+import Box from '../../box';
+import Text from '../../../misc/text';
+import { THEMES } from '../../../../styles/colors';
+import Card from '../../card';
 
 const StyledComp = styled.div`
    background-color: ${(props) => props.color};

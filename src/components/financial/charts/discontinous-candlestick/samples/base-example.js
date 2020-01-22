@@ -1,13 +1,12 @@
 import React, {
   useState,
 } from 'react';
-
-import CandleStickChart from './index';
-import Box from '../../../layout/box';
-import { useAutoFetch } from '../../../../utils/auto-fetch';
-import CheckBox from '../../../inputs/checkbox';
-import Card from '../../../layout/card/index';
-import { buildDateParser } from '../helpers';
+import DiscontinousCandlestick from '../index';
+import Box from '../../../../layout/box';
+import { useAutoFetch } from '../../../../../utils/auto-fetch';
+import CheckBox from '../../../../inputs/checkbox';
+import Card from '../../../../layout/card/index';
+import { buildDateParser } from '../../helpers';
 
 const timeParser = buildDateParser();
 
@@ -34,12 +33,10 @@ const Example = () => {
   } = useAutoFetch(autoFetchConfig);
 
   const [hasGrid, setHasGrid] = useState(true);
-  const [hasCrossHair, setCrossHair] = useState(true);
   const [hasOHLCTooltip, setHLCTooltip] = useState(true);
   const [hasZoom, setZoom] = useState(true);
   const [hasEdgeIndicator, setEdgeIndicator] = useState(true);
   const [hasTooltip, setTooltip] = useState(true);
-
 
   return (
     <Box type="flat" vertical>
@@ -52,13 +49,6 @@ const Example = () => {
                 onChange={({ target: { checked } }) => setHasGrid(checked)}
                 checked={hasGrid}
               >Grid
-              </CheckBox>
-            </Box>
-            <Box type="flat">
-              <CheckBox
-                onChange={({ target: { checked } }) => setCrossHair(checked)}
-                checked={hasCrossHair}
-              >CrossHair
               </CheckBox>
             </Box>
             <Box type="flat">
@@ -93,13 +83,13 @@ const Example = () => {
         </Box>
       </Card>
       <Box style={{ width: '100%', height: '500px' }}>
-        <CandleStickChart
-          tickSizeX={10}
+        <DiscontinousCandlestick
+          tickSizeX={5}
+          tickSizeY={10}
           loading={isDataLoading}
           data={results}
           title="MFST"
           hasGrid={hasGrid}
-          hasCrossHair={hasCrossHair}
           hasOHLCTooltip={hasOHLCTooltip}
           hasTooltip={hasTooltip}
           hasZoom={hasZoom}
@@ -111,7 +101,7 @@ const Example = () => {
 };
 
 export default () => (
-  <Box style={{ width: '100%', padding: '4px'}}>
+  <Box style={{ width: '100%' }}>
     <Example />
   </Box>
 );

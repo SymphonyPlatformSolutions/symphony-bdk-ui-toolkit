@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { withTheme } from 'styled-components';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
-import SSEventsListWrapper from './index';
-import { RestClient } from '../../../utils';
-import { Card } from '../../index';
-import Button from '../../misc/button';
-import MessageBox from '../../misc/message-box';
-import Toggle from '../../inputs/toggle';
-import { buildDateParser } from '../../financial/charts/helpers';
-import DiscontinousCandleStick from '../../financial/charts/discontinous-candlestick';
+import Box from '../../../layout/box';
+import Text from '../../../misc/text';
+import SSEventsListWrapper from '../index';
+import { RestClient } from '../../../../utils';
+import { Card } from '../../../index';
+import Button from '../../../misc/button';
+import MessageBox from '../../../misc/message-box';
+import Toggle from '../../../inputs/toggle';
+import { buildDateParser } from '../../../financial/charts/helpers';
+import DiscontinousCandleStick from '../../../financial/charts/discontinous-candlestick';
 
 const timeParser = buildDateParser('%Y-%m-%d');
 

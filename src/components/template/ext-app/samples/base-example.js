@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Faker from 'faker';
 import { linkTo } from '@storybook/addon-links';
-import Tabs from '../../layout/nav-tabs';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
-import Button from '../../misc/button';
-import Table from '../../data/table';
-import { NoOp } from '../../../utils/helpers';
-import HelpPageBuilder from '../../helpers/help-page-builder';
-import { PAGE_DATA_TWO_LEVELS } from '../../helpers/help-page-builder/template';
+import Tabs from '../../../layout/nav-tabs';
+import Box from '../../../layout/box';
+import Text from '../../../misc/text';
+import Button from '../../../misc/button';
+import Table from '../../../data/table';
+import { NoOp } from '../../../../utils/helpers';
+import HelpPageBuilder from '../../../helpers/help-page-builder';
+import { PAGE_DATA_TWO_LEVELS } from '../../../helpers/help-page-builder/samples/two-levels';
 
 const getFullName = () => `${Faker.name.firstName()} ${Faker.name.lastName()}`;
 const mockData = [];

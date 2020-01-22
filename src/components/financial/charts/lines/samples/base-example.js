@@ -2,13 +2,13 @@ import React, {
   useState,
 } from 'react';
 import { withTheme } from 'styled-components';
-import LineChart from './index';
-import Box from '../../../layout/box';
-import { useAutoFetch } from '../../../../utils/auto-fetch';
-import CheckBox from '../../../inputs/checkbox';
-import Card from '../../../layout/card/index';
-import { sortByDateAscending } from '../../../../utils/helpers';
-import { buildDateParser } from '../helpers';
+import LineChart from '../index';
+import Box from '../../../../layout/box';
+import { useAutoFetch } from '../../../../../utils/auto-fetch';
+import CheckBox from '../../../../inputs/checkbox';
+import Card from '../../../../layout/card/index';
+import { sortByDateAscending } from '../../../../../utils/helpers';
+import { buildDateParser } from '../../helpers';
 
 const timeParser = buildDateParser('%b %d, %Y');
 

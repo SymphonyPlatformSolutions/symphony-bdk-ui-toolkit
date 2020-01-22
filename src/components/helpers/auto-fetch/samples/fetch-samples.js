@@ -1,11 +1,11 @@
 import React from 'react';
-import AutoFetchWrapper from '.';
-import Box from '../../layout/box';
-import { CellWrapper } from '../../data/table/theme';
-import Table from '../../data/table';
-import Text from '../../misc/text';
-import Search from '../../inputs/search';
-import Button from '../../misc/button';
+import AutoFetchWrapper from '..';
+import Box from '../../../layout/box';
+import { CellWrapper } from '../../../data/table/theme';
+import Table from '../../../data/table';
+import Text from '../../../misc/text';
+import Search from '../../../inputs/search';
+import Button from '../../../misc/button';
 
 
 const autoFetchConfig = {

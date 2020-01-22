@@ -1,8 +1,8 @@
 import React from 'react';
-import { COUNTRIES_LIST } from './countries';
-import Text from '../text';
-import Box from '../../layout/box';
-import Flag from './index';
+import { COUNTRIES_LIST } from '../countries';
+import Text from '../../text';
+import Box from '../../../layout/box';
+import Flag from '../index';
 
 const buildFlagMap = () => {
   const map = [];

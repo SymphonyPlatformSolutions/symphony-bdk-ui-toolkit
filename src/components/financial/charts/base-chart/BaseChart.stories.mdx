@@ -1,7 +1,7 @@
 import Text from '../../../misc/text';
 import Box from '../../../layout/box';
 import BaseChart from './index.js';
-import BaseChartTemplate from './template'
+import BaseChartTemplate from './samples/base-example';
 import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
 
 <Meta title='Financial/Charts' component={BaseChart} />
@@ -31,7 +31,6 @@ import { createVerticalLinearGradient, hexToRGBA, last } from 'react-stockcharts
 import { curveMonotoneX } from 'd3-shape';
 import Box from '../../../layout/box';
 import Text from '../../../misc/text';
-import { StoryWrapper } from '../../../misc/wrappers';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import { buildDateParser } from '../helpers';
 import BaseChart from './index';

@@ -7,7 +7,7 @@ import Button from '../../../misc/button';
 import Card from '../../card';
 import CheckBox from '../../../inputs/checkbox';
 import InputField from '../../../inputs/input-field';
-import { AreaChartExample } from '../../../financial/charts/base-chart/template';
+import { AreaChartExample } from '../../../financial/charts/base-chart/samples/base-example';
 import DiscontinousCandleStick from '../../../financial/charts/discontinous-candlestick';
 import { useAutoFetch } from '../../../../utils/auto-fetch';
 import { buildDateParser } from '../../../financial/charts/helpers';

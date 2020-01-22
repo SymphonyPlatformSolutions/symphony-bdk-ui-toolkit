@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { UpArrow } from 'styled-icons/boxicons-solid';
-import Box from '../../layout/box';
-import Table from '../../data/table';
-import Text from '../../misc/text';
-import SSEventsListWrapper from './index';
-import { RestClient } from '../../../utils';
-import { Card } from '../../index';
-import Button from '../../misc/button';
-import MessageBox from '../../misc/message-box';
-import TextLink from '../../misc/text-link';
-import Toggle from '../../inputs/toggle';
-import TableElements from '../../data/table/components/table-elements';
-import { CellWrapper } from '../../data/table/theme';
+import Box from '../../../layout/box';
+import Table from '../../../data/table';
+import Text from '../../../misc/text';
+import SSEventsListWrapper from '../index';
+import { RestClient } from '../../../../utils';
+import { Card } from '../../../index';
+import Button from '../../../misc/button';
+import MessageBox from '../../../misc/message-box';
+import TextLink from '../../../misc/text-link';
+import Toggle from '../../../inputs/toggle';
+import TableElements from '../../../data/table/components/table-elements';
+import { CellWrapper } from '../../../data/table/theme';
 
 const StyledArrow = styled(UpArrow)`
   transform: ${props => (props.increased ? '0' : 'rotate(180deg)')};

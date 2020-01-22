@@ -9,7 +9,6 @@ import withTextSizer from './custom-addons/text-sizer';
 import './config.css';
 import { SizeContext } from './custom-addons/text-sizer/text-size-provider';
 import { StoryWrapper } from '../src/components/misc/wrappers';
-import { themes } from '@storybook/theming'
 import theme from './theme';
 
 Logger.setEnv({

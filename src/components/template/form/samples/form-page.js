@@ -1,17 +1,17 @@
 import React from 'react';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
-import Button from '../../misc/button';
+import Box from '../../../layout/box';
+import Text from '../../../misc/text';
+import Button from '../../../misc/button';
 import {
   Card, FormBox, FormGroup, Label,
-} from '../../index';
+} from '../../../index';
 import {
   InputController,
   DropdownHandler,
   CheckboxController,
   EmailController,
   RadioController,
-} from '../../inputs/form-box/samples/controllers';
+} from '../../../inputs/form-box/samples/controllers';
 
 const FormPage = () => (
   <Box vertical space={10} style={{ width: '100%' }}>
