@@ -107,6 +107,29 @@ html, body {
   }
  }
 
+
+.sbdocs-table {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+}
+
+.sbdocs-table {
+  width: 100%;
+  color: #f1f2f3;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.sbdocs-table ,tr ,th, td {
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: #f1f2f3;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  background-color: #232529;
+}
+
 .docblock-propstable {
   box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
 }
