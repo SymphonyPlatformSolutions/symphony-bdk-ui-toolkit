@@ -1,0 +1,55 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Toggle from './index.js';
+import { ToggleComponent } from './samples/controller';
+
+<Meta title='Inputs/Toggle' component={Toggle} />
+
+# Toggle
+
+<hr />
+
+Toggle component. Works pretty much like a checkbox.
+
+<Preview withSource="none">
+  <Story name="Base">
+    <ToggleComponent />
+  </Story>
+</Preview>
+
+## Disabled
+
+<Preview withSource="none">
+  <Story name="Disabled">
+    <Box align="center">
+      <ToggleComponent disabled />
+      <Toggle disabled />
+    </Box>
+  </Story>
+</Preview>
+
+## Custom Color
+
+Color can be customized via the ```color``` prop, passing any value that is accepted as CSS.
+
+<Preview>
+  <Story name="Custom Color">
+    <Box align="center">
+      <ToggleComponent color="#FF9CEE" />
+      <ToggleComponent color="#C5A3FF" />
+      <ToggleComponent color="#A79AFF" />
+      <ToggleComponent color="#85E3FF" />
+      <ToggleComponent color="#AFF8DB" />
+      <ToggleComponent color="#FFABAB" />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Toggle} />

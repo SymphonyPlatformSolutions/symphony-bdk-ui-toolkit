@@ -1,11 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import Box from '../box';
 import Text from '../../misc/text';
-import Info from './info.md';
 import { THEMES } from '../../../styles/colors';
-import { StoryWrapper } from '../../misc/wrappers';
 import Card from '../card';
 
 const StyledComp = styled.div`
@@ -104,16 +101,3 @@ export const ThemeShowCase = () => {
     </Box>
   );
 };
-//
-// storiesOf('Layout', module)
-//   .add('Themes', () => (
-//     <StoryWrapper p={15}>
-//       <Box space={20}>
-//         <ThemeShowCase />
-//       </Box>
-//     </StoryWrapper>
-//   ), {
-//     notes: {
-//       markdown: Info,
-//     },
-//   });

@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import RadioButton from './index';
-import Box from '../../layout/box';
-import Text from '../../misc/text';
-import { StoryWrapper } from '../../misc/wrappers';
-import Info from './info.md';
+import RadioButton from '../index';
+import Box from '../../../layout/box';
 
-const RadioGroup = ({ disabled, groupNumber }) => {
+export const RadioGroup = ({ disabled, groupNumber }) => {
   const [checkedId, setChecked] = useState(1);
 
   return (
@@ -39,25 +34,3 @@ const RadioGroup = ({ disabled, groupNumber }) => {
     </Box>
   );
 };
-
-storiesOf('Inputs', module)
-  .addDecorator(withKnobs)
-  .add('Radio Button', () => (
-    <StoryWrapper p={15}>
-      <Box vertical space={20}>
-        <Box>
-          <Text isTitle>Radio Button</Text>
-          <RadioGroup groupNumber={1} />
-        </Box>
-        <Box>
-          <Text isTitle>Disabled Radio Button</Text>
-          <RadioGroup groupNumber={2} disabled />
-        </Box>
-      </Box>
-    </StoryWrapper>
-  ),
-  {
-    notes: {
-      markdown: Info,
-    },
-  });

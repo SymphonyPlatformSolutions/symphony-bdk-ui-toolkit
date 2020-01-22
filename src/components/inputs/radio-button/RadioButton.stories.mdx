@@ -1,0 +1,56 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import RadioButton from './index.js';
+import { RadioGroup } from './samples/controller';
+
+<Meta title='Inputs/Radio Button' component={RadioButton} />
+
+# Radio Button
+
+<hr />
+
+Basic checkbox component, that behaves as the vanilla HTML tag. Do keep in mind to group them together via the ```groupName``` prop.
+
+<Preview withSource="none">
+  <Story name="Base">
+    <RadioGroup groupNumber={1} />
+  </Story>
+</Preview>
+
+```jsx
+<RadioButton
+  id="radio1"
+  groupName="radiogroup1"
+  onChange={() => setChecked(1)}
+>Option 1
+</RadioButton>
+<RadioButton
+  id="radio2"
+  groupName="radiogroup1"
+  onChange={() => setChecked(2)}
+>Option 2
+</RadioButton>
+<RadioButton
+  id="radio3"
+  groupName="radiogroup1"
+  onChange={() => setChecked(3)}
+>Option 3
+</RadioButton>
+```
+
+## Disabled 
+
+<Preview withSource="none">
+  <Story name="Disabled">
+    <RadioGroup groupNumber={2} disabled />
+  </Story>
+</Preview>
+
+<Props of={RadioButton} />

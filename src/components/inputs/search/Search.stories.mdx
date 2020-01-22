@@ -1,7 +1,33 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Search from './index.js';
+import { SearchWrapper } from './samples/controller';
+import { DuckDuckGoWrapper } from './samples/duck-duck-go';
+
+<Meta title='Inputs/Search' component={Search} />
+
 # Search
+
+<hr />
+
 A Search typehead component that boasts of debouncing and memoization.
 
 Through callbacks, it triggers a result-filtering function, and saves results based on the same search query.
+
+<Preview>
+  <Story name="Base">
+    <Box style={{ height: '400px'}}>
+      <SearchWrapper />
+    </Box>
+  </Story>
+</Preview>
 
 ## Use
 
@@ -9,9 +35,27 @@ To use the component, the parent component must pass the search results through 
 
 The search query, triggered after a debouncing typing period, is called through the ```searchHandler``` callback, and the results should be triggered by the ```resultHandler``` callback.
 
-You can also pass in a custom CustomMenuItem Component that overrides the basic <Text> used in the dropdown menu. I takes in the ```item``` it's relative to, and the ```typedTerm```, should it be needed. 
+You can also pass in a custom CustomMenuItem Component that overrides the basic ```<Text>``` used in the dropdown menu. It takes in the ```item``` it's relative to, and the ```typedTerm```, should it be needed. 
 
-## Example
+## Multiselect
+
+<Preview>
+  <Story name="MultiSelect">
+    <Box style={{ height: '450px'}} horizontal>
+      <Box style={{ width: '280px'}} type="flat">
+        <Text isTitle size="small">Default</Text>
+        <SearchWrapper isMulti />
+      </Box>
+      <Box style={{ width: '280px'}} type="flat">
+        <Text isTitle size="small">Stacked values</Text>
+        <SearchWrapper isMulti isStack/>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+
+## Async Example
 
 ```javascript
 const DuckDuckGoWrapper = () => {
@@ -70,51 +114,12 @@ const DuckDuckGoWrapper = () => {
 };
 ```
 
-### Custom MenuItem Example
+<Preview>
+  <Story name="Async">
+    <Box style={{ height: '400px'}}>
+      <DuckDuckGoWrapper />
+    </Box>
+  </Story>
+</Preview>
 
-```jsx
-const CustomItem = ({ item }) => (
-  <Text
-    style={{
-      color: '#DEE4E7',
-      backgroundColor: '#37474F',
-      padding: '4px 6px',
-      borderRadius: '3px',
-      transition: 'all 0.3s linear',
-    }}
-  >
-    {item.label}
-  </Text>
-);
-
-[...]
-
-// Using the Search Component
-<Search CustomMenuItem={CustomItem} {...} />
-```
-
-## Proptypes
-```jsx
-Search.propTypes = {
-  theme: PropTypes.object.isRequired,
-  content: PropTypes.array,
-  searchHandler: PropTypes.func.isRequired,
-  resultHandler: PropTypes.func.isRequired,
-  debouncePeriod: PropTypes.number,
-  size: PropTypes.oneOf(['regular', 'large']),
-  contentLabel: PropTypes.string,
-  placeholder: PropTypes.string,
-  noResultsMessage: PropTypes.string,
-  itemChooseHandler: PropTypes.func.isRequired,
-  CustomMenuItem: PropTypes.node,
-};
-Search.defaultProps = {
-  debouncePeriod: INIT_DEBOUNCE,
-  contentLabel: 'label',
-  placeholder: 'Search...',
-  noResultsMessage: 'No results',
-  content: [],
-  size: 'regular',
-  CustomMenuItem: null,
-};
-```
+<Props of={Search} />
