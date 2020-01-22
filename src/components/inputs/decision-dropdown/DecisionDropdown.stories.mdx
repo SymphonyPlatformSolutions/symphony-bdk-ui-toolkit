@@ -14,7 +14,7 @@ import { CUSTOM_EMPTY } from './samples/custom-empty';
 import { AsyncDropdownHandler } from './samples/async';
 import { SIMPLE_CUSTOM_ITEM_CONTENT, CustomValue } from './samples/custom-value';
 
-<Meta title='Inputs/Decision Dropdown' component={DecisionDropdown} />
+<Meta title="toolbox-ui/Inputs/Decision Dropdown" component={DecisionDropdown} />
 
 # Decision Dropdown
 
@@ -46,7 +46,7 @@ The data to be passed to the component has two basic elements: options, and grou
 - **Groups** basically fit options into a single menu card.
 
 > **Option structure:**
-> 
+>
 > ```jsx
 > {
 >   value: 'Internal, unique value. Usually and ID', /* required */
@@ -57,7 +57,7 @@ The data to be passed to the component has two basic elements: options, and grou
 > ```
 
 > **Group structure:**
-> 
+>
 > ```jsx
 > {
 >   title: 'Group title', /* optional */
@@ -224,7 +224,7 @@ Whenever a given layer of the decision tree is empty, its empty message can be s
 
 If needed, instead of the ```emptyMessage``` key, a Custom component can also be passed through the ```CustomEmptyComponent``` key.
 
-For example: 
+For example:
 
 ```jsx
 const CustomEmptyComponent = withTheme(({ theme }) => (
