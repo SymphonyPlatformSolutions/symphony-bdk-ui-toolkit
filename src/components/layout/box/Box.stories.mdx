@@ -16,7 +16,7 @@ import {
   Primary
 } from "@storybook/addon-docs/blocks";
 
-<Meta title="toolbox-ui/Layout/Box" component={Box} parameters={{ order: 1 }}/>
+<Meta title="components/Layout/Box" component={Box} parameters={{order: 100}}/>
 
 # Box
 
@@ -26,7 +26,7 @@ import {
 
 Most props for the Box are a simplified relay of common CSS flex-box positioning (such as direction and padding).
 
-<Story name="Full Example">
+<Story name="Full Example" parameters={{order: 101}}>
   <ComplexExample />
 </Story>
 
@@ -36,7 +36,7 @@ Most props for the Box are a simplified relay of common CSS flex-box positioning
 ### Types
 
 <Preview>
-  <Story name="Types">
+  <Story name="Types" parameters={{order: 102}}>
     <Box justify="center">
       <HilighterBox horizontal align="center" justify="space-between" >
         <Text isTitle>
@@ -71,7 +71,7 @@ Most props for the Box are a simplified relay of common CSS flex-box positioning
 ### Positioning
 #### Horizontal
 <Preview>
-  <Story name="Horizontal Positioning">
+  <Story name="Horizontal Positioning" parameters={{order: 103}}>
     <Box style={{ width: "100%", padding: "0 35px" }}>
       <Box type="flat">
           <Text isTitle size="small">Flex-Start</Text>
@@ -98,7 +98,7 @@ Most props for the Box are a simplified relay of common CSS flex-box positioning
 
 #### Horizontal
 <Preview>
-  <Story name="Vertical Positioning">
+  <Story name="Vertical Positioning" parameters={{order: 104}}>
     <Box horizontal style={{ height: '500px', padding: "0 35px" }}>
       <Box type="flat" align="center">
         <Box horizontal type="secondary">

@@ -9,7 +9,7 @@ import {
 } from "@storybook/addon-docs/blocks";
 import Card from './index.js';
 
-<Meta title="toolbox-ui/Layout/Card" component={Card} />
+<Meta title="components/Layout/Card" component={Card} parameters={{order: 110}}/>
 
 # Card
 
@@ -19,7 +19,7 @@ Card separates components in a page, harboring them in an interface module.
 
 ## With title
 <Preview withSource="open">
-  <Story name="Base">
+  <Story name="Base" parameters={{order: 111}}>
     <Box style={{ padding: '35px', width: '100%' }} horizontal>
       <Card titleText="Card with title">
         <Box type="flat" p="10px">
@@ -32,7 +32,7 @@ Card separates components in a page, harboring them in an interface module.
 
 ## No Title
 <Preview withSource="open">
-  <Story name="No Title">
+  <Story name="No Title" parameters={{order: 112}}>
     <Box style={{ padding: '35px', width: '100%' }} horizontal>
       <Card>
         <Box type="flat" p="10px">
@@ -45,7 +45,7 @@ Card separates components in a page, harboring them in an interface module.
 
 ## With Hover Effect
 <Preview withSource="open">
-  <Story name="Hover">
+  <Story name="Hover" parameters={{order: 113}}>
     <Box style={{ padding: '35px', width: '100%' }} horizontal>
       <Card hoverEffect>
         <Box type="flat" p="10px">

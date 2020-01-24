@@ -43,20 +43,52 @@ const DocsPageWrapper = (args) =>  (
   </ThemeProvider>
 );
 
-addParameters({
-  docs: {
-    container: DocsPageWrapper,
-    page: DocsPage,
-  },
-});
+const getOrder = (entry) => {
+  return entry[1].parameters.order ? entry[1].parameters.order : 100000;
+};
 
 addParameters({
   options: {
 	  theme: theme,
-    storySort: (a, b) =>
-      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, { numeric: true }),
+    showPanel: false,
+    storySort: (a, b) => {
+	    // makes sure Welcome page is loaded first
+	    if (a[0].includes('developer-framework-getting-started--page')) {
+	      return -1;
+      } else if (b[0].includes('developer-framework-getting-started--page')) {
+	      return 1;
+      } else {
+	      // if its from developer-framework still
+	      if (a[0].includes('developer-framework-') && b[0].includes('docs-')) {
+	        // if there's an order set, use it
+	        if (getOrder(a) < getOrder(b)) {
+	          return -1;
+          // if there's an order set, use it
+	        } else if (getOrder(a) > getOrder(b)) {
+	          return 1;
+          // otherwise lets use ascending order
+          } else {
+	          return a[1].id.localeCompare(b[1].id, { numeric: true });
+          }
+        } else {
+           if (getOrder(a) < getOrder(b)) {
+	          return -1;
+          // if there's an order set, use it
+	        } else if (getOrder(a) > getOrder(b)) {
+	          return 1;
+          // otherwise lets use ascending order
+          } else {
+	          return a[1].id.localeCompare(b[1].id, { numeric: true });
+          }
+        }
+      }
+    },
     showRoots: true,
-	}
+	},
+  docs: {
+    container: DocsPageWrapper,
+    page: DocsPage,
+  },
 });
 
 addDecorator(withThemesProvider(decoratedThemes, CustomThemeProvider));
