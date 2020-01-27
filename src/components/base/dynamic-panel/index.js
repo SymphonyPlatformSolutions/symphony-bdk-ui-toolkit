@@ -35,7 +35,7 @@ const AddTabButton = props => {
 const TabTitle = (props) => {
   const {
     TitleComponent, theme, removable, handleRemove,
-    title, key, changeTitleHandler,
+    title, tabIndex, changeTitleHandler,
   } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [typedValue, setTypedValue] = useState(title);
@@ -84,14 +84,18 @@ const TabTitle = (props) => {
     return (
       <TabHeader onDoubleClick={() => setIsEditing(true)} editing={isEditing}>
         {renderTabTitle()}
-        <CloseIconWrapper onMouseDown={handleRemove(key)}>
+        <CloseIconWrapper onMouseDown={handleRemove(tabIndex)}>
           <CloseIcon size={10} color={theme.colors.secondary_300} />
         </CloseIconWrapper>
       </TabHeader>
     );
   }
 
-  return renderTabTitle();
+  return (
+    <TabHeader onDoubleClick={() => setIsEditing(true)} editing={isEditing}>
+      {renderTabTitle()}
+    </TabHeader>
+  );
 };
 
 TabTitle.propTypes = {
@@ -134,6 +138,7 @@ const DynamicTabs = ({
           title={tab.title}
           TitleComponent={tab.TitleComponent}
           theme={theme}
+          tabIndex={index}
           key={tab.key}
           handleRemove={handleRemove}
           removable={tabsRemovable}
