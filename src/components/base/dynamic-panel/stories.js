@@ -108,6 +108,15 @@ const DynamicTabsSample = () => {
     setData(getTabs());
   };
 
+  const tabChange = (index) => {
+    setActiveTab(index);
+  };
+
+  const changeTitleHandler = (newTitle, index) => {
+    dynamicTabs[index].title = newTitle;
+    setData(getTabs());
+  };
+
   useEffect(() => {
     setData(getTabs());
   }, [activeTab,
@@ -184,6 +193,10 @@ const DynamicTabsSample = () => {
           showSelectedTabIndicator={isShowingTabIndicator}
           tabsRemovable={areTabsRemovable}
           activeTab={activeTab}
+          onChange={tabChange}
+          onCreate={onAddElement}
+          changeTitleHandler={changeTitleHandler}
+          hasAddButton
         />
       </Box>
     </Box>
