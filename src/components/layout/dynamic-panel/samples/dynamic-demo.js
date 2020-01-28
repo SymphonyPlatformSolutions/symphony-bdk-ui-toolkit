@@ -77,78 +77,6 @@ const getTabs = () => dynamicTabs.map((tab, index) => ({
   key: index,
 }));
 
-const ControlPanel = props => {
-  const {
-    responsiveBreakpoint,
-    setResponsiveBreakpoint,
-    activeTab,
-    handleActiveTab,
-    isResponsive,
-    setIsResponsive,
-    isWrappingTabs,
-    setIsWrappingTabs,
-    isShowingTabIndicator,
-    setIsShowingTabIndicator,
-    setAreTabsRemovable,
-    areTabsRemovable,
-    onAddElement,
-  } = props;
-  return (
-    <Box align="end">
-      <Card>
-        <Box horizontal justify="space-evenly">
-          <Box justify="space-evenly" style={{ paddingTop: '8px' }}>
-            <Box horizontal>
-              <InputField
-                type="number"
-                label="Responsive Breakpoint"
-                placeholder="1400"
-                value={responsiveBreakpoint}
-                onChange={({ target }) => setResponsiveBreakpoint(parseInt(target.value, 10))}
-              />
-              <InputField
-                type="number"
-                label="Active Tabs"
-                placeholder="0"
-                value={activeTab}
-                onChange={handleActiveTab}
-              />
-            </Box>
-          </Box>
-          <Box type="flat" justify="center" style={{ flexWrap: 'wrap', width: '270px', height: '75px' }}>
-            <CheckBox
-              onChange={() => setIsResponsive(!isResponsive)}
-              checked={isResponsive}
-            >
-              Responsive
-            </CheckBox>
-            <CheckBox
-              onChange={() => setIsWrappingTabs(!isWrappingTabs)}
-              checked={isWrappingTabs}
-            >
-              WrapTabs
-            </CheckBox>
-            <CheckBox
-              onChange={() => setIsShowingTabIndicator(!isShowingTabIndicator)}
-              checked={isShowingTabIndicator}
-            >
-              Tab Indicator
-            </CheckBox>
-            <CheckBox
-              onChange={() => setAreTabsRemovable(!areTabsRemovable)}
-              checked={areTabsRemovable}
-            >
-              Removable Tabs
-            </CheckBox>
-          </Box>
-          <Box justify="center">
-            <Button onClick={onAddElement}>Add Item</Button>
-          </Box>
-        </Box>
-      </Card>
-    </Box>
-  );
-};
 
 export const DynamicTabsSample = () => {
   const [data, setData] = useState(getTabs());
@@ -159,27 +87,39 @@ export const DynamicTabsSample = () => {
   const [isWrappingTabs, setIsWrappingTabs] = useState(true);
   const [isShowingTabIndicator, setIsShowingTabIndicator] = useState(false);
   const [areTabsRemovable, setAreTabsRemovable] = useState(true);
+  const [hasAddTabs, setAddTabs] = useState(true);
+
 
   const onAddElement = () => {
-    dynamicTabs.push({ title: 'Example Tab', body: <ExampleTab /> });
+    dynamicTabs.push(
+      { title: 'Example Tab', body: (<ExampleTab />) },
+    );
     setData(getTabs());
   };
 
-  const handleRemove = index => {
+  const handleRemove = (index) => {
     dynamicTabs.splice(index, 1);
+    setData(getTabs());
+  };
+
+  const tabChange = (index) => {
+    setActiveTab(index);
+  };
+
+  const changeTitleHandler = (newTitle, index) => {
+    dynamicTabs[index].title = newTitle;
     setData(getTabs());
   };
 
   useEffect(() => {
     setData(getTabs());
-  }, [
-    activeTab,
+  }, [activeTab,
     isResponsive,
     isWrappingTabs,
     isShowingTabIndicator,
     areTabsRemovable,
-    responsiveBreakpoint,
-  ]);
+    hasAddTabs,
+    responsiveBreakpoint]);
 
   const handleActiveTab = ({ target }) => {
     const value = parseInt(target.value, 10);
@@ -194,21 +134,59 @@ export const DynamicTabsSample = () => {
 
   return (
     <Box vertical space={30} style={{ width: '100%', padding: '0 30px', height: '-webkit-fill-available' }}>
-      <ControlPanel
-        responsiveBreakpoint={responsiveBreakpoint}
-        setResponsiveBreakpoint={setResponsiveBreakpoint}
-        activeTab={activeTab}
-        handleActiveTab={handleActiveTab}
-        isResponsive={isResponsive}
-        setIsResponsive={setIsResponsive}
-        isWrappingTabs={isWrappingTabs}
-        setIsWrappingTabs={setIsWrappingTabs}
-        isShowingTabIndicator={isShowingTabIndicator}
-        setIsShowingTabIndicator={setIsShowingTabIndicator}
-        setAreTabsRemovable={setAreTabsRemovable}
-        areTabsRemovable={areTabsRemovable}
-        onAddElement={onAddElement}
-      />
+      <Box align="end">
+        <Card>
+          <Box horizontal justify="flex-end" align="center">
+            <InputField
+              type="number"
+              label="Responsive Breakpoint"
+              placeholder="1400"
+              value={responsiveBreakpoint}
+              onChange={({ target }) => setResponsiveBreakpoint(parseInt(target.value, 10))}
+            />
+            <InputField
+              type="number"
+              label="Active Tabs"
+              placeholder="0"
+              value={activeTab}
+              onChange={handleActiveTab}
+            />
+            <Box type="flat" vertical>
+              <CheckBox
+                onChange={() => setIsResponsive(!isResponsive)}
+                checked={isResponsive}
+              >Responsive
+              </CheckBox>
+              <CheckBox
+                onChange={() => setAddTabs(!hasAddTabs)}
+                checked={hasAddTabs}
+              >Add Button
+              </CheckBox>
+            </Box>
+            <Box type="flat" vertical>
+              <CheckBox
+                onChange={() => setIsWrappingTabs(!isWrappingTabs)}
+                checked={isWrappingTabs}
+              >WrapTabs
+              </CheckBox>
+              <CheckBox
+                onChange={() => setIsShowingTabIndicator(!isShowingTabIndicator)}
+                checked={isShowingTabIndicator}
+              >TabIndicator
+              </CheckBox>
+            </Box>
+            <CheckBox
+              onChange={() => setAreTabsRemovable(!areTabsRemovable)}
+              checked={areTabsRemovable}
+            >Removable Tabs
+            </CheckBox>
+
+            <Box>
+              <Button onClick={onAddElement}>Add Item</Button>
+            </Box>
+          </Box>
+        </Card>
+      </Box>
       <Box type="flat">
         <DynamicTabs
           tabs={data}
@@ -219,6 +197,10 @@ export const DynamicTabsSample = () => {
           showSelectedTabIndicator={isShowingTabIndicator}
           tabsRemovable={areTabsRemovable}
           activeTab={activeTab}
+          onChange={tabChange}
+          onCreate={onAddElement}
+          changeTitleHandler={changeTitleHandler}
+          hasAddButton={hasAddTabs}
         />
       </Box>
     </Box>
