@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { THEME_TYPES } from '../../..';
+import InputField from '../input-field';
+import Text from '../text';
 
 export const StyledPanelContainer = styled.div`
   border-radius: 2px;
@@ -35,15 +37,18 @@ export const RRTStyleOverride = createGlobalStyle`
     margin-top: 1px;
     border: none !important;
     width: 150px;
+    transition: all 0.3s;
     :hover {
       background-color: ${({ theme }) => theme.colors.grey_400} !important;
     }
+    padding: 0 !important;
   }
   .RRT__tab--selected {
     margin-right: inherit;
     background-color: ${({ theme }) => theme.colors.grey_050} !important;
     margin-top: inherit;
     margin-left: -1px;
+    transition: all 0.3s;
     :hover {
       background-color: ${({ theme }) => theme.colors.grey_050} !important;
     }
@@ -54,6 +59,18 @@ export const RRTStyleOverride = createGlobalStyle`
     right: 0 !important;
     top: 0 !important;
     margin-left: 0px;
+  }
+  .RRT__tab.RRT__add-tab { 
+    padding: 0;
+    border: transparent;
+    background-color: transparent !important;
+    display: flex;
+    align-items: center;
+    width: auto;
+    justify-content: center;
+    :hover {
+
+    }
   }
   .RRT__showmore {
     background: #eee;
@@ -75,12 +92,14 @@ export const RRTStyleOverride = createGlobalStyle`
 `;
 
 export const TabHeader = styled.div`
-  width: 160px;
+  padding: ${({ editing }) => (editing ? '7px 6px' : '12px 6px')};
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
-
 
 export const CloseIconWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary_050};
@@ -88,9 +107,43 @@ export const CloseIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
   margin-left: 5px;
   :hover {
     background-color: ${({ theme }) => theme.colors.secondary_100}
   }
 ;
+`;
+
+export const IconContainer = styled.div`
+  height: 100%;
+  cursor: pointer;
+  padding: 3px 8px 0 8px;
+  align-items: center;
+  display: flex;
+`;
+
+export const AddTabIcon = styled.div`
+  border-radius: 50%;
+  transition: all 0.3s;
+  height: 28px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${IconContainer}:hover & {
+    background-color: ${({ theme }) => theme.colors.grey_300} !important;
+  }
+`;
+
+export const TabText = styled(Text)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const EditTabTitleInput = styled(InputField)`
+  padding: 3px 7px;
 `;

@@ -94,6 +94,8 @@ const DynamicTabsSample = () => {
   const [isWrappingTabs, setIsWrappingTabs] = useState(true);
   const [isShowingTabIndicator, setIsShowingTabIndicator] = useState(false);
   const [areTabsRemovable, setAreTabsRemovable] = useState(true);
+  const [hasAddTabs, setAddTabs] = useState(true);
+
 
 
   const onAddElement = () => {
@@ -108,6 +110,15 @@ const DynamicTabsSample = () => {
     setData(getTabs());
   };
 
+  const tabChange = (index) => {
+    setActiveTab(index);
+  };
+
+  const changeTitleHandler = (newTitle, index) => {
+    dynamicTabs[index].title = newTitle;
+    setData(getTabs());
+  };
+
   useEffect(() => {
     setData(getTabs());
   }, [activeTab,
@@ -115,6 +126,7 @@ const DynamicTabsSample = () => {
     isWrappingTabs,
     isShowingTabIndicator,
     areTabsRemovable,
+    hasAddTabs,
     responsiveBreakpoint]);
 
   const handleActiveTab = ({ target }) => {
@@ -153,6 +165,11 @@ const DynamicTabsSample = () => {
             >Responsive
             </CheckBox>
             <CheckBox
+              onChange={() => setAddTabs(!hasAddTabs)}
+              checked={hasAddTabs}
+            >Add Button
+            </CheckBox>
+            <CheckBox
               onChange={() => setIsWrappingTabs(!isWrappingTabs)}
               checked={isWrappingTabs}
             >WrapTabs
@@ -184,6 +201,10 @@ const DynamicTabsSample = () => {
           showSelectedTabIndicator={isShowingTabIndicator}
           tabsRemovable={areTabsRemovable}
           activeTab={activeTab}
+          onChange={tabChange}
+          onCreate={onAddElement}
+          changeTitleHandler={changeTitleHandler}
+          hasAddButton={hasAddTabs}
         />
       </Box>
     </Box>

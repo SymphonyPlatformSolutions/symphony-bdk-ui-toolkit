@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes, { arrayOf } from 'prop-types';
 import { withTheme } from 'styled-components';
 import Tabs from 'react-responsive-tabs';
@@ -9,6 +7,10 @@ import {
   RRTStyleOverride,
   TabHeader,
   CloseIconWrapper,
+  AddTabIcon,
+  IconContainer,
+  EditTabTitleInput,
+  TabText,
 } from './theme';
 
 import 'react-responsive-tabs/styles.css';
@@ -16,6 +18,109 @@ import { CloseIcon } from '../../..';
 import { NoOp } from '../../../utils/helpers';
 import Text from '../text';
 
+const ENTER_KEY = 13;
+const ESCAPE_KEY = 27;
+
+const AddTabButton = props => {
+  const { onClick } = props;
+
+  return (
+    <IconContainer onClick={onClick}>
+      <AddTabIcon>
+        <Text isTitle style={{ fontWeight: 'normal', marginTop: '2px' }}>+</Text>
+      </AddTabIcon>
+    </IconContainer>
+  );
+};
+
+const TabTitle = (props) => {
+  const {
+    TitleComponent, theme, removable, handleRemove,
+    title, tabIndex, changeTitleHandler,
+  } = props;
+  const [isEditing, setIsEditing] = useState(false);
+  const [typedValue, setTypedValue] = useState(title);
+
+  const resetInput = (forceResest) => {
+    setIsEditing(false);
+    if (typedValue && !forceResest) {
+      changeTitleHandler(typedValue);
+    } else {
+      setTypedValue(title);
+    }
+  };
+
+  const keyDownHandler = ({ keyCode }) => {
+    if (keyCode === ENTER_KEY) {
+      resetInput();
+    }
+    if (keyCode === ESCAPE_KEY) {
+      resetInput(true);
+    }
+  };
+
+  const handleType = (e) => {
+    setTypedValue(e.target.value);
+  };
+
+  function renderTabTitle() {
+    const autoFocus = (input) => {
+      if (input) {
+        input.getElementsByTagName('input')[0].focus();
+      }
+    };
+
+    if (isEditing) {
+      return (
+        <div ref={autoFocus}>
+          <EditTabTitleInput
+            onBlur={() => resetInput()}
+            value={typedValue}
+            placeholder={title}
+            onKeyDown={keyDownHandler}
+            onChange={handleType}
+            autofocus
+          />
+        </div>
+      );
+    }
+
+    if (TitleComponent) {
+      return (
+          <TitleComponent>{title}</TitleComponent>
+      );
+    }
+    return <TabText>{title}</TabText>;
+  }
+
+
+  if (removable) {
+    return (
+      <TabHeader
+        onDoubleClick={() => setIsEditing(true)}
+        editing={isEditing}
+        ref={inputRef}
+      >
+        {renderTabTitle()}
+        {!isEditing && (
+        <CloseIconWrapper onClick={handleRemove(tabIndex)}>
+          <CloseIcon size={10} color={theme.colors.secondary_300} />
+        </CloseIconWrapper>
+        )}
+      </TabHeader>
+    );
+  }
+
+  return (
+    <TabHeader onDoubleClick={() => setIsEditing(true)} editing={isEditing}>
+      {renderTabTitle()}
+    </TabHeader>
+  );
+};
+
+TabTitle.propTypes = {
+  TitleComponent: PropTypes.node,
+};
 const DynamicTabs = ({
   theme,
   tabs,
@@ -26,48 +131,56 @@ const DynamicTabs = ({
   showSelectedTabIndicator,
   tabsRemovable,
   activeTab,
+  onChange,
+  hasAddButton,
+  onCreate,
+  AddTabComponent,
+  changeTitleHandler,
 }) => {
+  function renderAddTabComponent() {
+    if (AddTabComponent) {
+      return <AddTabComponent onClick={onCreate} />;
+    }
+    return <AddTabButton onClick={onCreate} />;
+  }
   const [currentTabs, setCurrentTabs] = useState(tabs);
-  const [currentTab, setCurrentTab] = useState(0);
   const [mkey, setMkey] = useState(0);
 
-  const handleChange = (e) => {
-    setCurrentTab(e);
-  };
-  const handleRemove = (tabIndex) => (e) => {
+  const handleRemove = tabIndex => e => {
     e.stopPropagation();
     onRemove(tabIndex);
   };
 
   useEffect(() => {
-    const newTabs = tabs.map((tab) => {
-      let decoratedTitle;
-      if (tabsRemovable) {
-        decoratedTitle = (
-          <TabHeader>
-            <Text>{tab.title}</Text>
-            <CloseIconWrapper onClick={handleRemove(tab.key)}>
-              <CloseIcon size={10} color={theme.colors.secondary_300} />
-            </CloseIconWrapper>
-          </TabHeader>
-        );
-      } else {
-        decoratedTitle = (
-          <Text>
-            {tab.title}
-          </Text>
-        );
-      }
+    const newTabs = tabs.map((tab, index) => {
+      const decoratedTitle = (
+        <TabTitle
+          title={tab.title}
+          TitleComponent={tab.TitleComponent}
+          theme={theme}
+          tabIndex={index}
+          key={tab.key}
+          handleRemove={handleRemove}
+          removable={tabsRemovable}
+          changeTitleHandler={newTitle => changeTitleHandler(newTitle, index)}
+        />
+      );
+
       tab.title = decoratedTitle;
       return tab;
     });
-
+    if (hasAddButton) {
+      newTabs.push({
+        title: renderAddTabComponent(),
+        body: null,
+        tabClassName: 'RRT__add-tab',
+      });
+    }
     setCurrentTabs(newTabs);
     setMkey(mkey + 1);
   }, [tabs, activeTab]);
 
   useEffect(() => {
-    setCurrentTab(activeTab);
     setMkey(mkey + 1);
   }, [activeTab]);
 
@@ -76,12 +189,12 @@ const DynamicTabs = ({
       <RRTStyleOverride theme={theme} />
       <Tabs
         items={currentTabs}
-        onChange={handleChange}
+        onChange={onChange}
         showMore={wrapTabs}
         transformWidth={responsiveBreakpoint}
         transform={isResponsive}
         showInkBar={showSelectedTabIndicator}
-        selectedTabKey={currentTab}
+        selectedTabKey={activeTab}
       />
     </StyledPanelContainer>
   );
@@ -92,11 +205,13 @@ DynamicTabs.propTypes = {
     mode: PropTypes.string,
     colors: arrayOf(PropTypes.object),
   }).isRequired,
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.oneOf([PropTypes.node, PropTypes.string]),
-    getContent: PropTypes.func,
-    key: PropTypes.number,
-  })),
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.oneOf([PropTypes.node, PropTypes.string]),
+      getContent: PropTypes.func,
+      key: PropTypes.number,
+    }),
+  ),
   onRemove: PropTypes.func,
   isResponsive: PropTypes.bool,
   responsiveBreakpoint: PropTypes.number,
@@ -104,6 +219,11 @@ DynamicTabs.propTypes = {
   showSelectedTabIndicator: PropTypes.bool,
   tabsRemovable: PropTypes.bool,
   activeTab: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  hasAddButton: PropTypes.bool,
+  onCreate: PropTypes.func,
+  AddTabComponent: PropTypes.node,
+  changeTitleHandler: PropTypes.func,
 };
 
 DynamicTabs.defaultProps = {
@@ -115,6 +235,10 @@ DynamicTabs.defaultProps = {
   showSelectedTabIndicator: false,
   tabsRemovable: false,
   activeTab: 0,
+  hasAddButton: false,
+  onCreate: null,
+  AddTabComponent: null,
+  changeTitleHandler: null,
 };
 
 export default withTheme(DynamicTabs);
