@@ -1,0 +1,130 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import InputField from './index.js';
+import { InputFieldController } from './samples/controller';
+
+<Meta title="components/Inputs/Input Field" component={InputField} parameters={{order: 230}}/>
+
+# InputField
+
+<hr />
+
+Input field with multiple states. Can also be used as:
+- Password Input
+- Read-Only value
+- Copy Input
+- Text Area
+
+<Preview>
+  <Story name="Base">
+    <InputFieldController />
+  </Story>
+</Preview>
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+### Controller example
+
+```jsx
+const InputFieldController = (props) => {
+  const [input, setInput] = useState('');
+
+  function handleInput(e) {
+    setInput(e.target.value);
+  }
+  return (
+    <Box vertical space={20}>
+      <div style={{ width: '24rem' }}>
+        <InputField
+          {...props}
+          value={input || props.value}
+          onChange={handleInput}
+        />
+      </div>
+    </Box>
+  );
+};
+```
+
+## States
+
+<Preview withSource="open">
+  <Story name="States">
+    <Box>
+      <InputFieldController />
+      <InputFieldController inputState="error" errorMessage="My custom Error Message" />
+      <InputFieldController disabled />
+    </Box>
+  </Story>
+</Preview>
+
+
+## Sizes
+
+<Preview withSource="open">
+  <Story name="Sizes">
+    <Box horizontal>
+      <InputFieldController />
+      <InputFieldController size="large" />
+    </Box>
+  </Story>
+</Preview>
+
+## Types
+### Password
+
+Set by setting the ```type``` prop to *password*.
+
+<Preview withSource="open">
+  <Story name="Password">
+    <Box horizontal>
+      <InputFieldController type="password" />
+    </Box>
+  </Story>
+</Preview>
+
+### Read Only
+
+Set by setting the ```readOnly``` prop to *true*.
+
+<Preview withSource="open">
+  <Story name="Read-Only">
+    <Box horizontal>
+      <InputFieldController readOnly value="Some content" />
+    </Box>
+  </Story>
+</Preview>
+
+### Copy
+
+Set by setting the ```type``` prop to *copy*.
+
+<Preview withSource="open">
+  <Story name="Copy">
+    <Box horizontal>
+      <InputFieldController type="copy" readOnly value="Copyable content" />
+    </Box>
+  </Story>
+</Preview>
+
+### Text Area
+
+Set by setting the ```type``` prop to *textarea*.
+
+<Preview withSource="open">
+  <Story name="TextArea">
+    <Box horizontal>
+      <InputFieldController type="textarea" />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={InputField} />

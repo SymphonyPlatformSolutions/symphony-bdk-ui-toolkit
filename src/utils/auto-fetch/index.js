@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import RestClient from '../rest-client';
 
 export const useAutoFetch = ({ endpoint, params, handleData }) => {
-  if (!endpoint) {
-    return {};
-  }
   const [config, setConfig] = useState({ endpoint, params, handleData });
 
   const [results, setResults] = useState([]);
@@ -29,6 +26,16 @@ export const useAutoFetch = ({ endpoint, params, handleData }) => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [config]);
+
+
+  if (!endpoint) {
+    return {};
+  }
+
+
   const refreshData = (newConfig) => {
     if (newConfig) {
       setConfig(prevState => ({
@@ -39,10 +46,6 @@ export const useAutoFetch = ({ endpoint, params, handleData }) => {
       fetchData();
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [config]);
 
   return {
     results,

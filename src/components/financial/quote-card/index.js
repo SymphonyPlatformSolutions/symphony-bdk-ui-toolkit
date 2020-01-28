@@ -9,7 +9,7 @@ import {
   QuoteShortCodeLabel, QuoteShortCodeName, TagList,
   IconButton, getMenuIcon, getMenuStyle, ContextMenuItem,
 } from './theme';
-import Box from '../../base/box';
+import Box from '../../layout/box';
 import QuotePanel from '../quote-panel';
 import QuoteProductTag from '../quote-product-tag';
 

@@ -1,0 +1,75 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import RadioButton from './index.js';
+import { RadioGroup } from './samples/controller';
+
+<Meta title="components/Inputs/Radio Button" component={RadioButton} parameters={{order: 270}}/>
+
+# Radio Button
+
+<hr />
+
+Basic checkbox component, that behaves as the vanilla HTML tag. Do keep in mind to group them together via the ```groupName``` prop.
+
+<Preview withSource="none">
+  <Story name="Base">
+    <RadioGroup groupNumber={1} />
+  </Story>
+</Preview>
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+### Controler example
+
+```jsx
+const RadioGroup = ({ disabled, groupNumber }) => {
+  const [checkedId, setChecked] = useState(1);
+
+  return (
+    <Box type="flat">
+      <RadioButton
+        checked={checkedId === 1}
+        id={`radio1${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(1)}
+        disabled={disabled}
+      >Option 1
+      </RadioButton>
+      <RadioButton
+        checked={checkedId === 2}
+        id={`radio2${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(2)}
+        disabled={disabled}
+      >Option 2
+      </RadioButton>
+      <RadioButton
+        checked={checkedId === 3}
+        id={`radio3${groupNumber}`}
+        groupName={`radiogroup${groupNumber}`}
+        onChange={() => setChecked(3)}
+        disabled={disabled}
+      >Option 3
+      </RadioButton>
+    </Box>
+  );
+};
+```
+
+## Disabled
+
+<Preview withSource="none">
+  <Story name="Disabled">
+    <RadioGroup groupNumber={2} disabled />
+  </Story>
+</Preview>
+
+<Props of={RadioButton} />

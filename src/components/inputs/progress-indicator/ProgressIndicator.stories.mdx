@@ -1,0 +1,66 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import ProgressIndicator from './index.js';
+import { ProgressController } from './samples/controller';
+
+<Meta title="components/Inputs/Progress Indicator" component={ProgressIndicator} parameters={{order: 260}}/>
+
+# Progress Indicator
+
+<hr />
+
+Progress Indicator component, showing in which step a certain multi-step action is.
+
+Simply takes in the number of steps, and which step it's currently on. Can be set horizontally as well.
+The length of the Progress Indicator can also be changed, by passing the ```length``` value, as a number prop (in px).
+
+<Preview withSource="open">
+  <Story name="Base">
+    <ProgressController steps={3} />
+  </Story>
+</Preview>
+
+## More steps
+
+<Preview withSource="open">
+  <Story name="More Steps">
+    <Box horizontal>
+      <ProgressController steps={3} />
+      <ProgressController steps={4} />
+      <ProgressController steps={5} />
+    </Box>
+  </Story>
+</Preview>
+
+## Horizontal
+
+<Preview withSource="open">
+  <Story name="Horizontal">
+    <Box>
+      <ProgressController horizontal steps={3} />
+      <ProgressController horizontal steps={4} />
+      <ProgressController horizontal steps={5} />
+    </Box>
+  </Story>
+</Preview>
+
+## Custom length
+
+<Preview withSource="open">
+  <Story name="Custom Length">
+    <Box>
+      <ProgressController length={200} horizontal steps={3} />
+      <ProgressController length={400} horizontal steps={3} />
+      <ProgressController length={600} horizontal steps={3} />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={ProgressIndicator} />

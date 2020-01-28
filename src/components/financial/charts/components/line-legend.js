@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { darken } from 'polished';
 import { THEME_TYPES } from '../../../..';
 
 export const LineChartLegend = withTheme(({

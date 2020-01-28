@@ -1,0 +1,262 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import MultiValueInput from './index.js';
+import { SearchWrapper } from './samples/controller';
+import { Tag } from './samples/custom-tag';
+import { MultiLayerSearchWrapper } from './samples/multi-layer';
+
+<Meta title="components/Inputs/Multi Value Input" component={MultiValueInput} parameters={{order: 240}}/>
+
+# Multi Value Input
+
+<hr />
+
+A Search typehead component that triggers a sequence of GET requests depending on the values that have been selected.
+
+<Preview>
+  <Story name="Base">
+    <Box align="center">
+      <Box type="secondary" style={{ borderRadius: '6px', backgroundColor: 'rgba(53, 56, 62, 0.35)', padding: '10px' }}>
+        <Text>Type out values in the search to trigger the query API.</Text>
+        <Text>You can also use the ENTER and arrow keys to navigate the dropdown options!</Text>
+      </Box>
+      <Box style={{ height: '150px'}}>
+        <SearchWrapper />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+## Use
+
+The component needs an "Endpoints" prop, that is an array that specifies the GET search/query endpoints. They can be specified either as a fixed string, a callback that returns a string, or a recursive array of the any of the 3.
+
+This callback will receive two arguments: the current values, and the current typed term.
+
+The GET endpoint is called as soon as either the Value array changes (that is, an option is selected or deleted), or after a debouncing period that follows a typing event in the search input.
+
+Endpoints that are specified as an array will be sent to the parent component as an array. Meaning, the values are structured into the array like to follow the endpoints.
+
+For example, if the endpoints are defined as
+
+```javascript
+const endpoints = [
+  (value, typedTerm) => 'endpoint1',
+  (value, typedTerm) => 'endpoint2',
+  [
+    (value, typedTerm) => 'endpoint3',
+    (value, typedTerm) => 'endpoint4',
+  ],
+  (value, typedTerm) => 'endpoint5',
+]
+```
+
+then the values (once selected) will follow the structure
+
+```javascript
+value = [
+  { value: 'value1' },
+  { value: 'value2' },
+  [
+    { value: 'value3' },
+    { value: 'value4' },
+  ],
+  { value: 'value5' },
+]
+```
+
+To change the "clear message" button, that wipes all current values, you can utilize the ```clearMessage``` prop.
+Additionally, you can alter the "no results found" message by passing a ```noResultsMessage``` prop.
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+## Controller examples
+
+```jsx
+const SearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '400px' }}>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+const Tag = (props) => {
+  const { hasClose, removeHandler, element } = props;
+
+  if (Array.isArray(element)) {
+    return (
+      <TagContainer>
+        <QuoteProductTag
+          sideInfo={element[0].label}
+          mainInfo={element[1] ? element[1].label : ''}
+          tagState={hasClose ? 'active' : 'default'}
+          onClose={() => removeHandler(element.value)}
+        />
+      </TagContainer>
+    );
+  }
+
+  return (
+    <TagContainer>
+      <QuoteProductTag
+        mainInfo={element.label}
+        tagState={hasClose ? 'active' : 'default'}
+        onClose={() => removeHandler(element.value)}
+      />
+    </TagContainer>
+  );
+};
+
+const MultiLayerSearchWrapper = (props) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const endpoints = [
+    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    [
+      (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+    ],
+    [
+      (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
+    ],
+  ];
+
+  return (
+    <Box type="secondary">
+      <Box horizontal>
+        <MultiValueInput
+          {...props}
+          value={currentValue}
+          data={currentdata}
+          endpoints={endpoints}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+        />
+      </Box>
+    </Box>
+  );
+};
+```
+
+## Custom Components
+### ```CustomTag```
+
+You can also pass a custom CustomTag component, for the case of extending the search result tags.
+
+It receives the following props:
+
+```jsx
+element = <Object containing value and label>
+index = <Index of the element in the value array>
+hasClose = <Whether it's the last element in the value array, and can be removed>
+removeHandler = <Removal callback>
+```
+
+An example, implemented below:
+
+```jsx
+const Tag = (props) => {
+  const { hasClose, removeHandler, element } = props;
+
+  return (
+    <TagContainer>
+      <QuoteProductTag
+        mainInfo={element.label}
+        tagState={hasClose ? 'active' : 'default'}
+        onClose={() => removeHandler(element.value)}
+      />
+    </TagContainer>
+  );
+};
+
+[...]
+
+// Using the MultiValueInput Component
+<MultiValueInput CustomTag={Tag} {...} />
+```
+
+<Preview>
+  <Story name="Custom Tag">
+    <Box style={{ height: '170px'}}>
+      <SearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} />
+    </Box>
+  </Story>
+</Preview>
+
+### ```CustomMenuItem```
+
+For extending the Menu items, you can pass a CustomMenuItem prop.
+
+It receives the following props:
+
+```jsx
+element = <Object containing value and label>
+typedTerm = <The current query string>
+```
+
+## Multi Layer
+
+Multi Layer is triggered by putting the endpoints inside a recursive structure of arrays:
+
+```javascript
+const endpoints = [
+  (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+  [
+    (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+  ],
+  [
+    (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
+  ],
+];
+```
+
+This way, the Search will go down the endpoint list, editing the resulting values in the array according to the endpoint structure.
+
+<Preview>
+  <Story name="Multilayer">
+    <Box style={{ height: '170px', width: '90%'}}>
+      <MultiLayerSearchWrapper />
+    </Box>
+  </Story>
+</Preview>
+
+Example with Custom Tags:
+
+<Preview>
+  <Story name="Multilayer with Custom Tag">
+    <Box style={{ height: '170px', width: '90%'}}>
+      <MultiLayerSearchWrapper CustomTag={Tag} style={{ margin: '4px 2px' }} clearMessage="clear filter" />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={MultiValueInput} />

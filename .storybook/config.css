@@ -2,6 +2,7 @@ html, body {
   font-family: "SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif;
   font-style: normal;
   font-weight: normal;
+  height: 100%;
 }
 
 /** SYMPHONY LATO **/
@@ -72,4 +73,73 @@ html, body {
 
 .sb-show-main {
   margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+#docs-root {
+  height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+}
+
+.sbdocs-preview {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+  width: auto !important;
+}
+
+.sbdocs-wrapper {
+  width: 850px;
+}
+
+@media (max-width: 700px) {
+  .sbdocs-wrapper  {
+    width: 500px;
+  }
+ }
+
+@media (max-width: 900px) {
+  .sbdocs-wrapper  {
+    width: 850px;
+  }
+ }
+
+
+.sbdocs-table {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+}
+
+.sbdocs-table {
+  width: 100%;
+  color: #f1f2f3;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.sbdocs-table ,tr ,th, td {
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: #f1f2f3;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  background-color: #232529;
+}
+
+.docblock-propstable {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+}
+
+.sbdocs-pre {
+  box-shadow: rgba(0,0,0,0.20) 1px 3px 10px 3px !important;
+}
+
+.sbdocs-hr {
+  background: white;
+  margin: 0 0 15px 0;
+  height: 1px !important;
 }

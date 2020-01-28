@@ -1,0 +1,165 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Search from './index.js';
+import { SearchWrapper } from './samples/controller';
+import { DuckDuckGoWrapper } from './samples/duck-duck-go';
+
+<Meta title="components/Inputs/Search" component={Search} parameters={{order: 280}}/>
+
+# Search
+
+<hr />
+
+A Search typehead component that boasts of debouncing and memoization.
+
+Through callbacks, it triggers a result-filtering function, and saves results based on the same search query.
+
+<Preview>
+  <Story name="Base">
+    <Box style={{ height: '400px'}}>
+      <SearchWrapper />
+    </Box>
+  </Story>
+</Preview>
+
+## Use
+
+To use the component, the parent component must pass the search results through props, with a content label to identify which object key to display in the dropdown menu. If none is provided, the default "label" will be used.
+
+The search query, triggered after a debouncing typing period, is called through the ```searchHandler``` callback, and the results should be triggered by the ```resultHandler``` callback.
+
+You can also pass in a custom CustomMenuItem Component that overrides the basic ```<Text>``` used in the dropdown menu. It takes in the ```item``` it's relative to, and the ```typedTerm```, should it be needed.
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+### Controller example
+
+```jsx
+export const SearchWrapper = ({ CustomMenuItem, isMulti, isStack }) => {
+  const [currentdata, setCurrentdata] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  const filterFunc = (searchTerm) => {
+    setCurrentdata(
+      mockData.filter((el) => {
+        if (el.label.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return true;
+        }
+        return false;
+      }),
+    );
+  };
+
+  return (
+    <Box type="secondary">
+      <Box horizontal>
+        <Search
+          isStack={isStack}
+          value={currentValue}
+          data={currentdata}
+          searchHandler={filterFunc}
+          resultHandler={setCurrentdata}
+          itemChooseHandler={newValue => setCurrentValue(newValue)}
+          CustomMenuItem={CustomMenuItem}
+          isMulti={isMulti}
+        />
+      </Box>
+    </Box>
+  );
+};
+```
+
+## Multiselect
+
+<Preview>
+  <Story name="MultiSelect">
+    <Box style={{ height: '450px'}} horizontal>
+      <Box style={{ width: '280px'}} type="flat">
+        <Text isTitle size="small">Default</Text>
+        <SearchWrapper isMulti />
+      </Box>
+      <Box style={{ width: '280px'}} type="flat">
+        <Text isTitle size="small">Stacked values</Text>
+        <SearchWrapper isMulti isStack/>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+
+## Async Example
+
+```javascript
+const DuckDuckGoWrapper = () => {
+  const [currentContent, setCurrentContent] = useState([]);
+  const [chosenResult, setChosenResult] = useState(null);
+
+  // Function that changes the content array
+  const searchFunc = async (searchTerm) => {
+    if (!searchTerm) {
+      setCurrentContent([]);
+      return;
+    }
+    const results = await Axios.get(
+      `https://api.duckduckgo.com/?q=${encodeURIComponent(
+        searchTerm,
+      )}&format=json`,
+    );
+    const STRING_CUT = 50;
+    // Api-specific formatting
+    const endResults = results.data.RelatedTopics.map((el) => {
+      if (el.Text) {
+        return {
+          ...el,
+          shortened: el.Text.length > STRING_CUT
+            ? `${el.Text.slice(0, STRING_CUT)}...`
+            : el.Text,
+        };
+      }
+      return {
+        ...el.Topics[0],
+        shortened: el.Topics[0].Text.length > STRING_CUT
+          ? `${el.Topics[0].Text.slice(0, STRING_CUT)}...`
+          : el.Topics[0].Text,
+      };
+    });
+    setCurrentContent(endResults);
+  };
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '500px' }}>
+        <Search
+          placeholder="Search DuckDuckGo..."
+          content={currentContent}
+          searchHandler={searchFunc}
+          contentLabel="shortened"
+          resultHandler={setCurrentContent}
+          itemChooseHandler={setChosenResult}
+        />
+      </Box>
+      {chosenResult && (
+        <ResultCard {...chosenResult} />
+      )}
+    </Box>
+  );
+};
+```
+
+<Preview>
+  <Story name="Async">
+    <Box style={{ height: '400px'}}>
+      <DuckDuckGoWrapper />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Search} />

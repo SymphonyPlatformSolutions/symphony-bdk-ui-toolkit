@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import { CloseButton } from '../../base/button/icon-buttons';
+import { CloseButton } from '../../misc/button/icon-buttons';
 import {
   MainTag,
   SubTag,

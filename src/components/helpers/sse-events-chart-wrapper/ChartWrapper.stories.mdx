@@ -1,0 +1,31 @@
+import SSEEventsWrapper from '.'
+import Box from '../../layout/box';
+import Text from '../../misc/text';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import { SSEEventsChartDemo } from './samples/base-example';
+
+<Meta title="components/Helpers/SSEEventsWrapper" component={SSEEventsWrapper} />
+
+# SSEEvents Chart Implementation
+<hr />
+
+This is an example implementation of the SSEEventsWrapper. In this case we're showcasing a
+table that gets mutated by sse events. First it fetchs the initial data from an endpoint
+using the **`useAutoFetch`** helper, then starts getting the `delta` through sse. These
+events will cycle from update, create, remove if **Auto Pilot** is selected.
+
+
+<Preview withSource="none">
+  <Story name="charts">
+    <SSEEventsChartDemo />
+  </Story>
+</Preview>
+
+### Props
+<Props of={SSEEventsWrapper} />

@@ -1,0 +1,119 @@
+import Text from '../../misc/text';
+import QuoteCard from './index.js';
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="components/Financial/Quote Card" component={QuoteCard} />
+
+# Quote Card
+<hr />
+
+A card for displaying quotes. It takes producs, and descriptions as options. It implements
+a context menu for actions.
+
+### Simple
+
+This is a basic card witch contrasts dealer/buyer pricing. In order to have that
+you'll have to provide an property called **`panelData`**. here's a sample of that structure
+
+```jsx
+const panelData = {
+  dealerName: 'Dealer two',
+  dealerPayedValue: 1.75,
+  clientName: 'Client one',
+  clientPayedValue: 3,
+};
+```
+
+<Preview>
+  <Story name="with panelData">
+    <QuoteCard
+        quoteShortCode="A5"
+        colorIndex={1}
+        panelData={{
+          dealerName: 'Dealer two',
+          dealerPayedValue: 1.75,
+          clientName: 'Client one',
+          clientPayedValue: 3,
+        }}
+        productData={null}
+    />
+  </Story>
+</Preview>
+
+### Product Data
+
+This card shows the keywords that define a particular quote. In order to have that
+you'll have to provide an property called **`productData`**. here's a sample of that structure
+
+```jsx
+const productData = {
+  name: 'IRS',
+  currency: 'USD',
+  rateIndex: '3M-LIBOR',
+  clearingHouse: 'EUREX',
+  startDate: 'spot',
+  tenorDate: '1y',
+  roll: 'IMM',
+  size: {
+    type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
+  },
+  payDirection: 'pay',
+};
+```
+
+<Preview>
+  <Story name="with product data">
+    <QuoteCard
+        quoteShortCode="D5"
+        colorIndex={3}
+        productData={{
+          name: 'IRS',
+          currency: 'USD',
+          rateIndex: '3M-LIBOR',
+          clearingHouse: 'EUREX',
+          startDate: 'spot',
+          tenorDate: '1y',
+          roll: 'IMM',
+          size: {
+            type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
+          },
+          payDirection: 'pay',
+        }}
+    />
+  </Story>
+</Preview>
+
+### Both
+
+Finally, you can have both those descriptions within a single quote card. The product of that
+is displayed below:
+
+<Preview>
+  <Story name="with panel data and product data">
+    <QuoteCard
+        quoteShortCode="H1"
+        colorIndex={5}
+        panelData={{
+          dealerName: 'Dealer two',
+          dealerPayedValue: 1.75,
+          clientName: 'Client one',
+          clientPayedValue: 3,
+        }}
+        productData={{
+          name: 'IRS',
+          currency: 'USD',
+          rateIndex: '3M-LIBOR',
+          clearingHouse: 'EUREX',
+          startDate: 'spot',
+          tenorDate: '1y',
+          roll: 'IMM',
+          size: {
+            type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
+          },
+          payDirection: 'pay',
+        }}
+    />
+  </Story>
+</Preview>
+
+<Props of={QuoteCard} />

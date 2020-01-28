@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Text from '../../base/text';
+import Text from '../../misc/text';
 
 export const MainTag = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_900};

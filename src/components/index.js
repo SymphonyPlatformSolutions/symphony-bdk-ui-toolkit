@@ -1,22 +1,22 @@
-export { default as Box } from './base/box';
-export { default as Button } from './base/button';
-export { default as Card } from './base/card';
-export { default as Loader } from './base/loader';
-export { default as Separator } from './base/separator';
-export { default as Tabs } from './base/tabs';
-export { default as Text } from './base/text';
-export { default as InputField } from './base/input-field';
-export { default as Checkbox } from './base/checkbox';
-export { default as PhoneInputField } from './base/phone-input-field';
-export { default as Modal } from './base/modal';
-export { default as Flag } from './base/flags';
-export { default as Table, TableComponents } from './base/table';
-export { default as TableElements } from './base/table/components/table-elements';
-export { default as DataGrid } from './base/data-grid';
-export { default as RadioButton } from './base/radio-button';
-export { default as Dropdown } from './base/dropdown';
-export { default as MessageBox } from './base/message-box';
-export { default as TextLink } from './base/text-link';
+export { default as Box } from './layout/box';
+export { default as Button } from './misc/button';
+export { default as Card } from './layout/card';
+export { default as Loader } from './misc/loader';
+export { default as Separator } from './misc/separator';
+export { default as NavTabs } from './layout/nav-tabs';
+export { default as Text } from './misc/text';
+export { default as InputField } from './inputs/input-field';
+export { default as Checkbox } from './inputs/checkbox';
+export { default as PhoneInputField } from './inputs/phone-input-field';
+export { default as Modal } from './layout/modal';
+export { default as Flag } from './misc/flags';
+export { default as Table, TableComponents } from './data/table';
+export { default as TableElements } from './data/table/components/table-elements';
+export { default as DataGrid } from './data/data-grid';
+export { default as RadioButton } from './inputs/radio-button';
+export { default as Dropdown } from './inputs/dropdown';
+export { default as MessageBox } from './misc/message-box';
+export { default as TextLink } from './misc/text-link';
 export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
 export { default as QuoteCard } from './financial/quote-card';
@@ -26,27 +26,27 @@ export {
   FormGroup,
   Label,
   LabelText,
-} from './base/form-box';
+} from './inputs/form-box';
 export { default as AutoFetchWrapper } from './helpers/auto-fetch';
 export { default as SSEventsListWrapper } from './helpers/sse-events-wrapper';
 export {
   default as ToasterContext,
   ToasterProvider,
   ToasterConsumer,
-} from './base/toaster/toaster-context';
-export { default as Tooltip } from './base/tooltip';
-export { default as ModalRoot, DangerConfirmationModal } from './base/modal';
+} from './misc/toaster/toaster-context';
+export { default as Tooltip } from './misc/tooltip';
+export { default as ModalRoot, DangerConfirmationModal } from './layout/modal';
 export {
   default as ModalContext,
   ModalConsumer,
   ModalProvider,
-} from './base/modal/modal-context';
+} from './layout/modal/modal-context';
 export { default as HelpPageBuilder } from './helpers/help-page-builder';
 export {
   FavoriteButton,
   CloseButton,
   MoreButton,
-} from './base/button/icon-buttons';
+} from './misc/button/icon-buttons';
 export {
   EllipsisIcon,
   EmptyStarIcon,
@@ -68,12 +68,12 @@ export {
   CloseIcon,
   PricingIcon,
   SearchIcon,
-} from './base/icons';
-export { default as Search } from './base/search';
-export { default as Toggle } from './base/toggle';
-export { default as DecisionDropdown } from './base/decision-dropdown';
-export { default as ProgressIndicator } from './base/progress-indicator';
-export { default as MultiValueInput } from './base/multi-value-input';
+} from './misc/icons';
+export { default as Search } from './inputs/search';
+export { default as Toggle } from './inputs/toggle';
+export { default as DecisionDropdown } from './inputs/decision-dropdown';
+export { default as ProgressIndicator } from './inputs/progress-indicator';
+export { default as MultiValueInput } from './inputs/multi-value-input';
 export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,
@@ -89,4 +89,4 @@ export {
 } from './financial/charts/discontinous-candlestick';
 export {
   default as DynamicTabs,
-} from './base/dynamic-panel';
+} from './layout/dynamic-panel';
