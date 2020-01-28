@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { THEME_TYPES } from '../../..';
 import InputField from '../input-field';
+import Text from '../text';
 
 export const StyledPanelContainer = styled.div`
   border-radius: 2px;
@@ -93,8 +94,11 @@ export const RRTStyleOverride = createGlobalStyle`
 export const TabHeader = styled.div`
   padding: ${({ editing }) => (editing ? '7px 6px' : '12px 6px')};
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const CloseIconWrapper = styled.div`
@@ -103,6 +107,9 @@ export const CloseIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
   margin-left: 5px;
   :hover {
     background-color: ${({ theme }) => theme.colors.secondary_100}
@@ -129,6 +136,12 @@ export const AddTabIcon = styled.div`
   ${IconContainer}:hover & {
     background-color: ${({ theme }) => theme.colors.grey_300} !important;
   }
+`;
+
+export const TabText = styled(Text)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const EditTabTitleInput = styled(InputField)`

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes, { arrayOf } from 'prop-types';
 import { withTheme } from 'styled-components';
 import Tabs from 'react-responsive-tabs';
@@ -10,6 +10,7 @@ import {
   AddTabIcon,
   IconContainer,
   EditTabTitleInput,
+  TabText,
 } from './theme';
 
 import 'react-responsive-tabs/styles.css';
@@ -63,30 +64,49 @@ const TabTitle = (props) => {
   };
 
   function renderTabTitle() {
+    const autoFocus = (input) => {
+      if (input) {
+        input.getElementsByTagName('input')[0].focus();
+      }
+    };
+
     if (isEditing) {
       return (
-        <EditTabTitleInput
-          onBlur={() => resetInput()}
-          value={typedValue}
-          placeholder={title}
-          onKeyDown={keyDownHandler}
-          onChange={handleType}
-        />
+        <div ref={autoFocus}>
+          <EditTabTitleInput
+            onBlur={() => resetInput()}
+            value={typedValue}
+            placeholder={title}
+            onKeyDown={keyDownHandler}
+            onChange={handleType}
+            autofocus
+          />
+        </div>
       );
     }
+
     if (TitleComponent) {
-      return <TitleComponent>{title}</TitleComponent>;
+      return (
+          <TitleComponent>{title}</TitleComponent>
+      );
     }
-    return <Text>{title}</Text>;
+    return <TabText>{title}</TabText>;
   }
+
 
   if (removable) {
     return (
-      <TabHeader onDoubleClick={() => setIsEditing(true)} editing={isEditing}>
+      <TabHeader
+        onDoubleClick={() => setIsEditing(true)}
+        editing={isEditing}
+        ref={inputRef}
+      >
         {renderTabTitle()}
-        <CloseIconWrapper onMouseDown={handleRemove(tabIndex)}>
+        {!isEditing && (
+        <CloseIconWrapper onClick={handleRemove(tabIndex)}>
           <CloseIcon size={10} color={theme.colors.secondary_300} />
         </CloseIconWrapper>
+        )}
       </TabHeader>
     );
   }
@@ -215,7 +235,7 @@ DynamicTabs.defaultProps = {
   showSelectedTabIndicator: false,
   tabsRemovable: false,
   activeTab: 0,
-  hasAddButton: null,
+  hasAddButton: false,
   onCreate: null,
   AddTabComponent: null,
   changeTitleHandler: null,
