@@ -19,6 +19,7 @@ const INPUT_TYPES = {
   TEXTAREA: 'textarea',
   COPY: 'copy',
   TEXT: 'text',
+  NUMBER: 'number',
 };
 
 export const ErrorWrapper = ({ children, error, errorMessage }) => (
@@ -165,12 +166,12 @@ InputField.propTypes = {
   id: PropTypes.string,
   inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-  type: PropTypes.oneOf(['password', 'textarea', 'copy', 'text']),
+  type: PropTypes.oneOf(['password', 'textarea', 'copy', 'text', 'number']),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
 };

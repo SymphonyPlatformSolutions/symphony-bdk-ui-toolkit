@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes, { arrayOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import Tabs from 'react-responsive-tabs';
 import {
@@ -86,9 +86,7 @@ const TabTitle = (props) => {
     }
 
     if (TitleComponent) {
-      return (
-          <TitleComponent>{title}</TitleComponent>
-      );
+      return TitleComponent({ children: [title] });
     }
     return <TabText>{title}</TabText>;
   }
@@ -138,7 +136,7 @@ const DynamicTabs = ({
 }) => {
   function renderAddTabComponent() {
     if (AddTabComponent) {
-      return <AddTabComponent onClick={onCreate} />;
+      return AddTabComponent({ onClick: { onCreate } });
     }
     return <AddTabButton onClick={onCreate} />;
   }
@@ -200,13 +198,10 @@ const DynamicTabs = ({
 };
 
 DynamicTabs.propTypes = {
-  theme: PropTypes.shape({
-    mode: PropTypes.string,
-    colors: arrayOf(PropTypes.object),
-  }).isRequired,
+  theme: PropTypes.object.isRequired,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.oneOf([PropTypes.node, PropTypes.string]),
+      title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
       getContent: PropTypes.func,
       key: PropTypes.number,
     }),
@@ -221,7 +216,7 @@ DynamicTabs.propTypes = {
   onChange: PropTypes.func.isRequired,
   hasAddButton: PropTypes.bool,
   onCreate: PropTypes.func,
-  AddTabComponent: PropTypes.node,
+  AddTabComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   changeTitleHandler: PropTypes.func,
 };
 

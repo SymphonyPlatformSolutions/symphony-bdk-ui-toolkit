@@ -76,7 +76,7 @@ Box.propTypes = {
   grow: PropTypes.string,
   space: PropTypes.number,
   bg: PropTypes.string,
-  p: PropTypes.number,
+  p: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   mx: PropTypes.string,
   my: PropTypes.string,
   type: PropTypes.oneOf([BOX_TYPES.PRIMARY, BOX_TYPES.SECONDARY, BOX_TYPES.FLAT]),

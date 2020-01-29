@@ -143,14 +143,16 @@ CandleStickChart.defaultProps = {
   loading: false,
   hasTooltip: false,
   hasZoom: false,
+  tickSizeY: null,
+  children: [],
 };
 
 CandleStickChart.propTypes = {
   data: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   theme: PropTypes.object.isRequired,
   tickSizeX: PropTypes.number.isRequired,
-  tickSizeY: PropTypes.number.isRequired,
+  tickSizeY: PropTypes.number,
   hasTooltip: PropTypes.bool,
   hasZoom: PropTypes.bool,
   loading: PropTypes.bool,

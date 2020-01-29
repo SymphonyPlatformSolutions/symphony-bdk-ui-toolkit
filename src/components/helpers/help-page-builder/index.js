@@ -215,7 +215,7 @@ HelpPageBuilder.propTypes = {
     description: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
-      icon: PropTypes.string,
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.object]),
       title: PropTypes.string,
       description: PropTypes.string,
       topics: PropTypes.array,

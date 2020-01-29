@@ -20,3 +20,4 @@ rules:
   import/prefer-default-export: off
   react/jsx-props-no-spreading: off
   arrow-parens: off
+  react/no-array-index-key: off

@@ -121,7 +121,7 @@ export const ChartBuilder = ({
         y={50}
         fontFamily={fontFamily}
         fill={theme.colors.grey_600}
-        fontSize="30"
+        fontSize={30}
         opacity={0.5}
         text={title}
       />
@@ -195,9 +195,9 @@ ChartBuilder.propTypes = {
     top: PropTypes.number,
     bottom: PropTypes.number,
   }),
-  displayXAccessor: PropTypes.object,
-  xScale: PropTypes.object,
-  xAccessor: PropTypes.object,
+  displayXAccessor: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  xScale: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  xAccessor: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   xExtents: PropTypes.array,
 };
 
@@ -271,7 +271,7 @@ ChartContainer.defaultProps = {
 
 ChartContainer.propTypes = {
   data: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.node, PropTypes.func]).isRequired,
   loading: PropTypes.bool,
   margin: PropTypes.shape({
     left: PropTypes.number,

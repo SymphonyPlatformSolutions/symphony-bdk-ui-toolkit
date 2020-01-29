@@ -6,6 +6,7 @@ import Table from '../../../data/table';
 import Text from '../../../misc/text';
 import Search from '../../../inputs/search';
 import Button from '../../../misc/button';
+import { NoOp } from '../../../../utils/helpers';
 
 
 const autoFetchConfig = {
@@ -64,6 +65,8 @@ const SearchExample = ({ data, refreshData }) => {
       <Box type="flat" vertical>
         <Search
           data={data}
+          resultHandler={NoOp}
+          itemChooseHandler={NoOp}
           dataLabel="Text"
           placeholder="Search DuckDuckGo..."
           searchHandler={searchFunc}

@@ -76,7 +76,7 @@ const Button = ({
 
 Button.propTypes = {
   onClick: PropTypes.func,
-  type: PropTypes.oneOf(['submit', 'primary', 'danger']),
+  type: PropTypes.oneOf(['submit', 'primary', 'secondary', 'danger']),
   size: PropTypes.oneOf(['small', 'regular', 'large']),
   fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,

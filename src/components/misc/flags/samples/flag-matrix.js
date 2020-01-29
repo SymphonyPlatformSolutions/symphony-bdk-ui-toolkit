@@ -25,10 +25,10 @@ const DATA = buildFlagMap();
 
 export const FlagMatrix = () => (
   <Box space={20}>
-    { DATA.map(row => (
-      <Box horizontal space={20}>
-        { row.map(flag => (
-          <Box vertical align="center" style={{ width: '35px' }}>
+    { DATA.map((row, i) => (
+      <Box horizontal space={20} key={`a-${i}`}>
+        { row.map((flag, j) => (
+          <Box vertical align="center" style={{ width: '35px' }} key={`a-${j}`}>
             <Text isTitle size="tiny">
               {flag}
             </Text>

@@ -107,10 +107,15 @@ const SSEventsContentWrapper = ({
 SSEventsContentWrapper.propTypes = {
   fetchData: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.object.isRequired,
+  error: PropTypes.object,
   refreshData: PropTypes.func.isRequired,
-  eventType: PropTypes.string.isRequired,
+  eventType: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+SSEventsContentWrapper.defaultProps = {
+  error: null,
+  eventType: null,
 };
 
 const SSEventsListWrapper = ({
@@ -149,13 +154,17 @@ const SSEventsListWrapper = ({
 };
 
 SSEventsListWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   sseEndpoint: PropTypes.string.isRequired,
   autoFetchConfig: PropTypes.shape({
     endpoint: PropTypes.string,
     params: PropTypes.object,
     handleData: PropTypes.any,
   }).isRequired,
+};
+
+SSEventsListWrapper.defaultProps = {
+  children: null,
 };
 
 

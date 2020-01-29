@@ -163,11 +163,12 @@ DiscontinousCandleStick.defaultProps = {
   yPadding: { top: 2, bottom: 2 },
   xPadding: { right: 50, left: 0 },
   shownWindow: 150,
+  children: [],
 };
 
 DiscontinousCandleStick.propTypes = {
   data: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   theme: PropTypes.object.isRequired,
   tickSizeX: PropTypes.number.isRequired,
   tickSizeY: PropTypes.number.isRequired,

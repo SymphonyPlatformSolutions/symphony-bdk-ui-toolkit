@@ -7,6 +7,7 @@ import {
   ToggleContainer,
   SwitchCircle,
 } from './theme';
+import { NoOp } from '../../../utils/helpers';
 
 const Toggle = (props) => {
   const {
@@ -24,12 +25,13 @@ const Toggle = (props) => {
 };
 
 Toggle.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   toggled: PropTypes.bool,
   color: PropTypes.string,
   disabled: PropTypes.bool,
 };
 Toggle.defaultProps = {
+  onChange: NoOp,
   toggled: false,
   disabled: false,
   color: null,

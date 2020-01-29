@@ -22,8 +22,8 @@ export const LightTheme = () => {
   return (
     <Card>
       <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
-        {lightColorsMap.map((entry) => (
-          <Box align="center" space={4}>
+        {lightColorsMap.map((entry, i) => (
+          <Box align="center" space={4} key={i}>
             <Text size="tiny">{entry.key}</Text>
             <StyledComp color={entry.value} />
           </Box>
@@ -42,8 +42,8 @@ export const DarkTheme = () => {
   return (
     <Card>
       <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
-        {darkColorsMap.map((entry) => (
-          <Box align="center" space={4}>
+        {darkColorsMap.map((entry, i) => (
+          <Box align="center" space={4} key={i}>
             <Text size="tiny">{entry.key}</Text>
             <StyledComp color={entry.value} />
           </Box>
@@ -74,8 +74,8 @@ export const ThemeShowCase = () => {
         </Box>
         <Card>
           <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
-            {lightColorsMap.map((entry) => (
-              <Box align="center" space={4}>
+            {lightColorsMap.map((entry, i) => (
+              <Box align="center" space={4} key={i}>
                 <Text size="tiny">{entry.key}</Text>
                 <StyledComp color={entry.value} />
               </Box>
@@ -89,8 +89,8 @@ export const ThemeShowCase = () => {
         </Box>
         <Card>
           <Box type="flat" horizontal style={{ flexWrap: 'wrap' }} justify="space-evenly">
-            {darkColorsMap.map((entry) => (
-              <Box align="center" space={4}>
+            {darkColorsMap.map((entry, i) => (
+              <Box align="center" space={4} key={i}>
                 <Text size="tiny">{entry.key}</Text>
                 <StyledComp color={entry.value} />
               </Box>

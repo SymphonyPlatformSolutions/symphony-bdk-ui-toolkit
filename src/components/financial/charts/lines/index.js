@@ -188,12 +188,13 @@ LineChart.defaultProps = {
   hasTooltip: false,
   hasZoom: false,
   yAxisLabel: null,
+  children: null,
   yPadding: { top: 1, bottom: 1 },
 };
 
 LineChart.propTypes = {
   data: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   theme: PropTypes.object.isRequired,
   tickSizeX: PropTypes.number.isRequired,
   tickSizeY: PropTypes.number.isRequired,

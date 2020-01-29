@@ -84,10 +84,15 @@ const SSEventsContentWrapper = ({
 SSEventsContentWrapper.propTypes = {
   fetchData: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.object.isRequired,
+  error: PropTypes.object,
   refreshData: PropTypes.func.isRequired,
-  eventType: PropTypes.string.isRequired,
+  eventType: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+SSEventsContentWrapper.defaultProps = {
+  error: null,
+  eventType: null,
 };
 
 const SSEventsListWrapper = ({

@@ -154,7 +154,7 @@ const DecisionDropdown = (props) => {
 
 DecisionDropdown.propTypes = {
   onChange: PropTypes.func.isRequired,
-  data: PropTypes.array,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -165,7 +165,7 @@ DecisionDropdown.propTypes = {
   isMulti: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
   tooltip: PropTypes.string,
-  CustomValue: PropTypes.node,
+  CustomValue: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 DecisionDropdown.defaultProps = {

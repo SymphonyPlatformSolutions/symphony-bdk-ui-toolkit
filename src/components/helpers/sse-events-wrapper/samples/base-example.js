@@ -63,7 +63,7 @@ const StyledText = styled(Text)`
 
 const RegularRow = ({ cell, row: { original } }) => useMemo(() => (
   <CellWrapper>
-    <StyledText {...original}>{cell.value}</StyledText>
+    <StyledText {...original} type="primary">{cell.value}</StyledText>
   </CellWrapper>
 ), [cell.value]);
 
@@ -143,7 +143,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
     Cell: ({ cell: { value }, row: { original } }) => useMemo(
       () => (
         <CellWrapper>
-          <StyledText {...original}>{getRenderTime(value)}</StyledText>
+          <StyledText {...original} type="primary">{getRenderTime(value)}</StyledText>
         </CellWrapper>
       ),
       [value, original.animating],
@@ -165,7 +165,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
               {original.dealer.name}
             </StyledLink>
           ) : (
-            <StyledText {...original}>{original.dealer.name}</StyledText>
+            <StyledText {...original} type="primary">{original.dealer.name}</StyledText>
           )}
         </CellWrapper>
       ),

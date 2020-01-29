@@ -101,24 +101,27 @@ export const RadioController = ({ disabled }) => {
   return (
     <Box type="flat">
       <RadioButton
+        id="radio-a"
         checked={chosen === 'a'}
-        groupname="radiogroup"
+        groupName="radiogroup"
         onChange={() => changeChosen('a')}
         disabled={disabled}
       >
         This one
       </RadioButton>
       <RadioButton
+        id="radio-b"
         checked={chosen === 'b'}
-        groupname="radiogroup"
+        groupName="radiogroup"
         onChange={() => changeChosen('b')}
         disabled={disabled}
       >
         This other one
       </RadioButton>
       <RadioButton
+        id="radio-c"
         checked={chosen === 'c'}
-        groupname="radiogroup"
+        groupName="radiogroup"
         onChange={() => changeChosen('c')}
         disabled={disabled}
       >

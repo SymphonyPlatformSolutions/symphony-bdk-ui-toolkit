@@ -62,7 +62,7 @@ Label.defaultProps = {
 
 export const FormGroup = ({ children, disabled, ...rest }) => (
   <FieldSet disabled={disabled} {...rest}>
-    {disabled ? children.map(child => React.cloneElement(child, { disabled: true })) : children}
+    {disabled ? children.map((child, i) => React.cloneElement(child, { disabled: true, key: i })) : children}
   </FieldSet>
 );
 FormGroup.propTypes = {
@@ -81,7 +81,7 @@ const FormBox = (props) => {
   return (
     <form onSubmit={onSubmit}>
       <Box {...rest}>
-        {disabled ? children.map(child => React.cloneElement(child, { disabled: true })) : children}
+        {disabled ? children.map((child, i) => React.cloneElement(child, { disabled: true, key: i })) : children}
       </Box>
     </form>
   );

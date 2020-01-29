@@ -197,9 +197,9 @@ Table.propTypes = {
   emptyMessage: PropTypes.string,
   theme: PropTypes.object.isRequired,
   searchable: PropTypes.bool,
-  maxHeight: PropTypes.string,
+  maxHeight: PropTypes.number,
   align: PropTypes.oneOf(Object.keys(ALIGNMENTS)),
-  Row: PropTypes.node,
+  Row: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 Table.defaultProps = {
