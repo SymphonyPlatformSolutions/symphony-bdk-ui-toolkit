@@ -184,7 +184,7 @@ const SSE_EVENTS_TABLE_COLUMNS = [
 ];
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:9999/financial-demo',
+  endpoint: `http://${window.location.hostname}:9999/financial-demo`,
   params: {},
   handleData: results => results,
 };
@@ -215,7 +215,7 @@ const CustomRow = (props) => {
 const postDemo = async (action, isAuto = null, interval = null) => {
   try {
     await RestClient.post(
-      'http://localhost:9999/financial-demo',
+      `http://${window.location.hostname}:9999/financial-demo`,
       { action, isAuto, interval },
       {},
       false,
@@ -333,7 +333,7 @@ const ThemedSample = withTheme(SSEEventsSample);
 export const SSEEventsTableDemo = () => (
   <Box style={{ width: '100%', padding: '10px' }}>
     <SSEventsListWrapper
-      sseEndpoint="http://localhost:9999/sse-events"
+      sseEndpoint={`http://${window.location.hostname}:9999/sse-events`}
       autoFetchConfig={autoFetchConfig}
     >
       <ThemedSample />

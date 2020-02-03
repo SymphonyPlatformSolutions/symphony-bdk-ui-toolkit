@@ -7,8 +7,8 @@ export const SearchWrapper = (props) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   const endpoints = [
-    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
-    (value, typedTerm) => `http://localhost:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://${window.location.hostname}:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://${window.location.hostname}:9999/ingredients?food=${value[0].value}&query=${encodeURIComponent(typedTerm)}`,
   ];
 
   return (

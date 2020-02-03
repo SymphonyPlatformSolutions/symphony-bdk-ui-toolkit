@@ -24,7 +24,7 @@ const parseData = (parse) => (d) => {
 };
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:9999/intraday-chart-demo',
+  endpoint: `http://${window.location.hostname}:9999/intraday-chart-demo`,
   params: {},
   handleData: (results) => results.map(parseData(timeParser)),
 };
@@ -32,7 +32,7 @@ const autoFetchConfig = {
 const postDemo = async (action, isAuto = null, interval = null) => {
   try {
     await RestClient.post(
-      'http://localhost:9999/intraday-chart-demo',
+      `http://${window.location.hostname}:9999/intraday-chart-demo`,
       { action, isAuto, interval },
       {},
       false,
@@ -124,7 +124,7 @@ export const SSEEventsChartDemo = () => (
   <Box style={{ width: '100%', padding: '10px' }}>
     <SSEventsListWrapper
       style={{ height: '100%' }}
-      sseEndpoint="http://localhost:9999/sse-chart-events"
+      sseEndpoint={`http://${window.location.hostname}:9999/sse-chart-events`}
       autoFetchConfig={autoFetchConfig}
     >
       <ThemedSample />

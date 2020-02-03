@@ -7,14 +7,14 @@ export const MultiLayerSearchWrapper = (props) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   const endpoints = [
-    (value, typedTerm) => `http://localhost:9999/food?query=${encodeURIComponent(typedTerm)}`,
+    (value, typedTerm) => `http://${window.location.hostname}:9999/food?query=${encodeURIComponent(typedTerm)}`,
     [
-      (value, typedTerm) => `http://localhost:9999/size?query=${encodeURIComponent(typedTerm)}`,
-      (value, typedTerm) => `http://localhost:9999/sides?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://${window.location.hostname}:9999/size?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://${window.location.hostname}:9999/sides?query=${encodeURIComponent(typedTerm)}`,
     ],
     [
-      (value, typedTerm) => `http://localhost:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
-      (value, typedTerm) => `http://localhost:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://${window.location.hostname}:9999/sweets?query=${encodeURIComponent(typedTerm)}`,
+      (value, typedTerm) => `http://${window.location.hostname}:9999/flavors?query=${encodeURIComponent(typedTerm)}`,
     ],
   ];
 

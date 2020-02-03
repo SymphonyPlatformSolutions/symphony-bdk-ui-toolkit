@@ -18,7 +18,7 @@ const parseData = parser => (d) => {
 };
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:9999/chart-lines-data',
+  endpoint: `http://${window.location.hostname}:9999/chart-lines-data`,
   handleData: results => results.map(parseData(timeParser)).sort(sortByDateAscending),
 };
 

@@ -23,7 +23,7 @@ const parseData = (parse) => (d) => {
 };
 
 const autoFetchConfig = {
-  endpoint: 'http://localhost:9999/chart-candlestick-data',
+  endpoint: `http://${window.location.hostname}:9999/chart-candlestick-data`,
   handleData: (results) => results.map(parseData(timeParser)),
 };
 
