@@ -10,6 +10,7 @@ import './config.css';
 import { SizeContext } from './custom-addons/text-sizer/text-size-provider';
 import { StoryWrapper } from '../src/components/misc/wrappers';
 import theme from './theme';
+import { withA11y } from '@storybook/addon-a11y';
 
 Logger.setEnv({
   appTitle: 'MS Storybook',
@@ -93,3 +94,4 @@ addParameters({
 
 addDecorator(withThemesProvider(decoratedThemes, CustomThemeProvider));
 addDecorator(withTextSizer(sizes));
+addDecorator(withA11y);
