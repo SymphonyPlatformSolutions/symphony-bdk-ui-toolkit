@@ -1,0 +1,53 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import TagBar from './index.js';
+import { TagBarHandler, CustomTag } from './samples/simple-sample';
+
+<Meta title="components/Inputs/Tag Bar" component={TagBar} parameters={{order: 210}}/>
+
+# Tag Bar
+
+Tag bar is a simple input component that saves everything that is typed and submitted as a tag. Simply press enter after typing a value to consolidate a tag.
+
+<Preview>
+  <Story name="Simple">
+    <TagBarHandler />
+  </Story>
+</Preview>
+
+## Custom Value Component
+
+<Preview>
+  <Story name="Custom Value Component">
+    <TagBarHandler CustomValue={CustomTag} style={{ height: '40px' }} />
+  </Story>
+</Preview>
+
+## Tooltip
+
+<Preview>
+  <Story name="Tooltip">
+    <TagBarHandler tooltip="Info info!"
+    />
+  </Story>
+</Preview>
+
+## States
+
+<Preview>
+  <Story name="Disabled">
+    <Box style={{ width: '100%'}} align="center">
+      <TagBarHandler disabled />
+      <TagBarHandler errorMessage="Something's afoot!" />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={TagBar} />
