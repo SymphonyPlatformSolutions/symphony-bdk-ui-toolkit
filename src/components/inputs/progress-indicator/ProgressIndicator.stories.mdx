@@ -16,10 +16,6 @@ import { ProgressController } from './samples/controller';
 
 <hr />
 
-Progress Indicator component, showing in which step a certain multi-step action is.
-
-Simply takes in the number of steps, and which step it's currently on. Can be set horizontally as well.
-The length of the Progress Indicator can also be changed, by passing the ```length``` value, as a number prop (in px).
 
 <Preview withSource="open">
   <Story name="Base">
@@ -27,14 +23,59 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
   </Story>
 </Preview>
 
+Progress Indicator component, showing in which step a certain multi-step action is.
+
+Simply takes in the number of steps, and which step it's currently on. Can be set horizontally as well.
+The length of the Progress Indicator can also be changed, by passing the ```length``` value, as a number prop (in px).
+It is a controlled component therefore, a wrapper will most likely be used.
+
+
+```jsx
+export const ProgressController = (props) => {
+  const { numberOfSteps, ...rest } = props;
+  const [current, setCurrent] = useState(0);
+  return (
+    <Box justify="center" align="center">
+      <Box horizontal>
+        <ProgressIndicator
+          numberOfSteps={numberOfSteps}
+          currentStep={current}
+          {...rest}
+        />
+      </Box>
+      <Box horizontal>
+        <Button
+          size="small"
+          onClick={() => {
+            if (current > 0) {
+              setCurrent(current - 1);
+            }
+          }}
+        >{'<'}
+        </Button>
+        <Button
+          size="small"
+          onClick={() => {
+            if (current < numberOfSteps - 1) {
+              setCurrent(current + 1);
+            }
+          }}
+        >{'>'}
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+```
+
 ## More steps
 
 <Preview withSource="open">
   <Story name="More Steps">
     <Box horizontal>
-      <ProgressController steps={3} />
-      <ProgressController steps={4} />
-      <ProgressController steps={5} />
+      <ProgressController numberOfSteps={3} />
+      <ProgressController numberOfSteps={4} />
+      <ProgressController numberOfSteps={5} />
     </Box>
   </Story>
 </Preview>
@@ -44,9 +85,9 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
 <Preview withSource="open">
   <Story name="Horizontal">
     <Box>
-      <ProgressController horizontal steps={3} />
-      <ProgressController horizontal steps={4} />
-      <ProgressController horizontal steps={5} />
+      <ProgressController horizontal numberOfSteps={3} />
+      <ProgressController horizontal numberOfSteps={4} />
+      <ProgressController horizontal numberOfSteps={5} />
     </Box>
   </Story>
 </Preview>
@@ -56,9 +97,9 @@ The length of the Progress Indicator can also be changed, by passing the ```leng
 <Preview withSource="open">
   <Story name="Custom Length">
     <Box>
-      <ProgressController length={200} horizontal steps={3} />
-      <ProgressController length={400} horizontal steps={3} />
-      <ProgressController length={600} horizontal steps={3} />
+      <ProgressController length={200} horizontal numberOfSteps={3} />
+      <ProgressController length={400} horizontal numberOfSteps={3} />
+      <ProgressController length={600} horizontal numberOfSteps={3} />
     </Box>
   </Story>
 </Preview>
