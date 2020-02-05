@@ -34,13 +34,12 @@ export const TagBarHandler = props => {
   };
 
   return (
-    <Box style={{ width: '95%' }}>
+    <Box style={{ padding: '0 16px', width: '100%' }}>
       <TagBar
         onChoose={tagChosen}
         onRemove={removeHandler}
         onClear={onClear}
         value={chosen}
-
         {...props}
       />
     </Box>

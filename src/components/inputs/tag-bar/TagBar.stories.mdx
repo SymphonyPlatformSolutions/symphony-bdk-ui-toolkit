@@ -16,6 +16,40 @@ import { TagBarHandler, CustomTag } from './samples/simple-sample';
 
 Tag bar is a simple input component that saves everything that is typed and submitted as a tag. Simply press enter after typing a value to consolidate a tag.
 
+This component, like most Inputs, is a controlled component, therefore it will usually be wrapped
+by a controller, and have its state and logic controlled by a parent.
+
+### Controller example
+
+```jsx
+const TagBarHandler = props => {
+  const [chosen, changeChosen] = useState([]);
+
+  const tagChosen = newValue => {
+    changeChosen([...chosen, { value: newValue, label: newValue }]);
+  };
+
+  const removeHandler = removingValue => {
+    changeChosen(chosen.filter(el => removingValue.value !== el.value));
+  };
+
+  const onClear = () => {
+    changeChosen([]);
+  };
+
+  return (
+    <TagBar
+      onChoose={tagChosen}
+      onRemove={removeHandler}
+      onClear={onClear}
+      value={chosen}
+      {...props}
+    />
+  );
+};
+
+```
+
 <Preview>
   <Story name="Simple">
     <TagBarHandler />
