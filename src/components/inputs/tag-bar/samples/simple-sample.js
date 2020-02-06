@@ -33,6 +33,8 @@ export const TagBarHandler = props => {
     changeChosen([]);
   };
 
+  console.log('Chosen', chosen);
+
   return (
     <Box style={{ padding: '0 16px', width: '100%' }}>
       <TagBar

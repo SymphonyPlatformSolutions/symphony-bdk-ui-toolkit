@@ -3,9 +3,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
-  useRef,
 } from 'react';
-import styled from 'styled-components';
 import {
   Wrapper,
   MenuContainer,
@@ -14,12 +12,19 @@ import {
   SimpleItemLabel,
 } from './theme';
 
-function filterData(data, query) {
+function filterData(data, query, value) {
   if (!query) {
     return data;
   }
   const lowerQuery = query.toLowerCase();
-  return data.filter(el => el.value.toLowerCase().includes(lowerQuery));
+
+  return data.filter((el) => {
+    if (value) {
+      const isChosen = value.find(v => v.value.toLowerCase() === el.value.toLowerCase());
+      if (isChosen) return false;
+    }
+    return el.value.toLowerCase().includes(lowerQuery);
+  });
 }
 
 const MenuItem = props => {
@@ -47,15 +52,15 @@ const MenuItem = props => {
 };
 
 const TagBarMenu = forwardRef((props, ref) => {
-  const { data, currQuery, values } = props;
+  const {
+    data, currQuery, value, chooseHandler,
+  } = props;
   const [lightFocus, setLightFocus] = useState(0);
-  const [filteredData, setFilteredData] = useState(filterData(data, currQuery));
-
-  const chooseOption = () => {};
+  const [filteredData, setFilteredData] = useState(filterData(data, currQuery, value));
 
   useEffect(() => {
-    setFilteredData(filterData(data, currQuery));
-  }, [currQuery]);
+    setFilteredData(filterData(data, currQuery, value));
+  }, [currQuery, value]);
 
   useImperativeHandle(ref, () => ({
     increaseLightFocus() {
@@ -66,8 +71,11 @@ const TagBarMenu = forwardRef((props, ref) => {
         lightFocus - 1 < 0 ? filteredData.length - 1 : lightFocus - 1,
       );
     },
-    enterOption() {
-      // chooseOrNavigate(selectableArray[lightFocus]);
+    getCurrentOption() {
+      if (filteredData[lightFocus]) {
+        return filteredData[lightFocus].value;
+      }
+      return null;
     },
   }));
 
@@ -91,12 +99,11 @@ const TagBarMenu = forwardRef((props, ref) => {
     return filteredData.map((el, index) => (
       <MenuItem
         {...el}
-        // CustomItem={el.CustomItem}
         lightFocusHandler={lightFocusHandler}
         lightFocused={lightFocus === index}
         key={el.uid}
         uid={el.uid}
-        clickHandler={() => chooseOption(el)}
+        clickHandler={() => chooseHandler(el.value)}
       >
         {el.value}
       </MenuItem>

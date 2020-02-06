@@ -21,11 +21,14 @@ import { CrossIcon, CloseIcon } from '../../misc/icons';
 import Tooltip from '../../misc/tooltip';
 import { ErrorWrapper } from '../input-field';
 import TagBarMenu from './components';
-import Box from '../../layout/box';
 
 const BS_KEY = 8;
 const ENTER_KEY = 13;
 const ESC_KEY = 27;
+const UP_KEY = 38;
+const DOWN_KEY = 40;
+
+const INIT_DEBOUNCE = 1500;
 
 const MultiSelectValue = ({ children, removeHandler }) => (
   <MultiSelectContainer
@@ -62,7 +65,7 @@ const MultiValueList = props => {
             removeHandler={() => removeHandler(l)}
             key={l.value}
           >
-            {l.label}
+            {l.value}
           </MultiSelectValue>
         )))}
       </MultiValueContainer>
@@ -84,6 +87,7 @@ const TagBar = props => {
     CustomValue,
     errorMessage,
     autocompleteList,
+    debouncePeriod,
     ...rest
   } = props;
 
@@ -97,6 +101,7 @@ const TagBar = props => {
       : null,
   );
   const inputRef = useRef();
+  const menuRef = useRef();
 
   useEffect(() => {
     if (value) {
@@ -106,10 +111,45 @@ const TagBar = props => {
     }
   }, [value]);
 
+  const chooseValue = (newValue) => {
+    onChoose(newValue);
+    setTypedValue('');
+    setMenuIsOpen(false);
+  };
+
   const backSpaceHandler = () => {
     if (!typedValue && value && value.length) {
       onRemove(value[value.length - 1]);
     }
+  };
+
+  const specialKeyController = ({ keyCode }) => {
+    let lightFocusValue;
+    switch (keyCode) {
+      case DOWN_KEY:
+        return menuRef.current.increaseLightFocus();
+      case UP_KEY:
+        return menuRef.current.decreaseLightFocus();
+      case ENTER_KEY:
+        if (menuIsOpen) {
+          lightFocusValue = menuRef.current.getCurrentOption();
+          if (lightFocusValue) {
+            chooseValue(lightFocusValue);
+          }
+        } else if (typedValue) {
+          chooseValue(typedValue);
+        }
+        break;
+      case ESC_KEY:
+        inputRef.current.blur();
+        break;
+      case BS_KEY:
+        backSpaceHandler();
+        break;
+      default:
+        return null;
+    }
+    return null;
   };
 
   // Debounce
@@ -117,7 +157,7 @@ const TagBar = props => {
     const handler = setTimeout(() => {
       setCurrQuery(typedValue);
       setMenuIsOpen(!!typedValue);
-    }, 1500);
+    }, debouncePeriod);
     return () => clearTimeout(handler);
   }, [typedValue]);
 
@@ -144,18 +184,7 @@ const TagBar = props => {
             <div style={{ width: 'auto', display: 'flex' }}>
               <ControlInput
                 hide={hideInput && hasValue}
-                onKeyDown={e => {
-                  if (e.keyCode === BS_KEY) {
-                    backSpaceHandler();
-                  } else if (e.keyCode === ENTER_KEY) {
-                    if (typedValue) {
-                      setTypedValue('');
-                      onChoose(typedValue);
-                    }
-                  } else if (e.keyCode === ESC_KEY) {
-                    inputRef.current.blur();
-                  }
-                }}
+                onKeyDown={specialKeyController}
                 ref={inputRef}
                 placeholder={placeholder}
                 value={typedValue}
@@ -191,8 +220,11 @@ const TagBar = props => {
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
             {menuIsOpen && hasAutoList && (
             <TagBarMenu
+              ref={menuRef}
               data={uidAutocompleteList}
               currQuery={currQuery}
+              value={value}
+              chooseHandler={chooseValue}
             />
             )}
           </MenuWrapper>
@@ -214,6 +246,8 @@ TagBar.propTypes = {
   tooltip: PropTypes.string,
   CustomValue: PropTypes.node,
   errorMessage: PropTypes.string,
+  debouncePeriod: PropTypes.number,
+  autocompleteList: PropTypes.array,
 };
 TagBar.defaultProps = {
   placeholder: 'Input here...',
@@ -224,6 +258,8 @@ TagBar.defaultProps = {
   tooltip: null,
   CustomValue: null,
   errorMessage: null,
+  debouncePeriod: INIT_DEBOUNCE,
+  autocompleteList: null,
 };
 
 export default withTheme(TagBar);

@@ -64,7 +64,7 @@ export const LabelContainer = styled.div`
   align-items: flex-end;
 `;
 export const MultiSelectContainer = styled.div`
-  margin-top: ${({ ignorePadding }) => (ignorePadding ? undefined : '4px')};
+
   margin-right: ${({ ignorePadding }) => (ignorePadding ? undefined : '5px')};
   padding: ${({ ignorePadding }) => (ignorePadding ? undefined : '4px 7px 4px 4px')};
   display: flex;
@@ -90,8 +90,7 @@ export const TooltipMargin = styled.div`
 `;
 export const Binder = styled.div`
   width: 100%;
-  /* display: flex;
-  align-items: center; */
+  min-height: 34px;
 `;
 export const MenuContainer = styled.div`
   border: 1px solid ${(props) => getBorderColor({ ...props, menuIsOpen: true })};
@@ -149,5 +148,6 @@ export const IconsContainer = styled.div`
   position: absolute;
   align-items: center;
   right: 4px;
-  top: 25%;
+  top: 50%;
+  transform: translateY(-50%);
 `;
