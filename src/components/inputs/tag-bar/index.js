@@ -103,6 +103,10 @@ const TagBar = props => {
   const inputRef = useRef();
   const menuRef = useRef();
 
+  const hasValue = !!(value && value.length);
+  const hasError = !!errorMessage;
+  const hasAutoList = autocompleteList && autocompleteList.length;
+
   useEffect(() => {
     if (value) {
       setTypedValue(value.label);
@@ -131,7 +135,7 @@ const TagBar = props => {
       case UP_KEY:
         return menuRef.current.decreaseLightFocus();
       case ENTER_KEY:
-        if (menuIsOpen) {
+        if (menuIsOpen && hasAutoList) {
           lightFocusValue = menuRef.current.getCurrentOption();
           if (lightFocusValue) {
             chooseValue(lightFocusValue);
@@ -156,14 +160,13 @@ const TagBar = props => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setCurrQuery(typedValue);
-      setMenuIsOpen(!!typedValue);
+      if (hasAutoList) {
+        setMenuIsOpen(!!typedValue);
+      }
     }, debouncePeriod);
     return () => clearTimeout(handler);
   }, [typedValue]);
 
-  const hasValue = !!(value && value.length);
-  const hasError = !!errorMessage;
-  const hasAutoList = autocompleteList && autocompleteList.length;
 
   return (
     <ErrorWrapper error={hasError} errorMessage={errorMessage}>
