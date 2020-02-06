@@ -1,10 +1,7 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import {
   ControlInput,
   TagBarContainer,
@@ -15,10 +12,16 @@ import {
   IconMarginContainer,
   TooltipMargin,
   ValueAndControl,
+  MenuWrapper,
+  ShrinkingBorder,
+  Binder,
+  IconsContainer,
 } from './theme';
 import { CrossIcon, CloseIcon } from '../../misc/icons';
 import Tooltip from '../../misc/tooltip';
 import { ErrorWrapper } from '../input-field';
+import TagBarMenu from './components';
+import Box from '../../layout/box';
 
 const BS_KEY = 8;
 const ENTER_KEY = 13;
@@ -67,7 +70,7 @@ const MultiValueList = props => {
   );
 };
 
-const TagBar = (props) => {
+const TagBar = props => {
   const {
     placeholder,
     value,
@@ -80,11 +83,19 @@ const TagBar = (props) => {
     tooltip,
     CustomValue,
     errorMessage,
+    autocompleteList,
     ...rest
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
   const [hideInput, setHideInput] = useState(true);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [currQuery, setCurrQuery] = useState(null);
+  const [uidAutocompleteList] = useState(
+    autocompleteList
+      ? autocompleteList.map(el => ({ value: el, uid: uuid.v4() }))
+      : null,
+  );
   const inputRef = useRef();
 
   useEffect(() => {
@@ -101,65 +112,91 @@ const TagBar = (props) => {
     }
   };
 
+  // Debounce
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setCurrQuery(typedValue);
+      setMenuIsOpen(!!typedValue);
+    }, 1500);
+    return () => clearTimeout(handler);
+  }, [typedValue]);
+
   const hasValue = !!(value && value.length);
   const hasError = !!errorMessage;
+  const hasAutoList = autocompleteList && autocompleteList.length;
 
   return (
     <ErrorWrapper error={hasError} errorMessage={errorMessage}>
-      <TagBarContainer disabled={disabled} error={hasError} {...rest}>
-        <ValueAndControl
-          onClick={() => {
-            inputRef.current.focus();
-          }}
-          size={size}
-        >
-          <MultiValueList
-            CustomValue={CustomValue}
-            removeHandler={onRemove}
-            value={value}
+      <TagBarContainer disabled={disabled} error={hasError} menuIsOpen={menuIsOpen} {...rest}>
+        <Binder>
+          <ValueAndControl
+            onClick={() => {
+              inputRef.current.focus();
+            }}
             size={size}
-          />
-          <ControlInput
-            hide={hideInput && hasValue}
-            onKeyDown={e => {
-              if (e.keyCode === BS_KEY) {
-                backSpaceHandler();
-              } else if (e.keyCode === ENTER_KEY) {
-                if (typedValue) {
+          >
+            <MultiValueList
+              CustomValue={CustomValue}
+              removeHandler={onRemove}
+              value={value}
+              size={size}
+            />
+            <div style={{ width: 'auto', display: 'flex' }}>
+              <ControlInput
+                hide={hideInput && hasValue}
+                onKeyDown={e => {
+                  if (e.keyCode === BS_KEY) {
+                    backSpaceHandler();
+                  } else if (e.keyCode === ENTER_KEY) {
+                    if (typedValue) {
+                      setTypedValue('');
+                      onChoose(typedValue);
+                    }
+                  } else if (e.keyCode === ESC_KEY) {
+                    inputRef.current.blur();
+                  }
+                }}
+                ref={inputRef}
+                placeholder={placeholder}
+                value={typedValue}
+                onChange={({ target }) => {
+                  setTypedValue(target.value);
+                }}
+                onFocus={() => setHideInput(false)}
+                onBlur={() => {
                   setTypedValue('');
-                  onChoose(typedValue);
-                }
-              } else if (e.keyCode === ESC_KEY) {
-                inputRef.current.blur();
-              }
-            }}
-            ref={inputRef}
-            placeholder={placeholder}
-            value={typedValue}
-            onChange={({ target }) => {
-              setTypedValue(target.value);
-            }}
-            onFocus={() => setHideInput(false)}
-            onBlur={() => {
-              setTypedValue('');
-              setHideInput(true);
-            }}
-            disabled={disabled}
-            size={size}
-          />
-        </ValueAndControl>
-        {hasValue && (
-        <IconMarginContainer onMouseDown={onClear}>
-          <CrossIcon />
-        </IconMarginContainer>
-        )}
-        {tooltip && (
-        <TooltipMargin>
-          <Tooltip size={14} color={theme.colors.grey_600}>
-            {tooltip}
-          </Tooltip>
-        </TooltipMargin>
-        )}
+                  setMenuIsOpen(false);
+                  setHideInput(true);
+                }}
+                disabled={disabled}
+                size={size}
+              />
+              <IconsContainer>
+                {hasValue && (
+                <IconMarginContainer onMouseDown={onClear}>
+                  <CrossIcon />
+                </IconMarginContainer>
+                )}
+                {tooltip && (
+                <TooltipMargin>
+                  <Tooltip size={14} color={theme.colors.grey_600}>
+                    {tooltip}
+                  </Tooltip>
+                </TooltipMargin>
+                )}
+              </IconsContainer>
+            </div>
+          </ValueAndControl>
+          <MenuWrapper error={!!errorMessage}>
+            <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
+            {menuIsOpen && hasAutoList && (
+            <TagBarMenu
+              data={uidAutocompleteList}
+              currQuery={currQuery}
+            />
+            )}
+          </MenuWrapper>
+        </Binder>
       </TagBarContainer>
     </ErrorWrapper>
   );
@@ -188,6 +225,5 @@ TagBar.defaultProps = {
   CustomValue: null,
   errorMessage: null,
 };
-
 
 export default withTheme(TagBar);
