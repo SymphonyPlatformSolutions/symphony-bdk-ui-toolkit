@@ -64,8 +64,7 @@ export const LabelContainer = styled.div`
   align-items: flex-end;
 `;
 export const MultiSelectContainer = styled.div`
-
-  margin-right: ${({ ignorePadding }) => (ignorePadding ? undefined : '5px')};
+  margin: 2px 5px 2px 0;
   padding: ${({ ignorePadding }) => (ignorePadding ? undefined : '4px 7px 4px 4px')};
   display: flex;
   align-items: center;

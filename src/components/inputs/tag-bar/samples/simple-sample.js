@@ -5,7 +5,7 @@ import QuoteProductTag from '../../../financial/quote-product-tag';
 import Box from '../../../layout/box';
 
 const TagContainer = styled.div`
-  margin-right: 6px;
+  margin: 2px 6px 2px 0;
 `;
 
 export const CustomTag = (props) => {
@@ -32,8 +32,6 @@ export const TagBarHandler = props => {
   const onClear = () => {
     changeChosen([]);
   };
-
-  console.log('Chosen', chosen);
 
   return (
     <Box style={{ padding: '0 16px', width: '100%' }}>

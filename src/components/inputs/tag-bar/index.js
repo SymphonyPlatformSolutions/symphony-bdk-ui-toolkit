@@ -33,8 +33,10 @@ const INIT_DEBOUNCE = 1500;
 const MultiSelectValue = ({ children, removeHandler }) => (
   <MultiSelectContainer
     onMouseDown={e => {
-      e.preventDefault();
-      removeHandler();
+      if (e.button === 0) {
+        e.preventDefault();
+        removeHandler();
+      }
     }}
   >
     <MultiSelectText size="tiny">{children}</MultiSelectText>
@@ -116,6 +118,9 @@ const TagBar = props => {
   }, [value]);
 
   const chooseValue = (newValue) => {
+    if (value && value.findIndex(el => el.value.toLowerCase() === newValue.toLowerCase()) >= 0) {
+      return;
+    }
     onChoose(newValue);
     setTypedValue('');
     setMenuIsOpen(false);
@@ -205,7 +210,7 @@ const TagBar = props => {
               />
               <IconsContainer>
                 {hasValue && (
-                <IconMarginContainer onMouseDown={onClear}>
+                <IconMarginContainer onMouseDown={e => (e.button === 0 ? onClear() : null)}>
                   <CrossIcon />
                 </IconMarginContainer>
                 )}

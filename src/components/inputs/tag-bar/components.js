@@ -40,8 +40,10 @@ const MenuItem = props => {
       onMouseEnter={() => lightFocusHandler(uid)}
       lightFocused={lightFocused}
       onMouseDown={e => {
-        e.preventDefault();
-        clickHandler();
+        if (e.button === 0) {
+          e.preventDefault();
+          clickHandler();
+        }
       }}
     >
       <LabelContainer>
