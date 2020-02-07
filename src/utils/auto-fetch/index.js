@@ -6,7 +6,7 @@ export const useAutoFetch = ({ endpoint, params, handleData }) => {
   const [config, setConfig] = useState({ endpoint, params, handleData });
 
   const [results, setResults] = useState([]);
-  const [isDataLoading, setLoading] = useState(false);
+  const [isDataLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
