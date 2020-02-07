@@ -149,4 +149,5 @@ export const IconsContainer = styled.div`
   right: 4px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 2;
 `;
