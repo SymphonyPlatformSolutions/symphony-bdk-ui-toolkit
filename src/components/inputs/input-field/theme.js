@@ -58,7 +58,6 @@ export const InputLabel = styled(Text)`
 `;
 
 export const Container = styled.div`
-  margin-top: 3px;
   background: ${({ theme, disabled }) => (disabled ? theme.colors.grey_050 : 'transparent')};
   border: 1px solid ${({ theme, error }) => (error ? theme.colors.error_500 : theme.colors.grey_300)};
   border-radius: 4px;
