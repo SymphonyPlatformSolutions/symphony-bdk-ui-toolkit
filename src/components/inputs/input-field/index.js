@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Text from '../../misc/text';
@@ -74,8 +74,8 @@ const InputAddons = (props) => {
   );
 };
 
-const InputField = (props) => {
-  const inputRef = useRef(null);
+const InputField = forwardRef((props, inputRef) => {
+  const ownRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -98,7 +98,11 @@ const InputField = (props) => {
   } = props;
 
   function copyToClipBoard() {
-    inputRef.current.select();
+    if (inputRef) {
+      inputRef.current.select();
+    } else {
+      ownRef.current.select();
+    }
     document.execCommand('copy');
   }
 
@@ -117,7 +121,7 @@ const InputField = (props) => {
               id={id}
               onChange={onChange}
               value={value}
-              ref={inputRef}
+              ref={inputRef || ownRef}
               rows="2"
               required
             />
@@ -147,7 +151,7 @@ const InputField = (props) => {
             id={id}
             onChange={readOnly ? null : onChange}
             value={value}
-            ref={inputRef}
+            ref={inputRef || ownRef}
             type={showPassword ? INPUT_TYPES.TEXT : type}
             placeholder={placeholder}
             inputState={inputState}
@@ -157,7 +161,7 @@ const InputField = (props) => {
       </Container>
     </ErrorWrapper>
   );
-};
+});
 
 InputField.propTypes = {
   copyInput: PropTypes.bool,
