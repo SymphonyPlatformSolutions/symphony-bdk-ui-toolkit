@@ -75,6 +75,7 @@ export { default as DecisionDropdown } from './inputs/decision-dropdown';
 export { default as ProgressIndicator } from './inputs/progress-indicator';
 export { default as MultiValueInput } from './inputs/multi-value-input';
 export { default as TagBar } from './inputs/tag-bar';
+export { default as CustomTab } from './layout/custom-tab';
 export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,

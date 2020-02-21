@@ -1,0 +1,25 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import TabWrapper from './samples/simple';
+import CustomTab from './index';
+
+<Meta title="components/Layout/CustomTab" component={CustomTab} parameters={{order: 220}}/>
+
+# Custom Tab
+
+<Preview withSource="open">
+  <Story name="Main">
+    <Box style={{ padding: '0 32px', width: '100%' }}>
+      <TabWrapper />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={CustomTab} />
