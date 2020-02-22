@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ReactResizeDetector from 'react-resize-detector';
 import Text from '../../misc/text';
 import { CloseButton } from '../../misc/button/icon-buttons';
 
@@ -26,6 +27,12 @@ const TabLineup = styled.div`
   display: flex;
 `;
 
+const TabTitleComponent = ({ title }) => (
+  <ReactResizeDetector handleWidth>
+    {({ width }) => (<TabTitle type="primary">{title}</TabTitle>)}
+  </ReactResizeDetector>
+);
+
 const Tab = props => {
   const {
     title,
@@ -36,20 +43,41 @@ const Tab = props => {
     TabComponent,
   } = props;
 
+  const closeClickHandler = e => {
+    if (e.button === 0) {
+      e.stopPropagation();
+      closeHandler();
+    }
+  };
+
+  const tabClickHandler = e => {
+    if (e.button === 1) {
+      closeHandler();
+    }
+  };
 
   return (
-    <StyledTab onClick={isActive ? null : clickHandler} isActive={isActive}>
+    <StyledTab
+      onClick={isActive ? null : clickHandler}
+      isActive={isActive}
+      onMouseDown={tabClickHandler}
+    >
       {TabComponent ? (
         <TabComponent {...props} />
       ) : (
-        <TabTitle type="primary">{title}</TabTitle>
+        <TabTitleComponent title={title} />
       )}
       {hasClose && (
-        <div style={{ marginLeft: '6px' }}>
-          <CloseButton size={10} style={{ outline: 'none' }} onMouseDown={closeHandler} />
-        </div>
+      <div style={{ marginLeft: '6px' }}>
+        <CloseButton
+          size={10}
+          style={{ outline: 'none' }}
+          onMouseDown={closeClickHandler}
+        />
+      </div>
       )}
     </StyledTab>
+
   );
 };
 
@@ -68,7 +96,7 @@ const renderTabs = (tabs, onChange, onClose, activeTab) => tabs.map((el, index) 
       hasClose={hasClose}
       key={`tab_${index}`}
       clickHandler={() => onChange(index)}
-      closeHandler={() => onClose(index)}
+      closeHandler={() => (hasClose ? onClose(index) : null)}
     />
   );
 });
@@ -107,7 +135,7 @@ const CustomTab = props => {
     <div>
       <TabLineup>
         {renderTabs(tabs, onChange, onClose, activeTab)}
-        {hasAddButton && <AddIcon size={12} onClick={onAdd}>+</AddIcon>}
+        {hasAddButton && <AddIcon size={12} onClick={onAdd} />}
       </TabLineup>
       <TabContentContainer>
         {renderMethod === 'single'
