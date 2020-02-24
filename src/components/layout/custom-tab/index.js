@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactResizeDetector from 'react-resize-detector';
 import Text from '../../misc/text';
@@ -23,15 +23,35 @@ const TabTitle = styled(Text)`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
-const TabLineup = styled.div`
+const TabTileContainer = styled.div`
   display: flex;
 `;
 
-const TabTitleComponent = ({ title }) => (
-  <ReactResizeDetector handleWidth>
-    {({ width }) => (<TabTitle type="primary">{title}</TabTitle>)}
-  </ReactResizeDetector>
-);
+const TabTitleComponent = ({ title }) => {
+  const titleRef = useRef();
+  const [isSquished, setIsSquished] = useState(false);
+
+  return (
+    <>
+      <TabTitle ref={titleRef}>
+        <ReactResizeDetector handleWidth>
+          {({ width }) => {
+            if (titleRef.current) {
+              if (Math.ceil(width) < titleRef.current.scrollWidth) {
+                setIsSquished(true);
+              } else if (isSquished) {
+                setIsSquished(false);
+              }
+            }
+
+            return <>{title}</>;
+          }}
+        </ReactResizeDetector>
+      </TabTitle>
+      {isSquished ? <div style={{ position: 'absolute' }}>SQUISHED</div> : null}
+    </>
+  );
+};
 
 const Tab = props => {
   const {
@@ -68,16 +88,15 @@ const Tab = props => {
         <TabTitleComponent title={title} />
       )}
       {hasClose && (
-      <div style={{ marginLeft: '6px' }}>
-        <CloseButton
-          size={10}
-          style={{ outline: 'none' }}
-          onMouseDown={closeClickHandler}
-        />
-      </div>
+        <div style={{ marginLeft: '6px' }}>
+          <CloseButton
+            size={10}
+            style={{ outline: 'none' }}
+            onMouseDown={closeClickHandler}
+          />
+        </div>
       )}
     </StyledTab>
-
   );
 };
 
@@ -86,20 +105,46 @@ const TabContentContainer = styled.div`
   padding: 16px 16px;
 `;
 
-const renderTabs = (tabs, onChange, onClose, activeTab) => tabs.map((el, index) => {
-  const { hasClose = true } = el;
+const TabLineup = styled.div`
+  display: flex;
+`;
 
-  return (
-    <Tab
-      {...el}
-      isActive={index === activeTab}
-      hasClose={hasClose}
-      key={`tab_${index}`}
-      clickHandler={() => onChange(index)}
-      closeHandler={() => (hasClose ? onClose(index) : null)}
-    />
-  );
-});
+const renderTabs = (tabs, onChange, onClose, activeTab, parentWidth, isSquished, squishHandler) => (
+  <TabLineup>
+    <ReactResizeDetector handleWidth>
+      {({ width }) => {
+        // console.log('WIDTH', width);
+        // console.log('PARENT WIDTH', parentWidth);
+        if (parentWidth) {
+          if (parentWidth < width && !isSquished) {
+            // console.log('HERE BROTHER');
+            squishHandler(true);
+          } else if (parentWidth > width && isSquished) {
+            squishHandler(false);
+          }
+        }
+        return (
+          <>
+            {tabs.map((el, index) => {
+              const { hasClose = true } = el;
+
+              return (
+                <Tab
+                  {...el}
+                  isActive={index === activeTab}
+                  hasClose={hasClose}
+                  key={`tab_${index}`}
+                  clickHandler={() => onChange(index)}
+                  closeHandler={() => (hasClose ? onClose(index) : null)}
+                />
+              );
+            })}
+          </>
+        );
+      }}
+    </ReactResizeDetector>
+  </TabLineup>
+);
 
 const singleRender = (tabs, activeTab) => tabs[activeTab].content();
 const allRender = (tabs, activeTab) => (
@@ -130,13 +175,30 @@ const CustomTab = props => {
     hasAddButton,
     onAdd,
   } = props;
+  const [isSquished, setIsSquished] = useState(false);
+  const [numberOfTabs, setNumberOfTabs] = useState(tabs ? tabs.length : 0);
+  const [hiddenTabs, setHiddenTabs] = useState([]);
+
+  useEffect(() => {
+    if (tabs) {
+      if (tabs.length !== numberOfTabs) {
+        setNumberOfTabs(tabs.length);
+      }
+    }
+  }, [tabs]);
+
+  console.log('Squished', isSquished);
 
   return (
     <div>
-      <TabLineup>
-        {renderTabs(tabs, onChange, onClose, activeTab)}
+      <TabTileContainer>
+        <ReactResizeDetector handleWidth>
+          {({ width }) => (
+            <>{renderTabs(tabs, onChange, onClose, activeTab, width, isSquished, setIsSquished)}</>
+          )}
+        </ReactResizeDetector>
         {hasAddButton && <AddIcon size={12} onClick={onAdd} />}
-      </TabLineup>
+      </TabTileContainer>
       <TabContentContainer>
         {renderMethod === 'single'
           ? singleRender(tabs, activeTab)

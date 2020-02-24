@@ -64,7 +64,7 @@ const Bubble = styled.div`
   }
 `;
 
-const TooltipBubble = (props) => {
+export const TooltipBubble = (props) => {
   const {
     show, children, bottom, theme, tooltipRef,
   } = props;

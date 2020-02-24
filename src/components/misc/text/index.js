@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-cycle
 import Tooltip from '../tooltip';
 import { BaseText } from './theme';
 import Box from '../../layout/box';
 
-export default function Text(props) {
+const Text = forwardRef((props, ref) => {
   const {
     children, isTitle, size, underline, tooltip, isLink, ...rest
   } = props;
@@ -13,7 +13,7 @@ export default function Text(props) {
   if (tooltip) {
     return (
       <Box horizontal space={5}>
-        <BaseText isTitle={isTitle} size={size} underline={underline} {...rest}>
+        <BaseText ref={ref} isTitle={isTitle} size={size} underline={underline} {...rest}>
           {children}
         </BaseText>
         {tooltip && <Tooltip>{tooltip}</Tooltip>}
@@ -22,6 +22,7 @@ export default function Text(props) {
   }
   return (
     <BaseText
+      ref={ref}
       isTitle={isTitle}
       size={size}
       underline={underline}
@@ -31,7 +32,7 @@ export default function Text(props) {
       {children}
     </BaseText>
   );
-}
+});
 
 Text.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'danger', 'info']),
@@ -60,3 +61,5 @@ Text.defaultProps = {
   tooltip: null,
   isLink: false,
 };
+
+export default Text;

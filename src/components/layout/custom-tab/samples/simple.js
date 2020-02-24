@@ -9,6 +9,8 @@ const TabContent = (props) => {
     console.log('Remaking', number);
   }, []);
 
+  console.log('Rendering page');
+
   return (
     <div style={{ width: '80%' }}>
       <Text>Content for {number}</Text>
