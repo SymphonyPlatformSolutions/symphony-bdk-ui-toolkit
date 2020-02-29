@@ -27,28 +27,33 @@ const TabTileContainer = styled.div`
   display: flex;
 `;
 
-const TabTitleComponent = ({ title }) => {
+const TabTitleComponent = ({ title, tellWidthHandler }) => {
   const titleRef = useRef();
-  const [isSquished, setIsSquished] = useState(false);
+  // const [isSquished, setIsSquished] = useState(false);
+  const [currWidth, setCurrWidth] = useState(null);
+  useEffect(() => {
+    tellWidthHandler(currWidth);
+  }, [currWidth]);
 
   return (
     <>
       <TabTitle ref={titleRef}>
         <ReactResizeDetector handleWidth>
           {({ width }) => {
-            if (titleRef.current) {
-              if (Math.ceil(width) < titleRef.current.scrollWidth) {
-                setIsSquished(true);
-              } else if (isSquished) {
-                setIsSquished(false);
-              }
+            // if (titleRef.current) {
+            //   if (Math.ceil(width) < titleRef.current.scrollWidth) {
+            //     setIsSquished(true);
+            //   } else if (isSquished) {
+            //     setIsSquished(false);
+            //   }
+            // }
+            if (width !== currWidth) {
+              setCurrWidth(width);
             }
-
             return <>{title}</>;
           }}
         </ReactResizeDetector>
       </TabTitle>
-      {isSquished ? <div style={{ position: 'absolute' }}>SQUISHED</div> : null}
     </>
   );
 };
@@ -61,6 +66,7 @@ const Tab = props => {
     closeHandler,
     isActive,
     TabComponent,
+    tellWidthHandler,
   } = props;
 
   const closeClickHandler = e => {
@@ -85,7 +91,7 @@ const Tab = props => {
       {TabComponent ? (
         <TabComponent {...props} />
       ) : (
-        <TabTitleComponent title={title} />
+        <TabTitleComponent title={title} tellWidthHandler={tellWidthHandler} />
       )}
       {hasClose && (
         <div style={{ marginLeft: '6px' }}>
@@ -109,19 +115,19 @@ const TabLineup = styled.div`
   display: flex;
 `;
 
-const renderTabs = (tabs, onChange, onClose, activeTab, parentWidth, isSquished, squishHandler) => (
+const renderTabs = (
+  tabs,
+  onChange,
+  onClose,
+  activeTab,
+  parentWidth,
+  tellWidthHandler,
+) => (
   <TabLineup>
     <ReactResizeDetector handleWidth>
       {({ width }) => {
-        // console.log('WIDTH', width);
-        // console.log('PARENT WIDTH', parentWidth);
         if (parentWidth) {
-          if (parentWidth < width && !isSquished) {
-            // console.log('HERE BROTHER');
-            squishHandler(true);
-          } else if (parentWidth > width && isSquished) {
-            squishHandler(false);
-          }
+          const a = 0;
         }
         return (
           <>
@@ -131,6 +137,7 @@ const renderTabs = (tabs, onChange, onClose, activeTab, parentWidth, isSquished,
               return (
                 <Tab
                   {...el}
+                  tellWidthHandler={(thisTabWidth) => tellWidthHandler(thisTabWidth, index)}
                   isActive={index === activeTab}
                   hasClose={hasClose}
                   key={`tab_${index}`}
@@ -176,25 +183,39 @@ const CustomTab = props => {
     onAdd,
   } = props;
   const [isSquished, setIsSquished] = useState(false);
-  const [numberOfTabs, setNumberOfTabs] = useState(tabs ? tabs.length : 0);
+  const [tabSizes, setTabSizes] = useState([]);
   const [hiddenTabs, setHiddenTabs] = useState([]);
 
   useEffect(() => {
-    if (tabs) {
-      if (tabs.length !== numberOfTabs) {
-        setNumberOfTabs(tabs.length);
-      }
-    }
+    setTabSizes([]);
   }, [tabs]);
 
-  console.log('Squished', isSquished);
+  console.log('TABSIZES', tabSizes);
+
+  const tellWidthHandler = (width, index) => {
+    if (tabSizes[index] !== width) {
+      const newTabSizes = tabSizes;
+      newTabSizes[index] = width;
+      setTabSizes(newTabSizes);
+    }
+    // console.log('GOT', width, 'FOR TAB', index);
+  };
 
   return (
     <div>
       <TabTileContainer>
         <ReactResizeDetector handleWidth>
           {({ width }) => (
-            <>{renderTabs(tabs, onChange, onClose, activeTab, width, isSquished, setIsSquished)}</>
+            <>
+              {renderTabs(
+                tabs,
+                onChange,
+                onClose,
+                activeTab,
+                width,
+                tellWidthHandler,
+              )}
+            </>
           )}
         </ReactResizeDetector>
         {hasAddButton && <AddIcon size={12} onClick={onAdd} />}
