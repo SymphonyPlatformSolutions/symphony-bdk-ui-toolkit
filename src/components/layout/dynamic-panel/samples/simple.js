@@ -6,12 +6,6 @@ import Text from '../../../misc/text';
 const TabContent = (props) => {
   const { number } = props;
 
-  useEffect(() => {
-    console.log('Remaking', number);
-  }, []);
-
-  console.log('Rendering page');
-
   return (
     <div style={{ width: '80%' }}>
       <Text>Content for {number}</Text>
@@ -21,10 +15,10 @@ const TabContent = (props) => {
 
 const TABS = [
   {
-    title: 'Tab 1', id: uuid.v4(), content: () => (<TabContent number={1} />), hasClose: false,
+    title: 'Tab 1', id: uuid.v4(), getContent: () => (<TabContent number={1} />), hasClose: false,
   },
-  { title: 'Tab 2', id: uuid.v4(), content: () => (<TabContent number={2} />) },
-  { title: 'Tab 3', id: uuid.v4(), content: () => (<TabContent number={3} />) },
+  { title: 'Tab 2', id: uuid.v4(), getContent: () => (<TabContent number={2} />) },
+  { title: 'Tab 3', id: uuid.v4(), getContent: () => (<TabContent number={3} />) },
 ];
 
 const TabWrapper = (props) => {
@@ -37,8 +31,8 @@ const TabWrapper = (props) => {
     }
     setTabs(tabs.filter((el, index) => index !== removeIndex));
   };
-  const onAdd = () => {
-    setTabs([...tabs, { title: 'New tab', id: uuid.v4(), content: () => (<TabContent number={tabs.length + 1} />) }]);
+  const onCreate = () => {
+    setTabs([...tabs, { title: 'New tab', id: uuid.v4(), getContent: () => (<TabContent number={tabs.length + 1} />) }]);
   };
 
   return (
@@ -46,9 +40,9 @@ const TabWrapper = (props) => {
       onChange={(newTab) => setCurrentTab(newTab)}
       tabs={tabs}
       activeTab={currentTab}
-      onClose={removeTab}
+      onRemove={removeTab}
       renderMethod="single"
-      onAdd={onAdd}
+      onCreate={onCreate}
       hasAddButton
     />
   );

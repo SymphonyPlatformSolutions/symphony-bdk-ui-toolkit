@@ -1,238 +1,369 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
-import Tabs from 'react-responsive-tabs';
-import {
-  StyledPanelContainer,
-  RRTStyleOverride,
-  TabHeader,
-  CloseIconWrapper,
-  AddTabIcon,
-  IconContainer,
-  EditTabTitleInput,
-  TabText,
-} from './theme';
-
-import 'react-responsive-tabs/styles.css';
-import { CloseIcon } from '../../../index';
-import { NoOp } from '../../../utils/helpers';
+import styled from 'styled-components';
+import ReactResizeDetector from 'react-resize-detector';
 import Text from '../../misc/text';
+import { CloseButton } from '../../misc/button/icon-buttons';
 
-const ENTER_KEY = 13;
-const ESCAPE_KEY = 27;
+const StyledTab = styled.div`
+  padding: 8px 16px;
+  margin-right: 3px;
+  display: flex;
+  align-items: center;
+  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.grey_200 : theme.colors.grey_100)};
+  cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
+  transition: background-color 0.3s;
+  min-width: 40px;
+  :hover {
+    background-color: ${({ theme, isActive }) => (isActive ? undefined : theme.colors.grey_300)};
+  }
+`;
+const TabTitle = styled(Text)`
+  margin-top: 4px;
+  margin-bottom: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+const TabTileContainer = styled.div`
+  display: flex;
+`;
 
-const AddTabButton = props => {
-  const { onClick } = props;
+const TabTitleComponent = ({ title }) => {
+  const titleRef = useRef();
 
-  return (
-    <IconContainer onClick={onClick}>
-      <AddTabIcon>
-        <Text isTitle style={{ fontWeight: 'normal', marginTop: '2px' }}>+</Text>
-      </AddTabIcon>
-    </IconContainer>
-  );
+  return <TabTitle ref={titleRef}>{title}</TabTitle>;
 };
 
-const TabTitle = (props) => {
+const Tab = props => {
   const {
-    TitleComponent, theme, removable, handleRemove,
-    title, tabIndex, changeTitleHandler,
+    title,
+    clickHandler,
+    hasClose,
+    closeHandler,
+    isActive,
+    TabComponent,
+    tellWidthHandler,
+    currWidth,
   } = props;
-  const [isEditing, setIsEditing] = useState(false);
-  const [typedValue, setTypedValue] = useState(title);
 
-  const resetInput = (forceResest) => {
-    setIsEditing(false);
-    if (typedValue && !forceResest) {
-      changeTitleHandler(typedValue);
-    } else {
-      setTypedValue(title);
+  const closeClickHandler = e => {
+    if (e.button === 0) {
+      e.stopPropagation();
+      closeHandler();
     }
   };
 
-  const keyDownHandler = ({ keyCode }) => {
-    if (keyCode === ENTER_KEY) {
-      resetInput();
-    }
-    if (keyCode === ESCAPE_KEY) {
-      resetInput(true);
+  const tabClickHandler = e => {
+    if (e.button === 1) {
+      closeHandler();
     }
   };
-
-  const handleType = (e) => {
-    setTypedValue(e.target.value);
-  };
-
-  function renderTabTitle() {
-    const autoFocus = (input) => {
-      if (input) {
-        input.getElementsByTagName('input')[0].focus();
-      }
-    };
-
-    if (isEditing) {
-      return (
-        <div ref={autoFocus}>
-          <EditTabTitleInput
-            onBlur={() => resetInput()}
-            value={typedValue}
-            placeholder={title}
-            onKeyDown={keyDownHandler}
-            onChange={handleType}
-            autofocus
-          />
-        </div>
-      );
-    }
-
-    if (TitleComponent) {
-      return TitleComponent({ children: [title] });
-    }
-    return <TabText>{title}</TabText>;
-  }
-
-
-  if (removable) {
-    return (
-      <TabHeader
-        onDoubleClick={() => setIsEditing(true)}
-        editing={isEditing}
-      >
-        {renderTabTitle()}
-        {!isEditing && (
-        <CloseIconWrapper onClick={handleRemove(tabIndex)}>
-          <CloseIcon size={10} color={theme.colors.secondary_300} />
-        </CloseIconWrapper>
-        )}
-      </TabHeader>
-    );
-  }
 
   return (
-    <TabHeader onDoubleClick={() => setIsEditing(true)} editing={isEditing}>
-      {renderTabTitle()}
-    </TabHeader>
+    <div>
+      <ReactResizeDetector handleWidth>
+        {({ width }) => {
+          if (width) {
+            if (currWidth !== width) {
+              tellWidthHandler(width);
+            }
+          }
+          return (
+            <StyledTab
+              onClick={isActive ? null : clickHandler}
+              isActive={isActive}
+              onMouseDown={tabClickHandler}
+            >
+              {TabComponent ? (
+                <TabComponent {...props} />
+              ) : (
+                <TabTitleComponent title={title} />
+              )}
+              {hasClose && (
+                <div style={{ marginLeft: '6px' }}>
+                  <CloseButton
+                    size={10}
+                    style={{ outline: 'none' }}
+                    onMouseDown={closeClickHandler}
+                  />
+                </div>
+              )}
+            </StyledTab>
+          );
+        }}
+      </ReactResizeDetector>
+    </div>
   );
 };
 
-TabTitle.propTypes = {
-  TitleComponent: PropTypes.node,
-};
-const DynamicTabs = ({
-  theme,
+const TabContentContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.grey_200};
+  padding: 16px 16px;
+`;
+
+const TabLineup = styled.div`
+  display: flex;
+`;
+
+const renderTabs = (
   tabs,
-  isResponsive,
-  onRemove,
-  responsiveBreakpoint,
-  wrapTabs,
-  showSelectedTabIndicator,
-  tabsRemovable,
-  activeTab,
   onChange,
-  hasAddButton,
-  onCreate,
-  AddTabComponent,
-  changeTitleHandler,
-}) => {
-  function renderAddTabComponent() {
-    if (AddTabComponent) {
-      return AddTabComponent({ onClick: { onCreate } });
-    }
-    return <AddTabButton onClick={onCreate} />;
-  }
-  const [currentTabs, setCurrentTabs] = useState(tabs);
-  const [mkey, setMkey] = useState(0);
-
-  const handleRemove = tabIndex => e => {
-    e.stopPropagation();
-    onRemove(tabIndex);
-  };
-
-  useEffect(() => {
-    const newTabs = tabs.map((tab, index) => {
-      const decoratedTitle = (
-        <TabTitle
-          title={tab.title}
-          TitleComponent={tab.TitleComponent}
-          theme={theme}
-          tabIndex={index}
-          key={tab.key}
-          handleRemove={handleRemove}
-          removable={tabsRemovable}
-          changeTitleHandler={newTitle => changeTitleHandler(newTitle, index)}
+  onRemove,
+  activeTab,
+  tellWidthHandler,
+  tabSizes,
+  hiddenTabs,
+) => (
+  <TabLineup>
+    {tabs.map((el, index) => {
+      const { hasClose = true } = el;
+      if (hiddenTabs.find(shouldNotRender => shouldNotRender.id === el.id)) {
+        return null;
+      }
+      return (
+        <Tab
+          {...el}
+          tellWidthHandler={thisTabWidth => tellWidthHandler(thisTabWidth, el.id)}
+          isActive={index === activeTab}
+          hasClose={hasClose}
+          key={el.id}
+          currWidth={tabSizes[el.id]}
+          clickHandler={() => onChange(index)}
+          closeHandler={() => (hasClose ? onRemove(index) : null)}
         />
       );
+    })}
+  </TabLineup>
+);
 
-      tab.title = decoratedTitle;
-      return tab;
-    });
-    if (hasAddButton) {
-      newTabs.push({
-        title: renderAddTabComponent(),
-        body: null,
-        tabClassName: 'RRT__add-tab',
-      });
-    }
-    setCurrentTabs(newTabs);
-    setMkey(mkey + 1);
-  }, [tabs, activeTab]);
+const singleRender = (tabs, activeTab) => tabs[activeTab].getContent();
+const allRender = (tabs, activeTab) => (
+  <div>
+    {tabs.map((el, index) => {
+      if (index !== activeTab) {
+        return undefined;
+      }
+      return el.getContent();
+    })}
+  </div>
+);
 
-  useEffect(() => {
-    setMkey(mkey + 1);
-  }, [activeTab]);
+const AddIcon = styled(CloseButton)`
+  transform: rotate(45deg);
+  padding: 5px;
+  margin-left: 5px;
+  outline: none;
+`;
 
+const ExcessIconContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ExcessEllipsis = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.grey_100};
+  padding: 4px;
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  justify-content: center;
+  cursor: pointer;
+`;
+const ExcessMenuContainer = styled.div`
+  position: absolute;
+  padding: 8px 6px 8px 8px;
+  right: 0;
+  top: 14px;
+  z-index: 1;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.grey_300};
+`;
+
+const ExcessMenu = props => {
+  const {
+    hiddenTabs, activeTab, onChange, onRemove, totalTabs,
+  } = props;
   return (
-    <StyledPanelContainer key={mkey} theme={theme}>
-      <RRTStyleOverride theme={theme} />
-      <Tabs
-        items={currentTabs}
-        onChange={onChange}
-        showMore={wrapTabs}
-        transformWidth={responsiveBreakpoint}
-        transform={isResponsive}
-        showInkBar={showSelectedTabIndicator}
-        selectedTabKey={activeTab}
-      />
-    </StyledPanelContainer>
+    <ExcessMenuContainer>
+      {hiddenTabs.map((el, index) => {
+        const { hasClose = true } = el;
+        return (
+          <Tab
+            {...el}
+            tellWidthHandler={() => {}}
+            isActive={totalTabs - hiddenTabs.length + index === activeTab}
+            hasClose={hasClose}
+            key={el.id}
+            clickHandler={() => onChange(totalTabs - hiddenTabs.length + index)}
+            closeHandler={() => (hasClose ? onRemove(totalTabs - hiddenTabs.length + index) : null)}
+          />
+        );
+      })}
+    </ExcessMenuContainer>
   );
 };
 
-DynamicTabs.propTypes = {
-  theme: PropTypes.object.isRequired,
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-      getContent: PropTypes.func,
-      key: PropTypes.number,
-    }),
-  ),
-  onRemove: PropTypes.func,
-  isResponsive: PropTypes.bool,
-  responsiveBreakpoint: PropTypes.number,
-  wrapTabs: PropTypes.bool,
-  showSelectedTabIndicator: PropTypes.bool,
-  tabsRemovable: PropTypes.bool,
+const ExcessTabDropdown = props => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [triggerMenu, setTriggerMenu] = useState(false);
+  const inputRef = useRef();
+
+  // Debounce
+  useEffect(() => {
+    if (triggerMenu) {
+      setMenuIsOpen(true);
+      return undefined;
+    }
+    const handler = setTimeout(() => {
+      setMenuIsOpen(triggerMenu);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [triggerMenu]);
+  return (
+    <ExcessIconContainer
+      onMouseEnter={() => setTriggerMenu(true)}
+      onMouseLeave={() => setTriggerMenu(false)}
+    >
+      <ExcessEllipsis>
+        <Text size="small">•••</Text>
+      </ExcessEllipsis>
+      <div style={{ position: 'relative' }}>
+        {menuIsOpen ? <ExcessMenu {...props} inputRef={inputRef} /> : null}
+      </div>
+    </ExcessIconContainer>
+  );
+};
+
+const sumTabWidths = tabSizes => Object.keys(tabSizes).reduce((acc, el) => {
+  if (tabSizes[el]) {
+    return acc + tabSizes[el];
+  }
+  return acc;
+}, 0);
+
+const DynamicPanel = props => {
+  const {
+    tabs,
+    onChange,
+    activeTab,
+    renderMethod,
+    hasAddButton,
+    onRemove,
+    onCreate,
+  } = props;
+  const [tabSizes, setTabSizes] = useState({});
+  const [sumOfWidths, setSumOfWidths] = useState(null);
+  const [currFullWidth, setFullWidth] = useState(null);
+  const [hiddenTabs, setHiddenTabs] = useState([]);
+
+  useEffect(() => {
+    const tabSizeKeys = Object.keys(tabSizes);
+    const newTabSizes = { ...tabSizes };
+    if (tabSizeKeys.length > tabs.length) {
+      // Remove the tab size from the array
+      for (let i = 0; i < tabSizeKeys.length; i += 1) {
+        if (!tabs.find(el => el.id === tabSizeKeys[i])) {
+          delete newTabSizes[tabSizeKeys[i]];
+        }
+      }
+      setTabSizes(newTabSizes);
+    }
+    setSumOfWidths(sumTabWidths(newTabSizes));
+  }, [tabs]);
+
+  useEffect(() => {
+    if (!currFullWidth) {
+      return;
+    }
+
+    let widthCutoff;
+    let widthAcc = 0;
+    const toHide = [];
+    for (widthCutoff = 0; widthCutoff < tabs.length; widthCutoff += 1) {
+      widthAcc += tabSizes[tabs[widthCutoff].id];
+      if (currFullWidth - 30 < widthAcc) {
+        toHide.push(tabs[widthCutoff]);
+      }
+    }
+
+    setHiddenTabs(toHide);
+  }, [currFullWidth, sumOfWidths]);
+
+  const tellWidthHandler = (width, id) => {
+    if (tabSizes[id] !== width) {
+      const newTabSizes = tabSizes;
+      newTabSizes[id] = width;
+      setSumOfWidths(sumTabWidths(newTabSizes));
+      setTabSizes(newTabSizes);
+    }
+  };
+
+  return (
+    <div>
+      <TabTileContainer>
+        <ReactResizeDetector handleWidth>
+          {({ width }) => {
+            if (width) {
+              if (width !== currFullWidth) {
+                setFullWidth(width);
+              }
+            }
+            return (
+              <React.Fragment>
+                {renderTabs(
+                  tabs,
+                  onChange,
+                  onRemove,
+                  activeTab,
+                  tellWidthHandler,
+                  tabSizes,
+                  hiddenTabs,
+                )}
+              </React.Fragment>
+            );
+          }}
+        </ReactResizeDetector>
+        {hasAddButton && <AddIcon size={12} onClick={onCreate} />}
+        {hiddenTabs.length ? (
+          <ExcessTabDropdown
+            hiddenTabs={hiddenTabs}
+            activeTab={activeTab}
+            PropTypes
+            onChange={onChange}
+            totalTabs={tabs.length}
+            onRemove={onRemove}
+          />
+        ) : null}
+      </TabTileContainer>
+      <TabContentContainer>
+        {renderMethod === 'single'
+          ? singleRender(tabs, activeTab)
+          : allRender(tabs, activeTab)}
+      </TabContentContainer>
+    </div>
+  );
+};
+
+DynamicPanel.propTypes = {
+  tabs: PropTypes.array,
+  onChange: PropTypes.func,
   activeTab: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
+  onRemove: PropTypes.func,
+  renderMethod: PropTypes.string,
   hasAddButton: PropTypes.bool,
   onCreate: PropTypes.func,
-  AddTabComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  changeTitleHandler: PropTypes.func,
 };
-
-DynamicTabs.defaultProps = {
-  tabs: [],
-  onRemove: NoOp,
-  isResponsive: false,
-  responsiveBreakpoint: 1400,
-  wrapTabs: true,
-  showSelectedTabIndicator: false,
-  tabsRemovable: false,
-  activeTab: 0,
-  hasAddButton: false,
+DynamicPanel.defaultProps = {
+  tabs: null,
+  onChange: null,
+  activeTab: null,
+  onRemove: null,
+  renderMethod: 'single',
+  hasAddButton: true,
   onCreate: null,
-  AddTabComponent: null,
-  changeTitleHandler: null,
 };
 
-export default withTheme(DynamicTabs);
+export default DynamicPanel;

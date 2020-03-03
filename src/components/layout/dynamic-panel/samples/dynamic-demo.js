@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Faker from 'faker';
+import uuid from 'uuid';
 import DynamicTabs from '../index';
 import Box from '../../box';
 import Text from '../../../misc/text';
@@ -64,10 +65,12 @@ const dynamicTabs = [
   {
     title: 'MSFT Area chart',
     body: <AreaChartExample height={400} />,
+    id: uuid.v4(),
   },
   {
     title: 'MSFT Intraday',
     body: <DiscontinousChart />,
+    id: uuid.v4(),
   },
 ];
 
@@ -75,6 +78,7 @@ const getTabs = () => dynamicTabs.map((tab, index) => ({
   title: tab.title,
   getContent: () => tab.body,
   key: index,
+  id: tab.id,
 }));
 
 
@@ -92,7 +96,7 @@ export const DynamicTabsSample = () => {
 
   const onAddElement = () => {
     dynamicTabs.push(
-      { title: 'Example Tab', body: (<ExampleTab />) },
+      { title: 'Example Tab', body: (<ExampleTab />), id: uuid.v4() },
     );
     setData(getTabs());
   };
@@ -200,7 +204,6 @@ export const DynamicTabsSample = () => {
           onChange={tabChange}
           onCreate={onAddElement}
           changeTitleHandler={changeTitleHandler}
-          hasAddButton={hasAddTabs}
         />
       </Box>
     </Box>
