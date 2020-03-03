@@ -326,7 +326,7 @@ const DynamicPanel = props => {
             );
           }}
         </ReactResizeDetector>
-        {hasAddButton && <AddIcon size={12} onClick={onCreate} />}
+        {hasAddButton && <AddIcon size={12} alt="Add Tab" onClick={onCreate} />}
         {hiddenTabs.length ? (
           <ExcessTabDropdown
             hiddenTabs={hiddenTabs}
