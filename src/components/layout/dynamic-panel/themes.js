@@ -12,20 +12,11 @@ const appear = keyframes`
   }
 `;
 
-const create = keyframes`
-  from {
-    position: absolute;
-    visibility: hidden;
-  }
-  to {
-    position: inherit;
-    visibility: visible;
-  }
-`;
-
-export const ResizeTabWrapper = styled.div`
-  animation-iteration-count: 1;
-  animation: ${create} 0.1s;
+export const InvisibleTabBuffer = styled.div`
+  visibility: 0;
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
 `;
 
 export const StyledTab = styled.div`

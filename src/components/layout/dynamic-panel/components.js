@@ -33,7 +33,6 @@ export const Tab = props => {
     isActive,
     TabComponent,
     widthHandler,
-    currSize,
   } = props;
 
   const [currWidth, setCurrWidth] = useState(null);
@@ -57,12 +56,9 @@ export const Tab = props => {
         {({ width }) => {
           if (width) {
             if (currWidth !== width) {
-              console.log('Blaming width of', width);
               widthHandler(width);
               setCurrWidth(width);
             }
-          } else {
-            console.log('Started tab with no width!');
           }
 
           return (
@@ -143,6 +139,7 @@ ExcessMenu.propTypes = {
   onChange: PropTypes.func,
   onRemove: PropTypes.func,
   totalTabs: PropTypes.number,
+  widthHandler: PropTypes.func.isRequired,
 };
 ExcessMenu.defaultProps = {
   hiddenTabs: null,

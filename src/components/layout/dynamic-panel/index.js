@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactResizeDetector from 'react-resize-detector';
 import {
@@ -6,13 +6,11 @@ import {
   TabTileContainer,
   AddIcon,
   TabContentContainer,
+  InvisibleTabBuffer,
 } from './themes';
-import {
-  Tab,
-  ExcessTabDropdown,
-} from './components';
+import { Tab, ExcessTabDropdown } from './components';
 
-const renderTabs = (
+const renderTabs = ({
   tabs,
   onChange,
   onRemove,
@@ -20,11 +18,31 @@ const renderTabs = (
   widthHandler,
   hiddenTabs,
   tabSizes,
-) => {
-  console.log('Rendering tabs');
+}) => {
+  const renderableTabs = tabs.filter(el => !!tabSizes[el.id]);
+  const noWidthTabs = tabs.filter(el => !tabSizes[el.id]);
+
   return (
     <TabLineup>
-      {tabs.map((el, index) => {
+      <InvisibleTabBuffer>
+        {noWidthTabs.map((el, index) => {
+          const { hasClose = true } = el;
+          if (hiddenTabs.find(shouldNotRender => shouldNotRender.id === el.id)) {
+            return null;
+          }
+          return (
+            <Tab
+              {...el}
+              widthHandler={thisTabWidth => widthHandler(thisTabWidth, el.id)}
+              hasClose={hasClose}
+              key={`${el.id}__widthTry`}
+              clickHandler={() => {}}
+              closeHandler={() => {}}
+            />
+          );
+        })}
+      </InvisibleTabBuffer>
+      {renderableTabs.map((el, index) => {
         const { hasClose = true } = el;
         if (hiddenTabs.find(shouldNotRender => shouldNotRender.id === el.id)) {
           return null;
@@ -36,7 +54,6 @@ const renderTabs = (
             isActive={index === activeTab}
             hasClose={hasClose}
             key={el.id}
-            currSize={tabSizes[el.id]}
             clickHandler={() => onChange(index)}
             closeHandler={() => (hasClose ? onRemove(index) : null)}
           />
@@ -73,19 +90,17 @@ const DynamicPanel = props => {
   const [currFullWidth, setFullWidth] = useState(null);
   const [hiddenTabs, setHiddenTabs] = useState([]);
 
-  const applyHide = (from) => {
+  const applyHide = () => {
     if (!currFullWidth) {
       return;
     }
-
-    console.log('In APPLY HIDE', tabSizes);
 
     let widthCutoff;
     let widthAcc = 0;
     const toHide = [];
     for (widthCutoff = 0; widthCutoff < tabs.length; widthCutoff += 1) {
       widthAcc += tabSizes[tabs[widthCutoff].id];
-      if ((currFullWidth - 30) < widthAcc) {
+      if (currFullWidth - 30 < widthAcc) {
         toHide.push(tabs[widthCutoff]);
       }
     }
@@ -102,7 +117,6 @@ const DynamicPanel = props => {
   };
 
   useLayoutEffect(() => {
-    console.log('Tabs changed!');
     const tabSizeKeys = Object.keys(tabSizes);
     const newTabSizes = { ...tabSizes };
     if (tabSizeKeys.length > tabs.length) {
@@ -113,18 +127,10 @@ const DynamicPanel = props => {
         }
       }
       setTabSizes(newTabSizes);
-    } else if (tabSizeKeys.length < tabs.length) {
-      for (let i = 0; i < tabs.length; i++) {
-        if (!newTabSizes[tabs[i].id]) {
-          newTabSizes[tabs[i].id] = 180;
-        }
-      }
-      setTabSizes(newTabSizes);
     }
   }, [tabs]);
 
   const widthHandler = (width, id) => {
-    console.log('Want to say width', width, 'for', id);
     if (tabSizes[id] !== width) {
       const newTabSizes = { ...tabSizes };
       newTabSizes[id] = width;
@@ -147,7 +153,7 @@ const DynamicPanel = props => {
             }
             return (
               <React.Fragment>
-                {renderTabs(
+                {renderTabs({
                   tabs,
                   onChange,
                   onRemove,
@@ -155,7 +161,7 @@ const DynamicPanel = props => {
                   widthHandler,
                   hiddenTabs,
                   tabSizes,
-                )}
+                })}
               </React.Fragment>
             );
           }}
