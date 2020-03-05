@@ -37,9 +37,10 @@ export const StyledTab = styled.div`
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   transition: background-color 0.3s;
   min-width: 40px;
+  max-width: 180px;
   animation-iteration-count: 1;
   opacity: 1;
-  animation: ${appear} 0.4s;
+  animation: ${appear} 0.3s;
   :hover {
     background-color: ${({ theme, isActive }) => (isActive ? undefined : theme.colors.grey_300)};
   }

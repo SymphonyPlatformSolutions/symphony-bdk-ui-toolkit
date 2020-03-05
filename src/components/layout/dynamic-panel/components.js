@@ -52,7 +52,7 @@ export const Tab = props => {
   };
 
   return (
-    <ResizeTabWrapper>
+    <div>
       <ReactResizeDetector handleWidth>
         {({ width }) => {
           if (width) {
@@ -61,6 +61,8 @@ export const Tab = props => {
               widthHandler(width);
               setCurrWidth(width);
             }
+          } else {
+            console.log('Started tab with no width!');
           }
 
           return (
@@ -87,7 +89,7 @@ export const Tab = props => {
           );
         }}
       </ReactResizeDetector>
-    </ResizeTabWrapper>
+    </div>
   );
 };
 
@@ -112,7 +114,7 @@ Tab.defaultProps = {
 
 export const ExcessMenu = props => {
   const {
-    hiddenTabs, activeTab, onChange, onRemove, totalTabs,
+    hiddenTabs, activeTab, onChange, onRemove, totalTabs, widthHandler,
   } = props;
 
   return (
@@ -123,7 +125,7 @@ export const ExcessMenu = props => {
         return (
           <Tab
             {...el}
-            widthHandler={() => {}}
+            widthHandler={thisTabWidth => widthHandler(thisTabWidth, el.id)}
             isActive={isActive}
             hasClose={hasClose}
             key={el.id}

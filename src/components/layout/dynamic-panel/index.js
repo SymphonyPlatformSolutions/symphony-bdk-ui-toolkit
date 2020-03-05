@@ -58,13 +58,6 @@ const allRender = (tabs, activeTab) => (
   </div>
 );
 
-const sumTabWidths = tabSizes => Object.keys(tabSizes).reduce((acc, el) => {
-  if (tabSizes[el]) {
-    return acc + tabSizes[el];
-  }
-  return acc;
-}, 0);
-
 const DynamicPanel = props => {
   const {
     tabs,
@@ -77,7 +70,6 @@ const DynamicPanel = props => {
     closeDebouncePerdiod,
   } = props;
   const [tabSizes, setTabSizes] = useState({});
-  const [sumOfWidths, setSumOfWidths] = useState(null);
   const [currFullWidth, setFullWidth] = useState(null);
   const [hiddenTabs, setHiddenTabs] = useState([]);
 
@@ -86,7 +78,7 @@ const DynamicPanel = props => {
       return;
     }
 
-    console.log('Applying hide from', from);
+    console.log('In APPLY HIDE', tabSizes);
 
     let widthCutoff;
     let widthAcc = 0;
@@ -97,8 +89,16 @@ const DynamicPanel = props => {
         toHide.push(tabs[widthCutoff]);
       }
     }
-
-    setHiddenTabs(toHide);
+    if (toHide.length !== hiddenTabs.length) {
+      setHiddenTabs(toHide);
+    } else {
+      for (let i = 0; i < toHide.length; i++) {
+        if (toHide[i].id !== hiddenTabs[i].id) {
+          setHiddenTabs(toHide);
+          break;
+        }
+      }
+    }
   };
 
   useLayoutEffect(() => {
@@ -113,31 +113,26 @@ const DynamicPanel = props => {
         }
       }
       setTabSizes(newTabSizes);
-      applyHide('Tab Effect');
+    } else if (tabSizeKeys.length < tabs.length) {
+      for (let i = 0; i < tabs.length; i++) {
+        if (!newTabSizes[tabs[i].id]) {
+          newTabSizes[tabs[i].id] = 180;
+        }
+      }
+      setTabSizes(newTabSizes);
     }
-    // else if (tabSizeKeys.length < tabs.length) {
-    //   for (let i = 0; i < tabs.length; i++) {
-    //     if (!newTabSizes[tabs[i].id]) {
-    //       newTabSizes[tabs[i].id] = 200;
-    //       console.log(newTabSizes);
-    //     }
-    //   }
-    //   setTabSizes(newTabSizes);
-    //   applyHide('Tab Effect');
-    // }
-    // setSumOfWidths(sumTabWidths(newTabSizes));
   }, [tabs]);
 
-  // [currFullWidth, sumOfWidths]
-
   const widthHandler = (width, id) => {
-    const newTabSizes = tabSizes;
-    newTabSizes[id] = width;
-    applyHide('Width handler');
-    setTabSizes(newTabSizes);
+    console.log('Want to say width', width, 'for', id);
+    if (tabSizes[id] !== width) {
+      const newTabSizes = { ...tabSizes };
+      newTabSizes[id] = width;
+      setTabSizes(newTabSizes);
+    }
   };
 
-  console.log('So we here');
+  applyHide();
 
   return (
     <div>
@@ -170,6 +165,7 @@ const DynamicPanel = props => {
           <ExcessTabDropdown
             hiddenTabs={hiddenTabs}
             activeTab={activeTab}
+            widthHandler={widthHandler}
             closeDebouncePerdiod={closeDebouncePerdiod}
             onChange={onChange}
             totalTabs={tabs.length}
