@@ -66,6 +66,7 @@ const dynamicTabs = [
     title: 'MSFT Area chart',
     body: <AreaChartExample height={400} />,
     id: uuid.v4(),
+    stopClose: true,
   },
   {
     title: 'MSFT Intraday',
@@ -79,6 +80,7 @@ const getTabs = () => dynamicTabs.map((tab, index) => ({
   getContent: () => tab.body,
   key: index,
   id: tab.id,
+  hasClose: !tab.stopClose,
 }));
 
 export const DynamicTabsSample = () => {
@@ -98,6 +100,9 @@ export const DynamicTabsSample = () => {
   };
 
   const handleRemove = index => {
+    if (activeTab >= index) {
+      setActiveTab(activeTab - 1);
+    }
     dynamicTabs.splice(index, 1);
     setData(getTabs());
   };

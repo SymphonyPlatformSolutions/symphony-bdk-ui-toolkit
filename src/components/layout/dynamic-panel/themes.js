@@ -3,9 +3,10 @@ import Text from '../../misc/text';
 import { CloseButton } from '../../misc/button/icon-buttons';
 
 const appear = keyframes`
-  from {
+  0%, 30% {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -13,16 +14,20 @@ const appear = keyframes`
 
 const create = keyframes`
   from {
-    width: 0
-    min-width: 0;
-    padding: 8px 0;
+    position: absolute;
+    visibility: hidden;
   }
   to {
-    width: auto;
-    padding: 8px 16px;
-    min-width: 40;
+    position: inherit;
+    visibility: visible;
   }
 `;
+
+export const ResizeTabWrapper = styled.div`
+  animation-iteration-count: 1;
+  animation: ${create} 0.1s;
+`;
+
 export const StyledTab = styled.div`
   padding: 8px 16px;
   margin-right: 3px;
@@ -34,7 +39,7 @@ export const StyledTab = styled.div`
   min-width: 40px;
   animation-iteration-count: 1;
   opacity: 1;
-  animation: ${appear} 0.3s, ${create} 0.3s;
+  animation: ${appear} 0.4s;
   :hover {
     background-color: ${({ theme, isActive }) => (isActive ? undefined : theme.colors.grey_300)};
   }
@@ -48,10 +53,12 @@ export const TabTitle = styled(Text)`
 `;
 export const TabTileContainer = styled.div`
   display: flex;
+  position: relative;
 `;
 export const TabContentContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.grey_200};
   padding: 16px 16px;
+  overflow: auto;
 `;
 export const TabLineup = styled.div`
   display: flex;
@@ -66,6 +73,9 @@ export const ExcessIconContainer = styled.div`
   display: flex;
   align-items: center;
   transition: all 0.3s;
+  position: absolute;
+  right: 4px;
+  top: 3px;
 `;
 export const ExcessEllipsis = styled.div`
   display: flex;

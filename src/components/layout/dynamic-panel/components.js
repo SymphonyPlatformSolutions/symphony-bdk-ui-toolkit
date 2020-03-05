@@ -5,7 +5,7 @@ import Text from '../../misc/text';
 import { CloseButton } from '../../misc/button/icon-buttons';
 import {
   TabTitle, StyledTab, ExcessMenuContainer,
-  ExcessIconContainer, ExcessEllipsis,
+  ExcessIconContainer, ExcessEllipsis, ResizeTabWrapper,
 } from './themes';
 
 export const TabTitleComponent = ({ title }) => {
@@ -33,8 +33,10 @@ export const Tab = props => {
     isActive,
     TabComponent,
     widthHandler,
-    currWidth,
+    currSize,
   } = props;
+
+  const [currWidth, setCurrWidth] = useState(null);
 
   const closeClickHandler = e => {
     if (e.button === LEFT_MOUSE_BUTTON) {
@@ -50,14 +52,17 @@ export const Tab = props => {
   };
 
   return (
-    <div>
+    <ResizeTabWrapper>
       <ReactResizeDetector handleWidth>
         {({ width }) => {
           if (width) {
             if (currWidth !== width) {
+              console.log('Blaming width of', width);
               widthHandler(width);
+              setCurrWidth(width);
             }
           }
+
           return (
             <StyledTab
               onClick={isActive ? null : clickHandler}
@@ -70,19 +75,19 @@ export const Tab = props => {
                 <TabTitleComponent title={title} />
               )}
               {hasClose && (
-                <div style={{ marginLeft: '6px' }}>
-                  <CloseButton
-                    size={10}
-                    style={{ outline: 'none' }}
-                    onMouseDown={closeClickHandler}
-                  />
-                </div>
+              <div style={{ marginLeft: '6px' }}>
+                <CloseButton
+                  size={10}
+                  style={{ outline: 'none' }}
+                  onMouseDown={closeClickHandler}
+                />
+              </div>
               )}
             </StyledTab>
           );
         }}
       </ReactResizeDetector>
-    </div>
+    </ResizeTabWrapper>
   );
 };
 

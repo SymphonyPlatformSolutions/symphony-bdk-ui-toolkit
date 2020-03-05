@@ -18,30 +18,33 @@ const renderTabs = (
   onRemove,
   activeTab,
   widthHandler,
-  tabSizes,
   hiddenTabs,
-) => (
-  <TabLineup>
-    {tabs.map((el, index) => {
-      const { hasClose = true } = el;
-      if (hiddenTabs.find(shouldNotRender => shouldNotRender.id === el.id)) {
-        return null;
-      }
-      return (
-        <Tab
-          {...el}
-          widthHandler={thisTabWidth => widthHandler(thisTabWidth, el.id)}
-          isActive={index === activeTab}
-          hasClose={hasClose}
-          key={el.id}
-          currWidth={tabSizes[el.id]}
-          clickHandler={() => onChange(index)}
-          closeHandler={() => (hasClose ? onRemove(index) : null)}
-        />
-      );
-    })}
-  </TabLineup>
-);
+  tabSizes,
+) => {
+  console.log('Rendering tabs');
+  return (
+    <TabLineup>
+      {tabs.map((el, index) => {
+        const { hasClose = true } = el;
+        if (hiddenTabs.find(shouldNotRender => shouldNotRender.id === el.id)) {
+          return null;
+        }
+        return (
+          <Tab
+            {...el}
+            widthHandler={thisTabWidth => widthHandler(thisTabWidth, el.id)}
+            isActive={index === activeTab}
+            hasClose={hasClose}
+            key={el.id}
+            currSize={tabSizes[el.id]}
+            clickHandler={() => onChange(index)}
+            closeHandler={() => (hasClose ? onRemove(index) : null)}
+          />
+        );
+      })}
+    </TabLineup>
+  );
+};
 
 const singleRender = (tabs, activeTab) => tabs[activeTab].getContent();
 const allRender = (tabs, activeTab) => (
@@ -78,25 +81,12 @@ const DynamicPanel = props => {
   const [currFullWidth, setFullWidth] = useState(null);
   const [hiddenTabs, setHiddenTabs] = useState([]);
 
-  useEffect(() => {
-    const tabSizeKeys = Object.keys(tabSizes);
-    const newTabSizes = { ...tabSizes };
-    if (tabSizeKeys.length > tabs.length) {
-      // Remove the tab size from the array
-      for (let i = 0; i < tabSizeKeys.length; i += 1) {
-        if (!tabs.find(el => el.id === tabSizeKeys[i])) {
-          delete newTabSizes[tabSizeKeys[i]];
-        }
-      }
-      setTabSizes(newTabSizes);
-    }
-    setSumOfWidths(sumTabWidths(newTabSizes));
-  }, [tabs]);
-
-  useLayoutEffect(() => {
+  const applyHide = (from) => {
     if (!currFullWidth) {
       return;
     }
+
+    console.log('Applying hide from', from);
 
     let widthCutoff;
     let widthAcc = 0;
@@ -109,16 +99,45 @@ const DynamicPanel = props => {
     }
 
     setHiddenTabs(toHide);
-  }, [currFullWidth, sumOfWidths]);
+  };
+
+  useLayoutEffect(() => {
+    console.log('Tabs changed!');
+    const tabSizeKeys = Object.keys(tabSizes);
+    const newTabSizes = { ...tabSizes };
+    if (tabSizeKeys.length > tabs.length) {
+      // Remove the tab size from the array
+      for (let i = 0; i < tabSizeKeys.length; i += 1) {
+        if (!tabs.find(el => el.id === tabSizeKeys[i])) {
+          delete newTabSizes[tabSizeKeys[i]];
+        }
+      }
+      setTabSizes(newTabSizes);
+      applyHide('Tab Effect');
+    }
+    // else if (tabSizeKeys.length < tabs.length) {
+    //   for (let i = 0; i < tabs.length; i++) {
+    //     if (!newTabSizes[tabs[i].id]) {
+    //       newTabSizes[tabs[i].id] = 200;
+    //       console.log(newTabSizes);
+    //     }
+    //   }
+    //   setTabSizes(newTabSizes);
+    //   applyHide('Tab Effect');
+    // }
+    // setSumOfWidths(sumTabWidths(newTabSizes));
+  }, [tabs]);
+
+  // [currFullWidth, sumOfWidths]
 
   const widthHandler = (width, id) => {
-    if (tabSizes[id] !== width) {
-      const newTabSizes = tabSizes;
-      newTabSizes[id] = width;
-      setSumOfWidths(sumTabWidths(newTabSizes));
-      setTabSizes(newTabSizes);
-    }
+    const newTabSizes = tabSizes;
+    newTabSizes[id] = width;
+    applyHide('Width handler');
+    setTabSizes(newTabSizes);
   };
+
+  console.log('So we here');
 
   return (
     <div>
@@ -128,6 +147,7 @@ const DynamicPanel = props => {
             if (width) {
               if (width !== currFullWidth) {
                 setFullWidth(width);
+                applyHide();
               }
             }
             return (
@@ -138,8 +158,8 @@ const DynamicPanel = props => {
                   onRemove,
                   activeTab,
                   widthHandler,
-                  tabSizes,
                   hiddenTabs,
+                  tabSizes,
                 )}
               </React.Fragment>
             );
