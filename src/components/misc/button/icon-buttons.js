@@ -32,10 +32,13 @@ export const FavoriteButton = (props) => {
 };
 
 export const CloseButton = withTheme((props) => {
-  const { onClick, theme, size } = props;
+  const {
+    onClick, theme, size, ...rest
+  } = props;
   const [isHovering, setHovering] = useState(false);
   return (
     <ButtonBG
+      {...rest}
       onClick={onClick}
       onFocus={() => setHovering(true)}
       onBlur={() => setHovering(false)}
@@ -44,6 +47,7 @@ export const CloseButton = withTheme((props) => {
       size={size}
     >
       <CloseIcon
+        size={size}
         style={{ transform: 'translate(0.6px, 0.5px)' }}
         color={isHovering ? theme.colors.grey_800 : theme.colors.grey_600}
       />

@@ -1,7 +1,5 @@
-import { DynamicTabsSample } from './samples/dynamic-demo';
-import DynamicTabs from '.'
-import Box from '../box';
-import Text from '../../misc/text';
+import Box from "../../layout/box";
+import Text from "../../misc/text";
 import {
   Story,
   Meta,
@@ -9,8 +7,15 @@ import {
   Props,
   Link
 } from "@storybook/addon-docs/blocks";
+import TabWrapper from "./samples/simple";
+import { DynamicTabsSample } from "./samples/dynamic-demo";
+import DynamicPanel from "./index";
 
-<Meta title="components/Layout" component={DynamicTabs} />
+<Meta
+  title="components/Layout/DynamicPanel"
+  component={DynamicPanel}
+  parameters={{ order: 220 }}
+/>
 
 # Dynamic Panels
 
@@ -19,9 +24,13 @@ import {
 Dynamic Panels separate the Application into specific tabs for better navigation and organizing,
 dynamically building contexts which holds any component in them. They can be dynamically added, removed and updated.
 
-<Preview withSource="none" style={{height: '800px'}}>
-  <Story name="Dynamic Panel">
-    <DynamicTabsSample />
+The tabs are responsive, grouping up into a hoverable drop-down when the tabs' widths surpass the container's.
+
+<Preview withSource="open">
+  <Story name="Main">
+    <Box style={{ padding: "0 32px", width: "100%" }}>
+      <TabWrapper />
+    </Box>
   </Story>
 </Preview>
 
@@ -30,100 +39,92 @@ dynamically building contexts which holds any component in them. They can be dyn
 You'll need to provide an array to the **`tabs`** property, that array will include objects that describe
 a tab:
 
-``` jsx
+```jsx
 const tabs = [
   {
-    title: 'MSFT Area chart',
-    body: <AreaChartExample height={400} />,
+    title: "MSFT Area chart",
+    getContent: () => <AreaChartExample height={400} />,
+    id: "ID1"
   },
   {
-    title: 'MSFT Intraday',
-    body: <DiscontinousChart />,
-  },
+    title: "MSFT Intraday",
+    getContent: () => <DiscontinousChart />,
+    id: "ID2"
+  }
 ];
 ```
 
-You can either add,remove or update existing items in this array, and all changes will be reflected
-in the component.
+> NOTE: all of these 3 keys are obligatory!
 
-This component also allows you to define a set of funcionalities, each of these will be accessible
-through props in the component. As follows:
+Adding and removing tabs is left to the parent component, as can be seen as a demo on the Sample Code below.
 
-- **isResponsive**: Changes how the tabs get displayed when a particular breakpoint is reached,
-in this mode tabs get stacked as a pile, more suitable for smaller screens or mobile devices.
-- **responsiveBreakpoint**: available when *responsive* is set to `true`,
-defines the minimum width required to go in responsive mode.
-- **wrapTabs**: Defines if the elipsis (see more) will be used instead of stacking all available tabs.
-- **tabsRemovable**: Defines if the close tab button will be displyed, if so, an callback will be called
-whenever a user clicks the close tab, that callback will carry the tab index so you can take action and remove
-from your list.
+<Preview withSource="none" style={{ height: "800px" }}>
+  <Story name="Dynamic Panel">
+    <DynamicTabsSample />
+  </Story>
+</Preview>
 
 ### Sample code
 
 ```jsx
-const dynamicTabs = [
+const TabContent = props => {
+  const { number } = props;
+
+  return (
+    <div style={{ width: "80%" }}>
+      <Text>Content for {number}</Text>
+    </div>
+  );
+};
+
+const TABS = [
   {
-    title: 'MSFT Area chart',
-    body: <AreaChartExample height={400} />,
+    title: "Tab 1",
+    id: uuid.v4(),
+    getContent: () => <TabContent number={1} />,
+    hasClose: false
   },
   {
-    title: 'MSFT Intraday',
-    body: <DiscontinousChart />,
+    title: "Tab 2",
+    id: uuid.v4(),
+    getContent: () => <TabContent number={2} />
   },
+  { title: "Tab 3", id: uuid.v4(), getContent: () => <TabContent number={3} /> }
 ];
 
-const getTabs = () => dynamicTabs.map((tab, index) => ({
-  title: tab.title,
-  getContent: () => tab.body,
-  key: index,
-}));
+const TabWrapper = props => {
+  const [currentTab, setCurrentTab] = useState(0);
+  const [tabs, setTabs] = useState(TABS);
 
-export const DynamicTabsSample = () => {
-  const [data, setData] = useState(getTabs());
-  const [activeTab, setActiveTab] = useState(0);
-
-  const onAddElement = () => {
-    dynamicTabs.push({ title: 'Example Tab', body: <ExampleTab /> });
-    setData(getTabs());
-  };
-
-  const handleRemove = index => {
-    dynamicTabs.splice(index, 1);
-    setData(getTabs());
-  };
-
-  useEffect(() => {
-    setData(getTabs());
-  }, [activeTab]);
-
-  const handleActiveTab = ({ target }) => {
-    const value = parseInt(target.value, 10);
-    if (value <= 0) {
-      setActiveTab(0);
-    } else if (value >= data.length) {
-      setActiveTab(data.length - 1);
-    } else {
-      setActiveTab(value);
+  const removeTab = removeIndex => {
+    if (currentTab >= removeIndex) {
+      setCurrentTab(currentTab - 1);
     }
+    setTabs(tabs.filter((el, index) => index !== removeIndex));
+  };
+  const onCreate = () => {
+    setTabs([
+      ...tabs,
+      {
+        title: "New tab",
+        id: uuid.v4(),
+        getContent: () => <TabContent number={tabs.length + 1} />
+      }
+    ]);
   };
 
   return (
-    <Box type="flat">
-      <DynamicTabs
-        tabs={data}
-        activeTab={activeTab}
-        onRemove={handleRemove}
-        responsiveBreakpoint={1400}
-        isResponsive={false}
-        wrapTabs
-        showSelectedTabIndicator
-        tabsRemovable
-      />
-    </Box>
+    <CustomTabs
+      onChange={newTab => setCurrentTab(newTab)}
+      tabs={tabs}
+      activeTab={currentTab}
+      onRemove={removeTab}
+      renderMethod="single"
+      onCreate={onCreate}
+      hasAddButton
+    />
   );
 };
 ```
 
-
-
-<Props of={DynamicTabs} />
+<Props of={DynamicPanel} />
