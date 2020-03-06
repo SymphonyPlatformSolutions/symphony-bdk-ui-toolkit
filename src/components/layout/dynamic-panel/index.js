@@ -75,6 +75,8 @@ const allRender = (tabs, activeTab) => (
   </div>
 );
 
+const ADDITIONAL_ICON_WIDTH = 60;
+
 const DynamicPanel = props => {
   const {
     tabs,
@@ -100,7 +102,7 @@ const DynamicPanel = props => {
     const toHide = [];
     for (widthCutoff = 0; widthCutoff < tabs.length; widthCutoff += 1) {
       widthAcc += tabSizes[tabs[widthCutoff].id];
-      if (currFullWidth - 30 < widthAcc) {
+      if (currFullWidth - ADDITIONAL_ICON_WIDTH < widthAcc) {
         toHide.push(tabs[widthCutoff]);
       }
     }
