@@ -5,7 +5,7 @@ import { Story, Meta, Preview, Props, Link, Anchor, Description } from '@storybo
 # Bot SDK
 ---
 
-[![CircleCI](https://circleci.com/gh/SymphonyPlatformSolutions/sms-bot-sdk.svg?style=svg)](https://circleci.com/gh/SymphonyPlatformSolutions/sms-bot-sdk) [![Java](https://img.shields.io/badge/JDK-1.8-blue.svg)](https://www.oracle.com/technetwork/java/javase/documentation/index.html) [![Maven](https://img.shields.io/badge/MAVEN-3.0.5+-blue.svg)](https://maven.apache.org/guides/index.html)
+[![CircleCI](https://circleci.com/gh/SymphonyPlatformSolutions/symphony-bot-sdk.svg?style=svg)](https://circleci.com/gh/SymphonyPlatformSolutions/symphony-bot-sdk) [![Java](https://img.shields.io/badge/JDK-1.8-blue.svg)](https://www.oracle.com/technetwork/java/javase/documentation/index.html) [![Maven](https://img.shields.io/badge/MAVEN-3.0.5+-blue.svg)](https://maven.apache.org/guides/index.html)
 
 
 The Bot SDK is managing all bot interactions from handling bot commands to receiving notifications from external
@@ -841,7 +841,7 @@ public class TemplateSampleHandler extends CommandHandler {
   public void handle(BotCommand command, SymphonyMessage commandResponse) {
     Map<String, Object> commandParameter =
         jsonMapper.toObject("{\"message\": {\"title\": \"Title\", \"content\": \"Content\"}}", Map.class);
-    commandResponse.setTemplateFile(SmsRenderer.SmsTypes.ALERT.getName(), commandParameter);
+    commandResponse.setTemplateFile(SmsRenderer.SymphonyTypes.ALERT.getName(), commandParameter);
   }
 
 }
@@ -856,7 +856,7 @@ Currently, Symphony Bot SDK offers the following templates:
 * SIMPLE
 * TABLE
 
-For more information about the Symphony standard templates, take a look on https://github.com/SymphonyPlatformSolutions/sms-sdk-renderer-java. Also, check [Template command](#template-command) section.
+For more information about the Symphony standard templates, take a look on https://github.com/SymphonyPlatformSolutions/sms'-sdk-renderer-java. Also, check [Template command](#template-command) section.
 
 
 ## Extending health metrics
@@ -1304,7 +1304,7 @@ To change log file name and/or location, or to change log level for different pa
 
 ```yaml
 logging:
-  file: /home/myuser/sms-bot-sdk/logs/bot-app.log
+  file: /home/myuser/symphony-bot-sdk/logs/bot-app.log
   level:
     ROOT: INFO
     com.symphony.ms.bot.sdk.internal: DEBUG
