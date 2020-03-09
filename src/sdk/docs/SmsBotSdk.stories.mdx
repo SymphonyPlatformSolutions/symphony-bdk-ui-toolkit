@@ -841,7 +841,7 @@ public class TemplateSampleHandler extends CommandHandler {
   public void handle(BotCommand command, SymphonyMessage commandResponse) {
     Map<String, Object> commandParameter =
         jsonMapper.toObject("{\"message\": {\"title\": \"Title\", \"content\": \"Content\"}}", Map.class);
-    commandResponse.setTemplateFile(SmsRenderer.SymphonyTypes.ALERT.getName(), commandParameter);
+    commandResponse.setTemplateFile(SmsRenderer.SmsTypes.ALERT.getName(), commandParameter);
   }
 
 }
@@ -856,7 +856,7 @@ Currently, Symphony Bot SDK offers the following templates:
 * SIMPLE
 * TABLE
 
-For more information about the Symphony standard templates, take a look on https://github.com/SymphonyPlatformSolutions/sms'-sdk-renderer-java. Also, check [Template command](#template-command) section.
+For more information about the Symphony standard templates, take a look on https://github.com/SymphonyPlatformSolutions/sms-sdk-renderer-java. Also, check [Template command](#template-command) section.
 
 
 ## Extending health metrics
