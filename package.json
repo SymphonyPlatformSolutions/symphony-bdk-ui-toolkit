@@ -1,7 +1,7 @@
 {
-  "name": "symphony-sdk-toolbox-ui",
+  "name": "symphony-bdk-toolkit-ui",
   "version": "1.0.0",
-  "description": "Package with component-based development for Symphony",
+  "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
@@ -19,15 +19,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SymphonyPlatformSolutions/symphony-sdk-toolbox-ui.git"
+    "url": "git+https://github.com/SymphonyPlatformSolutions/symphony-bdk-toolkit-ui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SymphonyPlatformSolutions/symphony-sdk-toolbox-ui/issues"
+    "url": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-toolkit-ui/issues"
   },
   "private": true,
-  "homepage": "https://github.com/SymphonyPlatformSolutions/symphony-sdk-toolbox-ui#readme",
+  "homepage": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-toolkit-ui#readme",
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",

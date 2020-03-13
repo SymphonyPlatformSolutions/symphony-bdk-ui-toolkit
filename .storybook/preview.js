@@ -13,7 +13,7 @@ import theme from './theme';
 import { withA11y } from '@storybook/addon-a11y';
 
 Logger.setEnv({
-  appTitle: 'Symphony Toolbox Storybook',
+  appTitle: 'Symphony Toolkit Storybook',
   environment: 'DEV',
   apiUrl: null,
   debugLevel: 1,

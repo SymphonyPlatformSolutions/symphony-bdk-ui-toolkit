@@ -1,5 +1,5 @@
-# symphony-sdk-toolbox-ui
-Symphony SDK - Toolbox-UI
+# symphony-bdk-toolkit-ui
+Symphony BDK - UI-Toolkit
 
 [![Generic badge](https://img.shields.io/badge/StyledComponents-4.4.1-blue.svg)](https://styled-components.com/docs)
 [![Generic badge](https://img.shields.io/badge/React-16.12.0-blue.svg)](https://pt-br.reactjs.org/blog/2017/09/26/react-v16.0.html)
@@ -41,9 +41,9 @@ yarn build
 Install the library into your app, by adding it on your <strong><i>package.json</i></strong> e.g:
 
 ```jsx
- "symphony-sdk-toolbox-ui": "git+ssh://git@github.com:SymphonyPlatformSolutions/symphony-sdk-toolbox-ui.git#stage",
+ "symphony-bdk-toolkit-ui": "git+ssh://git@github.com:SymphonyPlatformSolutions/symphony-bdk-toolkit-ui.git#stage",
 ```
-> You need to have access to the toolbox repository for the method above to work, also you need to have 
+> You need to have access to the Toolkit repository for the method above to work, also you need to have 
 >your ssh keys added to your github account
 
 then run:
@@ -69,7 +69,7 @@ webpack file (or equivalent rule for your bundler):
 Then import the styles this library exports into your entrypoint js file, like so:
 
 ```jsx harmony
-import '../node_modules/symphony-sdk-toolbox-ui/dist/index.css';
+import '../node_modules/symphony-bdk-toolkit-ui/dist/index.css';
 ```
 
 ### Peer Dependencies
@@ -100,6 +100,6 @@ peer dependencies:
 Having the library up in running, simply import the components you want to use:
 
 ```jsx harmony
-import { Box , Text, Button } from 'symphony-sdk-toolbox-ui';
+import { Box , Text, Button } from 'symphony-bdk-toolkit-ui';
 ```
 
