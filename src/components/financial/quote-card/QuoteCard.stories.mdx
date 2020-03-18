@@ -1,5 +1,9 @@
 import Text from '../../misc/text';
-import QuoteCard from './index.js';
+import Box from '../../layout/box';
+import Button from '../../misc/button';
+import QuoteProductTag from '../quote-product-tag';
+import QuoteCard, { QuoteCardTag, QuoteCardContent, QuoteCardMenu } from './index.js';
+import { QuoteShortCodeLabel, QuoteShortCodeName } from './theme';
 import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 
 <Meta title="components/Financial/Quote Card" component={QuoteCard} />
@@ -7,112 +11,114 @@ import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 # Quote Card
 <hr />
 
-A card for displaying quotes. It takes producs, and descriptions as options. It implements
-a context menu for actions.
+A card for displaying quotes. It is divided into 3 modular portions to be filled in:
 
-### Simple
-
-This is a basic card witch contrasts dealer/buyer pricing. In order to have that
-you'll have to provide an property called **`panelData`**. here's a sample of that structure
-
-```jsx
-const panelData = {
-  dealerName: 'Dealer two',
-  dealerPayedValue: 1.75,
-  clientName: 'Client one',
-  clientPayedValue: 3,
-};
-```
+- Tag
+- Content
+- Menu
 
 <Preview>
-  <Story name="with panelData">
+  <Story name="Base">
     <QuoteCard
-        quoteShortCode="A5"
-        colorIndex={1}
-        panelData={{
-          dealerName: 'Dealer two',
-          dealerPayedValue: 1.75,
-          clientName: 'Client one',
-          clientPayedValue: 3,
-        }}
-        productData={null}
-    />
+      colorIndex={1}
+    >
+      <QuoteCardTag>
+        <Box align="center" type="flat">
+          <QuoteShortCodeLabel>TAG</QuoteShortCodeLabel>
+          <QuoteShortCodeName>TAG</QuoteShortCodeName>
+        </Box>
+      </QuoteCardTag>
+      <QuoteCardContent>
+        <Text isTitle size="small">Content</Text>
+      </QuoteCardContent>
+      <QuoteCardContent>
+        <Text isTitle size="small">More Content</Text>
+        <Text>Content content content</Text>
+      </QuoteCardContent>
+      <QuoteCardContent>
+        <Text isTitle size="small">Even More Content</Text>
+        <Button>Button</Button>
+      </QuoteCardContent>
+      <QuoteCardMenu>
+        <Box align="center">
+          <Text>Menu</Text>
+          <Button fill="ghost">Edit</Button>
+        </Box>
+      </QuoteCardMenu>
+    </QuoteCard>
   </Story>
 </Preview>
 
-### Product Data
+### Use
 
-This card shows the keywords that define a particular quote. In order to have that
-you'll have to provide an property called **`productData`**. here's a sample of that structure
+The card is separated into 3 portions, all of which are populated by using the provided Components as children.
 
-```jsx
-const productData = {
-  name: 'IRS',
-  currency: 'USD',
-  rateIndex: '3M-LIBOR',
-  clearingHouse: 'EUREX',
-  startDate: 'spot',
-  tenorDate: '1y',
-  roll: 'IMM',
-  size: {
-    type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
-  },
-  payDirection: 'pay',
-};
-```
+- ```QuoteCardTag``` will fill in the colorful tag to the left of the component. There should be a single Child with this Component. The ```QuoteShortCodeLabel``` and ```QuoteShortCodeName``` are also being shipped for convenience.
+- ```QuoteCardContent``` will populate the middle portion of the card. Every Child with this component will appear as a new line inside the content.
+- ```QuoteCardMenu``` will populate the right-most side of the card. It represents the action part of the component.
+
+In case the user would want to use the provided dropdown menu, simply pass the ```useDefaultContextMenu``` prop, alongside the ```onEdit``` and ```onCancel``` handlers.
+
+### Examples
 
 <Preview>
   <Story name="with product data">
     <QuoteCard
-        quoteShortCode="D5"
-        colorIndex={3}
-        productData={{
-          name: 'IRS',
-          currency: 'USD',
-          rateIndex: '3M-LIBOR',
-          clearingHouse: 'EUREX',
-          startDate: 'spot',
-          tenorDate: '1y',
-          roll: 'IMM',
-          size: {
-            type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
-          },
-          payDirection: 'pay',
-        }}
-    />
+      colorIndex={3}
+    >
+      <QuoteCardTag>
+        <Box align="center" type="flat">
+          <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
+          <QuoteShortCodeName>2B</QuoteShortCodeName>
+        </Box>
+      </QuoteCardTag>
+      <QuoteCardContent>
+        <Box horizontal type="secondary">
+          <QuoteProductTag
+            mainInfo="IRS"
+          />
+          <QuoteProductTag
+            mainInfo="USD"
+            sideInfo="3M-LIBOR"
+          />
+          <QuoteProductTag
+            mainInfo="EUREX"
+          />
+        </Box>
+      </QuoteCardContent>
+    </QuoteCard>
   </Story>
 </Preview>
 
-### Both
-
-Finally, you can have both those descriptions within a single quote card. The product of that
-is displayed below:
+### Default Context Menu
 
 <Preview>
-  <Story name="with panel data and product data">
+  <Story name="with context">
     <QuoteCard
-        quoteShortCode="H1"
-        colorIndex={5}
-        panelData={{
-          dealerName: 'Dealer two',
-          dealerPayedValue: 1.75,
-          clientName: 'Client one',
-          clientPayedValue: 3,
-        }}
-        productData={{
-          name: 'IRS',
-          currency: 'USD',
-          rateIndex: '3M-LIBOR',
-          clearingHouse: 'EUREX',
-          startDate: 'spot',
-          tenorDate: '1y',
-          roll: 'IMM',
-          size: {
-            type: 'DV01', currency: 'USD', value: '3', multiplier: 'k',
-          },
-          payDirection: 'pay',
-        }}
-    />
+      colorIndex={5}
+      useDefaultContextMenu
+    >
+      <QuoteCardTag>
+        <Box align="center" type="flat">
+          <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
+          <QuoteShortCodeName>9S</QuoteShortCodeName>
+        </Box>
+      </QuoteCardTag>
+      <QuoteCardContent>
+        <Box horizontal type="secondary">
+          <QuoteProductTag
+            mainInfo="IRS"
+          />
+          <QuoteProductTag
+            mainInfo="USD"
+            sideInfo="3M-LIBOR"
+          />
+          <QuoteProductTag
+            mainInfo="EUREX"
+          />
+        </Box>
+      </QuoteCardContent>
+    </QuoteCard>
   </Story>
 </Preview>
 

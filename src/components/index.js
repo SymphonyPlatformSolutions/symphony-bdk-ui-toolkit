@@ -19,7 +19,16 @@ export { default as MessageBox } from './misc/message-box';
 export { default as TextLink } from './misc/text-link';
 export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
-export { default as QuoteCard } from './financial/quote-card';
+export {
+  default as QuoteCard,
+  QuoteCardMenu,
+  QuoteCardContent,
+  QuoteCardTag,
+} from './financial/quote-card';
+export {
+  QuoteShortCodeLabel,
+  QuoteShortCodeName,
+} from './financial/quote-card/theme';
 export { default as DealerTag } from './financial/dealer-tags';
 export {
   default as FormBox,
