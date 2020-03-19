@@ -1,10 +1,10 @@
 {
   "name": "symphony-bdk-ui-toolkit",
   "version": "1.0.0",
-  "description": "Package with component-based development of SMS",
+  "description": "UI Toolkit components for Symphony Bot Developer Kit",
   "source": "src/index.js",
   "main": "dist/index.js",
-  "module": "dist/index.module.js",
+  "module": "src/index.js",
   "unpkg": "dist/index.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,6 +15,7 @@
     "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts --watch --compress false --raw  true"
   },
   "files": [
+    "src",
     "dist"
   ],
   "repository": {
