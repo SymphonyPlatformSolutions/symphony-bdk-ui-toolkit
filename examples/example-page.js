@@ -1,10 +1,10 @@
 /*
-  You can test npm package locally running npm on symphony-bdk-toolkit-ui folder
+  You can test npm package locally running npm on symphony-bdk-ui-toolkit folder
   Then npm link on example folder
 */
 
 import React from 'react';
-import Button from 'symphony-bdk-toolkit-ui';
+import Button from 'symphony-bdk-ui-toolkit';
 
 const ExamplePage = () => (
   <React.Fragment>
