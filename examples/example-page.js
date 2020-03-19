@@ -1,10 +1,10 @@
 /*
-  You can test npm package locally running npm on sms-sdk-toolbox-ui folder
+  You can test npm package locally running npm on symphony-bdk-ui-toolkit folder
   Then npm link on example folder
 */
 
 import React from 'react';
-import Button from 'sms-sdk-toolbox-ui';
+import Button from 'symphony-bdk-ui-toolkit';
 
 const ExamplePage = () => (
   <React.Fragment>

@@ -47,7 +47,7 @@ files into your bundle system. like so:
 
 ```jsx harmony
 new CopyWebpackPlugin([
-  { from: './node_modules/sms-dev-tool-mock-client/dist', to: '' },
+  { from: './node_modules/symphony-bdk-mock-client/dist', to: '' },
 ]),
 ```
 
@@ -129,14 +129,14 @@ appWrapper();
 ```
 
 
-## Running as a cli
+## Running as a CLI
 run:
 ```jsx harmony
 yarn link
 ```
 ![Alt text](/readme/mock-client-cli.png?raw=true "Mock client architecture while running inside an extension app project")
 
-From the cli you'll be able to point to a particular extension app deployed on any given address and load it on the
+From the CLI you'll be able to point to a particular extension app deployed on any given address and load it on the
 mock client. Specially usefull when your app doesnt run on default port **4000**
 
 

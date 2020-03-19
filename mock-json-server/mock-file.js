@@ -4,7 +4,6 @@ const { timeParse, timeFormat } = require('d3-time-format');
 
 let lastUpdatedEntries = [];
 
-
 const DEALERS = [
   'Goldman Sachs',
   'BNP Paribas',
