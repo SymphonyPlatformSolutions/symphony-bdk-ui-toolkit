@@ -1,0 +1,44 @@
+import Tabs from '.';
+import Box from '../box';
+import Text from '../../misc/text';
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+
+<Meta title="components/Layout" component={Tabs} />
+
+# NavTabs
+
+<hr />
+
+The Tabs Component takes a set of children and renders them depending on which Tab is active.
+You can dinamically set the active tab by passing a number to the **`activeTab`** property;
+
+<Preview withSource="open">
+  <Story name="Nav Tabs">
+    <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
+      <Box horizontal space={60}>
+        <Tabs activeTab={0}>
+          <div label="Set Up">
+            <Text small>This is a content for Info</Text>
+          </div>
+          <div label="Notifications">
+            <Text small>This is a content for Notifications</Text>
+          </div>
+          <div label="Messages">
+            <Text small>This is a content for Messages</Text>
+          </div>
+          <div label="Admin" align="right">
+            <Text small>This is a content for Admin</Text>
+          </div>
+        </Tabs>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Tabs} />

@@ -1,0 +1,77 @@
+import Text from "../../misc/text";
+import Box from "../../layout/box";
+import MessageBox from "./index.js";
+
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+
+<Meta title="components/Misc/Message Box" component={MessageBox} parameters={{order: 650}}/>
+
+# Message Box
+
+<hr />
+
+A Message Box for displaying **`errors`**, **`success`** **`feedback`**, etc.
+
+It comes in **4** styles:
+  - **`Success`**
+  - **`Error`**
+  - **`Info`**
+  - **`Warning`**.
+
+### Success
+
+<Preview withSource="open">
+  <Story name="Success">
+     <Box>
+        <MessageBox type="success">Success!!</MessageBox>
+        <Box horizontal>
+          <MessageBox hasButton buttonHandler={()=>{}} type="success">Success!!</MessageBox>
+        </Box>
+      </Box>
+  </Story>
+</Preview>
+
+### Error
+<Preview withSource="open">
+  <Story name="Error">
+    <Box>
+      <MessageBox type="error">Uh oh, something's wrong.</MessageBox>
+      <Box horizontal>
+        <MessageBox hasButton buttonHandler={()=>{}} type="error">Uh oh, something's wrong.</MessageBox>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+### Info
+
+<Preview withSource="open">
+  <Story name="Info">
+    <Box>
+      <MessageBox type="info">Relevant information</MessageBox>
+      <Box horizontal>
+        <MessageBox hasButton buttonHandler={()=>{}} type="info">Relevant information</MessageBox>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+### Warning
+<Preview withSource="open">
+  <Story name="Warning">
+    <Box>
+      <MessageBox type="warning">Careful with whatever you're doing.</MessageBox>
+      <Box horizontal>
+        <MessageBox hasButton buttonHandler={()=>{}} type="warning">Careful with whatever you're doing.</MessageBox>
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={MessageBox} />

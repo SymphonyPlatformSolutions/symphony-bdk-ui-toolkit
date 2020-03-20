@@ -1,0 +1,94 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import TagBar from './index.js';
+import { TagBarHandler, CustomTag } from './samples/simple-sample';
+
+<Meta title="components/Inputs/Tag Bar" component={TagBar} parameters={{order: 210}}/>
+
+# Tag Bar
+
+<Preview withSource="none">
+  <Story name="Simple">
+    <TagBarHandler />
+  </Story>
+</Preview>
+
+Tag bar is a simple input component that saves everything that is typed and submitted as a tag. Simply press enter after typing a value to consolidate a tag.
+
+This component, like most Inputs, is a controlled component, therefore it will usually be wrapped
+by a controller, and have its state and logic controlled by a parent.
+
+### Controller example
+
+```jsx
+const TagBarHandler = props => {
+  const [chosen, changeChosen] = useState([]);
+
+  const tagChosen = newValue => {
+    changeChosen([...chosen, { value: newValue, label: newValue }]);
+  };
+
+  const removeHandler = removingValue => {
+    changeChosen(chosen.filter(el => removingValue.value !== el.value));
+  };
+
+  const onClear = () => {
+    changeChosen([]);
+  };
+
+  return (
+    <TagBar
+      onChoose={tagChosen}
+      onRemove={removeHandler}
+      onClear={onClear}
+      value={chosen}
+      {...props}
+    />
+  );
+};
+
+```
+
+## Custom Value Component
+
+<Preview>
+  <Story name="Custom Value Component">
+    <TagBarHandler CustomValue={CustomTag} style={{ minHeight: '40px' }} />
+  </Story>
+</Preview>
+
+## Tooltip
+
+<Preview>
+  <Story name="Tooltip">
+    <TagBarHandler tooltip="Info info!"
+    />
+  </Story>
+</Preview>
+
+## States
+
+<Preview>
+  <Story name="Disabled">
+    <Box style={{ width: '100%'}} align="center">
+      <TagBarHandler disabled />
+      <TagBarHandler errorMessage="Something's afoot!" />
+    </Box>
+  </Story>
+</Preview>
+
+## AutoComplete
+<Preview>
+  <Story name="Autocomplete">
+    <TagBarHandler autocompleteList={['One', 'Two', 'Three', 'Four', 'Five']} />
+  </Story>
+</Preview>
+
+<Props of={TagBar} />

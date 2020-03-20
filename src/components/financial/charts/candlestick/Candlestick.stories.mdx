@@ -1,0 +1,102 @@
+import Text from '../../../misc/text';
+import Box from '../../../layout/box';
+import Candlestick from './index.js';
+import CandlestickTemplate from './samples/base-example';
+import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks';
+
+<Meta title="components/Financial/Charts" component={Candlestick} />
+
+# Candlestick
+<hr />
+
+This is a Candlestick implementation of **`BaseChart`** component.
+
+<Story name="Candlestick">
+  <CandlestickTemplate />
+</Story>
+
+## Data
+In order to have this component working, a **contract** must be met, the data attribute
+is expecting a data structure following this:
+
+```jsx
+[
+  {
+    "date": "2010-01-04",
+    "open": 25.436282332605284,
+    "high": 25.835021381744056,
+    "low": 25.411360259406774,
+    "close": 25.710416,
+    "volume": 38409100,
+    "split": "",
+    "dividend": ""
+  },
+....
+```
+
+please note that data types here **matter**. Please make so that the dates are in that format
+Y-M-D and that the other properties are numbers, just like shown above.
+
+
+## Example
+```jsx
+import React from 'react';
+
+import CandleStickChart from './index';
+import Box from '../../../layout/box';
+import { useAutoFetch } from '../../../../utils/auto-fetch';
+import CheckBox from '../../../inputs/checkbox';
+import Card from '../../../layout/card/index';
+import { buildDateParser } from '../helpers';
+
+const timeParser = buildDateParser();
+
+const parseData = (parse) => (d) => {
+  d.date = parse(d.date);
+  d.open = +d.open;
+  d.high = +d.high;
+  d.low = +d.low;
+  d.close = +d.close;
+  d.volume = +d.volume;
+
+  return d;
+};
+
+const autoFetchConfig = {
+  endpoint: 'http://localhost:9999/chart-candlestick-data',
+  handleData: (results) => results.map(parseData(timeParser)),
+};
+
+
+const Example = () => {
+  const {
+    results, isDataLoading,
+  } = useAutoFetch(autoFetchConfig);
+
+  return (
+  <Box style={{ width: '100%', height: '500px' }}>
+    <CandleStickChart
+      tickSizeX={10}
+      loading={isDataLoading}
+      data={results}
+      title="MFST"
+      hasGrid
+      hasCrossHair
+      hasOHLCTooltip
+      hasTooltip
+      hasZoom
+      hasEdgeIndicator
+    />
+  </Box>
+);
+};
+
+export default () => (
+  <Box style={{ width: '100%', padding: '4px'}}>
+    <Example />
+  </Box>
+);
+```
+
+## Props
+<Props of={Candlestick} />

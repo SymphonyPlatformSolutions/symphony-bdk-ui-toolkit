@@ -1,0 +1,23 @@
+import Text from '../../misc/text';
+import QuotePanel from './index.js';
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="components/Financial/Quote Panel" component={QuotePanel} />
+
+# Quote Panel
+<hr />
+
+A panel for displaying quote prices, having both Dealer and Buyer quotes in a higher contrast panel
+
+<Preview withSource="open">
+  <Story name="regular">
+    <QuotePanel
+        dealerName="Dealer two"
+        dealerPayedValue={1.75}
+        clientName="Client one"
+        clientPayedValue={3}
+      />
+  </Story>
+</Preview>
+
+<Props of={QuotePanel} />

@@ -1,0 +1,139 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Dropdown from './index.js';
+import { DropdownHandler, OPTIONS } from './samples/full-example';
+import { AsyncDropdownHandler } from './samples/async';
+
+<Meta title="components/Inputs/Dropdown" component={Dropdown} parameters={{order: 220}}/>
+
+# Dropdown
+
+<hr />
+
+A Dropdown component, that wraps the basic functionalities of
+[react-select](https://github.com/JedWatson/react-select), but includes the Toolkit's own styling and Components.
+
+Please for further customization please follow the above documentation,
+everything passed to DataGrid will be propagated and **override** any prop.
+
+Do keep in mind that there are two ways to pass in a value: Both through the ```value``` prop, and the ```chosenValue``` prop.
+
+The ```value``` prop is the direct prop to React Select, and expects an object with *value* and *label*. The ```chosenValue``` expects only the value as a string.
+
+The Dropdown also incorporates loading functionality, that takes in a handler to execute every time the Dropdown is focused. This is built to be used with Asynchronous fecthing, and dynamically load the Dropdown with options.
+
+<Preview>
+  <Story name="Base">
+    <Box style={{height: '200px'}}>
+      <DropdownHandler options={OPTIONS} label="My Dropdown" />
+    </Box>
+  </Story>
+</Preview>
+
+
+This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
+by a controller, or its state and logic by its parent.
+
+## Controller examples
+```jsx
+export const DropdownHandler = (props) => {
+  const [chosen, changeChosen] = useState(null);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown {...props} value={chosen} onChange={changeChosen} />
+    </Box>
+  );
+};
+
+export const AsyncDropdownHandler = (props) => {
+  const { options, ...rest } = props;
+  const [chosen, changeChosen] = useState(null);
+  const [isLoading, toggleIsLoading] = useState(false);
+  const [loadedOptions, changeLoadedOptions] = useState([]);
+
+  return (
+    <Box style={{ width: '300px' }}>
+      <Dropdown
+        {...rest}
+        value={chosen}
+        onChange={changeChosen}
+        isLoading={isLoading}
+        clickHandler={() => {
+          toggleIsLoading(true);
+          changeLoadedOptions([]);
+          setTimeout(() => {
+            changeLoadedOptions(options.slice(Math.floor(Math.random() * 3) + 2));
+            toggleIsLoading(false);
+          }, 1000);
+        }}
+        options={loadedOptions}
+      />
+    </Box>
+  );
+};
+
+
+```
+
+## States
+
+<Preview withSource="open">
+  <Story name="States">
+    <Box horizontal>
+      <Box style={{height: '200px'}}>
+        <DropdownHandler options={OPTIONS} error errorMessage="Something ain't right!" label="Dropdown with error" />
+      </Box>
+      <Box style={{height: '200px'}}>
+        <DropdownHandler options={OPTIONS} disabled label="Disabled Dropdown" />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+## Empty
+
+The Empty message can be customized via the ```noOptionsMessage``` prop.
+
+<Preview withSource="open">
+  <Story name="Empty">
+    <Box horizontal>
+      <Box style={{height: '90px'}}>
+        <DropdownHandler options={[]} noOptionsMessage="My Empty Dropdown!" label="Empty Dropdown" />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+## Loading and Async
+
+For Asynchronous data requests, the ```clickHandler``` prop can be used. This allows the user to pass a callback that runs everytime the Dropdown is clicked. This can be used in conjuntion with the ```isLoading``` prop, to set the Dropdown in an intermediate loading state.
+
+<Preview withSource="open">
+  <Story name="Loading">
+    <Box horizontal>
+      <Box style={{height: '110px'}}>
+        <AsyncDropdownHandler isLoading label="Loading" />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+<Preview withSource="open">
+  <Story name="Async">
+    <Box horizontal>
+      <Box style={{height: '110px'}}>
+        <AsyncDropdownHandler options={[]} noOptionsMessage="Empty!" label="Empty Dropdown with Loading" />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Dropdown} />

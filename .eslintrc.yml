@@ -1,0 +1,23 @@
+extends: airbnb
+env:
+  browser: true
+  jest: true
+parser: babel-eslint
+rules:
+  react/jsx-filename-extension:
+    - 1
+    - extensions:
+      - .js
+      - .jsx
+  no-nested-ternary: off
+  import/no-extraneous-dependencies: off
+  jsx-a11y/label-has-for: off
+  react/forbid-prop-types: off
+  react/jsx-one-expression-per-line: off
+  react/jsx-no-bind: off
+  react/jsx-fragments: off
+  no-underscore-dangle: off
+  import/prefer-default-export: off
+  react/jsx-props-no-spreading: off
+  arrow-parens: off
+  react/no-array-index-key: off
