@@ -4,6 +4,15 @@ import {
   ToggleButtonText,
 } from '../input-field/theme';
 
+const getBorderColor = ({ theme, error, isMenuOpen }) => {
+  if (error) {
+    return theme.colors.error_500;
+  }
+  if (isMenuOpen) {
+    return theme.colors.oldprimary_400;
+  }
+  return theme.colors.grey_300;
+};
 export const ClearText = styled(ToggleButtonText)`
   white-space: nowrap;
   display: flex;
@@ -18,7 +27,7 @@ export const BorderContainer = styled.div`
 `;
 export const InputContainer = styled(Container)`
   &:focus-within {
-    border: 1px solid ${({ theme }) => theme.colors.oldprimary_400};
+    border: 1px solid ${(props) => getBorderColor(props)};
     border-bottom-left-radius:  ${({ isMenuOpen }) => (isMenuOpen ? '0' : undefined)};
     border-bottom-right-radius: ${({ isMenuOpen }) => (isMenuOpen ? '0' : undefined)};
     border-bottom: ${({ isMenuOpen }) => (isMenuOpen ? '1px solid transparent' : undefined)};
@@ -41,7 +50,7 @@ export const MenuContainer = styled.div`
   padding: 7px 0 5px 0;
   margin: -3px -1px -1px -1px;
   background-color: ${({ theme }) => theme.colors.mainbackground};
-  border: 1px solid ${({ theme }) => (theme.colors.oldprimary_400)};
+  border: 1px solid ${(props) => getBorderColor({ ...props, isMenuOpen: true })};
   border-top: none;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -58,15 +67,16 @@ export const MenuItem = styled.div`
   background-color: ${({ theme, lightFocused }) => (lightFocused ? theme.colors.grey_200 : 'transparent')};
 `;
 export const ShrinkingBorder = styled.span`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.oldprimary_400};
+  border-bottom: 1px solid
+    ${({ theme, error }) => (error ? theme.colors.error_500 : theme.colors.oldprimary_400)};
   width: ${({ show }) => (show ? '80%' : '100%')};
-  transition: all 0.3s ease;
-  top: -2px;
-  z-index: 10;
-  position: relative;
-  height: 1px;  
+  transition: width 0.3s ease;
+  bottom: -1px;
+  position: absolute;
+  height: 1px;
   display: block;
   opacity: ${({ show }) => (show ? '1' : '0')};
+  z-index: 10;
 `;
 export const LoaderWrapper = styled.div`
   padding: 14px 0 8px 0;

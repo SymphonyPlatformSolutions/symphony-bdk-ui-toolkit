@@ -23,7 +23,7 @@ const INPUT_TYPES = {
 };
 
 export const ErrorWrapper = ({ children, error, errorMessage }) => (
-  <div>
+  <div style={{ width: '100%' }}>
     {children}
     {error && (
       <Text type="danger" style={{ marginTop: '3px' }} size="small">
