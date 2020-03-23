@@ -12,6 +12,7 @@ import { DropdownHandler, CONTENT } from './samples/full-example';
 import { SIMPLE_CONTENT } from './samples/simple-content';
 import { CUSTOM_EMPTY } from './samples/custom-empty';
 import { AsyncDropdownHandler } from './samples/async';
+import { StyledDropdownHandler } from './samples/styled-dropdown';
 import { SIMPLE_CUSTOM_ITEM_CONTENT, CustomValue } from './samples/custom-value';
 
 <Meta title="components/Inputs/Decision Dropdown" component={DecisionDropdown} parameters={{order: 210}}/>
@@ -349,6 +350,16 @@ const SIMPLE_CUSTOM_ITEM_CONTENT = [
         </Box>
       </Box>
     </Story>
+</Preview>
+
+## Extended Styles
+
+<Preview withSource="none">
+  <Story name="Extended Style">
+    <Box type="flat" style={{ height: '220px'}}>
+      <StyledDropdownHandler data={SIMPLE_CONTENT} />
+    </Box>
+  </Story>
 </Preview>
 
 ## Misc
