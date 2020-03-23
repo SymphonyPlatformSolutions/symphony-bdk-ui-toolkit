@@ -45,11 +45,12 @@ const Menu = props => {
     value,
     isLarge,
     loading,
+    error,
   } = props;
 
   if (loading) {
     return (
-      <MenuContainer theme={theme}>
+      <MenuContainer theme={theme} error={error}>
         <Box align="center" justify="center" horizontal>
           <Text style={{ fontStyle: 'italic', paddingTop: '5px' }}>
             <LoaderWrapper>
@@ -63,7 +64,7 @@ const Menu = props => {
 
   if (!data.length) {
     return (
-      <MenuContainer theme={theme}>
+      <MenuContainer theme={theme} error={error}>
         <Box align="center" justify="center" horizontal>
           <Text style={{ fontStyle: 'italic', paddingTop: '5px' }}>
             {noResultsMessage}
@@ -74,7 +75,7 @@ const Menu = props => {
   }
 
   return (
-    <MenuContainer theme={theme} isLarge={isLarge}>
+    <MenuContainer theme={theme} isLarge={isLarge} error={error}>
       <FloatWrapper>
         {data.map((el, index) => (
           <MenuItem
@@ -118,13 +119,14 @@ const Typehead = props => {
     size,
     placeholder,
     noResultsMessage,
-    onChange,
     CustomMenuItem,
     CustomTag,
     disabled,
     clearMessage,
     value,
+    onChange,
     loading,
+    errorMessage,
     ...rest
   } = props;
 
@@ -177,42 +179,44 @@ const Typehead = props => {
   const isMenuOpen = isInputFocused && !!value && !!cleanData?.length;
 
   return (
-    <TextInputWrapper>
-      <BorderContainer>
-        <InputContainer
-          disabled={disabled}
-          isMenuOpen={isMenuOpen}
-          onClick={() => inputRef.current.focus()}
-        >
-          <Box type="flat" style={{ width: '100%' }} horizontal>
-            <StyledTextInput
-              {...rest}
-              disabled={disabled}
-              ref={inputRef}
-              onKeyDown={specialKeyHandler}
-              size={size}
-              value={value}
-              onChange={({ target }) => {
-                handleType(target.value);
-              }}
-              onFocus={() => {
-                setLightFocus(-1);
-                setIsInputFocused(true);
-              }}
-              onBlur={() => {
-                setLightFocus(-1);
-                setIsInputFocused(false);
-              }}
-              placeholder={placeholder}
-            />
-          </Box>
-          {!!value && value.length > 0 && hasReset && (
+    <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
+      <TextInputWrapper>
+        <BorderContainer>
+          <InputContainer
+            disabled={disabled}
+            isMenuOpen={isMenuOpen}
+            error={!!errorMessage}
+            onClick={() => inputRef.current.focus()}
+          >
+            <Box type="flat" style={{ width: '100%' }} horizontal>
+              <StyledTextInput
+                {...rest}
+                disabled={disabled}
+                ref={inputRef}
+                onKeyDown={specialKeyHandler}
+                size={size}
+                value={value}
+                onChange={({ target }) => {
+                  handleType(target.value);
+                }}
+                onFocus={() => {
+                  setLightFocus(-1);
+                  setIsInputFocused(true);
+                }}
+                onBlur={() => {
+                  setLightFocus(-1);
+                  setIsInputFocused(false);
+                }}
+                placeholder={placeholder}
+              />
+            </Box>
+            {!!value && value.length > 0 && hasReset && (
             <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
-          )}
-        </InputContainer>
-        <ShrinkingBorder theme={theme} show={isMenuOpen} error />
-      </BorderContainer>
-      {isMenuOpen && (
+            )}
+          </InputContainer>
+          <ShrinkingBorder theme={theme} show={isMenuOpen} error={!!errorMessage} />
+        </BorderContainer>
+        {isMenuOpen && (
         <Menu
           loading={loading}
           isLarge={size === 'large'}
@@ -220,14 +224,16 @@ const Typehead = props => {
           lightFocus={lightFocus}
           setLightFocus={setLightFocus}
           theme={theme}
+          error={!!errorMessage}
           data={cleanData}
           clickHandler={choseItem}
           noResultsMessage={noResultsMessage}
           value={value}
           CustomTag={CustomTag}
         />
-      )}
-    </TextInputWrapper>
+        )}
+      </TextInputWrapper>
+    </ErrorWrapper>
   );
 };
 
@@ -246,6 +252,9 @@ Typehead.propTypes = {
   value: PropTypes.array,
   clearMessage: PropTypes.string,
   hasReset: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 Typehead.defaultProps = {
@@ -260,6 +269,8 @@ Typehead.defaultProps = {
   disabled: false,
   value: [],
   hasReset: true,
+  loading: false,
+  errorMessage: null,
 };
 
 export default withTheme(Typehead);

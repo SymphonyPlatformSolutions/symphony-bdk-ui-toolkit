@@ -26,18 +26,75 @@ import { TypeheadWrapper } from './samples/controller';
   </Story>
 </Preview>
 
+Typehead is a simple component that acts as a dropdown, but only activates when typed. It ships with a simple content based search that can be used.
+
+This component, like most Inputs, is a controlled component, therefore it will usually be wrapped
+by a controller, and have its state and logic controlled by a parent.
+
+```jsx
+import React, { useState } from 'react';
+import Typehead, { simpleFilter } from '../index';
+import Box from '../../../layout/box';
+
+const DATA = [
+  'Thing',
+  'Stuff',
+  'Data',
+  'Value',
+];
+
+export const TypeheadWrapper = (props) => {
+  const [currentData, setCurrentData] = useState([]);
+  const [currentValue, setCurrentValue] = useState(null);
+
+  return (
+    <Box type="secondary">
+      <Box horizontal style={{ width: '400px' }}>
+        <Typehead
+          {...props}
+          value={currentValue}
+          data={currentData}
+          onChange={newValue => {
+            setCurrentData(simpleFilter(DATA, newValue));
+            setCurrentValue(newValue);
+          }}
+        />
+      </Box>
+    </Box>
+  );
+};
+```
+
+## Use
+
+As with any input, it must be referred to by an onChange and value pairs, with the addition of a ```data``` prop. This must be an array of strings that correspond to the current possible values.
+
+## Size
+
+<Preview>
+  <Story name="Size">
+    <Box style={{ height: '150px'}}>
+      <TypeheadWrapper size="large" />
+    </Box>
+  </Story>
+</Preview>
+
+## States
+
 <Preview>
   <Story name="States">
     <Box>
       <Box>
         <TypeheadWrapper errorMessage="Something's amiss!" />
       </Box>
-      <Box style={{ height: '150px'}}>
+      <Box>
         <TypeheadWrapper disabled />
+      </Box>
+      <Box style={{ height: '150px'}}>
+        <TypeheadWrapper loading />
       </Box>
     </Box>
   </Story>
 </Preview>
-
 
 <Props of={Typehead} />
