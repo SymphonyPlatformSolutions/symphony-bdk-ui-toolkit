@@ -71,7 +71,7 @@ export const MenuArea = styled.div`
   border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   border-right: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
-  align-items: center;
+  align-items: baseline;
   display: flex;
 `;
 
