@@ -37,7 +37,7 @@ const getContextMenuItemColor = ({ theme, type }) => {
 
 export const BaseCard = styled.div`
   display: grid;
-  grid-template-columns: 40px auto 56px; 
+  grid-template-columns: 40px auto auto; 
   grid-template-rows: auto; 
   grid-template-areas:
     "quoteShortCodeArea contentArea menuArea";
@@ -65,12 +65,14 @@ export const ContentArea = styled.div`
 export const MenuArea = styled.div`
   grid-area: menuArea;
   background-color: ${({ theme }) => theme.colors.grey_100};
-  padding: 16px;
+  padding: ${({ hasContent }) => (hasContent ? '16px' : '1px')};
   border-radius: 0 4px 4px 0;
   border-top: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   border-right: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
+  align-items: baseline;
+  display: flex;
 `;
 
 export const QuoteShortCodeLabel = styled.span`
@@ -83,17 +85,6 @@ export const QuoteShortCodeName = styled.span`
   font-size: 1.1rem;
   font-weight: bold;
   color: #FFFFFF;
-`;
-
-export const TagList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  > * {
-    margin-bottom: 4px;
-  }
-  > *:not(:last-child) {
-    margin-right: 4px;
-  }
 `;
 
 export const IconButton = styled.button`
