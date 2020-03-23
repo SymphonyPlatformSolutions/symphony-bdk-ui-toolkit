@@ -97,6 +97,7 @@ export const DropdownContainer = styled(Container)`
     ${(props) => (props.menuIsOpen ? 'transparent' : getBorderColor(props))};
   border-bottom-right-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
   border-bottom-left-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : '4px')};
+  margin: -1px;
 `;
 export const ValueContainer = styled.div`
   padding: 3px 6px 7px 7px;
@@ -111,7 +112,7 @@ export const ChevronContainer = styled.div`
 export const MenuContainer = styled.div`
   border: 1px solid ${(props) => getBorderColor({ ...props, menuIsOpen: true })};
   border-top: 0;
-  top: -1px;
+  left: -1px;
   border-radius: 4px;
   border-top-right-radius: 0;
   box-shadow: ${({ theme }) => (theme.mode === THEME_TYPES.LIGHT ? '0 11px 16px -6px rgba(0,0,0,0.2)' : 'none')};
@@ -143,6 +144,7 @@ export const LoaderWrapper = styled.div`
 `;
 export const Wrapper = styled.div`
   width: 100%;
+  border-radius: 3px;
 `;
 export const ControlInput = styled(StyledInput)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};

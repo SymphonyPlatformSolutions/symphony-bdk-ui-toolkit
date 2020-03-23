@@ -1,0 +1,43 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Typehead from './index';
+import { TypeheadWrapper } from './samples/controller';
+
+<Meta title="components/Inputs/Typehead" />
+
+# Typehead
+
+<hr />
+
+<Preview>
+  <Story name="Base">
+    <Box align="center">
+      <Box style={{ height: '150px'}}>
+        <TypeheadWrapper />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="States">
+    <Box>
+      <Box>
+        <TypeheadWrapper errorMessage="Something's amiss!" />
+      </Box>
+      <Box style={{ height: '150px'}}>
+        <TypeheadWrapper disabled />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+
+<Props of={Typehead} />
