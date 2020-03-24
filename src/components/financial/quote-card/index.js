@@ -99,7 +99,7 @@ const QuoteCard = props => {
           {contentPortion.map(el => el)}
         </Box>
       </ContentArea>
-      {MenuPortion && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
+      {(MenuPortion || useDefaultContextMenu) && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
         {useDefaultContextMenu ? (
           <React.Fragment>
             <IconButton onClick={openContextMenu}>
