@@ -100,7 +100,7 @@ const Menu = props => {
   );
 };
 
-const cleanUpData = (data) => {
+const cleanUpData = data => {
   if (data) {
     return data.map(el => ({
       uid: uuid.v4(),
@@ -127,22 +127,41 @@ const Typehead = props => {
     onChange,
     loading,
     errorMessage,
+    helpDebouncePeriod,
     ...rest
   } = props;
 
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [lightFocus, setLightFocus] = useState(-1);
   const [cleanData, setCleanData] = useState(cleanUpData(data));
+  const [shouldMenuOpen, setShouldMenuOpen] = useState(false);
 
   const inputRef = useRef(null);
 
-  const handleType = (typedValue) => {
+  const handleType = typedValue => {
     onChange(typedValue);
   };
 
   useEffect(() => {
     setCleanData(cleanUpData(data));
   }, [data]);
+
+  useEffect(() => {
+    if (helpDebouncePeriod) {
+      if (isInputFocused) {
+        setShouldMenuOpen(false);
+        const handler = setTimeout(() => {
+          setShouldMenuOpen(true);
+        }, helpDebouncePeriod);
+        return () => clearTimeout(handler);
+      }
+
+      if (!isInputFocused && shouldMenuOpen) {
+        setShouldMenuOpen(false);
+      }
+    }
+    return undefined;
+  }, [isInputFocused, value]);
 
   const choseItem = item => {
     setLightFocus(-1);
@@ -176,7 +195,11 @@ const Typehead = props => {
     }
   };
 
-  const isMenuOpen = isInputFocused && !!value && !!cleanData?.length;
+  const isMenuOpen = (shouldMenuOpen || !helpDebouncePeriod)
+    && isInputFocused
+    && !!value
+    && !!cleanData
+    && !!cleanData.length;
 
   return (
     <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
@@ -211,26 +234,30 @@ const Typehead = props => {
               />
             </Box>
             {!!value && value.length > 0 && hasReset && (
-            <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
+              <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
             )}
           </InputContainer>
-          <ShrinkingBorder theme={theme} show={isMenuOpen} error={!!errorMessage} />
+          <ShrinkingBorder
+            theme={theme}
+            show={isMenuOpen}
+            error={!!errorMessage}
+          />
         </BorderContainer>
         {isMenuOpen && (
-        <Menu
-          loading={loading}
-          isLarge={size === 'large'}
-          CustomMenuItem={CustomMenuItem}
-          lightFocus={lightFocus}
-          setLightFocus={setLightFocus}
-          theme={theme}
-          error={!!errorMessage}
-          data={cleanData}
-          clickHandler={choseItem}
-          noResultsMessage={noResultsMessage}
-          value={value}
-          CustomTag={CustomTag}
-        />
+          <Menu
+            loading={loading}
+            isLarge={size === 'large'}
+            CustomMenuItem={CustomMenuItem}
+            lightFocus={lightFocus}
+            setLightFocus={setLightFocus}
+            theme={theme}
+            error={!!errorMessage}
+            data={cleanData}
+            clickHandler={choseItem}
+            noResultsMessage={noResultsMessage}
+            value={value}
+            CustomTag={CustomTag}
+          />
         )}
       </TextInputWrapper>
     </ErrorWrapper>
@@ -240,7 +267,8 @@ const Typehead = props => {
 Typehead.propTypes = {
   theme: PropTypes.object.isRequired,
   endpoints: PropTypes.array.isRequired,
-  itemChooseHandler: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  itemChooseHandler: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+    .isRequired,
   debouncePeriod: PropTypes.number,
   placeholder: PropTypes.string,
   data: PropTypes.array,
@@ -255,6 +283,7 @@ Typehead.propTypes = {
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   errorMessage: PropTypes.string,
+  helpDebouncePeriod: PropTypes.number,
 };
 
 Typehead.defaultProps = {
@@ -271,6 +300,7 @@ Typehead.defaultProps = {
   hasReset: true,
   loading: false,
   errorMessage: null,
+  helpDebouncePeriod: 1000,
 };
 
 export default withTheme(Typehead);
