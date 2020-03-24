@@ -33,12 +33,14 @@ It comes out-of-the-box with value filtering by typing.
           <Text>Type out values in the dropdown search to filter the options by value.</Text>
           <Text>You can also use the ENTER and arrow keys to navigate the dropdown options!</Text>
         </Box>
-        <Box style={{ height: '400px'}}>
+        <Box style={{ height: '470px'}}>
           <DropdownHandler data={CONTENT} />
         </Box>
       </Box>
     </Story>
 </Preview>
+
+> **Important note**: in order for the dropdown to function as expected, the menu items all have ```onMouseDown``` events, rather than the usual ```onClick```. Due to this, when writing tests or other programmatical UI handlers, do keep in mind that ```onClick``` will not trigger the correct behavior.
 
 ## Decision Tree structure
 
@@ -188,11 +190,11 @@ The error state can be triggered by passing an error message through the ```erro
           <DropdownHandler disabled data={CONTENT} />
         </Box>
         <Box align="center" horizontal>
-          <Box type="flat" style={{ height: '400px'}}>
+          <Box type="flat" style={{ height: '470px'}}>
             <Text isTitle size="small">Default</Text>
             <DropdownHandler data={CONTENT} />
           </Box>
-          <Box type="flat" style={{ height: '400px'}}>
+          <Box type="flat" style={{ height: '470px'}}>
             <Text isTitle size="small">Error</Text>
             <DropdownHandler errorMessage="My custom error message" data={CONTENT} />
           </Box>
@@ -306,7 +308,7 @@ Multiselect is supported by passing the ```isMulti``` flag to the Component. The
 <Preview>
     <Story name="Multiselect">
       <Box align="center" horizontal justify="flex-start">
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <DropdownHandler isMulti data={CONTENT} />
         </Box>
       </Box>
@@ -341,11 +343,11 @@ const SIMPLE_CUSTOM_ITEM_CONTENT = [
 <Preview>
     <Story name="Custom Components">
       <Box align="center" horizontal justify="flex-start">
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <Text isTitle size="small">Regular</Text>
           <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} CustomValue={CustomValue} />
         </Box>
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <Text isTitle size="small">Multiselect</Text>
           <DropdownHandler data={SIMPLE_CUSTOM_ITEM_CONTENT} isMulti CustomValue={CustomValue} />
         </Box>
@@ -384,7 +386,7 @@ export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
 <Preview>
     <Story name="Custom Chevron">
       <Box align="center" horizontal justify="flex-start">
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <DropdownHandler data={CONTENT} CustomChevron={CustomChevron} />
         </Box>
       </Box>
@@ -406,11 +408,11 @@ export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
 <Preview>
     <Story name="Misc">
       <Box align="center" horizontal justify="flex-start">
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <Text isTitle size="small">Tooltip</Text>
           <DropdownHandler data={CONTENT} tooltip="My tooltip message" />
         </Box>
-        <Box type="flat" style={{ height: '400px'}}>
+        <Box type="flat" style={{ height: '470px'}}>
           <Text isTitle size="small">With Back Button</Text>
           <DropdownHandler hasBackButton data={CONTENT} />
         </Box>
