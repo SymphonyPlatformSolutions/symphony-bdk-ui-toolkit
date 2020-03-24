@@ -35,41 +35,58 @@ const getContextMenuItemColor = ({ theme, type }) => {
   return theme.colors.textcolor;
 };
 
+const getTemplateAreas = ({type, hasMenu}) => {
+  const isSmall = type === 'small';
+  if (isSmall && hasMenu) {
+    return `"quoteShortCodeArea headerArea menuArea" "contentArea contentArea contentArea"`;
+  } else if (isSmall) {
+    return `"quoteShortCodeArea headerArea headerArea" "contentArea contentArea contentArea"`;
+  }
+  return `"quoteShortCodeArea contentArea menuArea"`;
+};
+
 export const BaseCard = styled.div`
   display: grid;
   grid-template-columns: 40px auto auto; 
-  grid-template-rows: auto; 
-  grid-template-areas:
-    "quoteShortCodeArea contentArea menuArea";
+  grid-template-rows: ${({type}) => type === 'small' ? 'auto auto' : 'auto'}; 
+  grid-template-areas: ${getTemplateAreas};
+  background-color: ${({ theme }) => theme.colors.grey_100};
+  border-radius: 4px;
+  border: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
+`;
+
+export const QuoteShortContainer = styled.div`
+  grid-area: quoteShortCodeArea;
 `;
 
 export const QuoteShortCodeArea = styled.div`
-  grid-area: quoteShortCodeArea;
+  top: -1px;
+  left: -1px;
+  height: ${({type}) => type === 'small' ? '42px' : 'calc(100% + 2px)'};
+  border-radius: ${({type}) => type === 'small' ? '4px 0 4px 0' : '4px 0 0 4px'};
+  position: relative;
   background-color: ${props => getQuoteShortCodeColor(props)};
-  border-radius: 4px 0 0 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
+export const HeaderArea = styled.div`
+  grid-area: headerArea;
+  padding: 5px;
+  box-sizing: border-box;
+`;
+
 export const ContentArea = styled.div`
   grid-area: contentArea;
-  background-color: ${({ theme }) => theme.colors.grey_100};
   padding: 16px;
-  border-top: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
-  border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
 `;
 
 export const MenuArea = styled.div`
   grid-area: menuArea;
-  background-color: ${({ theme }) => theme.colors.grey_100};
   padding: ${({ hasContent }) => (hasContent ? '16px' : '1px')};
-  border-radius: 0 4px 4px 0;
-  border-top: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
-  border-bottom: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
-  border-right: ${({ theme }) => `1px solid ${theme.colors.grey_200}`};
   box-sizing: border-box;
   align-items: baseline;
   display: flex;
