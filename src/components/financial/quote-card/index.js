@@ -101,12 +101,12 @@ const QuoteCard = props => {
       </ContentArea>
       {MenuPortion && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
         {useDefaultContextMenu ? (
-          <>
+          <React.Fragment>
             <IconButton onClick={openContextMenu}>
               <img src={getMenuIcon(props)} alt="menu-icon" />
             </IconButton>
             {renderContextMenu()}
-          </>
+          </React.Fragment>
         ) : (
           MenuPortion
         )}
