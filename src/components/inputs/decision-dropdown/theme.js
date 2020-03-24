@@ -150,7 +150,7 @@ export const ControlInput = styled(StyledInput)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
   position: ${({ hide }) => (hide ? 'absolute' : undefined)};
   height:${({ hide }) => (hide ? 0 : undefined)}; 
-  width: ${({ hide }) => (hide ? 0 : 'auto')};
+  width: ${({ hide }) => (hide ? 0 : undefined)};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
   margin-left: ${({ size }) => (size === 'large' ? '0' : '4px')};
@@ -197,6 +197,7 @@ export const MultiValueContainer = styled.div`
 export const IconMarginContainer = styled.div`
   display: flex;
   margin-right: 8px;
+  z-index: 4;
 `;
 export const TooltipMargin = styled.div`
   margin-left: 8px;

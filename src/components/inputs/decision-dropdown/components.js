@@ -228,6 +228,7 @@ export const DropdownControl = forwardRef((props, ref) => {
     tooltip,
     filterQueryHandler,
     CustomValue,
+    hideClear,
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
@@ -268,7 +269,7 @@ export const DropdownControl = forwardRef((props, ref) => {
     }
   };
 
-  const shouldRenderClear = isMulti ? !!(value && value.length) : value;
+  const shouldRenderClear = !hideClear && (isMulti ? !!(value && value.length) : value);
   const hideInput = isMulti
     ? value && value.length && !menuIsOpen
     : value && !!CustomValue && !menuIsOpen;
