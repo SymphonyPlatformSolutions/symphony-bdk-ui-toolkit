@@ -2,7 +2,8 @@ import Text from '../../misc/text';
 import Box from '../../layout/box';
 import Button from '../../misc/button';
 import QuoteProductTag from '../quote-product-tag';
-import QuoteCard, { QuoteCardTag, QuoteCardContent, QuoteCardMenu } from './index.js';
+import QuotePanel from '../quote-panel';
+import QuoteCard, { QuoteCardTag, QuoteCardContent, QuoteCardMenu, QuoteCardHeader } from './index.js';
 import { QuoteShortCodeLabel, QuoteShortCodeName } from './theme';
 import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 
@@ -56,6 +57,7 @@ The card is separated into 3 portions, all of which are populated by using the p
 - ```QuoteCardTag``` will fill in the colorful tag to the left of the component. There should be a single Child with this Component. The ```QuoteShortCodeLabel``` and ```QuoteShortCodeName``` are also being shipped for convenience.
 - ```QuoteCardContent``` will populate the middle portion of the card. Every Child with this component will appear as a new line inside the content.
 - ```QuoteCardMenu``` will populate the right-most side of the card. It represents the action part of the component.
+- ```QuoteCardHeader``` **To be used with Small type Cards** will populate the header of the card.
 
 In case the user would want to use the provided dropdown menu, simply pass the ```useDefaultContextMenu``` prop, alongside the ```onEdit``` and ```onCancel``` handlers.
 
@@ -84,6 +86,41 @@ In case the user would want to use the provided dropdown menu, simply pass the `
           <QuoteProductTag
             mainInfo="EUREX"
           />
+        </Box>
+      </QuoteCardContent>
+    </QuoteCard>
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="with small product tag">
+    <QuoteCard
+      type="small"
+      colorIndex={3}
+    >
+      <QuoteCardTag>
+        <Box align="center" type="flat">
+          <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
+          <QuoteShortCodeName>2B</QuoteShortCodeName>
+        </Box>
+      </QuoteCardTag>
+      <QuoteCardHeader>
+        <Box horizontal type="secondary" justify="center" style={{marginTop: '2px'}}>
+            <QuoteProductTag
+              mainInfo="IRS"
+            />
+            <QuoteProductTag
+              mainInfo="USD"
+              sideInfo="3M-LIBOR"
+            />
+            <QuoteProductTag
+              mainInfo="EUREX"
+            />
+          </Box>
+      </QuoteCardHeader>
+      <QuoteCardContent>
+        <Box vertical>
+         <QuotePanel dealerName="Dealer two" dealerPayedValue={1.75} clientName="Client one" clientPayedValue={3} />
         </Box>
       </QuoteCardContent>
     </QuoteCard>

@@ -6,6 +6,7 @@ import { contextMenu, Menu } from 'react-contexify';
 import uuid from 'uuid';
 import {
   BaseCard,
+  QuoteShortContainer,
   QuoteShortCodeArea,
   ContentArea,
   MenuArea,
@@ -13,6 +14,7 @@ import {
   getMenuIcon,
   getMenuStyle,
   ContextMenuItem,
+  HeaderArea,
 } from './theme';
 import Box from '../../layout/box';
 
@@ -22,6 +24,9 @@ export const QuoteCardMenu = ({ children, ...props }) => (
 export const QuoteCardContent = ({ children, ...props }) => (
   <div {...props}>{children}</div>
 );
+export const QuoteCardHeader = ({ children, ...props }) => (
+  <div {...props}>{children}</div>
+);
 export const QuoteCardTag = ({ children, ...props }) => (
   <div {...props}>{children}</div>
 );
@@ -29,6 +34,7 @@ export const QuoteCardTag = ({ children, ...props }) => (
 const QuoteCard = props => {
   const {
     theme,
+    type,
     colorIndex,
     onEdit,
     onCancel,
@@ -64,10 +70,12 @@ const QuoteCard = props => {
   };
 
   let TagPortion = null;
+  let HeaderPortion = null;
   let contentPortion = [];
   let MenuPortion = null;
   if (children) {
     TagPortion = children.find(el => el.type.displayName === 'QuoteCardTag');
+    HeaderPortion = children.find(el => el.type.displayName === 'QuoteCardHeader');
     contentPortion = children.filter(
       el => el.type.displayName === 'QuoteCardContent',
     );
@@ -75,16 +83,23 @@ const QuoteCard = props => {
   }
 
   return (
-    <BaseCard {...rest}>
-      <QuoteShortCodeArea colorIndex={colorIndex}>
-        {TagPortion}
-      </QuoteShortCodeArea>
+    <BaseCard {...rest} type={type} hasMenu={MenuPortion}>
+      <QuoteShortContainer>
+        <QuoteShortCodeArea colorIndex={colorIndex} type={type}>
+          {TagPortion}
+        </QuoteShortCodeArea>
+      </QuoteShortContainer>
+      { HeaderPortion && (
+          <HeaderArea>
+            {HeaderPortion}
+          </HeaderArea>)
+      }
       <ContentArea>
         <Box vertical space={16}>
           {contentPortion.map(el => el)}
         </Box>
       </ContentArea>
-      <MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
+      {MenuPortion && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
         {useDefaultContextMenu ? (
           <>
             <IconButton onClick={openContextMenu}>
@@ -95,7 +110,7 @@ const QuoteCard = props => {
         ) : (
           MenuPortion
         )}
-      </MenuArea>
+      </MenuArea>)}
     </BaseCard>
   );
 };
@@ -103,12 +118,14 @@ const QuoteCard = props => {
 QuoteCard.propTypes = {
   theme: PropTypes.object.isRequired,
   colorIndex: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(['regular', 'small']),
   onEdit: PropTypes.func,
   onCancel: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
 
 QuoteCard.defaultProps = {
+  type: 'regular',
   onEdit: null,
   onCancel: null,
 };
