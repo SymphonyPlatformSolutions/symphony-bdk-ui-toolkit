@@ -9,6 +9,7 @@ import {
 } from "@storybook/addon-docs/blocks";
 import Typehead from './index';
 import { TypeheadWrapper } from './samples/controller';
+import { CustomChevron } from './samples/custom-chevron';
 
 <Meta title="components/Inputs/Typehead" />
 
@@ -97,6 +98,46 @@ Also boasts of a period that counts as debounce. If set to 0, ignores the lag.
       </Box>
     </Box>
   </Story>
+</Preview>
+
+## Custom Chevron
+
+The component can also import a custom Chevron Component through the ```ChevronComponent``` prop.
+The ChevronComponent will be called with 4 props:
+- ```disabled```
+- ```focusInput```
+- ```blurInput```
+- ```menuIsOpen```
+Here's an example of a custom Chevron Component:
+
+```jsx
+export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
+  <SmileContainer
+    onMouseDown={e => {
+      e.preventDefault();
+      if (menuIsOpen) {
+        blurInput();
+      } else {
+        focusInput();
+      }
+    }}
+    menuIsOpen={menuIsOpen}
+  >
+    <StyledSmile size={20} menuIsOpen={menuIsOpen} />
+  </SmileContainer>
+);
+```
+
+It is also possible to hide the Chevron altogether (be it the Custom component or the default one) by passing the ```hideChevron``` prop.
+
+<Preview>
+    <Story name="Custom Chevron">
+      <Box style={{ height: '150px'}}>
+        <Box>
+          <TypeheadWrapper CustomChevron={CustomChevron} />
+        </Box>
+      </Box>
+    </Story>
 </Preview>
 
 <Props of={Typehead} />

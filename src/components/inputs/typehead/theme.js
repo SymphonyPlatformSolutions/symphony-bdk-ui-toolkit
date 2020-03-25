@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import {
-  StyledInput, Container, InputWrapper,
+  StyledInput, Container,
   ToggleButtonText,
 } from '../input-field/theme';
 
-const getBorderColor = ({ theme, error, isMenuOpen }) => {
+const getBorderColor = ({ theme, error, menuIsOpen }) => {
   if (error) {
     return theme.colors.error_500;
   }
-  if (isMenuOpen) {
+  if (menuIsOpen) {
     return theme.colors.oldprimary_400;
   }
   return theme.colors.grey_300;
@@ -28,9 +28,9 @@ export const BorderContainer = styled.div`
 export const InputContainer = styled(Container)`
   &:focus-within {
     border: 1px solid ${(props) => getBorderColor(props)};
-    border-bottom-left-radius:  ${({ isMenuOpen }) => (isMenuOpen ? '0' : undefined)};
-    border-bottom-right-radius: ${({ isMenuOpen }) => (isMenuOpen ? '0' : undefined)};
-    border-bottom: ${({ isMenuOpen }) => (isMenuOpen ? '1px solid transparent' : undefined)};
+    border-bottom-left-radius:  ${({ menuIsOpen }) => (menuIsOpen ? '0' : undefined)};
+    border-bottom-right-radius: ${({ menuIsOpen }) => (menuIsOpen ? '0' : undefined)};
+    border-bottom: ${({ menuIsOpen }) => (menuIsOpen ? '1px solid transparent' : undefined)};
   }
   
   width: inherit;
@@ -50,7 +50,7 @@ export const MenuContainer = styled.div`
   padding: 7px 0 5px 0;
   margin: -3px -1px -1px -1px;
   background-color: ${({ theme }) => theme.colors.mainbackground};
-  border: 1px solid ${(props) => getBorderColor({ ...props, isMenuOpen: true })};
+  border: 1px solid ${(props) => getBorderColor({ ...props, menuIsOpen: true })};
   border-top: none;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -82,4 +82,17 @@ export const LoaderWrapper = styled.div`
   padding: 14px 0 8px 0;
   display: flex;
   justify-content: center;
+`;
+export const ChevronWrapper = styled.div`
+  display: flex;
+  height: 10px;
+  align-items: center;
+  transition: all 0.3s ease-out;
+  transform: rotate(${({ turn }) => (turn ? '-180deg' : 0)});
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+`;
+export const ChevronContainer = styled.div`
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
 `;

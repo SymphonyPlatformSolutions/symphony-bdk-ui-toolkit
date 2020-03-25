@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import Loader from '../../misc/loader';
 import Text from '../../misc/text';
 import Box from '../../layout/box';
+import { DownChevron } from '../../misc/icons';
 import {
   StyledTextInput,
   TextInputWrapper,
@@ -16,6 +17,8 @@ import {
   FloatWrapper,
   LoaderWrapper,
   ClearText,
+  ChevronContainer,
+  ChevronWrapper,
 } from './theme';
 import { ErrorWrapper } from '../input-field';
 
@@ -112,7 +115,7 @@ const cleanUpData = data => {
 
 const Typehead = props => {
   const {
-    hasReset,
+    hideClear,
     theme,
     data,
     debouncePeriod,
@@ -128,6 +131,8 @@ const Typehead = props => {
     loading,
     errorMessage,
     helpDebouncePeriod,
+    hideChevron,
+    CustomChevron,
     ...rest
   } = props;
 
@@ -195,11 +200,49 @@ const Typehead = props => {
     }
   };
 
-  const isMenuOpen = (shouldMenuOpen || !helpDebouncePeriod)
+  const menuIsOpen = (shouldMenuOpen || !helpDebouncePeriod)
     && isInputFocused
     && !!value
     && !!cleanData
     && !!cleanData.length;
+
+  const blurInput = () => inputRef.current.blur();
+  const focusInput = () => inputRef.current.focus();
+
+  const renderChevron = () => {
+    if (hideChevron) {
+      return null;
+    }
+
+    if (CustomChevron) {
+      return (
+        <CustomChevron
+          blurInput={blurInput}
+          focusInput={focusInput}
+          disabled={disabled}
+          menuIsOpen={menuIsOpen}
+        />
+      );
+    }
+    return (
+      <ChevronWrapper
+        disabled={disabled}
+        onMouseDown={e => {
+          e.preventDefault();
+          if (menuIsOpen) {
+            blurInput();
+          } else {
+            focusInput();
+          }
+        }}
+        turn={menuIsOpen}
+      >
+        <DownChevron
+          color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+        />
+      </ChevronWrapper>
+    );
+  };
 
   return (
     <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
@@ -207,7 +250,7 @@ const Typehead = props => {
         <BorderContainer>
           <InputContainer
             disabled={disabled}
-            isMenuOpen={isMenuOpen}
+            menuIsOpen={menuIsOpen}
             error={!!errorMessage}
             onClick={() => inputRef.current.focus()}
           >
@@ -233,17 +276,20 @@ const Typehead = props => {
                 placeholder={placeholder}
               />
             </Box>
-            {!!value && value.length > 0 && hasReset && (
-              <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
-            )}
+            <ChevronContainer>
+              {!!value && value.length > 0 && !hideClear && (
+                <ClearText onMouseDown={wipeHandler}>{clearMessage}</ClearText>
+              )}
+              {renderChevron()}
+            </ChevronContainer>
           </InputContainer>
           <ShrinkingBorder
             theme={theme}
-            show={isMenuOpen}
+            show={menuIsOpen}
             error={!!errorMessage}
           />
         </BorderContainer>
-        {isMenuOpen && (
+        {menuIsOpen && (
           <Menu
             loading={loading}
             isLarge={size === 'large'}
@@ -279,11 +325,13 @@ Typehead.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.array,
   clearMessage: PropTypes.string,
-  hasReset: PropTypes.bool,
+  hideClear: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   errorMessage: PropTypes.string,
   helpDebouncePeriod: PropTypes.number,
+  hideChevron: PropTypes.bool,
+  CustomChevron: PropTypes.node,
 };
 
 Typehead.defaultProps = {
@@ -291,16 +339,18 @@ Typehead.defaultProps = {
   placeholder: 'Type value...',
   size: 'regular',
   data: null,
-  clearMessage: 'reset',
+  clearMessage: 'clear',
   noResultsMessage: 'No results found',
   CustomMenuItem: null,
   CustomTag: null,
   disabled: false,
   value: [],
-  hasReset: true,
+  hideClear: false,
+  hideChevron: false,
   loading: false,
   errorMessage: null,
   helpDebouncePeriod: 1000,
+  CustomChevron: null,
 };
 
 export default withTheme(Typehead);
