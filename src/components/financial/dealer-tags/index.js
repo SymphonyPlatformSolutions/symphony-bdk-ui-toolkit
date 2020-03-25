@@ -13,7 +13,7 @@ import {
 
 const DealerTag = (props) => {
   const {
-    children, subText, closeHandler, ...rest
+    children, subText, closeHandler, closeButtonSize, ...rest
   } = props;
 
   return (
@@ -26,7 +26,7 @@ const DealerTag = (props) => {
           <SubTag size="small">{subText}</SubTag>
         </SubTextContainer>
       </TextContainer>
-      {closeHandler && <CloseButton onClick={closeHandler} size={18} />}
+      {closeHandler && <CloseButton onClick={closeHandler} size={closeButtonSize} />}
     </TagContainer>
   );
 };
@@ -34,9 +34,11 @@ const DealerTag = (props) => {
 DealerTag.propTypes = {
   children: PropTypes.string.isRequired,
   subText: PropTypes.string,
+  closeButtonSize: PropTypes.number,
   closeHandler: PropTypes.func,
 };
 DealerTag.defaultProps = {
+  closeButtonSize: 18,
   subText: null,
   closeHandler: null,
 };
