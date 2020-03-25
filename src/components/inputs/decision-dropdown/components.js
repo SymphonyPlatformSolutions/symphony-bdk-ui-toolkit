@@ -49,7 +49,7 @@ export const DefaultEmptyMessage = ({ children }) => (
   </EmptyMessageContainer>
 );
 
-const SimpleItem = (props) => {
+const SimpleItem = props => {
   const {
     label,
     sublabel,
@@ -64,19 +64,19 @@ const SimpleItem = (props) => {
     <SimpleItemContainer
       onMouseEnter={() => lightFocusHandler(uid)}
       lightFocused={lightFocused}
-      onMouseDown={(e) => {
+      onMouseDown={e => {
         e.preventDefault();
         clickHandler();
       }}
     >
-      {CustomItem
-        ? <CustomItem>{label}</CustomItem>
-        : (
-          <LabelContainer>
-            {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
-            {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
-          </LabelContainer>
-        )}
+      {CustomItem ? (
+        <CustomItem>{label}</CustomItem>
+      ) : (
+        <LabelContainer>
+          {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
+          {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
+        </LabelContainer>
+      )}
 
       {multiChosen && (
         <MultiChosenCheck>
@@ -87,7 +87,7 @@ const SimpleItem = (props) => {
   );
 };
 
-export const MenuItem = (props) => {
+export const MenuItem = props => {
   const {
     title,
     subtitle,
@@ -107,9 +107,9 @@ export const MenuItem = (props) => {
 
   function renderEmptyContent() {
     if (!CustomEmptyComponent) {
-      return (<DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>);
+      return <DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>;
     }
-    return (CustomEmptyComponent);
+    return CustomEmptyComponent;
   }
   if (suboptions) {
     const filteredOptions = suboptions.filter(
@@ -122,8 +122,8 @@ export const MenuItem = (props) => {
       <MenuItemContainer hasTopBar={hasTopBar} hasBottomBar={hasBottomBar}>
         {title && <MenuItemTitle>{title}</MenuItemTitle>}
         {subtitle && <MenuItemSubtitle>{subtitle}</MenuItemSubtitle>}
-        {suboptions.length ? (
-          filteredOptions.map(el => (
+        {suboptions.length
+          ? filteredOptions.map(el => (
             <SimpleItem
               {...el}
               CustomItem={el.CustomItem}
@@ -133,11 +133,11 @@ export const MenuItem = (props) => {
               key={el.uid}
               clickHandler={() => chooseHandler(el)}
               multiChosen={
-                valueList && !!valueList.find(x => x.value === el.value)
-              }
+                  valueList && !!valueList.find(x => x.value === el.value)
+                }
             />
           ))
-        ) : (renderEmptyContent())}
+          : renderEmptyContent()}
       </MenuItemContainer>
     );
   }
@@ -168,7 +168,7 @@ MenuItem.defaultProps = {
 
 const MultiSelectValue = ({ children, removeHandler }) => (
   <MultiSelectContainer
-    onMouseDown={(e) => {
+    onMouseDown={e => {
       e.preventDefault();
       removeHandler();
     }}
@@ -178,7 +178,7 @@ const MultiSelectValue = ({ children, removeHandler }) => (
   </MultiSelectContainer>
 );
 
-const MultiValueList = (props) => {
+const MultiValueList = props => {
   const {
     value, chooseHandler, size, CustomValue,
   } = props;
@@ -190,22 +190,20 @@ const MultiValueList = (props) => {
   return (
     <ValueContainer size={size}>
       <MultiValueContainer>
-        {value.map(l => (CustomValue
-          ? (
-            <CustomValue
-              removeHandler={() => chooseHandler(l)}
-              key={l.value}
-              value={l}
-            />
-          )
-          : (
-            <MultiSelectValue
-              removeHandler={() => chooseHandler(l)}
-              key={l.value}
-            >
-              {l.label}
-            </MultiSelectValue>
-          )))}
+        {value.map(l => (CustomValue ? (
+          <CustomValue
+            removeHandler={() => chooseHandler(l)}
+            key={l.value}
+            value={l}
+          />
+        ) : (
+          <MultiSelectValue
+            removeHandler={() => chooseHandler(l)}
+            key={l.value}
+          >
+            {l.label}
+          </MultiSelectValue>
+        )))}
       </MultiValueContainer>
     </ValueContainer>
   );
@@ -229,12 +227,13 @@ export const DropdownControl = forwardRef((props, ref) => {
     filterQueryHandler,
     CustomValue,
     hideClear,
+    CustomChevron,
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
   const inputRef = useRef();
 
-  const toggleInputBlur = (isBlur) => {
+  const toggleInputBlur = isBlur => {
     if (isBlur) {
       inputRef.current.blur();
     } else {
@@ -281,21 +280,26 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }} size={size}>
+      <ValueAndControl
+        onClick={() => {
+          hideInput && inputRef.current.focus();
+        }}
+        size={size}
+      >
         {isMulti && (
-        <MultiValueList
-          CustomValue={CustomValue}
-          chooseHandler={chooseHandler}
-          value={value}
-          size={size}
-        />
+          <MultiValueList
+            CustomValue={CustomValue}
+            chooseHandler={chooseHandler}
+            value={value}
+            size={size}
+          />
         )}
         {!isMulti && CustomValue && value && !menuIsOpen && (
           <CustomValue value={value} />
         )}
         <ControlInput
           hide={hideInput}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             specialKeyController(e);
             if (e.keyCode === BS_KEY) {
               backSpaceHandler();
@@ -325,20 +329,32 @@ export const DropdownControl = forwardRef((props, ref) => {
             <CrossIcon />
           </IconMarginContainer>
         )}
-        <ChevronWrapper
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleInputBlur(menuIsOpen);
-          }}
-          turn={menuIsOpen}
-        >
-          <DownChevron
-            color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+        {CustomChevron ? (
+          <CustomChevron
+            blurInput={() => toggleInputBlur(true)}
+            focusInput={() => toggleInputBlur(false)}
+            menuIsOpen={menuIsOpen}
+            disabled={disabled}
           />
-        </ChevronWrapper>
+        ) : (
+          <ChevronWrapper
+            onMouseDown={e => {
+              e.preventDefault();
+              toggleInputBlur(menuIsOpen);
+            }}
+            turn={menuIsOpen}
+          >
+            <DownChevron
+              color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+            />
+          </ChevronWrapper>
+        )}
+
         {tooltip && (
           <TooltipMargin>
-            <Tooltip size={14} color={theme.colors.grey_600}>{tooltip}</Tooltip>
+            <Tooltip size={14} color={theme.colors.grey_600}>
+              {tooltip}
+            </Tooltip>
           </TooltipMargin>
         )}
       </ChevronContainer>
@@ -378,7 +394,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
     setLightFocus(-1);
   }, [filterQuery]);
 
-  const chooseOrNavigate = (item) => {
+  const chooseOrNavigate = item => {
     if (item.options) {
       setNavTree([...navTree, item.value]);
       setSelectableArray(buildSelectableArray(item.options, filterQuery));
@@ -404,7 +420,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
     },
   }));
 
-  const lightFocusHandler = (uid) => {
+  const lightFocusHandler = uid => {
     if (!uid) {
       return setLightFocus(-1);
     }
@@ -461,7 +477,9 @@ export const DropdownMenu = forwardRef((props, ref) => {
         />
       ));
     }
-    return <DefaultEmptyMessage>{currentData.emptyMessage}</DefaultEmptyMessage>;
+    return (
+      <DefaultEmptyMessage>{currentData.emptyMessage}</DefaultEmptyMessage>
+    );
   }
 
   return (
@@ -479,7 +497,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
         {hasBackButton && navTree.length > 0 && (
           <BackButtonContainer>
             <BackButton
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 goBack();
               }}
