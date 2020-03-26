@@ -36,6 +36,8 @@ const DecisionDropdown = (props) => {
     theme,
     tooltip,
     CustomValue,
+    hideClear,
+    CustomChevron,
     ...rest
   } = props;
 
@@ -112,6 +114,7 @@ const DecisionDropdown = (props) => {
       <Wrapper ref={node} {...rest}>
         <div>
           <DropdownControl
+            hideClear={hideClear}
             filterQueryHandler={setFilterQuery}
             chooseHandler={chooseHandler}
             size={size}
@@ -128,6 +131,7 @@ const DecisionDropdown = (props) => {
             theme={theme}
             tooltip={tooltip}
             CustomValue={CustomValue}
+            CustomChevron={CustomChevron}
           />
           <MenuWrapper error={!!errorMessage}>
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
@@ -166,6 +170,8 @@ DecisionDropdown.propTypes = {
   size: PropTypes.oneOf(['regular', 'large']),
   tooltip: PropTypes.string,
   CustomValue: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  hideClear: PropTypes.bool,
+  CustomChevron: PropTypes.node,
 };
 
 DecisionDropdown.defaultProps = {
@@ -181,6 +187,8 @@ DecisionDropdown.defaultProps = {
   size: 'regular',
   tooltip: null,
   CustomValue: null,
+  hideClear: false,
+  CustomChevron: null,
 };
 
 export default withTheme(DecisionDropdown);

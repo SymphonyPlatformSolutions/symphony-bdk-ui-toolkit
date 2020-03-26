@@ -12,6 +12,8 @@ import { DropdownHandler, CONTENT } from './samples/full-example';
 import { SIMPLE_CONTENT } from './samples/simple-content';
 import { CUSTOM_EMPTY } from './samples/custom-empty';
 import { AsyncDropdownHandler } from './samples/async';
+import { StyledDropdownHandler } from './samples/styled-dropdown';
+import { CustomChevron } from './samples/custom-chevron';
 import { SIMPLE_CUSTOM_ITEM_CONTENT, CustomValue } from './samples/custom-value';
 
 <Meta title="components/Inputs/Decision Dropdown" component={DecisionDropdown} parameters={{order: 210}}/>
@@ -349,6 +351,54 @@ const SIMPLE_CUSTOM_ITEM_CONTENT = [
         </Box>
       </Box>
     </Story>
+</Preview>
+
+## Custom Chevron
+
+The component can also import a custom Chevron Component through the ```ChevronComponent``` prop.
+The ChevronComponent will be called with 4 props:
+- ```disabled```
+- ```focusInput```
+- ```blurInput```
+- ```menuIsOpen```
+Here's an example of a custom Chevron Component:
+
+```jsx
+export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
+  <SmileContainer
+    onMouseDown={e => {
+      e.preventDefault();
+      if (menuIsOpen) {
+        blurInput();
+      } else {
+        focusInput();
+      }
+    }}
+    menuIsOpen={menuIsOpen}
+  >
+    <StyledSmile size={20} menuIsOpen={menuIsOpen} />
+  </SmileContainer>
+);
+```
+
+<Preview>
+    <Story name="Custom Chevron">
+      <Box align="center" horizontal justify="flex-start">
+        <Box type="flat" style={{ height: '400px'}}>
+          <DropdownHandler data={CONTENT} CustomChevron={CustomChevron} />
+        </Box>
+      </Box>
+    </Story>
+</Preview>
+
+## Extended Styles
+
+<Preview withSource="none">
+  <Story name="Extended Style">
+    <Box type="flat" style={{ height: '220px'}}>
+      <StyledDropdownHandler data={SIMPLE_CONTENT} />
+    </Box>
+  </Story>
 </Preview>
 
 ## Misc
