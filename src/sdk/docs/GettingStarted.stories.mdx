@@ -1,7 +1,8 @@
-import { Story, Meta, Preview, Props, Link, Anchor, Description } from '@storybook/addon-docs/blocks';
+import {
+  Story, Meta, Preview, Props, Link, Anchor, Description
+} from '@storybook/addon-docs/blocks';
 
-<Meta title="Developer Framework/Getting Started" />
-
+<Meta title="Bot Developer Kit/Getting Started" parameters={{order: 1}}/>
 
 <div style={{ margin: '0 auto', color: 'white' }}>
   <img
@@ -10,26 +11,31 @@ import { Story, Meta, Preview, Props, Link, Anchor, Description } from '@storybo
   />
   <br />
   <br />
-  <img
-    style={{ width: '100px',
-    position: 'absolute',
-    top: '0',
-    right: '15px' }}
-    src="/beta.png"
-  />
 
   ---
 
-  The **Symphony Developer Framework** was built to help and guide developers in their integration/development efforts.
-  It comprehends a set of tools that are tailored made for organizations that need to integrate Symphony with their existing
-  workflows, or to create brand new applications that leverages Symphony's Data Security model. It provides the following:
+  The **Symphony Bot Developer Kit** aims to help developers expedite their development
+  journey in building production-grade Symphony *Bots* and *Extension Appplications*. The
+  kit is made up of a collection of tools that take care of best practices, enabling
+  developers to focus their efforts on designing and building workflows and integrations.
+
+  These tools are as follows:
 </div>
 
-- **[CLI](?path=/docs/developer-framework-cli--page)**: allows you to have a functional Bot project up and running in a manner of seconds,
-  and to have a complex extension app boilerplate with "themable" capabilities, that already has
-  all authentication, bootstrap and symphony integration done for you, and many more.
-- **[Bot BDK](?path=/docs/developer-framework-bot-bdk--page)**: provides authentication support, command matchers, Symphony Elements handlers, REST api capabilities, and many more.
-  Its foundation is built on top of best development practices and dedicated to Financial related applications.
-- **[UI Toolkit](?path=/docs/developer-framework-ui-toolkit--page)**: a library of UI components, that helps you to build complex frontend applications rapidly. It is meant to reduce
-    the development of Extension apps from months to weeks. It has from Layout, to forms, and even complex
-    financial charts, to allow you get the best out of your workflow, or business requirements.
+- **[Command Line Interface](?path=/docs/bot-developer-kit-cli--page)** (CLI): generates
+  project scaffolds for *Bot* and *Extension Application* projects, including RSA key
+  generation and installing dependencies. *Bot* and *Extension Application* projects
+  generated using the CLI are designed to integrate with each other to form complete
+  solutions that deliver the best user experience.
+
+
+- **[Bot SDK](?path=/docs/bot-developer-kit-bot-sdk--page)**: provides baseline best
+  practices for handling commands, message templating, Symphony Elements, webhook
+  notifications, third-party authentication / REST APIs and many more.
+
+
+- **[UI Toolkit](?path=/docs/bot-developer-kit-ui-toolkit--page)**: a library of UI
+  components for building application views in *Extension Application* projects. These
+  components are built with Symphony's design language to fit seamlessly into Symphony and
+  are optionally themeable. The library includes many components including layouts,
+  buttons, grids, charts and more.
