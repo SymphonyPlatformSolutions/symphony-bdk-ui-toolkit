@@ -22,11 +22,10 @@
     "url": "git+https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit/issues"
   },
-  "private": true,
   "homepage": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit#readme",
   "devDependencies": {
     "@babel/cli": "^7.7.5",

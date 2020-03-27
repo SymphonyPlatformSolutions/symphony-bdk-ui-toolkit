@@ -1,6 +1,6 @@
 import { Story, Meta, Preview, Props, Link, Anchor, Description } from '@storybook/addon-docs/blocks';
 
-<Meta title="Developer Framework/Symphony Mock Client" parameters={{order: 4}}/>
+<Meta title="Bot Developer Kit/Symphony Mock Client" parameters={{order: 5}}/>
 
 # Symphony Mock Client
 ---

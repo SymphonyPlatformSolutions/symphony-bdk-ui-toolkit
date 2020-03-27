@@ -31,7 +31,7 @@ export default create({
   inputTextColor: '#f1f2f3',
   inputBorderRadius: 4,
 
-  brandTitle: 'Developer solutions',
-  brandUrl: 'https://symphony.com/',
+  brandTitle: 'Symphony',
+  brandUrl: '/',
   brandImage: '/logo-symphony.svg',
 });
