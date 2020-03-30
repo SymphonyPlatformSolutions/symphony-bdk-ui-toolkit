@@ -75,7 +75,9 @@ const QuoteCard = props => {
   let MenuPortion = null;
   if (children) {
     TagPortion = children.find(el => el.type.displayName === 'QuoteCardTag');
-    HeaderPortion = children.find(el => el.type.displayName === 'QuoteCardHeader');
+    HeaderPortion = children.find(
+      el => el.type.displayName === 'QuoteCardHeader',
+    );
     contentPortion = children.filter(
       el => el.type.displayName === 'QuoteCardContent',
     );
@@ -89,28 +91,26 @@ const QuoteCard = props => {
           {TagPortion}
         </QuoteShortCodeArea>
       </QuoteShortContainer>
-      { HeaderPortion && (
-          <HeaderArea>
-            {HeaderPortion}
-          </HeaderArea>)
-      }
+      {HeaderPortion && <HeaderArea>{HeaderPortion}</HeaderArea>}
       <ContentArea>
         <Box vertical space={16}>
           {contentPortion.map(el => el)}
         </Box>
       </ContentArea>
-      {(MenuPortion || useDefaultContextMenu) && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
-        {useDefaultContextMenu ? (
-          <React.Fragment>
-            <IconButton onClick={openContextMenu}>
-              <img src={getMenuIcon(props)} alt="menu-icon" />
-            </IconButton>
-            {renderContextMenu()}
-          </React.Fragment>
-        ) : (
-          MenuPortion
-        )}
-      </MenuArea>)}
+      {(MenuPortion || useDefaultContextMenu) && (
+        <MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
+          {useDefaultContextMenu ? (
+            <React.Fragment>
+              <IconButton onClick={openContextMenu}>
+                <img src={getMenuIcon(props)} alt="menu-icon" />
+              </IconButton>
+              {renderContextMenu()}
+            </React.Fragment>
+          ) : (
+            MenuPortion
+          )}
+        </MenuArea>
+      )}
     </BaseCard>
   );
 };
