@@ -21,9 +21,6 @@ export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
 export {
   default as QuoteCard,
-  QuoteCardMenu,
-  QuoteCardContent,
-  QuoteCardTag,
 } from './financial/quote-card';
 export {
   QuoteShortCodeLabel,

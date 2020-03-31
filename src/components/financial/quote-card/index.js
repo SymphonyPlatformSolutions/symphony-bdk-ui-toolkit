@@ -18,18 +18,37 @@ import {
 } from './theme';
 import Box from '../../layout/box';
 
-export const QuoteCardMenu = ({ children, ...props }) => (
+const PORTIONS = {
+  tag: 'TAG',
+  header: 'HEADER',
+  content: 'CONTENT',
+  menu: 'MENU',
+};
+
+const QuoteCardMenu = ({ children, portion, ...props }) => (
   <div {...props}>{children}</div>
 );
-export const QuoteCardContent = ({ children, ...props }) => (
+QuoteCardMenu.defaultProps = {
+  portion: PORTIONS.menu,
+};
+const QuoteCardContent = ({ children, portion, ...props }) => (
   <div {...props}>{children}</div>
 );
-export const QuoteCardHeader = ({ children, ...props }) => (
+QuoteCardContent.defaultProps = {
+  portion: PORTIONS.content,
+};
+const QuoteCardHeader = ({ children, portion, ...props }) => (
   <div {...props}>{children}</div>
 );
-export const QuoteCardTag = ({ children, ...props }) => (
+QuoteCardHeader.defaultProps = {
+  portion: PORTIONS.header,
+};
+const QuoteCardTag = ({ children, portion, ...props }) => (
   <div {...props}>{children}</div>
 );
+QuoteCardTag.defaultProps = {
+  portion: PORTIONS.tag,
+};
 
 const QuoteCard = props => {
   const {
@@ -74,12 +93,12 @@ const QuoteCard = props => {
   let contentPortion = [];
   let MenuPortion = null;
   if (children) {
-    TagPortion = children.find(el => el.type.displayName === 'QuoteCardTag');
-    HeaderPortion = children.find(el => el.type.displayName === 'QuoteCardHeader');
+    TagPortion = children.find(el => el.props.portion === PORTIONS.tag);
+    HeaderPortion = children.find(el => el.props.portion === PORTIONS.header);
     contentPortion = children.filter(
-      el => el.type.displayName === 'QuoteCardContent',
+      el => el.props.portion === PORTIONS.content,
     );
-    MenuPortion = children.find(el => el.type.displayName === 'QuoteCardMenu');
+    MenuPortion = children.find(el => el.props.portion === PORTIONS.menu);
   }
 
   return (
@@ -89,28 +108,26 @@ const QuoteCard = props => {
           {TagPortion}
         </QuoteShortCodeArea>
       </QuoteShortContainer>
-      { HeaderPortion && (
-          <HeaderArea>
-            {HeaderPortion}
-          </HeaderArea>)
-      }
+      {HeaderPortion && <HeaderArea>{HeaderPortion}</HeaderArea>}
       <ContentArea>
         <Box vertical space={16}>
           {contentPortion.map(el => el)}
         </Box>
       </ContentArea>
-      {(MenuPortion || useDefaultContextMenu) && (<MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
-        {useDefaultContextMenu ? (
-          <React.Fragment>
-            <IconButton onClick={openContextMenu}>
-              <img src={getMenuIcon(props)} alt="menu-icon" />
-            </IconButton>
-            {renderContextMenu()}
-          </React.Fragment>
-        ) : (
-          MenuPortion
-        )}
-      </MenuArea>)}
+      {(MenuPortion || useDefaultContextMenu) && (
+        <MenuArea hasContent={useDefaultContextMenu || !!MenuPortion}>
+          {useDefaultContextMenu ? (
+            <React.Fragment>
+              <IconButton onClick={openContextMenu}>
+                <img src={getMenuIcon(props)} alt="menu-icon" />
+              </IconButton>
+              {renderContextMenu()}
+            </React.Fragment>
+          ) : (
+            MenuPortion
+          )}
+        </MenuArea>
+      )}
     </BaseCard>
   );
 };
@@ -130,4 +147,8 @@ QuoteCard.defaultProps = {
   onCancel: null,
 };
 
+QuoteCard.QuoteCardTag = QuoteCardTag;
+QuoteCard.QuoteCardMenu = QuoteCardMenu;
+QuoteCard.QuoteCardHeader = QuoteCardHeader;
+QuoteCard.QuoteCardContent = QuoteCardContent;
 export default withTheme(QuoteCard);

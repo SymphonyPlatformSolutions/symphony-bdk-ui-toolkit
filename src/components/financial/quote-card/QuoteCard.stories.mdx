@@ -3,7 +3,7 @@ import Box from '../../layout/box';
 import Button from '../../misc/button';
 import QuoteProductTag from '../quote-product-tag';
 import QuotePanel from '../quote-panel';
-import QuoteCard, { QuoteCardTag, QuoteCardContent, QuoteCardMenu, QuoteCardHeader } from './index.js';
+import QuoteCard from './index.js';
 import { QuoteShortCodeLabel, QuoteShortCodeName } from './theme';
 import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 
@@ -23,29 +23,29 @@ A card for displaying quotes. It is divided into 3 modular portions to be filled
     <QuoteCard
       colorIndex={1}
     >
-      <QuoteCardTag>
+      <QuoteCard.QuoteCardTag>
         <Box align="center" type="flat">
           <QuoteShortCodeLabel>TAG</QuoteShortCodeLabel>
           <QuoteShortCodeName>TAG</QuoteShortCodeName>
         </Box>
-      </QuoteCardTag>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardTag>
+      <QuoteCard.QuoteCardContent>
         <Text isTitle size="small">Content</Text>
-      </QuoteCardContent>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardContent>
+      <QuoteCard.QuoteCardContent>
         <Text isTitle size="small">More Content</Text>
         <Text>Content content content</Text>
-      </QuoteCardContent>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardContent>
+      <QuoteCard.QuoteCardContent>
         <Text isTitle size="small">Even More Content</Text>
         <Button>Button</Button>
-      </QuoteCardContent>
-      <QuoteCardMenu>
+      </QuoteCard.QuoteCardContent>
+      <QuoteCard.QuoteCardMenu>
         <Box align="center">
           <Text>Menu</Text>
           <Button fill="ghost">Edit</Button>
         </Box>
-      </QuoteCardMenu>
+      </QuoteCard.QuoteCardMenu>
     </QuoteCard>
   </Story>
 </Preview>
@@ -68,13 +68,13 @@ In case the user would want to use the provided dropdown menu, simply pass the `
     <QuoteCard
       colorIndex={3}
     >
-      <QuoteCardTag>
+      <QuoteCard.QuoteCardTag>
         <Box align="center" type="flat">
           <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
           <QuoteShortCodeName>2B</QuoteShortCodeName>
         </Box>
-      </QuoteCardTag>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardTag>
+      <QuoteCard.QuoteCardContent>
         <Box horizontal type="secondary">
           <QuoteProductTag
             mainInfo="IRS"
@@ -87,7 +87,7 @@ In case the user would want to use the provided dropdown menu, simply pass the `
             mainInfo="EUREX"
           />
         </Box>
-      </QuoteCardContent>
+      </QuoteCard.QuoteCardContent>
     </QuoteCard>
   </Story>
 </Preview>
@@ -98,13 +98,13 @@ In case the user would want to use the provided dropdown menu, simply pass the `
       type="small"
       colorIndex={3}
     >
-      <QuoteCardTag>
+      <QuoteCard.QuoteCardTag>
         <Box align="center" type="flat">
           <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
           <QuoteShortCodeName>2B</QuoteShortCodeName>
         </Box>
-      </QuoteCardTag>
-      <QuoteCardHeader>
+      </QuoteCard.QuoteCardTag>
+      <QuoteCard.QuoteCardHeader>
         <Box horizontal type="secondary" justify="center" style={{marginTop: '2px'}}>
             <QuoteProductTag
               mainInfo="IRS"
@@ -117,12 +117,12 @@ In case the user would want to use the provided dropdown menu, simply pass the `
               mainInfo="EUREX"
             />
           </Box>
-      </QuoteCardHeader>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardHeader>
+      <QuoteCard.QuoteCardContent>
         <Box vertical>
          <QuotePanel dealerName="Dealer two" dealerPayedValue={1.75} clientName="Client one" clientPayedValue={3} />
         </Box>
-      </QuoteCardContent>
+      </QuoteCard.QuoteCardContent>
     </QuoteCard>
   </Story>
 </Preview>
@@ -135,13 +135,13 @@ In case the user would want to use the provided dropdown menu, simply pass the `
       colorIndex={5}
       useDefaultContextMenu
     >
-      <QuoteCardTag>
+      <QuoteCard.QuoteCardTag>
         <Box align="center" type="flat">
           <QuoteShortCodeLabel>RFQ</QuoteShortCodeLabel>
           <QuoteShortCodeName>9S</QuoteShortCodeName>
         </Box>
-      </QuoteCardTag>
-      <QuoteCardContent>
+      </QuoteCard.QuoteCardTag>
+      <QuoteCard.QuoteCardContent>
         <Box horizontal type="secondary">
           <QuoteProductTag
             mainInfo="IRS"
@@ -154,7 +154,7 @@ In case the user would want to use the provided dropdown menu, simply pass the `
             mainInfo="EUREX"
           />
         </Box>
-      </QuoteCardContent>
+      </QuoteCard.QuoteCardContent>
     </QuoteCard>
   </Story>
 </Preview>
