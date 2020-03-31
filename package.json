@@ -11,7 +11,7 @@
     "storybook": "start-storybook -p 6006 -s ./public & nodemon mock-json-server/mock-server.js",
     "mock": "nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
-    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts --compress false && rm dist/index.module.js dist/index.module.js.map",
+    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts --compress 0 --no-compress",
     "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts --watch --compress false --raw  true"
   },
   "files": [
