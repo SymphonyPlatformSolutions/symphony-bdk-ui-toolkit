@@ -171,7 +171,7 @@ DecisionDropdown.propTypes = {
   tooltip: PropTypes.string,
   CustomValue: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   hideClear: PropTypes.bool,
-  CustomChevron: PropTypes.node,
+  CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 DecisionDropdown.defaultProps = {

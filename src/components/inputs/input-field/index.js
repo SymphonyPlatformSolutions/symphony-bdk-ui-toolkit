@@ -120,7 +120,7 @@ const InputField = forwardRef((props, inputRef) => {
               disabled={disabled}
               id={id}
               onChange={onChange}
-              value={value}
+              value={value || ''}
               ref={inputRef || ownRef}
               rows="2"
               required
@@ -150,7 +150,7 @@ const InputField = forwardRef((props, inputRef) => {
             disabled={disabled}
             id={id}
             onChange={readOnly ? null : onChange}
-            value={value}
+            value={value || ''}
             ref={inputRef || ownRef}
             type={showPassword ? INPUT_TYPES.TEXT : type}
             placeholder={placeholder}
@@ -186,7 +186,7 @@ InputField.defaultProps = {
   hasPasswordShow: true,
   inputState: 'initial',
   type: INPUT_TYPES.TEXT,
-  id: '',
+  id: undefined,
   onChange: undefined,
   placeholder: 'Input here...',
   errorMessage: 'Something went wrong!',
