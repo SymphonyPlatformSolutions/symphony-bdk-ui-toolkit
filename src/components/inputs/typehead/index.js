@@ -312,9 +312,6 @@ const Typehead = props => {
 
 Typehead.propTypes = {
   theme: PropTypes.object.isRequired,
-  endpoints: PropTypes.array.isRequired,
-  itemChooseHandler: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-    .isRequired,
   debouncePeriod: PropTypes.number,
   placeholder: PropTypes.string,
   data: PropTypes.array,
@@ -323,7 +320,7 @@ Typehead.propTypes = {
   CustomMenuItem: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   CustomTag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   disabled: PropTypes.bool,
-  value: PropTypes.array,
+  value: PropTypes.string,
   clearMessage: PropTypes.string,
   hideClear: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
@@ -331,7 +328,7 @@ Typehead.propTypes = {
   errorMessage: PropTypes.string,
   helpDebouncePeriod: PropTypes.number,
   hideChevron: PropTypes.bool,
-  CustomChevron: PropTypes.node,
+  CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 Typehead.defaultProps = {

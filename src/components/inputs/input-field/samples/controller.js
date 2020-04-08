@@ -3,7 +3,7 @@ import Box from '../../../layout/box';
 import InputField from '../index';
 
 export const InputFieldController = (props) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(null);
 
   function handleInput(e) {
     setInput(e.target.value);

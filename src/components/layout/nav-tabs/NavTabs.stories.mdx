@@ -1,4 +1,4 @@
-import Tabs from '.';
+import NavTabs from '.';
 import Box from '../box';
 import Text from '../../misc/text';
 import {
@@ -9,7 +9,7 @@ import {
   Link
 } from "@storybook/addon-docs/blocks";
 
-<Meta title="components/Layout" component={Tabs} />
+<Meta title="components/Layout" component={NavTabs} />
 
 # NavTabs
 
@@ -22,7 +22,7 @@ You can dinamically set the active tab by passing a number to the **`activeTab`*
   <Story name="Nav Tabs">
     <Box type="primary" style={{ padding: '0px 100px', width: '100%' }}>
       <Box horizontal space={60}>
-        <Tabs activeTab={0}>
+        <NavTabs activeTab={0}>
           <div label="Set Up">
             <Text small>This is a content for Info</Text>
           </div>
@@ -35,10 +35,10 @@ You can dinamically set the active tab by passing a number to the **`activeTab`*
           <div label="Admin" align="right">
             <Text small>This is a content for Admin</Text>
           </div>
-        </Tabs>
+        </NavTabs>
       </Box>
     </Box>
   </Story>
 </Preview>
 
-<Props of={Tabs} />
+<Props of={NavTabs} />

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import uuid from 'uuid';
-import CustomTabs from '../index';
+import DynamicTabs from '../index';
 import Text from '../../../misc/text';
 
 const TabContent = (props) => {
@@ -21,7 +21,7 @@ const TABS = [
   { title: 'Tab 3', id: uuid.v4(), getContent: () => (<TabContent number={3} />) },
 ];
 
-const TabWrapper = (props) => {
+const TabWrapper = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [tabs, setTabs] = useState(TABS);
 
@@ -36,7 +36,7 @@ const TabWrapper = (props) => {
   };
 
   return (
-    <CustomTabs
+    <DynamicTabs
       onChange={(newTab) => setCurrentTab(newTab)}
       tabs={tabs}
       activeTab={currentTab}

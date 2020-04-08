@@ -34,6 +34,8 @@ The tabs are responsive, grouping up into a hoverable drop-down when the tabs' w
   </Story>
 </Preview>
 
+The Tabs need to have a controller that holds its state, an example of which can be seen in the Sample Code below.
+
 ## Usage
 
 You'll need to provide an array to the **`tabs`** property, that array will include objects that describe
@@ -114,7 +116,7 @@ const TabWrapper = props => {
   };
 
   return (
-    <CustomTabs
+    <DynamicTabs
       onChange={newTab => setCurrentTab(newTab)}
       tabs={tabs}
       activeTab={currentTab}
