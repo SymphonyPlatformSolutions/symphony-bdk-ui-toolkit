@@ -74,7 +74,11 @@ export const customStyles = ({ theme, error }) => ({
   }),
   option: (provided, state) => ({
     ...provided,
-    color: state.isDisabled ? theme.colors.grey_400 : theme.colors.white,
+    color: state.isFocused
+      ? theme.colors.white
+      : state.isDisabled
+        ? theme.colors.grey_400
+        : theme.colors.grey_900,
     backgroundColor: state.isFocused
       ? theme.colors.oldprimary_400
       : theme.mode === THEME_TYPES.DARK
