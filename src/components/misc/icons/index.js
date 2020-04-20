@@ -320,7 +320,7 @@ export const WarningIcon = withTheme(({
     </svg>
   </IconWrapper>
 ));
-export const DocumentIcon = withTheme(({
+export const TildeIcon = withTheme(({
   theme, color, size = 16, blueprint, ...rest
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
