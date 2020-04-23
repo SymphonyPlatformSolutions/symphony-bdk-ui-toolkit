@@ -68,6 +68,10 @@ export {
   CloseIcon,
   PricingIcon,
   SearchIcon,
+  WarningIcon,
+  UploadIcon,
+  DownloadIcon,
+  DocumentTildeIcon,
 } from './misc/icons';
 export { default as Search } from './inputs/search';
 export { default as Toggle } from './inputs/toggle';
