@@ -72,6 +72,7 @@ The data to be passed to the component has two basic elements: options, and grou
 
 ## Example
 ```jsx
+// Content Example
 const CONTENT = [{
   title: 'Full decision tree',
   subtitle: 'A big example of navigation',
@@ -143,12 +144,13 @@ const CONTENT = [{
   emptyMessage: 'Dropdown region temporarily under maintenance',
 }];
 
+// Controller example
 const DropdownHandler = (props) => {
   const [chosen, changeChosen] = useState(null);
 
   return (
     <Box style={{ width: '300px' }}>
-      <DecisionDropdown onChange={changeChosen} value={chosen} data={CONTENT} />
+      <DecisionDropdown onChange={changeChosen} value={chosen} {...props} />
     </Box>
   );
 };
@@ -289,6 +291,46 @@ For Asynchronous data requests, the ```clickHandler``` prop can be used. This al
 </Preview>
 
 ### Async Calls
+
+>Purely for demonstration, we created a controller component that sets a timeout, to simulate asynchronous development. It was implemented as follows:
+>
+>```jsx
+>export const SIMPLE_CONTENT = [
+>  { label: 'Content 1', value: 'content1' },
+>  { label: 'Content 2', value: 'content2' },
+>  { label: 'Content 3', value: 'content3' },
+>  { label: 'Content 4', value: 'content4' },
+>  { label: 'Content 5', value: 'content5' },
+>];
+>
+>export const AsyncDropdownHandler = (props) => {
+>  const { data, ...rest } = props;
+>  const [chosen, changeChosen] = useState(null);
+>  const [isLoading, toggleIsLoading] = useState(false);
+>  const [loadedOptions, changeLoadedOptions] = useState([]);
+>
+>  return (
+>    <Box style={{ width: '300px' }}>
+>      <DecisionDropdown
+>        {...rest}
+>        value={chosen}
+>        onChange={changeChosen}
+>        loading={isLoading}
+>        clickHandler={() => {
+>          toggleIsLoading(true);
+>          changeLoadedOptions([]);
+>          setTimeout(() => {
+>            changeLoadedOptions(data.slice(Math.floor(Math.random() * 2) + 1));
+>            toggleIsLoading(false);
+>          }, 1000);
+>        }}
+>        data={loadedOptions}
+>      />
+>    </Box>
+>  );
+>};
+>```
+
 <Preview>
     <Story name="Async">
       <Box align="center" horizontal justify="flex-start">
@@ -320,6 +362,13 @@ The Component also supports the use of Custom Components through the ```CustomVa
 The ```CustomValue``` component substitutes the Component that represents the chosen value, while the ```CustomItem``` overrides the Component listed in the Dropdown.
 
 ```jsx
+const CustomValue = ({ value: { label } }) => (
+  <div
+    style={{ padding: '4px' }}
+  ><QuoteProductTag mainInfo={label} />
+  </div>
+);
+
 const CustomItem = ({ children }) => (
   <QuoteProductTag mainInfo={children} />
 );

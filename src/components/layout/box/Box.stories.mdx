@@ -57,6 +57,26 @@ const HilighterBox = (props) => {
 
 ### Types
 
+> The HilighterBox rendered here is simply a Box with a background-color, to show the elements onscreen
+
+```jsx
+const HilighterBox = (props) => {
+  const { children, style, ...rest } = props;
+  return (
+    <Box
+      {...rest}
+      style={{
+        width: '100%',
+        backgroundColor: 'rgba(53, 56, 62, 0.2)',
+        padding: '10px',
+        ...style,
+      }}
+    >{children}
+    </Box>
+  );
+};
+```
+
 <Preview>
   <Story name="Types" parameters={{order: 102}}>
     <Box justify="center">

@@ -156,7 +156,7 @@ export const DynamicTabsSample = () => {
             </Box>
             <InputField
               type="number"
-              label="Overlow Menu Close debounce (ms)"
+              label="Overflow Menu Close debounce (ms)"
               placeholder="500"
               value={closeDebouncePeriod}
               onChange={({ target: { value } }) => setCloseDebouncePeriod(value)}
