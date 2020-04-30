@@ -20,8 +20,8 @@ import {
 # Auto Fetch
 <hr />
 
-This is a helper that allows you to automatically plug an **`GET`** REST endpoint
-to your component, providing a loading indicator, data array and refresh functio to
+This is a helper that allows you to automatically plug a **`GET`** REST endpoint
+to your component, providing a loading indicator, data array and refresh function to
 re-get the data. On top of that, on its configuration object, you may provide
 a custom function to better process the data that endpoint returns, in order
 to fit in your component as you like.
@@ -40,8 +40,8 @@ const autoFetchConfig = {
 ## Usage
 
 You may use this wrapper in two fashions, the first is as a wrapper, in which you wrap
-your component with a AutoFetchWrapper Component Tag and give it a configuration. And the Other
- is like a [Hook](https://pt-br.reactjs.org/docs/hooks-intro.html) where in any given component
+your component with a AutoFetchWrapper Component Tag and give it a configuration. And the other
+ is like a [Hook](https://reactjs.org/docs/hooks-intro.html) where in any given component
  you may plug it, provided that a config is present.
 
  Like so:
@@ -149,6 +149,12 @@ const autoFetchConfig = {
   handleData: (results) => results.data,
 };
 
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
 
 const COLUMNS_WITH_AUTO_FETCH = [{
   header: 'Picture',
@@ -203,6 +209,39 @@ const autoFetchConfig = {
   params: { page: 2 },
   handleData: (results) => results.data,
 };
+
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
+
+const COLUMNS_WITH_AUTO_FETCH = [{
+  header: 'Picture',
+  tooltip: 'The person picture',
+  accessor: 'avatar',
+  Cell: ({ cell }) => (
+    <CellWrapper>
+      <img src={cell.value} width={32} />
+    </CellWrapper>
+  ),
+  width: 100,
+}, {
+  header: 'Name',
+  tooltip: 'The person Name',
+  accessor: 'id',
+  Cell: ({ row: { original } }) => (
+    <CellWrapper>
+      <Text>{original.first_name} {original.last_name}</Text>
+    </CellWrapper>
+  ),
+  width: 150,
+}, {
+  header: 'Email address',
+  tooltip: 'The person email address',
+  accessor: 'email',
+}];
 
 const RefreshExample = ({ data, loading, refreshData }) => {
   const onRefresh = () => {

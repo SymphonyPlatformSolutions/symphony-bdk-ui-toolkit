@@ -8,8 +8,7 @@ import { Story, Meta, Preview, Props, Link } from '@storybook/addon-docs/blocks'
 # Charts
 <hr />
 
-A auto resizable component that renders financial charts. Its based on this component is a wrapper and is meant to be used to compose charts.
-[react-stockcharts](https://github.com/rrag/react-stockcharts).
+An auto resizable component that renders financial charts. Its based on [react-stockcharts](https://github.com/rrag/react-stockcharts).
 
 ## Minimum Requirements
 
@@ -27,17 +26,15 @@ to your project:
 }
 ```
 
-Based on that you can build pretty much any chart you want.
-
 There are Two main Strucutures to follow, **`BaseChart`** which is the component in which you'll build your custom chart
-upon, and it wrapps a component called **`ChartBuilder`**, These two components have their own properties, and every
+upon, and it wraps a component called **`ChartBuilder`**, These two components have their own properties, and every
 property passed to **`BaseChart`** will be propagated to  **`ChartBuilder`**.
 
 It is meant to help you creating charts rapidly with no or very little frictionThese are the charts supported:
   - Area
   - Line
   - Candlestick
-  - and many more, see here: [react-stockcharts](https://github.com/rrag/react-stockcharts)
+  - and many more, that you can find in [the underlying component's docs](https://github.com/rrag/react-stockcharts)
 
 ### BaseChart
 

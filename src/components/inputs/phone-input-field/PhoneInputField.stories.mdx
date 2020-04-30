@@ -1,4 +1,5 @@
 import PhoneInputField from '.';
+import PhoneInputController from './samples';
 import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
 
 <Meta title="components/Inputs/Phone Input Field" parameters={{order: 250}}/>
@@ -12,9 +13,19 @@ It wraps this component [react-phone-input-2](https://github.com/bl00mber/react-
 
 <Preview withSource="open">
   <Story name="regular">
-    <PhoneInputField value="+1" label="Default Phone Input field"/>
+    <PhoneInputController label="Default Phone Input field"/>
   </Story>
 </Preview>
+
+As with other Controlled Components, the PhoneInputField needs a parent controller to hold its current value and state.
+
+```jsx
+const PhoneInputController = (props) => {
+  const [value, setValue] = useState('');
+
+  return (<PhoneInputField value={value} onChange={setValue} {...props} />);
+};
+```
 
 ### Minimum Requirements
 In order to make this component work properly, you must import the dist.css file from the Toolkit

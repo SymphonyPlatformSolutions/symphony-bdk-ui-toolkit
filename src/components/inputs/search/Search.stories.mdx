@@ -43,6 +43,16 @@ by a controller, or its state and logic by its parent.
 ### Controller example
 
 ```jsx
+const mockData = [];
+let nameValue;
+for (let i = 0; i < 15; i++) {
+  nameValue = Faker.name.firstName();
+  mockData.push({
+    label: nameValue,
+    value: nameValue,
+  });
+}
+
 export const SearchWrapper = ({ CustomMenuItem, isMulti, isStack }) => {
   const [currentdata, setCurrentdata] = useState([]);
   const [currentValue, setCurrentValue] = useState(null);
@@ -98,6 +108,21 @@ export const SearchWrapper = ({ CustomMenuItem, isMulti, isStack }) => {
 ## Async Example
 
 ```jsx
+const ResultCard = (props) => {
+  const {
+    Icon: { URL },
+    FirstURL,
+  } = props;
+  return (
+    <div>
+      <img src={URL} />
+      <Text>{props.Text}</Text>
+      <br />
+      <a href={FirstURL}>Link</a>
+    </div>
+  );
+};
+
 const DuckDuckGoWrapper = () => {
   const [currentContent, setCurrentContent] = useState([]);
   const [chosenResult, setChosenResult] = useState(null);
@@ -139,9 +164,9 @@ const DuckDuckGoWrapper = () => {
       <Box horizontal style={{ width: '500px' }}>
         <Search
           placeholder="Search DuckDuckGo..."
-          content={currentContent}
+          data={currentContent}
           searchHandler={searchFunc}
-          contentLabel="shortened"
+          dataLabel="shortened"
           resultHandler={setCurrentContent}
           itemChooseHandler={setChosenResult}
         />

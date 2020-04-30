@@ -18,7 +18,7 @@ import { RadioGroup } from './samples/controller';
 
 Basic checkbox component, that behaves as the vanilla HTML tag. Do keep in mind to group them together via the ```groupName``` prop.
 
-<Preview withSource="none">
+<Preview>
   <Story name="Base">
     <RadioGroup groupNumber={1} />
   </Story>
@@ -27,7 +27,7 @@ Basic checkbox component, that behaves as the vanilla HTML tag. Do keep in mind 
 This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
 by a controller, or its state and logic by its parent.
 
-### Controler example
+### Controller example
 
 ```jsx
 const RadioGroup = ({ disabled, groupNumber }) => {
@@ -66,7 +66,7 @@ const RadioGroup = ({ disabled, groupNumber }) => {
 
 ## Disabled
 
-<Preview withSource="none">
+<Preview>
   <Story name="Disabled">
     <RadioGroup groupNumber={2} disabled />
   </Story>

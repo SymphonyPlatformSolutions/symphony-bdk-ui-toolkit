@@ -111,6 +111,19 @@ The ChevronComponent will be called with 4 props:
 Here's an example of a custom Chevron Component:
 
 ```jsx
+const SmileContainer = styled.div`
+  display: flex;
+  height: 16px;
+  align-items: center;
+  transition: all 0.3s ease-out;
+  transform: rotate(${({ menuIsOpen }) => (menuIsOpen ? '-180deg' : 0)});
+  cursor: pointer;
+`;
+
+const StyledSmile = styled(Smile)`
+  transition: all 0.3s;
+  color: ${({ theme, menuIsOpen }) => (menuIsOpen ? theme.colors.warning_500 : theme.colors.grey_500)};
+`;
 export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
   <SmileContainer
     onMouseDown={e => {

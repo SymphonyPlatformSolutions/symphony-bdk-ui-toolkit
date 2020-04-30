@@ -34,14 +34,13 @@ const config = {
   topics: [
   {
     id: 'UniqueTopicId',
-    title: Faker.lorem.word(),
-    description: Faker.lorem.sentences().slice(0, 50),
-    icon: <StyledBookmarkIcon />,
+    title: 'Foobar',
+    description: 'Lorem Ipsum',
     contents: [
     {
      title: 'Step 1',
-     description: Faker.lorem.sentences(),
-     imageUrl: Faker.image.imageUrl(),
+     description: 'lorem',
+     imageUrl: 'https://via.placeholder.com/500',
    }
    ],
    relatedContent: [
@@ -69,43 +68,42 @@ const Help = () => (
 ### sample
 
 ```jsx
-const PAGE_DATA_TWO_LEVELS = {
+const config = {
   title: 'Help page',
   description: 'this is a two levels help Page, it has topics, sub-topic and contents',
   topics: [
-  {
-    title: 'Test',
-    description: 'Descriptuon',
-    icon: null,
-    topics: [
     {
-      id: 'UniqueTopicId',
       title: 'Test',
-      description: 'description',
-      icon: <StyledBookmarkIcon />,
-      contents: [
-      {
-        title: 'Step 1',
-        description: 'lorem',
-        imageUrl: ,
-      },
-      {
-        title: 'Step 2',
-        description: null,
-        imageUrl: null,
-      }
+      description: 'Descriptuon',
+      icon: null,
+      topics: [
+        {
+          id: 'UniqueTopicId',
+          title: 'Test',
+          description: 'description',
+          contents: [
+            {
+              title: 'Step 1',
+              description: 'lorem',
+              imageUrl: 'https://via.placeholder.com/500',
+            },
+            {
+              title: 'Step 2',
+              description: null,
+              imageUrl: null,
+            },
+          ],
+        },
       ],
-    }
-    ],
-    relatedContent: [
-    {
-     id: 'UniqueTopicId',
-     title: 'entry.title',
-     url: 'entry.url',
-   }
-   ],
- }
- ],
+      relatedContent: [
+        {
+          id: 'UniqueTopicId',
+          title: 'entry.title',
+          url: 'entry.url',
+        },
+      ],
+    },
+  ],
 };
 
 const Help = () => (

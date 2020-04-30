@@ -58,6 +58,26 @@ const TagBarHandler = props => {
 
 ## Custom Value Component
 
+> Just as a demonstration, for the Custom Tag, we used our own QuoteTag
+>
+> ```jsx
+> 
+> const TagContainer = styled.div`
+>   margin: 2px 6px 2px 0;
+> `;
+> 
+> const CustomTag = (props) => {
+>   const { value: { value } } = props;
+> 
+>   return (
+>     <TagContainer>
+>       <QuoteProductTag mainInfo={value} />
+>     </TagContainer>
+>   );
+> };
+> ```
+
+
 <Preview>
   <Story name="Custom Value Component">
     <TagBarHandler CustomValue={CustomTag} style={{ minHeight: '40px' }} />

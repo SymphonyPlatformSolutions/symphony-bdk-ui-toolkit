@@ -62,22 +62,21 @@ M d, Y and that the other properties are proper numbers, just like shown above.
 Please also note that for every line series being displayed, you'll add one entry to the prices array.
 in the above example, there will be 4 lines being drawn.
 
+The demo code below relies on a server sending the chart information to populate the page. In this case, a mocked server was set up that responds to the `/chart-candlestick-data` endpoint. The payload follows that of the [docs](https://github.com/rrag/react-stockcharts).
 
 ## Sample
 
 
 ```jsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withTheme } from 'styled-components';
-import LineChart from './index';
-import Box from '../../../layout/box';
-import { useAutoFetch } from '../../../../utils/auto-fetch';
-import CheckBox from '../../../inputs/checkbox';
-import Card from '../../../layout/card/index';
-import { sortByDateAscending } from '../../../../utils/helpers';
-import { buildDateParser } from '../helpers';
+import { timeParse } from 'd3-time-format';
+import { Box, useAutoFetch, LineChart } from 'symphony-bdk-ui-toolkit';
+
+const buildDateParser = (pattern = '%Y-%m-%d') => timeParse(pattern);
 
 const timeParser = buildDateParser('%b %d, %Y');
+const sortByDateAscending = (a, b) => a.date - b.date;
 
 const parseData = parser => (d) => {
   d.date = parser(d.date);
@@ -123,7 +122,7 @@ const Example = withTheme(({ theme }) => {
         hasZoom
       />
     </Box>
-   );
+  );
 });
 
 export default () => (

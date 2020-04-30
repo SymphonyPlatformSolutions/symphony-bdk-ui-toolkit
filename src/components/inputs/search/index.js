@@ -260,7 +260,6 @@ const Search = (props) => {
 Menu.propTypes = {
   data: PropTypes.array,
   dataLabel: PropTypes.string.isRequired,
-  itemChooseHandler: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   noResultsMessage: PropTypes.string.isRequired,
   CustomMenuItem: PropTypes.node,

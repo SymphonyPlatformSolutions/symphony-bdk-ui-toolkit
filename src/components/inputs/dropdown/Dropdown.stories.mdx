@@ -41,6 +41,33 @@ The Dropdown also incorporates loading functionality, that takes in a handler to
 This component likely most Inputs, it a controlled component, therefore its usual that its wrapped
 by a controller, or its state and logic by its parent.
 
+>As for the options, the above example used the following structure
+>
+>```jsx
+>export const OPTIONS = [
+>  {
+>    value: 'option1',
+>    label: 'Option 1',
+>  },
+>  {
+>    value: 'option2',
+>    label: 'Option 2',
+>  },
+>  {
+>    value: 'option3',
+>    label: 'Option 3',
+>  },
+>  {
+>    value: 'option4',
+>    label: 'Option 4',
+>  },
+>  {
+>    value: 'option5',
+>    label: 'Option 5',
+>  },
+>];
+>```
+
 ## Controller examples
 ```jsx
 export const DropdownHandler = (props) => {

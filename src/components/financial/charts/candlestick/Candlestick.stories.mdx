@@ -37,21 +37,19 @@ is expecting a data structure following this:
 please note that data types here **matter**. Please make so that the dates are in that format
 Y-M-D and that the other properties are numbers, just like shown above.
 
+The demo code below relies on a server sending the chart information to populate the page. In this case, a mocked server was set up that responds to the `/chart-candlestick-data` endpoint. The payload follows that of the [docs](https://github.com/rrag/react-stockcharts).
 
 ## Example
 ```jsx
-import React from 'react';
+import React, { useCallback } from 'react';
+import { timeParse } from 'd3-time-format';
+import { Box, useAutoFetch, CandleStickChart } from 'symphony-bdk-ui-toolkit';
 
-import CandleStickChart from './index';
-import Box from '../../../layout/box';
-import { useAutoFetch } from '../../../../utils/auto-fetch';
-import CheckBox from '../../../inputs/checkbox';
-import Card from '../../../layout/card/index';
-import { buildDateParser } from '../helpers';
+const buildDateParser = (pattern = '%Y-%m-%d') => timeParse(pattern);
 
 const timeParser = buildDateParser();
 
-const parseData = (parse) => (d) => {
+const parseData = parse => (d) => {
   d.date = parse(d.date);
   d.open = +d.open;
   d.high = +d.high;
@@ -64,9 +62,8 @@ const parseData = (parse) => (d) => {
 
 const autoFetchConfig = {
   endpoint: 'http://localhost:9999/chart-candlestick-data',
-  handleData: (results) => results.map(parseData(timeParser)),
+  handleData: results => results.map(parseData(timeParser)),
 };
-
 
 const Example = () => {
   const {
@@ -74,25 +71,25 @@ const Example = () => {
   } = useAutoFetch(autoFetchConfig);
 
   return (
-  <Box style={{ width: '100%', height: '500px' }}>
-    <CandleStickChart
-      tickSizeX={10}
-      loading={isDataLoading}
-      data={results}
-      title="MFST"
-      hasGrid
-      hasCrossHair
-      hasOHLCTooltip
-      hasTooltip
-      hasZoom
-      hasEdgeIndicator
-    />
-  </Box>
-);
+    <Box style={{ width: '100%', height: '500px' }}>
+      <CandleStickChart
+        tickSizeX={10}
+        loading={isDataLoading}
+        data={results}
+        title="MFST"
+        hasGrid
+        hasCrossHair
+        hasOHLCTooltip
+        hasTooltip
+        hasZoom
+        hasEdgeIndicator
+      />
+    </Box>
+  );
 };
 
 export default () => (
-  <Box style={{ width: '100%', padding: '4px'}}>
+  <Box style={{ width: '100%', padding: '4px' }}>
     <Example />
   </Box>
 );
