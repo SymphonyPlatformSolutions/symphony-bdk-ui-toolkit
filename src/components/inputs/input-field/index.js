@@ -106,57 +106,53 @@ const InputField = forwardRef((props, inputRef) => {
     document.execCommand('copy');
   }
 
-  if (type === INPUT_TYPES.TEXTAREA) {
-    return (
-      <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-        {label && <label><InputLabel size="small">{label}</InputLabel></label>}
-        <Container disabled={disabled} error={inputState === 'error'}>
-          <InputWrapper>
-            <TextArea
-              {...rest}
-              size={size}
-              placeholder={placeholder}
-              textArea
-              disabled={disabled}
-              id={id}
-              onChange={onChange}
-              value={value}
-              ref={inputRef || ownRef}
-              rows="2"
-              required
-            />
-          </InputWrapper>
-        </Container>
-      </ErrorWrapper>
-    );
+  function renderInputFieldForType(type) {
+    return type === INPUT_TYPES.TEXTAREA ?
+      <TextArea
+        {...rest}
+        size={size}
+        placeholder={placeholder}
+        textArea
+        disabled={disabled}
+        id={id}
+        onChange={onChange}
+        value={value}
+        ref={inputRef || ownRef}
+        rows="2"
+        required
+      />
+    :
+      (<>
+        <InputAddons
+          copyToClipBoard={copyToClipBoard}
+          setShowPassword={() => setShowPassword(!showPassword)}
+          showPassword={showPassword}
+          theme={theme}
+          {...props}
+        />
+        <StyledInput
+          {...rest}
+          size={size}
+          readOnly={readOnly}
+          disabled={disabled}
+          id={id}
+          onChange={readOnly ? null : onChange}
+          value={value}
+          ref={inputRef || ownRef}
+          type={showPassword ? INPUT_TYPES.TEXT : type}
+          placeholder={placeholder}
+          inputState={inputState}
+          required
+        />
+      </>);
   }
-
+  
   return (
     <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
       {label && <label><InputLabel size="small">{label}</InputLabel></label>}
       <Container disabled={disabled} error={inputState === 'error'}>
         <InputWrapper>
-          <InputAddons
-            copyToClipBoard={copyToClipBoard}
-            setShowPassword={() => setShowPassword(!showPassword)}
-            showPassword={showPassword}
-            theme={theme}
-            {...props}
-          />
-          <StyledInput
-            {...rest}
-            size={size}
-            readOnly={readOnly}
-            disabled={disabled}
-            id={id}
-            onChange={readOnly ? null : onChange}
-            value={value}
-            ref={inputRef || ownRef}
-            type={showPassword ? INPUT_TYPES.TEXT : type}
-            placeholder={placeholder}
-            inputState={inputState}
-            required
-          />
+        {renderInputFieldForType(type)}
         </InputWrapper>
       </Container>
     </ErrorWrapper>
