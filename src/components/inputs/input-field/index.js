@@ -82,6 +82,7 @@ const InputField = forwardRef((props, inputRef) => {
     id,
     label,
     disabled,
+    required,
     onChange,
     placeholder,
     value,
@@ -119,7 +120,7 @@ const InputField = forwardRef((props, inputRef) => {
         value={value}
         ref={inputRef || ownRef}
         rows="2"
-        required
+        required={required}
       />
     :
       (<>
@@ -142,7 +143,7 @@ const InputField = forwardRef((props, inputRef) => {
           type={showPassword ? INPUT_TYPES.TEXT : type}
           placeholder={placeholder}
           inputState={inputState}
-          required
+          required={required}
         />
       </>);
   }
@@ -162,6 +163,7 @@ const InputField = forwardRef((props, inputRef) => {
 InputField.propTypes = {
   copyInput: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
   hasPasswordShow: PropTypes.bool,
   id: PropTypes.string,
   inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
@@ -179,6 +181,7 @@ InputField.propTypes = {
 InputField.defaultProps = {
   copyInput: false,
   disabled: false,
+  required: true,
   hasPasswordShow: true,
   inputState: 'initial',
   type: INPUT_TYPES.TEXT,
