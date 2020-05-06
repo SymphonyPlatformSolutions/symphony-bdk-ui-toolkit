@@ -123,7 +123,7 @@ const InputField = forwardRef((props, inputRef) => {
         required={required}
       />
     :
-      (<>
+      (<React.Fragment>
         <InputAddons
           copyToClipBoard={copyToClipBoard}
           setShowPassword={() => setShowPassword(!showPassword)}
@@ -145,7 +145,7 @@ const InputField = forwardRef((props, inputRef) => {
           inputState={inputState}
           required={required}
         />
-      </>);
+      </React.Fragment>);
   }
   
   return (
