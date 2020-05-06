@@ -1,0 +1,31 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Datepicker from './index.js';
+import { DatepickerController } from './samples/simple';
+
+<Meta title="components/Inputs/Datepicker" component={Datepicker} parameters={{order: 230}}/>
+
+# Datepicker
+
+<hr />
+
+Input field with multiple states. Can also be used as:
+- Password Input
+- Read-Only value
+- Copy Input
+- Text Area
+
+<Preview>
+  <Story name="Base">
+    <DatepickerController />
+  </Story>
+</Preview>
+
+<Props of={Datepicker} />
