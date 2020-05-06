@@ -1836,6 +1836,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
+"@datepicker-react/hooks@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@datepicker-react/hooks/-/hooks-2.3.1.tgz#b33f28aa9dc8628b5c273846544c38693452bd8a"
+  integrity sha512-9GIGWV0jwt2sDicK/e7Wdymv52n6Hj7srTjC+TMGO6eHRyIa29nrpbrepUVTITF9nwPLCjHll6cNfCKVD0Fghw==
+  dependencies:
+    date-fns "^2.8.1"
+
 "@egoist/vue-to-react@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@egoist/vue-to-react/-/vue-to-react-1.1.0.tgz#83c884b8608e8ee62e76c03e91ce9c26063a91ad"
@@ -6560,6 +6567,11 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     abab "^2.0.0"
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
+
+date-fns@^2.8.1:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.12.0.tgz#01754c8a2f3368fc1119cf4625c3dad8c1845ee6"
+  integrity sha512-qJgn99xxKnFgB1qL4jpxU7Q2t0LOn1p8KMIveef3UZD7kqjT3tpFNNdXJelEHhE+rUgffriXriw/sOSU+cS1Hw==
 
 de-indent@^1.0.2:
   version "1.0.2"
