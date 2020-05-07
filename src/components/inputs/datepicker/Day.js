@@ -4,13 +4,23 @@ import { useDay } from '@datepicker-react/hooks';
 import DatepickerContext from './datepickerContext';
 import Text from '../../misc/text';
 
+const getButtonColor = ({ theme, isSelectedStartOrEnd, isSelected }) => {
+  if (isSelectedStartOrEnd) {
+    return theme.colors.primary_700;
+  }
+  if (isSelected) {
+    return theme.colors.primary_400;
+  }
+  return 'transparent';
+};
+
 const DayButton = styled.button`
   border: none;
-  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.primary_500 : 'transparent')};
+  background-color: ${(props) => getButtonColor(props)};
   transition: all 0.3s;
   border-radius: 4px;
   &:hover {
-    background-color: ${({ theme, isSelected }) => (isSelected ? undefined : theme.grey_200)};
+    background-color: ${({ theme, isSelected }) => (isSelected ? undefined : theme.colors.grey_200)};
   }
   cursor: pointer;
   padding: 8px;
@@ -20,11 +30,13 @@ const DayButton = styled.button`
 const ButtonText = styled(Text)`
   color: ${({ theme, isSelected }) => (isSelected ? 'white' : undefined)};
   justify-content: center;
+  width: 2ch;
 `;
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   cursor: pointer;
+  margin-top: 5px;
 `;
 function Day({ day, date }) {
   const dayRef = useRef(null);
@@ -68,18 +80,19 @@ function Day({ day, date }) {
     <ButtonContainer>
       <DayButton
         onClick={onClick}
-        onKeyDown={onKeyDown}
+        // onKeyDown={onKeyDown}
         onMouseEnter={onMouseEnter}
         tabIndex={tabIndex}
         type="button"
         ref={dayRef}
-        isSelected={isSelectedStartOrEnd}
+        isSelectedStartOrEnd={isSelectedStartOrEnd}
+        isSelected={isSelected}
       >
         <ButtonText
-          isSelected={isSelectedStartOrEnd}
+          isSelected={isSelectedStartOrEnd || isSelected}
           size="small"
         >
-          {day}
+          {parseInt(day, 10)}
         </ButtonText>
       </DayButton>
     </ButtonContainer>
