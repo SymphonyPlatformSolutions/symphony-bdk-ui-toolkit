@@ -1,61 +1,13 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
 import Month from './Month';
 import DatepickerContext from './datepickerContext';
-import InputField from '../input-field';
-
-const CalendarBubble = styled.div`
-  background-color: ${({ theme }) => theme.colors.mainbackground};
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.grey_200};
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  display: flex;
-  position: absolute;
-  z-index: 10;
-  margin-top: 10px;
-  transform: translateY(100%);
-  bottom: -14px;
-  display: grid;
-  grid-template-columns: ${({ size }) => `repeat(${size}, 240px)`};
-  grid-gap: 0 40px;
-
-  &:after, &:before {
-    bottom: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  &:after {
-    /* border-color: rgba(136, 183, 213, 0); */
-    border-bottom-color: ${({ theme }) => theme.colors.mainbackground};
-    border-width: 10px;
-    margin-left: -10px;
-  }
-  &:before {
-    border-bottom-color: ${({ theme }) => theme.colors.grey_200};
-    border-width: 11px;
-    margin-left: -11px;
-  }
-`;
-const WholeWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-const OwnInput = styled(InputField)`
-  color: transparent;
-  text-shadow: ${({ theme }) => `0 0 0 ${theme.colors.grey_700}`};
-  &::placeholder {
-    text-shadow: none;
-  }
-`;
+import {
+  WholeWrapper,
+  OwnInput,
+  CalendarBubble,
+} from './theme';
 
 const MONTHS = [
   'Jan',
@@ -71,6 +23,8 @@ const MONTHS = [
   'Nov',
   'Dec',
 ];
+
+const CALENDAR_HEIGHT = 300;
 
 const formatDate = (date, endDate, isRange) => {
   if (!date) {
@@ -105,10 +59,17 @@ const Datepicker = (props) => {
     placeholder,
     size,
     dateValueFormatter,
+    firstDayOfWeek,
+    datepickerProps,
+    errorMessage,
+    disabled,
+    ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
+  const [triggerClose, setTriggerClose] = useState(false);
 
   const inputRef = useRef(null);
+  const divRef = useRef(null);
 
   function handleDateChange(data) {
     if (!isRange) {
@@ -122,8 +83,15 @@ const Datepicker = (props) => {
     }
   }
 
+  const getFocused = () => {
+    if (!isRange) {
+      return START_DATE;
+    }
+    return isStart ? START_DATE : END_DATE;
+  };
+
   const {
-    firstDayOfWeek,
+    // firstDayOfWeek,
     activeMonths,
     isDateSelected,
     isDateHovered,
@@ -139,10 +107,20 @@ const Datepicker = (props) => {
   } = useDatepicker({
     startDate: value,
     endDate: isRange ? endValue : null,
-    focusedInput: isStart ? START_DATE : END_DATE,
+    focusedInput: getFocused(),
     onDatesChange: handleDateChange,
     numberOfMonths,
+    firstDayOfWeek,
+    ...datepickerProps,
   });
+
+  const closeCalendar = () => {
+    setTriggerClose(true);
+    setTimeout(() => {
+      setCalendarIsOpen(false);
+      setTriggerClose(false);
+    }, 300);
+  };
 
   return (
     <DatepickerContext.Provider
@@ -158,11 +136,11 @@ const Datepicker = (props) => {
         onDateHover,
       }}
     >
-      <WholeWrapper>
+      <WholeWrapper ref={divRef} {...rest}>
         <OwnInput
           ref={inputRef}
           onFocus={() => setCalendarIsOpen(true)}
-          // onBlur={() => setCalendarIsOpen(false)}
+          onBlur={() => closeCalendar()}
           value={
             dateValueFormatter
               ? dateValueFormatter(value, endValue, isRange)
@@ -171,13 +149,21 @@ const Datepicker = (props) => {
           onChange={() => {}}
           placeholder={placeholder}
           size={size}
+          disabled={disabled}
+          errorMessage={errorMessage}
+          inputState={errorMessage ? 'error' : 'initial'}
         />
-        {calendarIsOpen ? (
+        {calendarIsOpen && !disabled ? (
           <CalendarBubble
             onMouseDown={(e) => {
               e.preventDefault();
             }}
             size={activeMonths.length}
+            out={triggerClose}
+            up={
+              divRef?.current?.offsetTop
+              >= CALENDAR_HEIGHT
+            }
           >
             {activeMonths.map((month, index) => (
               <Month
@@ -188,6 +174,7 @@ const Datepicker = (props) => {
                 key={`${month.year}-${month.month}`}
                 year={month.year}
                 month={month.month}
+                singleDay={!isRange && value}
                 firstDayOfWeek={firstDayOfWeek}
               />
             ))}
@@ -198,9 +185,35 @@ const Datepicker = (props) => {
   );
 };
 
+Datepicker.propTypes = {
+  value: PropTypes.object,
+  endValue: PropTypes.object,
+  onChange: PropTypes.func.isRequired,
+  numberOfMonths: PropTypes.number,
+  isRange: PropTypes.bool,
+  isStart: PropTypes.bool,
+  placeholder: PropTypes.string,
+  size: PropTypes.oneOf(['regular', 'large']),
+  dateValueFormatter: PropTypes.func,
+  firstDayOfWeek: PropTypes.number,
+  datepickerProps: PropTypes.object,
+  errorMessage: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
 Datepicker.defaultProps = {
+  value: null,
+  endValue: null,
+  isRange: false,
+  isStart: true,
+  size: 'regular',
   numberOfMonths: 1,
   placeholder: 'Choose date...',
   dateValueFormatter: null,
+  firstDayOfWeek: 0,
+  datepickerProps: {},
+  errorMessage: null,
+  disabled: false,
 };
+
 export default Datepicker;
