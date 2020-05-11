@@ -141,11 +141,12 @@ Number of months to be displayed
 
 ### Calendar positioning
 
-The calendar will be positioned above the input if there is space. 
+The calendar will automatically be positioned above the input if there is space. It listens to scroll events, so repositions automatically.
 
 <Preview>
-  <Story name="Calendar positioning">
-    <Box style={{height: '320px', justifyContent: 'flex-end'}}>
+  <Story name="Calendar positioning" style={{ overflowY: 'hidden'}}>
+    <Box style={{height: '1000px', justifyContent: 'center'}}>
+      <Text>Open the Calendar and scroll around!</Text>
       <DatepickerController />
     </Box>
   </Story>

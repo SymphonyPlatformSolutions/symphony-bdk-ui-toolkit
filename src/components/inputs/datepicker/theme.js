@@ -69,7 +69,7 @@ export const fadeDownOut = keyframes`
   }
 `;
 
-export const fadeUp = keyframes`
+export const fadeisUp = keyframes`
   0% {
     opacity: 0;
     transform: translateY(-90%);
@@ -80,7 +80,7 @@ export const fadeUp = keyframes`
   }
 `;
 
-export const fadeUpOut = keyframes`
+export const fadeisUpOut = keyframes`
  100% {
     opacity: 0;
     transform: translateY(-90%);
@@ -91,9 +91,9 @@ export const fadeUpOut = keyframes`
   }
 `;
 
-export const getAnimation = ({ out, up }) => {
-  if (up) {
-    return out ? fadeUpOut : fadeUp;
+export const getAnimation = ({ out, isUp }) => {
+  if (isUp) {
+    return out ? fadeisUpOut : fadeisUp;
   }
   return out ? fadeDownOut : fadeDown;
 };
@@ -107,11 +107,11 @@ export const CalendarBubble = styled.div`
   display: flex;
   position: absolute;
   z-index: 10;
-  margin-top: ${({ up }) => (up ? 0 : '10px')};
-  margin-bottom: ${({ up }) => (up ? '10px' : 0)};
-  transform: ${({ up }) => (up ? 'translateY(-100%)' : 'translateY(100%)')};
-  bottom: ${({ up }) => (up ? undefined : '-14px')};
-  top: ${({ up }) => (up ? '-14px' : undefined)};
+  margin-top: ${({ isUp }) => (isUp ? 0 : '10px')};
+  margin-bottom: ${({ isUp }) => (isUp ? '10px' : 0)};
+  transform: ${({ isUp }) => (isUp ? 'translateY(-100%)' : 'translateY(100%)')};
+  bottom: ${({ isUp }) => (isUp ? undefined : '-14px')};
+  top: ${({ isUp }) => (isUp ? '-14px' : undefined)};
   display: grid;
   grid-template-columns: ${({ size }) => `repeat(${size}, auto)`};
   grid-gap: 0 40px;
@@ -119,8 +119,8 @@ export const CalendarBubble = styled.div`
 
   &:after,
   &:before {
-    bottom: ${({ up }) => (up ? undefined : '100%')};
-    top: ${({ up }) => (up ? '100%' : undefined)};
+    bottom: ${({ isUp }) => (isUp ? undefined : '100%')};
+    top: ${({ isUp }) => (isUp ? '100%' : undefined)};
     left: 50%;
     border: solid transparent;
     content: " ";
@@ -130,14 +130,14 @@ export const CalendarBubble = styled.div`
     pointer-events: none;
   }
   &:after {
-    border-top-color: ${({ theme, up }) => (up ? theme.colors.mainbackground : undefined)};
-    border-bottom-color: ${({ theme, up }) => (up ? undefined : theme.colors.mainbackground)};
+    border-top-color: ${({ theme, isUp }) => (isUp ? theme.colors.mainbackground : undefined)};
+    border-bottom-color: ${({ theme, isUp }) => (isUp ? undefined : theme.colors.mainbackground)};
     border-width: 10px;
     margin-left: -10px;
   }
   &:before {
-    border-top-color: ${({ theme, up }) => (up ? theme.colors.grey_200 : undefined)};
-    border-bottom-color: ${({ theme, up }) => (up ? undefined : theme.colors.grey_200)};
+    border-top-color: ${({ theme, isUp }) => (isUp ? theme.colors.grey_200 : undefined)};
+    border-bottom-color: ${({ theme, isUp }) => (isUp ? undefined : theme.colors.grey_200)};
     border-width: 11px;
     margin-left: -11px;
   }

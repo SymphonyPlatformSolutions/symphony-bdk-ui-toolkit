@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
 import Month from './Month';
 import DatepickerContext from './datepickerContext';
-import {
-  WholeWrapper,
-  OwnInput,
-  CalendarBubble,
-} from './theme';
+import { WholeWrapper, OwnInput, CalendarBubble } from './theme';
+import VerticalPositioner from './positioner';
 
 const MONTHS = [
   'Jan',
@@ -122,6 +119,9 @@ const Datepicker = (props) => {
     }, 300);
   };
 
+  // // HMMM USE THIS
+  // console.log(divRef?.current?.getBoundingClientRect());
+
   return (
     <DatepickerContext.Provider
       value={{
@@ -153,33 +153,31 @@ const Datepicker = (props) => {
           errorMessage={errorMessage}
           inputState={errorMessage ? 'error' : 'initial'}
         />
-        {calendarIsOpen && !disabled ? (
-          <CalendarBubble
-            onMouseDown={(e) => {
-              e.preventDefault();
-            }}
-            size={activeMonths.length}
-            out={triggerClose}
-            up={
-              divRef?.current?.offsetTop
-              >= CALENDAR_HEIGHT
-            }
-          >
-            {activeMonths.map((month, index) => (
-              <Month
-                goToNextMonths={
-                  index === activeMonths.length - 1 ? goToNextMonths : null
-                }
-                goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
-                key={`${month.year}-${month.month}`}
-                year={month.year}
-                month={month.month}
-                singleDay={!isRange && value}
-                firstDayOfWeek={firstDayOfWeek}
-              />
-            ))}
-          </CalendarBubble>
-        ) : null}
+        <VerticalPositioner anchorRef={divRef} flyOutSize={CALENDAR_HEIGHT}>
+          {calendarIsOpen && !disabled ? (
+            <CalendarBubble
+              onMouseDown={(e) => {
+                e.preventDefault();
+              }}
+              size={activeMonths.length}
+              out={triggerClose}
+            >
+              {activeMonths.map((month, index) => (
+                <Month
+                  goToNextMonths={
+                    index === activeMonths.length - 1 ? goToNextMonths : null
+                  }
+                  goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
+                  key={`${month.year}-${month.month}`}
+                  year={month.year}
+                  month={month.month}
+                  singleDay={!isRange && value}
+                  firstDayOfWeek={firstDayOfWeek}
+                />
+              ))}
+            </CalendarBubble>
+          ) : null}
+        </VerticalPositioner>
       </WholeWrapper>
     </DatepickerContext.Provider>
   );
