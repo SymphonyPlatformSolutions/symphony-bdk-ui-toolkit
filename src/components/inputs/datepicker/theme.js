@@ -22,7 +22,7 @@ export const WeekSeparator = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   justify-content: center;
-  margin-top: ${({ margin }) => `${margin}px`};
+  margin-top: ${({ marginTop }) => `${marginTop}px`};
 `;
 export const TitleText = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_600};
@@ -35,8 +35,10 @@ export const WeekdayTextWrapper = styled.div`
 `;
 export const WeekdayText = styled(Text)`
   font-weight: bold;
-  padding-top: 2px;
   transition: all 0.3s;
+  line-height: 1rem;
+  height: 1rem;
+  margin-left: 0.1px;
 `;
 export const WeekdayBubble = styled.div`
   height: 26px;
@@ -48,8 +50,9 @@ export const WeekdayBubble = styled.div`
   transition: all 0.3s;
   justify-content: center;
 `;
+const BASE_BUBBLE_TRANSLATE = 18;
 const getUpTransform = ({ heightDelta }) => {
-  const base = -18 + heightDelta;
+  const base = heightDelta - BASE_BUBBLE_TRANSLATE;
   return `${base}px`;
 };
 const fadeIn = ({ isUp, relatedShift }) => keyframes`
@@ -59,7 +62,7 @@ const fadeIn = ({ isUp, relatedShift }) => keyframes`
   }
   100% {
     opacity: 1;
-    transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? '-18px' : '18px'});
+    transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? `-${BASE_BUBBLE_TRANSLATE}px` : `${BASE_BUBBLE_TRANSLATE}px`});
   }
 `;
 const fadeOut = ({ isUp, relatedShift, heightDelta }) => keyframes`
@@ -69,7 +72,7 @@ const fadeOut = ({ isUp, relatedShift, heightDelta }) => keyframes`
 }
 0% {
   opacity: 1;
-  transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? getUpTransform({ heightDelta }) : '18px'});
+  transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? getUpTransform({ heightDelta }) : `${BASE_BUBBLE_TRANSLATE}px`});
 }
 `;
 const getAnimation = ({
@@ -84,7 +87,7 @@ export const CalendarBubble = styled.div`
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   transform: translateX(calc(-50% + ${({ relatedShift }) => relatedShift}px))
-  translateY(${(props) => (props.isUp ? getUpTransform(props) : '18px')});
+  translateY(${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)});
   display: grid;
   grid-template-columns: ${({ size }) => `repeat(${size}, auto)`};
   grid-gap: 0 40px;
@@ -115,18 +118,11 @@ export const CalendarBubble = styled.div`
     margin-left: -11px;
   }
 `;
-export const WholeWrapper = styled.div`
+export const InputWrapper = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
-`;
-export const OwnInput = styled(InputField)`
-  color: transparent;
-  text-shadow: ${({ theme }) => `0 0 0 ${theme.colors.grey_700}`};
-  &::placeholder {
-    text-shadow: none;
-  }
 `;
 
 export const getButtonColor = ({ theme, isSelectedStartOrEnd, isSelected }) => {

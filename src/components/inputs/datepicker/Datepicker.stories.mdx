@@ -20,6 +20,16 @@ This component uses the headless hook version of [@datepicker-react/hooks](https
 
 As with all controlled components, the Datepicker requires a parent that holds the state and controls (sample code will be shown below).
 
+## Use
+
+The Calendar opens on InputField focus. As soon as it appears, freely navigate the Calendar and click on selected dates.
+
+It is also possible to type out a date. The typed out value is only applied when the **Enter** key is pressed. The date can be in any Javascript Date object recognizable format. If the date cannot be parsed by the Javascript engine, nothing will happen. The Custom date string formatter does not interfere with typed input because the date is only applied when the Enter key is pressed.
+
+> Important: Typed Dates cannot contain a "-" character if it's a date range.
+
+To type out a Date range, the two dates **necessarily** need to be separated by a dash "-". Simply input two dates in any recognizable format input a range.
+
 ## Single Date
 
 For a single date, the controller component must inject a *`value`* prop. The onChange function will return a javascript Date object to be used.
@@ -54,9 +64,10 @@ The onChange function will return an object with:
 - isStart (flipped from previous value)
 
 <Preview>
-  <Story name="Rage Date">
+  <Story name="Date Range">
     <Box>
       <RangeController />
+      <RangeController numberOfMonths={2} />
     </Box>
   </Story>
 </Preview>
@@ -86,6 +97,12 @@ export const RangeController = (props) => {
 ## Custom Date formatter
 
 The input field will display a Read-Only string that is altered based on the values that are passed to the Datepicker. To change how this string is built, you can use the *`dateValueFormatter`* prop. It's a callback that plugs in values for start date, end date and isRange values, respectively.
+
+On the example below, the dateValueFormatter simply turns the date into an ISO string
+
+```jsx
+  dateValueFormatter={(start, end, range) => start ? start.toString() : ''}
+```
 
 <Preview>
   <Story name="Custom Date String">
@@ -148,6 +165,20 @@ The calendar will automatically be positioned depending on the scroll position.
     <Box>
       <Text>Open the Calendar at different scroll positions!</Text>
       <DatepickerController />
+    </Box>
+  </Story>
+</Preview>
+
+### Custom Weekday Labels
+
+To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the arrats starts off with **Sunday** on index 0.
+
+> Note: The array order is not affected by the firstDayOfWeek prop. It always starts with Sunday, and the calendar will change accordingly.
+
+<Preview>
+  <Story name="Custom Weekday Label">
+    <Box>
+      <DatepickerController customWeekdayLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']} />
     </Box>
   </Story>
 </Preview>
