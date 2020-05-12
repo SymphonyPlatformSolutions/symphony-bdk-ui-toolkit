@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useMonth } from '@datepicker-react/hooks';
 import { DownChevron } from '../../misc/icons';
 import Day from './Day';
@@ -12,11 +13,6 @@ import {
   WeekdayText,
 } from './theme';
 
-/* Datepicker hook config constants */
-const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-const weekdayLabelFormat = (date) => WEEKDAYS[date.getDay()];
-
 const Month = (props) => {
   const {
     year,
@@ -25,7 +21,10 @@ const Month = (props) => {
     goToNextMonths,
     goToPreviousMonths,
     singleDay,
+    customWeekdayLabels,
   } = props;
+
+  const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
   const { days, weekdayLabels, monthLabel } = useMonth({
     year,
     month,
@@ -61,7 +60,7 @@ const Month = (props) => {
           <DownChevron size={12} />
         </ChangeMonthButton>
       </MonthTitleContainer>
-      <WeekSeparator margin={8}>
+      <WeekSeparator marginTop={8}>
         {weekdayLabels.map((dayLabel, index) => (
           <WeekdayTextWrapper key={`${dayLabel}_${index}`}>
             <WeekdayBubble hilighted={getSelectedIndex() === index}>
@@ -70,7 +69,7 @@ const Month = (props) => {
           </WeekdayTextWrapper>
         ))}
       </WeekSeparator>
-      <WeekSeparator margin={1}>
+      <WeekSeparator marginTop={1}>
         {days.map((day, index) => (
           <Day
             date={day.date}
@@ -81,6 +80,23 @@ const Month = (props) => {
       </WeekSeparator>
     </div>
   );
+};
+
+Month.propTypes = {
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  firstDayOfWeek: PropTypes.number.isRequired,
+  goToNextMonths: PropTypes.func,
+  goToPreviousMonths: PropTypes.func,
+  singleDay: PropTypes.instanceOf(Date),
+  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
+};
+
+Month.defaultProps = {
+  singleDay: null,
+  customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  goToNextMonths: null,
+  goToPreviousMonths: null,
 };
 
 export default Month;

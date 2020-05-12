@@ -1,4 +1,5 @@
 import React, { useRef, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useDay } from '@datepicker-react/hooks';
 import DatepickerContext from './datepickerContext';
 import {
@@ -9,9 +10,8 @@ import {
 
 function Day({ day, date }) {
   const dayRef = useRef(null);
+  const context = useContext(DatepickerContext);
   const {
-    focusedDate,
-    isDateFocused,
     isDateSelected,
     isDateHovered,
     isDateBlocked,
@@ -19,18 +19,16 @@ function Day({ day, date }) {
     onDateSelect,
     onDateFocus,
     onDateHover,
-  } = useContext(DatepickerContext);
+  } = context;
   const {
     isSelected,
     isSelectedStartOrEnd,
     onClick,
-    onKeyDown,
-    onMouseEnter,
     tabIndex,
   } = useDay({
     date,
-    focusedDate,
-    isDateFocused,
+    focusedDate: null,
+    isDateFocused: () => false,
     isDateSelected,
     isDateHovered,
     isDateBlocked,
@@ -49,7 +47,6 @@ function Day({ day, date }) {
     <ButtonContainer>
       <DayButton
         onClick={onClick}
-        onMouseEnter={onMouseEnter}
         tabIndex={tabIndex}
         type="button"
         ref={dayRef}
@@ -66,5 +63,15 @@ function Day({ day, date }) {
     </ButtonContainer>
   );
 }
+
+Day.propTypes = {
+  day: PropTypes.string,
+  date: PropTypes.object,
+};
+
+Day.defaultProps = {
+  day: null,
+  date: null,
+};
 
 export default Day;

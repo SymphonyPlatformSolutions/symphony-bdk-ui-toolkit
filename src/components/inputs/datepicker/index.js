@@ -1,15 +1,13 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, {
+  useState, useRef, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
-import {
-  useDatepicker,
-  START_DATE,
-  END_DATE,
-  useMonth,
-} from '@datepicker-react/hooks';
+import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
-import Month from './Month';
+import PortalBubble from './bubble';
 import DatepickerContext from './datepickerContext';
-import { WholeWrapper, OwnInput, CalendarBubble } from './theme';
+import InputField from '../input-field';
+import { InputWrapper } from './theme';
 
 const MONTHS = [
   'Jan',
@@ -26,61 +24,7 @@ const MONTHS = [
   'Dec',
 ];
 
-const PortalBubble = (props) => {
-  const {
-    triggerClose,
-    activeMonths,
-    goToNextMonths,
-    goToPreviousMonths,
-    firstDayOfWeek,
-    isRange,
-    value,
-    strategy,
-    relatedWidth,
-  } = props;
-  const isUp = strategy && strategy.includes('ABOVE');
-  const bubbleRef = useRef();
-  const [initialHeight, setInitialHeight] = useState(0);
-  const [currHeight, setCurrHeight] = useState(0);
-  useLayoutEffect(() => {
-    if (!initialHeight) {
-      setInitialHeight(bubbleRef.current.getBoundingClientRect().height);
-    }
-    setCurrHeight(bubbleRef.current.getBoundingClientRect().height);
-  }, [activeMonths]);
-
-  return (
-    <CalendarBubble
-      ref={bubbleRef}
-      relatedShift={relatedWidth / 2}
-      onMouseDown={(e) => {
-        e.preventDefault();
-      }}
-      size={activeMonths.length}
-      out={triggerClose}
-      isUp={isUp}
-      heightDelta={
-        initialHeight
-          ? initialHeight - currHeight
-          : 0
-      }
-    >
-      {activeMonths.map((month, index) => (
-        <Month
-          goToNextMonths={
-            index === activeMonths.length - 1 ? goToNextMonths : null
-          }
-          goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
-          key={`${month.year}-${month.month}`}
-          year={month.year}
-          month={month.month}
-          singleDay={!isRange && value}
-          firstDayOfWeek={firstDayOfWeek}
-        />
-      ))}
-    </CalendarBubble>
-  );
-};
+const ENTER_KEY = 13;
 
 const formatDate = (date, endDate, isRange) => {
   if (!date) {
@@ -119,13 +63,23 @@ const Datepicker = (props) => {
     datepickerProps,
     errorMessage,
     disabled,
+    customWeekdayLabels,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
   const [triggerClose, setTriggerClose] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const inputRef = useRef(null);
   const divRef = useRef(null);
+
+  useEffect(() => {
+    setInputValue(
+      dateValueFormatter
+        ? dateValueFormatter(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
+    );
+  }, [value, endValue, isRange]);
 
   function handleDateChange(data) {
     if (!isRange) {
@@ -147,14 +101,12 @@ const Datepicker = (props) => {
   };
 
   const {
-    // firstDayOfWeek,
     activeMonths,
     isDateSelected,
     isDateHovered,
     isFirstOrLastSelectedDate,
     isDateBlocked,
     isDateFocused,
-    focusedDate,
     onDateHover,
     onDateSelect,
     onDateFocus,
@@ -170,21 +122,56 @@ const Datepicker = (props) => {
     ...datepickerProps,
   });
 
+  const specialKeyHandler = ({ keyCode }) => {
+    // Enter Key Handler
+    if (keyCode === ENTER_KEY) {
+      if (!isRange) {
+        const inputDate = new Date(inputValue);
+        if (inputDate.toString() !== 'Invalid Date') {
+          onChange(inputDate);
+          onDateFocus(inputDate);
+        }
+      } else {
+        const [inputStart, inputEnd] = inputValue.split('-');
+        const inputDateStart = inputStart ? new Date(inputStart) : null;
+        const inputDateEnd = inputEnd ? new Date(inputEnd) : null;
+        let startDateObject = null;
+        let endDateObject = null;
+        let newSide = false;
+        if (!!inputDateStart && inputDateStart.toString() !== 'Invalid Date') {
+          startDateObject = inputDateStart;
+        }
+        if (!!inputDateEnd && inputDateEnd.toString() !== 'Invalid Date') {
+          endDateObject = inputDateEnd;
+          newSide = true;
+        }
+        onChange({
+          startDate: startDateObject,
+          endDate: endDateObject,
+          isStart: newSide,
+        });
+        onDateFocus(startDateObject || endDateObject);
+      }
+    }
+  };
+
   const closeCalendar = () => {
     setTriggerClose(true);
+    // Reset input to chosen date value
+    setInputValue(
+      dateValueFormatter
+        ? dateValueFormatter(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
+    );
     setTimeout(() => {
       setCalendarIsOpen(false);
       setTriggerClose(false);
     }, 300);
   };
 
-  // // HMMM USE THIS
-  // console.log(divRef?.current?.getBoundingClientRect());
-
   return (
     <DatepickerContext.Provider
       value={{
-        focusedDate,
         isDateFocused,
         isDateSelected,
         isDateHovered,
@@ -208,27 +195,28 @@ const Datepicker = (props) => {
             firstDayOfWeek={firstDayOfWeek}
             isRange={isRange}
             value={value}
+            customWeekdayLabels={customWeekdayLabels}
           />
         )}
+        portalElement={<div style={{ zIndex: 10 }} />}
       >
-        <WholeWrapper ref={divRef} {...rest}>
-          <OwnInput
+        <InputWrapper ref={divRef} {...rest}>
+          <InputField
             ref={inputRef}
+            onKeyDown={specialKeyHandler}
             onFocus={() => setCalendarIsOpen(true)}
             onBlur={() => closeCalendar()}
-            value={
-              dateValueFormatter
-                ? dateValueFormatter(value, endValue, isRange)
-                : formatDate(value, endValue, isRange)
-            }
-            onChange={() => {}}
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
             placeholder={placeholder}
             size={size}
             disabled={disabled}
             errorMessage={errorMessage}
             inputState={errorMessage ? 'error' : 'initial'}
           />
-        </WholeWrapper>
+        </InputWrapper>
       </PositioningPortal>
     </DatepickerContext.Provider>
   );
@@ -248,6 +236,7 @@ Datepicker.propTypes = {
   datepickerProps: PropTypes.object,
   errorMessage: PropTypes.string,
   disabled: PropTypes.bool,
+  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
 };
 
 Datepicker.defaultProps = {
@@ -263,6 +252,7 @@ Datepicker.defaultProps = {
   datepickerProps: {},
   errorMessage: null,
   disabled: false,
+  customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 };
 
 export default Datepicker;
