@@ -26,7 +26,7 @@ For a single date, the controller component must inject a *`value`* prop. The on
 
 <Preview>
   <Story name="Single Date">
-    <Box style={{height: '320px'}}>
+    <Box>
       <DatepickerController />
     </Box>
   </Story>
@@ -55,7 +55,7 @@ The onChange function will return an object with:
 
 <Preview>
   <Story name="Rage Date">
-    <Box style={{height: '320px'}}>
+    <Box>
       <RangeController />
     </Box>
   </Story>
@@ -89,7 +89,7 @@ The input field will display a Read-Only string that is altered based on the val
 
 <Preview>
   <Story name="Custom Date String">
-    <Box style={{height: '320px'}}>
+    <Box>
       <DatepickerController dateValueFormatter={(start, end, range) => start ? start.toString() : ''}/>
     </Box>
   </Story>
@@ -102,13 +102,13 @@ The input field will display a Read-Only string that is altered based on the val
 <Preview>
   <Story name="States">
     <Box horizontal>
-      <Box style={{height: '320px'}}>
+      <Box>
         <DatepickerController errorMessage="Something's wrong!" />
       </Box>
-      <Box style={{height: '320px'}}>
+      <Box>
         <DatepickerController disabled />
       </Box>
-      <Box style={{height: '320px'}}>
+      <Box>
         <DatepickerController size="large" />
       </Box>
     </Box>
@@ -121,7 +121,7 @@ Has to be a number from 0-6, 0 being Sunday.
 
 <Preview>
   <Story name="Custom First Day">
-    <Box style={{height: '320px'}}>
+    <Box>
       <DatepickerController firstDayOfWeek={3} />
     </Box>
   </Story>
@@ -133,7 +133,7 @@ Number of months to be displayed
 
 <Preview>
   <Story name="More Months">
-    <Box style={{height: '320px'}}>
+    <Box>
       <DatepickerController numberOfMonths={2} />
     </Box>
   </Story>
@@ -141,12 +141,12 @@ Number of months to be displayed
 
 ### Calendar positioning
 
-The calendar will automatically be positioned above the input if there is space. It listens to scroll events, so repositions automatically.
+The calendar will automatically be positioned depending on the scroll position.
 
 <Preview>
   <Story name="Calendar positioning" style={{ overflowY: 'hidden'}}>
-    <Box style={{height: '1000px', justifyContent: 'center'}}>
-      <Text>Open the Calendar and scroll around!</Text>
+    <Box>
+      <Text>Open the Calendar at different scroll positions!</Text>
       <DatepickerController />
     </Box>
   </Story>
