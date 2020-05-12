@@ -37,6 +37,9 @@ const Month = (props) => {
     if (!singleDay) {
       return -1;
     }
+    if (singleDay.getMonth() !== month) {
+      return -1;
+    }
     if (singleDay.getDay() >= firstDayOfWeek) {
       return singleDay.getDay() - firstDayOfWeek;
     }

@@ -1,10 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
+import {
+  useDatepicker,
+  START_DATE,
+  END_DATE,
+  useMonth,
+} from '@datepicker-react/hooks';
+import { PositioningPortal } from '@codastic/react-positioning-portal';
 import Month from './Month';
 import DatepickerContext from './datepickerContext';
 import { WholeWrapper, OwnInput, CalendarBubble } from './theme';
-import VerticalPositioner from './positioner';
 
 const MONTHS = [
   'Jan',
@@ -21,7 +26,61 @@ const MONTHS = [
   'Dec',
 ];
 
-const CALENDAR_HEIGHT = 300;
+const PortalBubble = (props) => {
+  const {
+    triggerClose,
+    activeMonths,
+    goToNextMonths,
+    goToPreviousMonths,
+    firstDayOfWeek,
+    isRange,
+    value,
+    strategy,
+    relatedWidth,
+  } = props;
+  const isUp = strategy && strategy.includes('ABOVE');
+  const bubbleRef = useRef();
+  const [initialHeight, setInitialHeight] = useState(0);
+  const [currHeight, setCurrHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (!initialHeight) {
+      setInitialHeight(bubbleRef.current.getBoundingClientRect().height);
+    }
+    setCurrHeight(bubbleRef.current.getBoundingClientRect().height);
+  }, [activeMonths]);
+
+  return (
+    <CalendarBubble
+      ref={bubbleRef}
+      relatedShift={relatedWidth / 2}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
+      size={activeMonths.length}
+      out={triggerClose}
+      isUp={isUp}
+      heightDelta={
+        initialHeight
+          ? initialHeight - currHeight
+          : 0
+      }
+    >
+      {activeMonths.map((month, index) => (
+        <Month
+          goToNextMonths={
+            index === activeMonths.length - 1 ? goToNextMonths : null
+          }
+          goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
+          key={`${month.year}-${month.month}`}
+          year={month.year}
+          month={month.month}
+          singleDay={!isRange && value}
+          firstDayOfWeek={firstDayOfWeek}
+        />
+      ))}
+    </CalendarBubble>
+  );
+};
 
 const formatDate = (date, endDate, isRange) => {
   if (!date) {
@@ -136,49 +195,41 @@ const Datepicker = (props) => {
         onDateHover,
       }}
     >
-      <WholeWrapper ref={divRef} {...rest}>
-        <OwnInput
-          ref={inputRef}
-          onFocus={() => setCalendarIsOpen(true)}
-          onBlur={() => closeCalendar()}
-          value={
-            dateValueFormatter
-              ? dateValueFormatter(value, endValue, isRange)
-              : formatDate(value, endValue, isRange)
-          }
-          onChange={() => {}}
-          placeholder={placeholder}
-          size={size}
-          disabled={disabled}
-          errorMessage={errorMessage}
-          inputState={errorMessage ? 'error' : 'initial'}
-        />
-        <VerticalPositioner anchorRef={divRef} flyOutSize={CALENDAR_HEIGHT}>
-          {calendarIsOpen && !disabled ? (
-            <CalendarBubble
-              onMouseDown={(e) => {
-                e.preventDefault();
-              }}
-              size={activeMonths.length}
-              out={triggerClose}
-            >
-              {activeMonths.map((month, index) => (
-                <Month
-                  goToNextMonths={
-                    index === activeMonths.length - 1 ? goToNextMonths : null
-                  }
-                  goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
-                  key={`${month.year}-${month.month}`}
-                  year={month.year}
-                  month={month.month}
-                  singleDay={!isRange && value}
-                  firstDayOfWeek={firstDayOfWeek}
-                />
-              ))}
-            </CalendarBubble>
-          ) : null}
-        </VerticalPositioner>
-      </WholeWrapper>
+      <PositioningPortal
+        isOpen={calendarIsOpen}
+        portalContent={({ relatedWidth, strategy }) => (
+          <PortalBubble
+            strategy={strategy}
+            relatedWidth={relatedWidth}
+            triggerClose={triggerClose}
+            activeMonths={activeMonths}
+            goToNextMonths={goToNextMonths}
+            goToPreviousMonths={goToPreviousMonths}
+            firstDayOfWeek={firstDayOfWeek}
+            isRange={isRange}
+            value={value}
+          />
+        )}
+      >
+        <WholeWrapper ref={divRef} {...rest}>
+          <OwnInput
+            ref={inputRef}
+            onFocus={() => setCalendarIsOpen(true)}
+            onBlur={() => closeCalendar()}
+            value={
+              dateValueFormatter
+                ? dateValueFormatter(value, endValue, isRange)
+                : formatDate(value, endValue, isRange)
+            }
+            onChange={() => {}}
+            placeholder={placeholder}
+            size={size}
+            disabled={disabled}
+            errorMessage={errorMessage}
+            inputState={errorMessage ? 'error' : 'initial'}
+          />
+        </WholeWrapper>
+      </PositioningPortal>
     </DatepickerContext.Provider>
   );
 };

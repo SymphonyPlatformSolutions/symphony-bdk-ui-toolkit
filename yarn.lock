@@ -1826,6 +1826,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@codastic/react-positioning-portal@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@codastic/react-positioning-portal/-/react-positioning-portal-0.3.2.tgz#91fba602ad53c60134928a3b9db7844c86914f8e"
+  integrity sha512-6WT4UufVs88UCrYSYxiDin4DFpCzgwFfs700gJwmrdPnH/MseABwMZcEfP+ucaV8QwselIWojPBZY4prkJuGGA==
+
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
