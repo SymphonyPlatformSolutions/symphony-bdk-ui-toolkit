@@ -30,8 +30,30 @@ Most props for the Box are a simplified relay of common CSS flex-box positioning
   <ComplexExample />
 </Story>
 
-
 ## Main properties
+
+> **An Observation:**
+>
+> The ```HilighterBox``` component showcased here in the code is simply a styled Box
+> with padding, 100% width and background color
+
+```jsx
+const HilighterBox = (props) => {
+  const { children, style, ...rest } = props;
+  return (
+    <Box
+      {...rest}
+      style={{
+        width: '100%',
+        backgroundColor: 'rgba(53, 56, 62, 0.2)',
+        padding: '10px',
+        ...style,
+      }}
+    >{children}
+    </Box>
+  );
+};
+```
 
 ### Types
 
