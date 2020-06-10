@@ -1,0 +1,186 @@
+import Box from "../../layout/box";
+import Text from "../../misc/text";
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link
+} from "@storybook/addon-docs/blocks";
+import Datepicker from './index.js';
+import { DatepickerController, RangeController } from './samples/simple';
+
+<Meta title="components/Inputs/Datepicker" component={Datepicker} parameters={{order: 230}}/>
+
+# Datepicker
+
+Datepicker component that implements a pop-up calendar to easily choose a single date or a range of dates.
+
+This component uses the headless hook version of [@datepicker-react/hooks](https://www.npmjs.com/package/@datepicker-react/hooks) to implement all logic.
+
+As with all controlled components, the Datepicker requires a parent that holds the state and controls (sample code will be shown below).
+
+## Use
+
+The Calendar opens on InputField focus. As soon as it appears, freely navigate the Calendar and click on selected dates.
+
+It is also possible to type out a date. The typed out value is only applied when the **Enter** key is pressed. The date can be in any Javascript Date object recognizable format. If the date cannot be parsed by the Javascript engine, nothing will happen. The Custom date string formatter does not interfere with typed input because the date is only applied when the Enter key is pressed.
+
+> Important: Typed Dates cannot contain a "-" character if it's a date range.
+
+To type out a Date range, the two dates **necessarily** need to be separated by a dash "-". Simply input two dates in any recognizable format input a range.
+
+## Single Date
+
+For a single date, the controller component must inject a *`value`* prop. The onChange function will return a javascript Date object to be used.
+
+<Preview>
+  <Story name="Single Date">
+    <Box>
+      <DatepickerController />
+    </Box>
+  </Story>
+</Preview>
+
+A simple implementation of the Controller component would be:
+
+```jsx
+export const DatepickerController = (props) => {
+  const [simpleDate, setSimpleDate] = useState(null);
+
+  return <Datepicker value={simpleDate} onChange={setSimpleDate} {...props} />;
+};
+```
+
+## Range of dates
+
+To switch the Datepicker to show a range of dates, the *`isRange`* can be flipped to *true*. There are however, a few considerations: the controller must inject two more values: the *`endValue`* (Javascript Date) and *`isStart`* (boolean).
+
+*`isStart`* will determine what value is being chosen, if it's the start date or the end date. The value for the start date continues to be read by the *`value`* prop.
+
+The onChange function will return an object with:
+- startDate
+- endDate
+- isStart (flipped from previous value)
+
+<Preview>
+  <Story name="Date Range">
+    <Box>
+      <RangeController />
+      <RangeController numberOfMonths={2} />
+    </Box>
+  </Story>
+</Preview>
+
+A simple implementation of the RangeController component would be:
+
+```jsx
+export const RangeController = (props) => {
+  const [currDate, setCurrDate] = useState({
+    startDate: null,
+    endDate: null,
+    isStart: true,
+  });
+  return (
+    <Datepicker
+      value={currDate.startDate}
+      endValue={currDate.endDate}
+      isStart={currDate.isStart}
+      onChange={setCurrDate}
+      isRange
+      {...props}
+    />
+  );
+};
+```
+
+## Custom Date formatter
+
+The input field will display a Read-Only string that is altered based on the values that are passed to the Datepicker. To change how this string is built, you can use the *`dateValueFormatter`* prop. It's a callback that plugs in values for start date, end date and isRange values, respectively.
+
+On the example below, the dateValueFormatter simply turns the date into an ISO string
+
+```jsx
+  dateValueFormatter={(start, end, range) => start ? start.toString() : ''}
+```
+
+<Preview>
+  <Story name="Custom Date String">
+    <Box>
+      <DatepickerController dateValueFormatter={(start, end, range) => start ? start.toString() : ''}/>
+    </Box>
+  </Story>
+</Preview>
+
+## Customizations
+
+### States
+
+<Preview>
+  <Story name="States">
+    <Box horizontal>
+      <Box>
+        <DatepickerController errorMessage="Something's wrong!" />
+      </Box>
+      <Box>
+        <DatepickerController disabled />
+      </Box>
+      <Box>
+        <DatepickerController size="large" />
+      </Box>
+    </Box>
+  </Story>
+</Preview>
+
+### Custom First day of Week
+
+Has to be a number from 0-6, 0 being Sunday.
+
+<Preview>
+  <Story name="Custom First Day">
+    <Box>
+      <DatepickerController firstDayOfWeek={3} />
+    </Box>
+  </Story>
+</Preview>
+
+### More Months
+
+Number of months to be displayed
+
+<Preview>
+  <Story name="More Months">
+    <Box>
+      <DatepickerController numberOfMonths={2} />
+    </Box>
+  </Story>
+</Preview>
+
+### Calendar positioning
+
+The calendar will automatically be positioned depending on the scroll position.
+
+<Preview>
+  <Story name="Calendar positioning" style={{ overflowY: 'hidden'}}>
+    <Box>
+      <Text>Open the Calendar at different scroll positions!</Text>
+      <DatepickerController />
+    </Box>
+  </Story>
+</Preview>
+
+### Custom Weekday Labels
+
+To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the arrats starts off with **Sunday** on index 0.
+
+> Note: The array order is not affected by the firstDayOfWeek prop. It always starts with Sunday, and the calendar will change accordingly.
+
+<Preview>
+  <Story name="Custom Weekday Label">
+    <Box>
+      <DatepickerController customWeekdayLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']} />
+    </Box>
+  </Story>
+</Preview>
+
+<Props of={Datepicker} />

@@ -53,6 +53,15 @@ const DATA = [
 /* ... */
 ];
 
+// Customizing a Box with own styling to adjust the cell
+// alingment to the way we want it to look
+const CellWrapper = styled(Box)`
+  margin: 0px 19px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+`;
+
 const COLUMNS = [{
   header: 'Name',
   tooltip: 'This column is not sortable',

@@ -18,6 +18,7 @@ export const OPTIONS = [
   {
     value: 'option4',
     label: 'Option 4',
+    isDisabled: true,
   },
   {
     value: 'option5',

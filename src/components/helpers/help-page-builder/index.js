@@ -37,7 +37,7 @@ const BreadCrumbs = ({ config, currentPage, handleNavigate }) => {
         <React.Fragment key={index}>
           { !item.link && <Text>{item.label}</Text> }
           {item.link && (<HelperLink onClick={handleNavigate(item.node)}>{item.label}</HelperLink>)}
-          { breadCrumbsMap.length !== (index + 1) && <Text px="5px"> > </Text> }
+          { breadCrumbsMap.length !== (index + 1) && <Text px="5px"> &gt; </Text> }
         </React.Fragment>
       ))}
     </Box>
