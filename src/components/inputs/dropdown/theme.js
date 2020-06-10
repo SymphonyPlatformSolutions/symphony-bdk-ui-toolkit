@@ -27,7 +27,7 @@ export const customStyles = ({ theme, error }) => ({
     width: '100%',
     boxShadow: 'none',
     border:
-      state.menuIsOpen
+      state.menuIsOpen || state.isFocused
         ? `1px solid ${theme.colors.oldprimary_400}`
         : `1px solid ${getBorderColor(theme, error)}`,
     borderBottomLeftRadius: state.menuIsOpen ? 0 : '3px',
@@ -74,30 +74,24 @@ export const customStyles = ({ theme, error }) => ({
   }),
   option: (provided, state) => ({
     ...provided,
-    color: 'inherit',
-    backgroundColor: state.selectProps.isDisabled
-      ? theme.colors.lightgrey
+    color: state.isFocused
+      ? theme.colors.white
+      : state.isDisabled
+        ? theme.colors.grey_400
+        : theme.colors.grey_900,
+    backgroundColor: state.isFocused
+      ? theme.colors.oldprimary_400
       : theme.mode === THEME_TYPES.DARK
-        ? theme.colors.inputgrey
+        ? undefined
         : theme.colors.white,
-    ':active': {
-      ...state[':active'],
-      backgroundColor: theme.colors.oldprimary_400,
-    },
-    '&:focus': {
-      background: 'none',
-    },
-    '&:hover': {
-      color: theme.colors.white,
-      backgroundColor: theme.colors.primary_400,
-    },
   }),
+  placeholder: (provided) => ({ ...provided, color: theme.colors.grey_400 }),
   singleValue: (provided, state) => ({
     ...provided,
     overflow: 'unset !important',
     transition: 'all 0.3s',
     backgroundColor: 'rgba(0,0,0,0)',
-    color: error ? `${theme.colors.error_500} !important` : undefined,
+    color: error ? `${theme.colors.error_500} !important` : theme.colors.grey_900,
   }),
   valueContainer: provided => ({
     ...provided,

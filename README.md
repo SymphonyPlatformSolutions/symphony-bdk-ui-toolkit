@@ -1,11 +1,7 @@
 # symphony-bdk-ui-toolkit
-Symphony BDK - UI-Toolkit
+Symphony BDK - UI Toolkit
 
-[![Generic badge](https://img.shields.io/badge/StyledComponents-4.4.1-blue.svg)](https://styled-components.com/docs)
-[![Generic badge](https://img.shields.io/badge/React-16.12.0-blue.svg)](https://pt-br.reactjs.org/blog/2017/09/26/react-v16.0.html)
-[![Generic badge](https://img.shields.io/badge/Storybook-5.3.3-blue.svg)](https://github.com/storybookjs/storybook)
-
-![Alt text](public/readme/storybook.gif?raw=true "Storybook")
+[![NPM Package](https://img.shields.io/npm/v/symphony-bdk-ui-toolkit?style=shield&logo=npm)](https://www.npmjs.com/package/symphony-bdk-ui-toolkit)
 
 
 This is the Component Library Project for the Rapid development of extension apps.
@@ -38,18 +34,12 @@ yarn build
 
 ### Using it in your extension app
 
-Install the library into your app, by adding it on your <strong><i>package.json</i></strong> e.g:
+Install the library into your app:
 
-```jsx
- "symphony-bdk-ui-toolkit": "git+ssh://git@github.com:SymphonyPlatformSolutions/symphony-bdk-ui-toolkit.git#stage",
+```bash
+npm install symphony-bdk-ui-toolkit
 ```
-> You need to have access to the Toolkit repository for the method above to work, also you need to have 
->your ssh keys added to your github account
 
-then run:
-```jsx
-yarn
-```
 Once the library gets installed be sure to include these rules on the resolve section of your
 webpack file (or equivalent rule for your bundler):
 
