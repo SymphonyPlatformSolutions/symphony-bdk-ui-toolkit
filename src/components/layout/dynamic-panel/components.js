@@ -5,7 +5,7 @@ import Text from '../../misc/text';
 import { CloseButton } from '../../misc/button/icon-buttons';
 import {
   TabTitle, StyledTab, ExcessMenuContainer,
-  ExcessIconContainer, ExcessEllipsis, ResizeTabWrapper,
+  ExcessIconContainer, ExcessEllipsis,
 } from './themes';
 
 export const TabTitleComponent = ({ title }) => {

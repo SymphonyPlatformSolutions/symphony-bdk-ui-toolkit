@@ -106,3 +106,4 @@ export {
 export {
   default as DynamicTabs,
 } from './layout/dynamic-panel';
+export { default as Datepicker } from './inputs/datepicker';
