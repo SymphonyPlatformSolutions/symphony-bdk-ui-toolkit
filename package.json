@@ -1,6 +1,6 @@
 {
-  "name": "sms-sdk-toolbox-ui",
-  "version": "1.0.36",
+  "name": "symphony-bdk-ui-toolkit",
+  "version": "1.0.37",
   "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -11,23 +11,22 @@
     "storybook": "start-storybook -p 6006 -s ./public & nodemon mock-json-server/mock-server.js",
     "mock": "nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
-    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts && rm dist/index.module.js dist/index.module.js.map",
-    "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts --watch --compress false --raw  true"
+    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks && rm dist/index.module.js dist/index.module.js.map",
+    "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks --watch --compress false --raw  true"
   },
   "files": [
     "dist"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui.git"
+    "url": "git+https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui/issues"
+    "url": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit/issues"
   },
-  "private": true,
-  "homepage": "https://github.com/SymphonyPlatformSolutions/sms-sdk-toolbox-ui#readme",
+  "homepage": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit#readme",
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
@@ -88,11 +87,14 @@
     "uuid": "^3.3.3"
   },
   "dependencies": {
+    "@codastic/react-positioning-portal": "^0.3.2",
+    "@datepicker-react/hooks": "^2.3.1",
     "@storybook/addon-docs": "^5.3.4",
     "@storybook/preset-create-react-app": "^1.5.1",
     "d3-dsv": "^1.2.0",
     "microbundle": "0.11.0",
     "react-hooks-sse": "^1.0.0",
+    "react-resize-detector": "^4.2.1",
     "react-responsive-tabs": "^3.3.0",
     "react-scripts": "^3.3.0",
     "react-virtualized-auto-sizer": "^1.0.2",
@@ -108,6 +110,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-stockcharts": "^0.7.8",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "@datepicker-react/hooks": "^2.3.1"
   }
 }
