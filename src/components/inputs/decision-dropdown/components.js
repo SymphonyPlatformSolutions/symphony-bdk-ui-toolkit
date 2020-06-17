@@ -59,9 +59,11 @@ const SimpleItem = props => {
     uid,
     multiChosen,
     CustomItem,
+    testId,
   } = props;
   return (
     <SimpleItemContainer
+      data-testId={`${testId}-${label}`}
       onMouseEnter={() => lightFocusHandler(uid)}
       lightFocused={lightFocused}
       onMouseDown={e => {

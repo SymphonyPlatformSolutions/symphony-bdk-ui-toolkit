@@ -111,7 +111,7 @@ const DecisionDropdown = (props) => {
 
   return (
     <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
-      <Wrapper ref={node} {...rest}>
+      <Wrapper ref={node} {...rest} onClick={() => focusBlurHandler(true)}>
         <div>
           <DropdownControl
             hideClear={hideClear}

@@ -1,7 +1,8 @@
 import React, {
   useState, useMemo, useCallback, useRef,
 } from 'react';
-import { useTable, useSortBy, useBlockLayout } from 'react-table';
+// import { useTable, useSortBy, useBlockLayout } from 'react-table';
+import * as ReactTable from 'react-table';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import { FixedSizeList as List } from 'react-window';
@@ -75,15 +76,15 @@ const Table = (props) => {
     rows,
     prepareRow,
     totalColumnsWidth,
-  } = useTable(
+  } = ReactTable.useTable(
     {
       getRowId: (elem => elem.id),
       columns,
       data: filteredData,
       defaultColumn,
     },
-    useBlockLayout,
-    useSortBy,
+    ReactTable.useBlockLayout,
+    ReactTable.useSortBy,
   );
 
   const renderEmptyTable = () => {

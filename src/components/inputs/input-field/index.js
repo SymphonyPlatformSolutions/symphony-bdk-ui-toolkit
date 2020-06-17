@@ -58,7 +58,7 @@ const InputAddons = (props) => {
           disabled={disabled}
           onClick={copyInput ? copyToClipBoard : setShowPassword}
         >
-          {copyInput ? 'copy' : showPassword ? (<ClosedEyeIcon />) : (<EyeIcon />)}
+          {copyInput ? 'copy' : showPassword ? <ClosedEyeIcon /> : <EyeIcon />}
         </ToggleButtonText>
       )}
       {tooltip && (
@@ -108,56 +108,56 @@ const InputField = forwardRef((props, inputRef) => {
   }
 
   function renderInputFieldForType(type) {
-    return type === INPUT_TYPES.TEXTAREA
-      ? (
-        <TextArea
+    return type === INPUT_TYPES.TEXTAREA ? (
+      <TextArea
+        {...rest}
+        size={size}
+        placeholder={placeholder}
+        textArea
+        disabled={disabled}
+        id={id}
+        onChange={onChange}
+        value={value}
+        ref={inputRef || ownRef}
+        rows="2"
+        required={required}
+      />
+    ) : (
+      <React.Fragment>
+        <InputAddons
+          copyToClipBoard={copyToClipBoard}
+          setShowPassword={() => setShowPassword(!showPassword)}
+          showPassword={showPassword}
+          theme={theme}
+          {...props}
+        />
+        <StyledInput
           {...rest}
           size={size}
-          placeholder={placeholder}
-          textArea
+          readOnly={readOnly}
           disabled={disabled}
           id={id}
-          onChange={onChange}
+          onChange={readOnly ? null : onChange}
           value={value}
           ref={inputRef || ownRef}
-          rows="2"
+          type={showPassword ? INPUT_TYPES.TEXT : type}
+          placeholder={placeholder}
+          inputState={inputState}
           required={required}
         />
-      )
-      : (
-        <React.Fragment>
-          <InputAddons
-            copyToClipBoard={copyToClipBoard}
-            setShowPassword={() => setShowPassword(!showPassword)}
-            showPassword={showPassword}
-            theme={theme}
-            {...props}
-          />
-          <StyledInput
-            {...rest}
-            size={size}
-            readOnly={readOnly}
-            disabled={disabled}
-            id={id}
-            onChange={readOnly ? null : onChange}
-            value={value}
-            ref={inputRef || ownRef}
-            type={showPassword ? INPUT_TYPES.TEXT : type}
-            placeholder={placeholder}
-            inputState={inputState}
-            required={required}
-          />
-        </React.Fragment>
-      );
+      </React.Fragment>
+    );
   }
 
   return (
     <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-      {label && <label><InputLabel size="small">{label}</InputLabel></label>}
+      {label && (
+        <label>
+          <InputLabel size="small">{label}</InputLabel>
+        </label>
+      )}
       <Container disabled={disabled} error={inputState === 'error'}>
-        <InputWrapper>
-          {renderInputFieldForType(type)}
-        </InputWrapper>
+        <InputWrapper>{renderInputFieldForType(type)}</InputWrapper>
       </Container>
     </ErrorWrapper>
   );
