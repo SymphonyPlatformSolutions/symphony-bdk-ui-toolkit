@@ -112,6 +112,8 @@ const Datepicker = (props) => {
     onDateFocus,
     goToPreviousMonths,
     goToNextMonths,
+    goToNextYear,
+    goToPreviousYear,
   } = useDatepicker({
     startDate: value,
     endDate: isRange ? endValue : null,
@@ -169,6 +171,21 @@ const Datepicker = (props) => {
     }, 300);
   };
 
+  const textInputDateRef = useRef();
+
+  const handleBlur = (e) => {
+    // console.log(e.currentTarget);
+    // console.log(e.relatedTarget.tagName.toUpperCase());
+
+    if (e.relatedTarget) {
+      if (e.relatedTarget.tagName.toUpperCase() !== 'INPUT') {
+        closeCalendar();
+      }
+    } else {
+      closeCalendar();
+    }
+  };
+
   return (
     <DatepickerContext.Provider
       value={{
@@ -192,20 +209,22 @@ const Datepicker = (props) => {
             activeMonths={activeMonths}
             goToNextMonths={goToNextMonths}
             goToPreviousMonths={goToPreviousMonths}
+            goToNextYear={goToNextYear}
+            goToPreviousYear={goToPreviousYear}
             firstDayOfWeek={firstDayOfWeek}
             isRange={isRange}
             value={value}
             customWeekdayLabels={customWeekdayLabels}
+            textInputDateRef={textInputDateRef}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}
       >
         <InputWrapper ref={divRef} {...rest}>
           <InputField
-            ref={inputRef}
             onKeyDown={specialKeyHandler}
             onFocus={() => setCalendarIsOpen(true)}
-            onBlur={() => closeCalendar()}
+            onBlur={(e) => handleBlur(e)}
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -215,6 +234,7 @@ const Datepicker = (props) => {
             disabled={disabled}
             errorMessage={errorMessage}
             inputState={errorMessage ? 'error' : 'initial'}
+            ref={textInputDateRef}
           />
         </InputWrapper>
       </PositioningPortal>

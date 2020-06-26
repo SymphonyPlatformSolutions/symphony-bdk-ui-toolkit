@@ -2,6 +2,11 @@ import styled, { keyframes } from 'styled-components';
 import { transparentize } from 'polished';
 import InputField from '../input-field';
 import Text from '../../misc/text';
+import Dropdown from '../dropdown';
+
+export const YearDropdown = styled(Dropdown)`
+  width: 100px;
+`;
 
 export const MonthTitleContainer = styled.div`
   display: flex;

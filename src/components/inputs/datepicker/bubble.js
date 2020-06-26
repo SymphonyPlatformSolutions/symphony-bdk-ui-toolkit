@@ -11,12 +11,15 @@ const PortalBubble = (props) => {
     activeMonths,
     goToNextMonths,
     goToPreviousMonths,
+    goToNextYear,
+    goToPreviousYear,
     firstDayOfWeek,
     isRange,
     value,
     strategy,
     relatedWidth,
     customWeekdayLabels,
+    textInputDateRef,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const bubbleRef = useRef();
@@ -48,11 +51,14 @@ const PortalBubble = (props) => {
           }
           customWeekdayLabels={customWeekdayLabels}
           goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
+          goToNextYear={goToNextYear}
+          goToPreviousYear={goToPreviousYear}
           key={`${month.year}-${month.month}`}
           year={month.year}
           month={month.month}
           singleDay={isRange ? null : value}
           firstDayOfWeek={firstDayOfWeek}
+          textInputDateRef={textInputDateRef}
         />
       ))}
     </CalendarBubble>

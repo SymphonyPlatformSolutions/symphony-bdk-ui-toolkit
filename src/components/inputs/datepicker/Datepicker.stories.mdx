@@ -171,7 +171,7 @@ The calendar will automatically be positioned depending on the scroll position.
 
 ### Custom Weekday Labels
 
-To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the arrats starts off with **Sunday** on index 0.
+To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the array starts off with **Sunday** on index 0.
 
 > Note: The array order is not affected by the firstDayOfWeek prop. It always starts with Sunday, and the calendar will change accordingly.
 
@@ -179,6 +179,18 @@ To change the weekday labels, the component can take in an array of 7 strings, e
   <Story name="Custom Weekday Label">
     <Box>
       <DatepickerController customWeekdayLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']} />
+    </Box>
+  </Story>
+</Preview>
+
+### J-Drizzle (alias: the Biggest Chungus) attempts what has never been done before
+
+According to web dev lore, there exists an arcane and elusive datepicker which allows to the user not only to browse by day, but also by month -- and even year! Known to be an arduous (some might even say perilous) task, our Biggest Chungus ventures forth on the audacious journey to build such a datepicker in-house and unleash its power on the citizens of Symphony-UI-Toolkit (the people affectionately known as the SUITs).
+
+<Preview>
+  <Story name="Sanguine">
+    <Box>
+      <DatepickerController />
     </Box>
   </Story>
 </Preview>
