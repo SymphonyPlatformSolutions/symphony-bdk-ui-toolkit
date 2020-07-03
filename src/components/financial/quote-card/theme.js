@@ -12,7 +12,7 @@ const getQuoteShortCodeColor = ({ colorIndex, theme }) => {
   return theme.colors.white;
 };
 
-export const getMenuStyle = theme => ({
+export const getMenuStyle = (theme) => ({
   style: {
     padding: '8px 0',
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
@@ -35,20 +35,21 @@ const getContextMenuItemColor = ({ theme, type }) => {
   return theme.colors.textcolor;
 };
 
-const getTemplateAreas = ({type, hasMenu}) => {
+const getTemplateAreas = ({ type, hasMenu }) => {
   const isSmall = type === 'small';
   if (isSmall && hasMenu) {
-    return `"quoteShortCodeArea headerArea menuArea" "contentArea contentArea contentArea"`;
-  } else if (isSmall) {
-    return `"quoteShortCodeArea headerArea headerArea" "contentArea contentArea contentArea"`;
+    return '"quoteShortCodeArea headerArea menuArea" "contentArea contentArea contentArea"';
   }
-  return `"quoteShortCodeArea contentArea menuArea"`;
+  if (isSmall) {
+    return '"quoteShortCodeArea headerArea headerArea" "contentArea contentArea contentArea"';
+  }
+  return '"quoteShortCodeArea contentArea menuArea"';
 };
 
 export const BaseCard = styled.div`
   display: grid;
-  grid-template-columns: 40px auto auto; 
-  grid-template-rows: ${({type}) => type === 'small' ? 'auto auto' : 'auto'}; 
+  grid-template-columns: 40px auto auto;
+  grid-template-rows: ${({ type }) => (type === 'small' ? 'auto auto' : 'auto')};
   grid-template-areas: ${getTemplateAreas};
   background-color: ${({ theme }) => theme.colors.grey_100};
   border-radius: 4px;
@@ -62,10 +63,10 @@ export const QuoteShortContainer = styled.div`
 export const QuoteShortCodeArea = styled.div`
   top: -1px;
   left: -1px;
-  height: ${({type}) => type === 'small' ? '42px' : 'calc(100% + 2px)'};
-  border-radius: ${({type}) => type === 'small' ? '4px 0 4px 0' : '4px 0 0 4px'};
+  height: ${({ type }) => (type === 'small' ? '100%' : 'calc(100% + 2px)')};
+  border-radius: ${({ type }) => (type === 'small' ? '4px 0 4px 0' : '4px 0 0 4px')};
   position: relative;
-  background-color: ${props => getQuoteShortCodeColor(props)};
+  background-color: ${(props) => getQuoteShortCodeColor(props)};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,7 +102,7 @@ export const QuoteShortCodeName = styled.span`
   margin-top: 4px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 export const IconButton = styled.button`
@@ -120,11 +121,7 @@ export const IconButton = styled.button`
   }
 `;
 
-export const getMenuIcon = ({ theme }) => (
-  theme.mode === THEME_TYPES.LIGHT
-    ? menuLightIcon
-    : menuDarkIcon
-);
+export const getMenuIcon = ({ theme }) => (theme.mode === THEME_TYPES.LIGHT ? menuLightIcon : menuDarkIcon);
 
 export const ContextMenuItem = styled.button`
   width: 100%;
@@ -134,7 +131,7 @@ export const ContextMenuItem = styled.button`
   text-align: start;
   font-size: 1rem;
   font-weight: bold;
-  color: ${props => getContextMenuItemColor(props)};
+  color: ${(props) => getContextMenuItemColor(props)};
   cursor: pointer;
   :hover {
     background: ${({ theme }) => theme.colors.grey_100};

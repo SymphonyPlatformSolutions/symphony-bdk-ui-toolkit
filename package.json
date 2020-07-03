@@ -88,6 +88,8 @@
     "uuid": "^3.3.3"
   },
   "dependencies": {
+    "@codastic/react-positioning-portal": "^0.3.2",
+    "@datepicker-react/hooks": "^2.3.1",
     "@storybook/addon-docs": "^5.3.4",
     "@storybook/preset-create-react-app": "^1.5.1",
     "d3-dsv": "^1.2.0",
