@@ -1,6 +1,6 @@
 {
   "name": "symphony-bdk-ui-toolkit",
-  "version": "1.0.67",
+  "version": "1.0.68",
   "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -26,7 +26,6 @@
   "bugs": {
     "url": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit/issues"
   },
-  "private": true,
   "homepage": "https://github.com/SymphonyPlatformSolutions/symphony-bdk-ui-toolkit#readme",
   "devDependencies": {
     "@babel/cli": "^7.7.5",
