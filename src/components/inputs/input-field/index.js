@@ -95,6 +95,7 @@ const InputField = forwardRef((props, inputRef) => {
     readOnly,
     size,
     theme,
+    containerProps,
     ...rest
   } = props;
 
@@ -156,7 +157,7 @@ const InputField = forwardRef((props, inputRef) => {
           <InputLabel size="small">{label}</InputLabel>
         </label>
       )}
-      <Container disabled={disabled} error={inputState === 'error'}>
+      <Container disabled={disabled} error={inputState === 'error'} {...containerProps}>
         <InputWrapper>{renderInputFieldForType(type)}</InputWrapper>
       </Container>
     </ErrorWrapper>
@@ -179,6 +180,7 @@ InputField.propTypes = {
   type: PropTypes.oneOf(['password', 'textarea', 'copy', 'text', 'number']),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
+  containerProps: PropTypes.object,
 };
 
 InputField.defaultProps = {
@@ -197,6 +199,7 @@ InputField.defaultProps = {
   tooltip: null,
   readOnly: false,
   size: 'regular',
+  containerProps: {},
 };
 
 export default withTheme(InputField);
