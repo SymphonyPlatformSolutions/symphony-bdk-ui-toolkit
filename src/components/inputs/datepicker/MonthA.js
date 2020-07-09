@@ -1,10 +1,8 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useMonth } from '@datepicker-react/hooks';
-import DatepickerContext from './datepickerContext';
 import {
   ButtonContainer,
-  ButtonText,
+  MonthButtonText,
   MonthButton,
 } from './theme';
 
@@ -19,18 +17,14 @@ function MonthA({ label, value, year, onClick }) {
     <ButtonContainer>
       <MonthButton
         onClick={() => onClick(value)}
-        // tabIndex={tabIndex}
         type="button"
         ref={monthRef}
-        // isSelectedStartOrEnd={isSelectedStartOrEnd}
-        // isSelected={isSelected}
       >
-        <ButtonText
-          // isSelected={isSelectedStartOrEnd || isSelected}
+        <MonthButtonText
           size="small"
         >
           {label}
-        </ButtonText>
+        </MonthButtonText>
       </MonthButton>
     </ButtonContainer>
   );

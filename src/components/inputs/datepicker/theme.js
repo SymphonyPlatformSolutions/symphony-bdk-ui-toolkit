@@ -8,6 +8,10 @@ export const YearDropdown = styled(Dropdown)`
   width: 100px;
 `;
 
+export const MonthDropdown = styled(Dropdown)`
+  width: 70px;
+`;
+
 export const MonthTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -25,7 +29,7 @@ export const ChangeMonthButton = styled.button`
 `;
 export const WeekSeparator = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: ${({ displayFours }) => (displayFours ? 'repeat(4, 1fr)' : 'repeat(7, 1fr)')};
   justify-content: center;
   margin-top: ${({ marginTop }) => `${marginTop}px`};
 `;
@@ -159,6 +163,15 @@ export const ButtonText = styled(Text)`
   justify-content: center;
   width: 2ch;
 `;
+
+export const YearButtonText = styled(ButtonText)`
+  width: 4ch;
+`;
+
+export const MonthButtonText = styled(ButtonText)`
+  width: 3ch;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -166,23 +179,14 @@ export const ButtonContainer = styled.div`
   margin: 4px 2px 0 2px;
 `;
 
-export const MonthButton = styled.button`
-  border: none;
-  background-color: ${(props) => getButtonColor(props)};
-  transition: all 0.3s;
-  border-radius: 4px;
-  &:hover {
-    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) => (isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200)};
-  }
-  cursor: pointer;
+export const MonthButton = styled(DayButton)`
   padding: 16px 20px;
-  display: flex;
-  justify-content: center;
 `;
 
-export const MonthButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
+export const YearButton = styled(DayButton)`
+  padding: 14px 16px;
+`;
+
+export const MonthButtonContainer = styled(ButtonContainer)`
   margin: 8px 4px 0 4px;
 `;

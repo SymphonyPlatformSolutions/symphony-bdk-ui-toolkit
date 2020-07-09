@@ -1,9 +1,9 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   ButtonContainer,
-  ButtonText,
-  MonthButton,
+  YearButtonText,
+  YearButton,
 } from './theme';
 
 function Year({ year, onClick }) {
@@ -15,20 +15,17 @@ function Year({ year, onClick }) {
 
   return (
     <ButtonContainer>
-      <MonthButton
+      <YearButton
         onClick={() => onClick(year)}
         type="button"
         ref={yearRef}
-        // isSelectedStartOrEnd={isSelectedStartOrEnd}
-        // isSelected={isSelected}
       >
-        <ButtonText
-          // isSelected={isSelectedStartOrEnd || isSelected}
+        <YearButtonText
           size="small"
         >
           {year}
-        </ButtonText>
-      </MonthButton>
+        </YearButtonText>
+      </YearButton>
     </ButtonContainer>
   );
 }

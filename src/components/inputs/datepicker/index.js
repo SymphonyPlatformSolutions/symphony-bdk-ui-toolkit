@@ -65,14 +65,13 @@ const Datepicker = (props) => {
     disabled,
     customWeekdayLabels,
     hasYearDropdown,
+    hasMonthDropdown,
     isYearPicker,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
-
-  const [nom, setNoM] = useState(numberOfMonths);
 
   const inputRef = useRef(null);
   const divRef = useRef(null);
@@ -84,12 +83,6 @@ const Datepicker = (props) => {
         : formatDate(value, endValue, isRange),
     );
   }, [value, endValue, isRange]);
-
-  const setNumberOfMonths = (num) => {
-    console.log('setting number of months');
-    console.log('num: ' + num);
-    setNoM(num);
-  } 
 
   function handleDateChange(data) {
     if (!isRange) {
@@ -122,6 +115,7 @@ const Datepicker = (props) => {
     onDateFocus,
     goToPreviousMonths,
     goToNextMonths,
+    goToDate,
     goToNextYear,
     goToPreviousYear,
   } = useDatepicker({
@@ -129,10 +123,18 @@ const Datepicker = (props) => {
     endDate: isRange ? endValue : null,
     focusedInput: getFocused(),
     onDatesChange: handleDateChange,
-    numberOfMonths: nom,
+    numberOfMonths,
     firstDayOfWeek,
     ...datepickerProps,
   });
+
+  const handleChangeMonth = (m, y) => {
+    const newDate = new Date();
+    newDate.setMonth(m);
+    newDate.setDate(1);
+    newDate.setFullYear(y);
+    goToDate(newDate);
+  }
 
   const specialKeyHandler = ({ keyCode }) => {
     // Enter Key Handler
@@ -222,10 +224,11 @@ const Datepicker = (props) => {
             isRange={isRange}
             value={value}
             hasYearDropdown={hasYearDropdown}
+            hasMonthDropdown={hasMonthDropdown}
             customWeekdayLabels={customWeekdayLabels}
             textInputDateRef={textInputDateRef}
             isYearPicker={isYearPicker}
-            setNumberOfMonths={setNumberOfMonths}
+            handleChangeMonth={handleChangeMonth}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}
@@ -267,6 +270,10 @@ Datepicker.propTypes = {
   errorMessage: PropTypes.string,
   disabled: PropTypes.bool,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
+  hasYearDropdown: PropTypes.bool,
+  hasMonthDropdown: PropTypes.bool,
+  isYearPicker: PropTypes.bool,
+
 };
 
 Datepicker.defaultProps = {
@@ -283,6 +290,9 @@ Datepicker.defaultProps = {
   errorMessage: null,
   disabled: false,
   customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  hasYearDropdown: false,
+  hasMonthDropdown: false,
+  isYearPicker: false,
 };
 
 export default Datepicker;

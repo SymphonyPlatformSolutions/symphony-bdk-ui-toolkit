@@ -183,6 +183,20 @@ To change the weekday labels, the component can take in an array of 7 strings, e
   </Story>
 </Preview>
 
+### Month Dropdown
+
+To add a dropdown which allows the user to move to any month in the current year, set the `hasMonthDropdown` property to `true`.
+
+> Note: for multi-month datepickers, changing one month will affect the other month(s) as well.
+
+<Preview>
+  <Story name="Month Dropdown">
+    <Box>
+      <DatepickerController hasMonthDropdown />
+    </Box>
+  </Story>
+</Preview>
+
 ### Year Dropdown
 
 To add a dropdown which allows the user to move up to five years in the future or past from the current year, set the `hasYearDropdown` property to `true`.
@@ -192,21 +206,21 @@ To add a dropdown which allows the user to move up to five years in the future o
 <Preview>
   <Story name="Year Dropdown">
     <Box>
-      <DatepickerController hasYearDropdown={true}/>
+      <DatepickerController hasYearDropdown/>
     </Box>
   </Story>
 </Preview>
 
 ### Year Picker
 
-To add a year picker ....
+To create a year picker in which you can click on the titles to select year and month, simply set `isYearPicker` to `true`. 
 
-> I like these notes.
+> Note: for datepickers where `numberOfMonths` is `2` or greater, clicking on the title will change both month views.
 
 <Preview>
   <Story name="Year Picker">
     <Box>
-      <DatepickerController isYearPicker={true}/>
+      <DatepickerController isYearPicker/>
     </Box>
   </Story>
 </Preview>
