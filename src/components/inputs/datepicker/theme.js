@@ -153,6 +153,7 @@ export const DayButton = styled.button`
   display: flex;
   justify-content: center;
 `;
+
 export const ButtonText = styled(Text)`
   color: ${({ isSelected }) => (isSelected ? 'white' : undefined)};
   justify-content: center;
@@ -163,4 +164,25 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   cursor: pointer;
   margin: 4px 2px 0 2px;
+`;
+
+export const MonthButton = styled.button`
+  border: none;
+  background-color: ${(props) => getButtonColor(props)};
+  transition: all 0.3s;
+  border-radius: 4px;
+  &:hover {
+    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) => (isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200)};
+  }
+  cursor: pointer;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const MonthButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin: 8px 4px 0 4px;
 `;

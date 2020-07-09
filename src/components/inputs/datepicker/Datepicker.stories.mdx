@@ -183,16 +183,33 @@ To change the weekday labels, the component can take in an array of 7 strings, e
   </Story>
 </Preview>
 
-### J-Drizzle (alias: the Biggest Chungus) attempts what has never been done before
+### Year Dropdown
 
-According to web dev lore, there exists an arcane and elusive datepicker which allows to the user not only to browse by day, but also by month -- and even year! Known to be an arduous (some might even say perilous) task, our Biggest Chungus ventures forth on the audacious journey to build such a datepicker in-house and unleash its power on the citizens of Symphony-UI-Toolkit (the people affectionately known as the SUITs).
+To add a dropdown which allows the user to move up to five years in the future or past from the current year, set the `hasYearDropdown` property to `true`.
+
+> Note: for multi-month datepickers, changing one month's year will affect the year(s) of the other month(s) as well.
 
 <Preview>
-  <Story name="Sanguine">
+  <Story name="Year Dropdown">
     <Box>
-      <DatepickerController />
+      <DatepickerController hasYearDropdown={true}/>
+    </Box>
+  </Story>
+</Preview>
+
+### Year Picker
+
+To add a year picker ....
+
+> I like these notes.
+
+<Preview>
+  <Story name="Year Picker">
+    <Box>
+      <DatepickerController isYearPicker={true}/>
     </Box>
   </Story>
 </Preview>
 
 <Props of={Datepicker} />
+

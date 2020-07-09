@@ -1,24 +1,27 @@
 import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useMonth } from '@datepicker-react/hooks';
+import DatepickerContext from './datepickerContext';
 import {
   ButtonContainer,
   ButtonText,
   MonthButton,
 } from './theme';
 
-function Year({ year, onClick }) {
-  const yearRef = useRef(null);
+function MonthA({ label, value, year, onClick }) {
+  const monthRef = useRef(null);
 
-  if (!year) {
+  if (!label) {
     return <div />;
   }
 
   return (
     <ButtonContainer>
       <MonthButton
-        onClick={() => onClick(year)}
+        onClick={() => onClick(value)}
+        // tabIndex={tabIndex}
         type="button"
-        ref={yearRef}
+        ref={monthRef}
         // isSelectedStartOrEnd={isSelectedStartOrEnd}
         // isSelected={isSelected}
       >
@@ -26,21 +29,25 @@ function Year({ year, onClick }) {
           // isSelected={isSelectedStartOrEnd || isSelected}
           size="small"
         >
-          {year}
+          {label}
         </ButtonText>
       </MonthButton>
     </ButtonContainer>
   );
 }
 
-Year.propTypes = {
+MonthA.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.number,
   year: PropTypes.number,
   onClick: PropTypes.func,
 };
 
-Year.defaultProps = {
+MonthA.defaultProps = {
+  label: null,
+  value: null,
   year: null,
   onClick: () => {}
 };
 
-export default Year;
+export default MonthA;

@@ -64,11 +64,15 @@ const Datepicker = (props) => {
     errorMessage,
     disabled,
     customWeekdayLabels,
+    hasYearDropdown,
+    isYearPicker,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  const [nom, setNoM] = useState(numberOfMonths);
 
   const inputRef = useRef(null);
   const divRef = useRef(null);
@@ -80,6 +84,12 @@ const Datepicker = (props) => {
         : formatDate(value, endValue, isRange),
     );
   }, [value, endValue, isRange]);
+
+  const setNumberOfMonths = (num) => {
+    console.log('setting number of months');
+    console.log('num: ' + num);
+    setNoM(num);
+  } 
 
   function handleDateChange(data) {
     if (!isRange) {
@@ -119,7 +129,7 @@ const Datepicker = (props) => {
     endDate: isRange ? endValue : null,
     focusedInput: getFocused(),
     onDatesChange: handleDateChange,
-    numberOfMonths,
+    numberOfMonths: nom,
     firstDayOfWeek,
     ...datepickerProps,
   });
@@ -174,9 +184,6 @@ const Datepicker = (props) => {
   const textInputDateRef = useRef();
 
   const handleBlur = (e) => {
-    // console.log(e.currentTarget);
-    // console.log(e.relatedTarget.tagName.toUpperCase());
-
     if (e.relatedTarget) {
       if (e.relatedTarget.tagName.toUpperCase() !== 'INPUT') {
         closeCalendar();
@@ -214,8 +221,11 @@ const Datepicker = (props) => {
             firstDayOfWeek={firstDayOfWeek}
             isRange={isRange}
             value={value}
+            hasYearDropdown={hasYearDropdown}
             customWeekdayLabels={customWeekdayLabels}
             textInputDateRef={textInputDateRef}
+            isYearPicker={isYearPicker}
+            setNumberOfMonths={setNumberOfMonths}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}

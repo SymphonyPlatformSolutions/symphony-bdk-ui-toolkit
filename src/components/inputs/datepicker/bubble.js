@@ -20,11 +20,38 @@ const PortalBubble = (props) => {
     relatedWidth,
     customWeekdayLabels,
     textInputDateRef,
+    hasYearDropdown,
+    isYearPicker,
+    setNumberOfMonths,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const bubbleRef = useRef();
   const [initialHeight, setInitialHeight] = useState(0);
   const [currHeight, setCurrHeight] = useState(0);
+
+  const [displayMonths, changeDisplayMonths] = useState(false);
+  const [displayYears, changeDisplayYears] = useState(false);
+  const [displayDays, changeDisplayDays] = useState(true);
+
+  const onClickForMonths = () => {
+    changeDisplayMonths(true);
+    changeDisplayYears(false);
+    changeDisplayDays(false);
+  };
+
+  const onClickForYears = () => {
+    changeDisplayYears(true);
+    changeDisplayMonths(false);
+    changeDisplayDays(false);
+  }
+
+  const onClickForDays = () => {
+    changeDisplayDays(true);
+    changeDisplayMonths(false);
+    changeDisplayYears(false);
+  }
+
+
   useLayoutEffect(() => {
     if (!initialHeight) {
       setInitialHeight(bubbleRef.current.getBoundingClientRect().height);
@@ -59,6 +86,15 @@ const PortalBubble = (props) => {
           singleDay={isRange ? null : value}
           firstDayOfWeek={firstDayOfWeek}
           textInputDateRef={textInputDateRef}
+          hasYearDropdown={hasYearDropdown}
+          isYearPicker={isYearPicker}
+          displayDays={displayDays}
+          displayMonths={displayMonths}
+          displayYears={displayYears}
+          onClickForDays={onClickForDays}
+          onClickForMonths={onClickForMonths}
+          onClickForYears={onClickForYears}
+          setNumberOfMonths={setNumberOfMonths}
         />
       ))}
     </CalendarBubble>
