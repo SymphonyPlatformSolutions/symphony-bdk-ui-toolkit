@@ -98,7 +98,7 @@ export const CalendarBubble = styled.div`
   transform: translateX(calc(-50% + ${({ relatedShift }) => relatedShift}px))
   translateY(${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)});
   display: grid;
-  grid-template-columns: ${({ size }) => `repeat(${size}, auto)`};
+  grid-template-columns: ${({ displaySmaller, size }) => (displaySmaller ? 'repeat(1, auto)' : `repeat(${size}, auto)`)};
   grid-gap: 0 40px;
   animation: ${(props) => getAnimation(props)} 0.3s;
   transition: all 0.3s;

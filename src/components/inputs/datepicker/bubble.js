@@ -67,19 +67,18 @@ const PortalBubble = (props) => {
       out={triggerClose}
       isUp={isUp}
       heightDelta={initialHeight ? initialHeight - currHeight : 0}
+      displaySmaller={displayMonths || displayYears}
     >
-      {activeMonths.map((month, index) => (
+      {(displayMonths || displayYears) ? (
         <Month
-          goToNextMonths={
-            index === activeMonths.length - 1 ? goToNextMonths : null
-          }
+          goToNextMonths={goToNextMonths}
           customWeekdayLabels={customWeekdayLabels}
-          goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
+          goToPreviousMonths={null}
           goToNextYear={goToNextYear}
           goToPreviousYear={goToPreviousYear}
-          key={`${month.year}-${month.month}`}
-          year={month.year}
-          month={month.month}
+          key={`${activeMonths[0].year}-${activeMonths[0].month}`}
+          year={activeMonths[0].year}
+          month={activeMonths[0].month}
           singleDay={isRange ? null : value}
           firstDayOfWeek={firstDayOfWeek}
           textInputDateRef={textInputDateRef}
@@ -93,7 +92,33 @@ const PortalBubble = (props) => {
           onClickForYears={onClickForYears}
           handleChangeMonth={handleChangeMonth}
         />
-      ))}
+      ) :
+        activeMonths.map((month, index) => (
+          <Month
+            goToNextMonths={
+            index === activeMonths.length - 1 ? goToNextMonths : null
+          }
+            customWeekdayLabels={customWeekdayLabels}
+            goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
+            goToNextYear={goToNextYear}
+            goToPreviousYear={goToPreviousYear}
+            key={`${month.year}-${month.month}`}
+            year={month.year}
+            month={month.month}
+            singleDay={isRange ? null : value}
+            firstDayOfWeek={firstDayOfWeek}
+            textInputDateRef={textInputDateRef}
+            hasYearDropdown={hasYearDropdown}
+            hasMonthDropdown={hasMonthDropdown}
+            isYearPicker={isYearPicker}
+            displayMonths={displayMonths}
+            displayYears={displayYears}
+            onClickForDays={onClickForDays}
+            onClickForMonths={onClickForMonths}
+            onClickForYears={onClickForYears}
+            handleChangeMonth={handleChangeMonth}
+          />
+        ))}
     </CalendarBubble>
   );
 };
