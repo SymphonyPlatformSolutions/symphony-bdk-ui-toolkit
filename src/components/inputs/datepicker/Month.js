@@ -18,18 +18,18 @@ import {
 } from './theme';
 
 const months = [
-  {value: 0, label: 'Jan'},
-  {value: 1, label: 'Feb'},
-  {value: 2, label: 'Mar'},
-  {value: 3, label: 'Apr'},
-  {value: 4, label: 'May'},
-  {value: 5, label: 'Jun'},
-  {value: 6, label: 'Jul'},
-  {value: 7, label: 'Aug'},
-  {value: 8, label: 'Sep'},
-  {value: 9, label: 'Oct'},
-  {value: 10, label: 'Nov'},
-  {value: 11, label: 'Dec'},
+  { value: 0, label: 'Jan' },
+  { value: 1, label: 'Feb' },
+  { value: 2, label: 'Mar' },
+  { value: 3, label: 'Apr' },
+  { value: 4, label: 'May' },
+  { value: 5, label: 'Jun' },
+  { value: 6, label: 'Jul' },
+  { value: 7, label: 'Aug' },
+  { value: 8, label: 'Sep' },
+  { value: 9, label: 'Oct' },
+  { value: 10, label: 'Nov' },
+  { value: 11, label: 'Dec' },
 ];
 
 const Month = (props) => {
@@ -65,10 +65,10 @@ const Month = (props) => {
 
   const onDropdownBlur = () => {
     textInputDateRef.current.focus();
-  }
+  };
 
   const years = [];
-  for (var i=year-5; i<=year+6; i++) {
+  for (let i = year - 5; i <= year + 6; i++) {
     years.push({ label: i.toString(), value: i });
   }
 
@@ -86,15 +86,15 @@ const Month = (props) => {
         goToNextYear(changeInYears);
       }
       onDropdownBlur();
-    }
+    };
 
     return (
-      <YearDropdown label='' value={chosenYear} options={years} onChange={onYearChange} onBlur={onDropdownBlur} />
+      <YearDropdown label="" value={chosenYear} options={years} onChange={onYearChange} onBlur={onDropdownBlur} />
     );
   };
 
   const MonthDropdownHandler = () => {
-    const currMonth = { label: months[month].label, value: month }
+    const currMonth = { label: months[month].label, value: month };
 
     const [chosenMonth, changeChosenMonth] = useState(currMonth);
 
@@ -102,10 +102,10 @@ const Month = (props) => {
       changeChosenMonth(m);
       handleChangeMonth(m.value, year);
       onDropdownBlur();
-    }
+    };
 
     return (
-      <MonthDropdown label='' value={chosenMonth} options={months} onChange={onMonthChange} onBlur={onDropdownBlur} />
+      <MonthDropdown label="" value={chosenMonth} options={months} onChange={onMonthChange} onBlur={onDropdownBlur} />
     );
   };
 
@@ -124,19 +124,19 @@ const Month = (props) => {
 
   const goForwardOneYear = () => {
     goToNextYear(1);
-  }
+  };
 
   const goBackOneYear = () => {
     goToPreviousYear(1);
-  }
+  };
 
   const goForwardOneDecade = () => {
     goToNextYear(10);
-  }
+  };
 
   const goBackOneDecade = () => {
     goToPreviousYear(10);
-  }
+  };
 
   const onYearSelect = (y) => {
     const changeInYears = Math.abs(year - y);
@@ -146,12 +146,12 @@ const Month = (props) => {
       goToNextYear(changeInYears);
     }
     onClickForMonths();
-  }
+  };
 
   const onMonthSelect = (m) => {
     handleChangeMonth(m, year);
     onClickForDays();
-  }
+  };
 
   if (isYearPicker) {
     if (displayMonths) {
@@ -263,7 +263,7 @@ const Month = (props) => {
         </ChangeMonthButton>
         {hasMonthDropdown ? <MonthDropdownHandler /> : '' }
         <TitleText>{hasYearDropdown ? months[month].label : (hasMonthDropdown ? year : monthLabel)}</TitleText>
-        {hasYearDropdown? <YearDropdownHandler /> : '' }
+        {hasYearDropdown ? <YearDropdownHandler /> : '' }
         <ChangeMonthButton onClick={goToNextMonths} show={!!goToNextMonths}>
           <DownChevron size={12} />
         </ChangeMonthButton>
