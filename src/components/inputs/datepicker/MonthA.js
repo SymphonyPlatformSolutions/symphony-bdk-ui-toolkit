@@ -6,7 +6,9 @@ import {
   MonthButton,
 } from './theme';
 
-function MonthA({ label, value, year, onClick }) {
+function MonthA({
+  label, value, onClick,
+}) {
   const monthRef = useRef(null);
 
   if (!label) {
@@ -33,15 +35,13 @@ function MonthA({ label, value, year, onClick }) {
 MonthA.propTypes = {
   label: PropTypes.string,
   value: PropTypes.number,
-  year: PropTypes.number,
   onClick: PropTypes.func,
 };
 
 MonthA.defaultProps = {
   label: null,
   value: null,
-  year: null,
-  onClick: () => {}
+  onClick: () => {},
 };
 
 export default MonthA;

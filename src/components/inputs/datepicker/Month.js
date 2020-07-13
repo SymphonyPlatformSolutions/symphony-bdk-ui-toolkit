@@ -68,7 +68,7 @@ const Month = (props) => {
   };
 
   const years = [];
-  for (let i = year - 5; i <= year + 6; i++) {
+  for (let i = year - 5; i <= year + 6; i += 1) {
     years.push({ label: i.toString(), value: i });
   }
 
@@ -202,10 +202,10 @@ const Month = (props) => {
             </ChangeMonthButton>
           </MonthTitleContainer>
           <WeekSeparator marginTop={8} displayFours>
-            {years.map((year) => (
+            {years.map((y) => (
               <Year
-                key={year.value}
-                year={year.value}
+                key={y.value}
+                year={y.value}
                 onClick={onYearSelect}
               />
             ))}
@@ -262,7 +262,9 @@ const Month = (props) => {
           <DownChevron size={12} />
         </ChangeMonthButton>
         {hasMonthDropdown ? <MonthDropdownHandler /> : '' }
-        <TitleText>{hasYearDropdown ? months[month].label : (hasMonthDropdown ? year : monthLabel)}</TitleText>
+        <TitleText>
+          {hasYearDropdown ? months[month].label : (hasMonthDropdown ? year : monthLabel)}
+        </TitleText>
         {hasYearDropdown ? <YearDropdownHandler /> : '' }
         <ChangeMonthButton onClick={goToNextMonths} show={!!goToNextMonths}>
           <DownChevron size={12} />

@@ -37,7 +37,7 @@ Year.propTypes = {
 
 Year.defaultProps = {
   year: null,
-  onClick: () => {}
+  onClick: () => {},
 };
 
 export default Year;

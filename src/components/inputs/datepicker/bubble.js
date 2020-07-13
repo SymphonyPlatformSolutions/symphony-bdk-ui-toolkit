@@ -41,12 +41,12 @@ const PortalBubble = (props) => {
   const onClickForYears = () => {
     changeDisplayYears(true);
     changeDisplayMonths(false);
-  }
+  };
 
   const onClickForDays = () => {
     changeDisplayMonths(false);
     changeDisplayYears(false);
-  }
+  };
 
 
   useLayoutEffect(() => {
@@ -92,8 +92,8 @@ const PortalBubble = (props) => {
           onClickForYears={onClickForYears}
           handleChangeMonth={handleChangeMonth}
         />
-      ) :
-        activeMonths.map((month, index) => (
+      )
+        : activeMonths.map((month, index) => (
           <Month
             goToNextMonths={
             index === activeMonths.length - 1 ? goToNextMonths : null

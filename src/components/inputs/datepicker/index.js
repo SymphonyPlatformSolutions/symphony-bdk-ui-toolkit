@@ -73,7 +73,6 @@ const Datepicker = (props) => {
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const inputRef = useRef(null);
   const divRef = useRef(null);
 
   useEffect(() => {
@@ -134,7 +133,7 @@ const Datepicker = (props) => {
     newDate.setDate(1);
     newDate.setFullYear(y);
     goToDate(newDate);
-  }
+  };
 
   const specialKeyHandler = ({ keyCode }) => {
     // Enter Key Handler
