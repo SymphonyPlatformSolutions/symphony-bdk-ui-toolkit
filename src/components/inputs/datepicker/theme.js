@@ -1,7 +1,15 @@
 import styled, { keyframes } from 'styled-components';
 import { transparentize } from 'polished';
-import InputField from '../input-field';
 import Text from '../../misc/text';
+import Dropdown from '../dropdown';
+
+export const YearDropdown = styled(Dropdown)`
+  width: 100px;
+`;
+
+export const MonthDropdown = styled(Dropdown)`
+  width: 70px;
+`;
 
 export const MonthTitleContainer = styled.div`
   display: flex;
@@ -20,7 +28,7 @@ export const ChangeMonthButton = styled.button`
 `;
 export const WeekSeparator = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: ${({ displayFours }) => (displayFours ? 'repeat(4, 1fr)' : 'repeat(7, 1fr)')};
   justify-content: center;
   margin-top: ${({ marginTop }) => `${marginTop}px`};
 `;
@@ -89,7 +97,7 @@ export const CalendarBubble = styled.div`
   transform: translateX(calc(-50% + ${({ relatedShift }) => relatedShift}px))
   translateY(${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)});
   display: grid;
-  grid-template-columns: ${({ size }) => `repeat(${size}, auto)`};
+  grid-template-columns: ${({ displaySmaller, size }) => (displaySmaller ? 'repeat(1, auto)' : `repeat(${size}, auto)`)};
   grid-gap: 0 40px;
   animation: ${(props) => getAnimation(props)} 0.3s;
   transition: all 0.3s;
@@ -148,14 +156,36 @@ export const DayButton = styled.button`
   display: flex;
   justify-content: center;
 `;
+
 export const ButtonText = styled(Text)`
   color: ${({ isSelected }) => (isSelected ? 'white' : undefined)};
   justify-content: center;
   width: 2ch;
 `;
+
+export const YearButtonText = styled(ButtonText)`
+  width: 4ch;
+`;
+
+export const MonthButtonText = styled(ButtonText)`
+  width: 3ch;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   cursor: pointer;
   margin: 4px 2px 0 2px;
+`;
+
+export const MonthButton = styled(DayButton)`
+  padding: 16px 20px;
+`;
+
+export const YearButton = styled(DayButton)`
+  padding: 14px 16px;
+`;
+
+export const MonthButtonContainer = styled(ButtonContainer)`
+  margin: 8px 4px 0 4px;
 `;

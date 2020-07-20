@@ -171,7 +171,7 @@ The calendar will automatically be positioned depending on the scroll position.
 
 ### Custom Weekday Labels
 
-To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the arrats starts off with **Sunday** on index 0.
+To change the weekday labels, the component can take in an array of 7 strings, each one representing the week day. Following the javascript date standard, the array starts off with **Sunday** on index 0.
 
 > Note: The array order is not affected by the firstDayOfWeek prop. It always starts with Sunday, and the calendar will change accordingly.
 
@@ -183,4 +183,47 @@ To change the weekday labels, the component can take in an array of 7 strings, e
   </Story>
 </Preview>
 
+### Month Dropdown
+
+To add a dropdown which allows the user to move to any month in the current year, set the `hasMonthDropdown` property to `true`.
+
+> Note: for multi-month datepickers, changing one month will affect the other month(s) as well.
+
+<Preview>
+  <Story name="Month Dropdown">
+    <Box>
+      <DatepickerController hasMonthDropdown />
+    </Box>
+  </Story>
+</Preview>
+
+### Year Dropdown
+
+To add a dropdown which allows the user to move up to five years in the future or past from the current year, set the `hasYearDropdown` property to `true`.
+
+> Note: for multi-month datepickers, changing one month's year will affect the year(s) of the other month(s) as well.
+
+<Preview>
+  <Story name="Year Dropdown">
+    <Box>
+      <DatepickerController hasYearDropdown/>
+    </Box>
+  </Story>
+</Preview>
+
+### Year Picker
+
+To create a year picker in which you can click on the titles to select year and month, simply set `isYearPicker` to `true`. 
+
+> Note: for datepickers where `numberOfMonths` is `2` or greater, clicking on the title will change both month views.
+
+<Preview>
+  <Story name="Year Picker">
+    <Box>
+      <DatepickerController isYearPicker/>
+    </Box>
+  </Story>
+</Preview>
+
 <Props of={Datepicker} />
+

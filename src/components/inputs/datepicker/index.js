@@ -64,13 +64,15 @@ const Datepicker = (props) => {
     errorMessage,
     disabled,
     customWeekdayLabels,
+    hasYearDropdown,
+    hasMonthDropdown,
+    isYearPicker,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const inputRef = useRef(null);
   const divRef = useRef(null);
 
   useEffect(() => {
@@ -112,6 +114,9 @@ const Datepicker = (props) => {
     onDateFocus,
     goToPreviousMonths,
     goToNextMonths,
+    goToDate,
+    goToNextYear,
+    goToPreviousYear,
   } = useDatepicker({
     startDate: value,
     endDate: isRange ? endValue : null,
@@ -121,6 +126,14 @@ const Datepicker = (props) => {
     firstDayOfWeek,
     ...datepickerProps,
   });
+
+  const handleChangeMonth = (m, y) => {
+    const newDate = new Date();
+    newDate.setMonth(m);
+    newDate.setDate(1);
+    newDate.setFullYear(y);
+    goToDate(newDate);
+  };
 
   const specialKeyHandler = ({ keyCode }) => {
     // Enter Key Handler
@@ -169,6 +182,18 @@ const Datepicker = (props) => {
     }, 300);
   };
 
+  const textInputDateRef = useRef();
+
+  const handleBlur = (e) => {
+    if (e.relatedTarget) {
+      if (e.relatedTarget.tagName.toUpperCase() !== 'INPUT') {
+        closeCalendar();
+      }
+    } else {
+      closeCalendar();
+    }
+  };
+
   return (
     <DatepickerContext.Provider
       value={{
@@ -192,20 +217,26 @@ const Datepicker = (props) => {
             activeMonths={activeMonths}
             goToNextMonths={goToNextMonths}
             goToPreviousMonths={goToPreviousMonths}
+            goToNextYear={goToNextYear}
+            goToPreviousYear={goToPreviousYear}
             firstDayOfWeek={firstDayOfWeek}
             isRange={isRange}
             value={value}
+            hasYearDropdown={hasYearDropdown}
+            hasMonthDropdown={hasMonthDropdown}
             customWeekdayLabels={customWeekdayLabels}
+            textInputDateRef={textInputDateRef}
+            isYearPicker={isYearPicker}
+            handleChangeMonth={handleChangeMonth}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}
       >
         <InputWrapper ref={divRef} {...rest}>
           <InputField
-            ref={inputRef}
             onKeyDown={specialKeyHandler}
             onFocus={() => setCalendarIsOpen(true)}
-            onBlur={() => closeCalendar()}
+            onBlur={(e) => handleBlur(e)}
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -215,6 +246,7 @@ const Datepicker = (props) => {
             disabled={disabled}
             errorMessage={errorMessage}
             inputState={errorMessage ? 'error' : 'initial'}
+            ref={textInputDateRef}
           />
         </InputWrapper>
       </PositioningPortal>
@@ -237,6 +269,10 @@ Datepicker.propTypes = {
   errorMessage: PropTypes.string,
   disabled: PropTypes.bool,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
+  hasYearDropdown: PropTypes.bool,
+  hasMonthDropdown: PropTypes.bool,
+  isYearPicker: PropTypes.bool,
+
 };
 
 Datepicker.defaultProps = {
@@ -253,6 +289,9 @@ Datepicker.defaultProps = {
   errorMessage: null,
   disabled: false,
   customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  hasYearDropdown: false,
+  hasMonthDropdown: false,
+  isYearPicker: false,
 };
 
 export default Datepicker;
