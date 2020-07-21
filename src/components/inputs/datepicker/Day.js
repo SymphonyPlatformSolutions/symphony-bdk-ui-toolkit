@@ -22,6 +22,7 @@ function Day({ day, date }) {
   } = context;
   const {
     isSelected,
+    disabledDate,
     isSelectedStartOrEnd,
     onClick,
     tabIndex,
@@ -44,7 +45,7 @@ function Day({ day, date }) {
   }
 
   return (
-    <ButtonContainer>
+    <ButtonContainer disabled={disabledDate}>
       <DayButton
         onClick={onClick}
         tabIndex={tabIndex}

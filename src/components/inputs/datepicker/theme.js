@@ -176,6 +176,11 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   cursor: pointer;
   margin: 4px 2px 0 2px;
+  
+  ${({ disabled }) => (disabled ? `
+    opacity: 0.3;
+    pointer-events: none;
+  ` : null)}
 `;
 
 export const MonthButton = styled(DayButton)`
