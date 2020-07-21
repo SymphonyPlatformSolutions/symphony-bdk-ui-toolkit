@@ -4,7 +4,11 @@ import Datepicker from '..';
 export const DatepickerController = (props) => {
   const [simpleDate, setSimpleDate] = useState(null);
 
-  return <Datepicker value={simpleDate} onChange={setSimpleDate} {...props} />;
+  const additionalProps = {
+    minBookingDate: new Date(),
+  };
+
+  return <Datepicker value={simpleDate} onChange={setSimpleDate} {...props} datepickerProps={additionalProps} />;
 };
 
 export const RangeController = (props) => {
