@@ -67,6 +67,7 @@ const Datepicker = (props) => {
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    closeOnClick,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
@@ -74,6 +75,25 @@ const Datepicker = (props) => {
   const [inputValue, setInputValue] = useState('');
 
   const divRef = useRef(null);
+  const textInputDateRef = useRef();
+
+  const closeCalendar = () => {
+    setTriggerClose(true);
+    // Reset input to chosen date value
+    setInputValue(
+      dateValueFormatter
+        ? dateValueFormatter(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
+    );
+    setTimeout(() => {
+      setCalendarIsOpen(false);
+      setTriggerClose(false);
+    }, 300);
+  };
+
+  const handleCloseOnClick = () => {
+    textInputDateRef.current.blur();
+  };
 
   useEffect(() => {
     setInputValue(
@@ -93,6 +113,7 @@ const Datepicker = (props) => {
         isStart: data.focusedInput === START_DATE,
       });
     }
+    if (closeOnClick) { handleCloseOnClick(); }
   }
 
   const getFocused = () => {
@@ -167,22 +188,6 @@ const Datepicker = (props) => {
       }
     }
   };
-
-  const closeCalendar = () => {
-    setTriggerClose(true);
-    // Reset input to chosen date value
-    setInputValue(
-      dateValueFormatter
-        ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange),
-    );
-    setTimeout(() => {
-      setCalendarIsOpen(false);
-      setTriggerClose(false);
-    }, 300);
-  };
-
-  const textInputDateRef = useRef();
 
   const handleBlur = (e) => {
     if (e.relatedTarget) {
@@ -272,7 +277,7 @@ Datepicker.propTypes = {
   hasYearDropdown: PropTypes.bool,
   hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
-
+  closeOnClick: PropTypes.bool,
 };
 
 Datepicker.defaultProps = {
@@ -292,6 +297,7 @@ Datepicker.defaultProps = {
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  closeOnClick: false,
 };
 
 export default Datepicker;
