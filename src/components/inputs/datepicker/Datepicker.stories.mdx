@@ -37,7 +37,7 @@ For a single date, the controller component must inject a *`value`* prop. The on
 <Preview>
   <Story name="Single Date">
     <Box>
-      <DatepickerController />
+      <DatepickerController closeOnClick={true}/>
     </Box>
   </Story>
 </Preview>
@@ -213,7 +213,7 @@ To add a dropdown which allows the user to move up to five years in the future o
 
 ### Year Picker
 
-To create a year picker in which you can click on the titles to select year and month, simply set `isYearPicker` to `true`. 
+To create a year picker in which you can click on the titles to select year and month, simply set `isYearPicker` to `true`.
 
 > Note: for datepickers where `numberOfMonths` is `2` or greater, clicking on the title will change both month views.
 
