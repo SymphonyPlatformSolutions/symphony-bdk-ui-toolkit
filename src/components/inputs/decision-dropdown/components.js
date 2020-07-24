@@ -314,8 +314,10 @@ export const DropdownControl = forwardRef((props, ref) => {
           }}
           onFocus={() => focusBlurHandler(true)}
           onBlur={() => {
-            if (value && !typedValue && !isMulti) {
+            if (value && !isMulti) {
               setTypedValue(value.label);
+            } else if (!value) {
+              setTypedValue('');
             }
             focusBlurHandler(false);
           }}
