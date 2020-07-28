@@ -25,6 +25,7 @@ const MONTHS = [
 ];
 
 const ENTER_KEY = 13;
+const TAB_KEY = 9;
 
 const formatDate = (date, endDate, isRange) => {
   if (!date) {
@@ -92,6 +93,7 @@ const Datepicker = (props) => {
   };
 
   const handleCloseOnClick = () => {
+    closeCalendar();
     textInputDateRef.current.blur();
   };
 
@@ -186,6 +188,8 @@ const Datepicker = (props) => {
         });
         onDateFocus(startDateObject || endDateObject);
       }
+    } else if (keyCode === TAB_KEY) {
+      closeCalendar();
     }
   };
 
