@@ -81,13 +81,18 @@ const DecisionDropdown = (props) => {
   };
 
   const focusBlurHandler = (isFocus) => {
+    if (disabled) {
+      return;
+    }
     if (isFocus && !menuIsOpen) {
       if (clickHandler) {
         clickHandler();
       }
       setMenuIsOpen(true);
+      controlRef.current.toggleInputBlur(false);
     } else if (!isFocus && menuIsOpen) {
       setMenuIsOpen(false);
+      controlRef.current.toggleInputBlur(true);
     }
   };
 

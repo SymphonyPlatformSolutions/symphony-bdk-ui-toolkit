@@ -49,7 +49,7 @@ export const DefaultEmptyMessage = ({ children }) => (
   </EmptyMessageContainer>
 );
 
-const SimpleItem = props => {
+const SimpleItem = (props) => {
   const {
     label,
     sublabel,
@@ -64,7 +64,7 @@ const SimpleItem = props => {
     <SimpleItemContainer
       onMouseEnter={() => lightFocusHandler(uid)}
       lightFocused={lightFocused}
-      onMouseDown={e => {
+      onMouseDown={(e) => {
         e.preventDefault();
         clickHandler();
       }}
@@ -87,7 +87,7 @@ const SimpleItem = props => {
   );
 };
 
-export const MenuItem = props => {
+export const MenuItem = (props) => {
   const {
     title,
     subtitle,
@@ -113,7 +113,7 @@ export const MenuItem = props => {
   }
   if (suboptions) {
     const filteredOptions = suboptions.filter(
-      x => !!selectableArray.find(y => y.value === x.value),
+      (x) => !!selectableArray.find((y) => y.value === x.value),
     );
     if (!filteredOptions.length && suboptions.length) {
       return null;
@@ -123,7 +123,7 @@ export const MenuItem = props => {
         {title && <MenuItemTitle>{title}</MenuItemTitle>}
         {subtitle && <MenuItemSubtitle>{subtitle}</MenuItemSubtitle>}
         {suboptions.length
-          ? filteredOptions.map(el => (
+          ? filteredOptions.map((el) => (
             <SimpleItem
               {...el}
               CustomItem={el.CustomItem}
@@ -133,7 +133,7 @@ export const MenuItem = props => {
               key={el.uid}
               clickHandler={() => chooseHandler(el)}
               multiChosen={
-                  valueList && !!valueList.find(x => x.value === el.value)
+                  valueList && !!valueList.find((x) => x.value === el.value)
                 }
             />
           ))
@@ -142,7 +142,7 @@ export const MenuItem = props => {
     );
   }
 
-  if (selectableArray.find(y => y.value === props.value)) {
+  if (selectableArray.find((y) => y.value === props.value)) {
     return (
       <SimpleItem
         {...props}
@@ -151,7 +151,7 @@ export const MenuItem = props => {
         lightFocusHandler={lightFocusHandler}
         clickHandler={() => chooseHandler(props)}
         multiChosen={
-          valueList && !!valueList.find(x => x.value === props.value)
+          valueList && !!valueList.find((x) => x.value === props.value)
         }
       />
     );
@@ -168,7 +168,7 @@ MenuItem.defaultProps = {
 
 const MultiSelectValue = ({ children, removeHandler }) => (
   <MultiSelectContainer
-    onMouseDown={e => {
+    onMouseDown={(e) => {
       e.preventDefault();
       removeHandler();
     }}
@@ -178,7 +178,7 @@ const MultiSelectValue = ({ children, removeHandler }) => (
   </MultiSelectContainer>
 );
 
-const MultiValueList = props => {
+const MultiValueList = (props) => {
   const {
     value, chooseHandler, size, CustomValue,
   } = props;
@@ -190,7 +190,7 @@ const MultiValueList = props => {
   return (
     <ValueContainer size={size}>
       <MultiValueContainer>
-        {value.map(l => (CustomValue ? (
+        {value.map((l) => (CustomValue ? (
           <CustomValue
             removeHandler={() => chooseHandler(l)}
             key={l.value}
@@ -233,7 +233,10 @@ export const DropdownControl = forwardRef((props, ref) => {
   const [typedValue, setTypedValue] = useState('');
   const inputRef = useRef();
 
-  const toggleInputBlur = isBlur => {
+  const toggleInputBlur = (isBlur) => {
+    if (disabled) {
+      return;
+    }
     if (isBlur) {
       inputRef.current.blur();
     } else {
@@ -281,9 +284,7 @@ export const DropdownControl = forwardRef((props, ref) => {
       error={error}
     >
       <ValueAndControl
-        onClick={() => {
-          hideInput && inputRef.current.focus();
-        }}
+        onClick={() => hideInput && toggleInputBlur(false)}
         size={size}
       >
         {isMulti && (
@@ -299,7 +300,7 @@ export const DropdownControl = forwardRef((props, ref) => {
         )}
         <ControlInput
           hide={hideInput}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             specialKeyController(e);
             if (e.keyCode === BS_KEY) {
               backSpaceHandler();
@@ -331,14 +332,14 @@ export const DropdownControl = forwardRef((props, ref) => {
         )}
         {CustomChevron ? (
           <CustomChevron
-            blurInput={() => toggleInputBlur(true)}
-            focusInput={() => toggleInputBlur(false)}
+            blurInput={() => focusBlurHandler(true)}
+            focusInput={() => focusBlurHandler(false)}
             menuIsOpen={menuIsOpen}
             disabled={disabled}
           />
         ) : (
           <ChevronWrapper
-            onMouseDown={e => {
+            onMouseDown={(e) => {
               e.preventDefault();
               toggleInputBlur(menuIsOpen);
             }}
@@ -394,7 +395,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
     setLightFocus(-1);
   }, [filterQuery]);
 
-  const chooseOrNavigate = item => {
+  const chooseOrNavigate = (item) => {
     if (item.options) {
       setNavTree([...navTree, item.value]);
       setSelectableArray(buildSelectableArray(item.options, filterQuery));
@@ -420,11 +421,11 @@ export const DropdownMenu = forwardRef((props, ref) => {
     },
   }));
 
-  const lightFocusHandler = uid => {
+  const lightFocusHandler = (uid) => {
     if (!uid) {
       return setLightFocus(-1);
     }
-    return setLightFocus(selectableArray.findIndex(el => el.uid === uid));
+    return setLightFocus(selectableArray.findIndex((el) => el.uid === uid));
   };
 
   const goBack = () => {
@@ -433,7 +434,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
       let nextBranch;
       for (let i = 0; i < acc.length; i += 1) {
         const subTree = acc[i].suboptions ? acc[i].suboptions : acc[i];
-        nextBranch = subTree.find(branch => branch.value === el);
+        nextBranch = subTree.find((branch) => branch.value === el);
         if (nextBranch) {
           break;
         }
@@ -497,7 +498,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
         {hasBackButton && navTree.length > 0 && (
           <BackButtonContainer>
             <BackButton
-              onMouseDown={e => {
+              onMouseDown={(e) => {
                 e.preventDefault();
                 goBack();
               }}
