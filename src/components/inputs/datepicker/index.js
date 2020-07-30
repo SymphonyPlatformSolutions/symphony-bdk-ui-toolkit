@@ -63,6 +63,7 @@ const Datepicker = (props) => {
     firstDayOfWeek,
     datepickerProps,
     errorMessage,
+    inputState,
     disabled,
     customWeekdayLabels,
     hasYearDropdown,
@@ -254,7 +255,7 @@ const Datepicker = (props) => {
             size={size}
             disabled={disabled}
             errorMessage={errorMessage}
-            inputState={errorMessage ? 'error' : 'initial'}
+            inputState={inputState}
             ref={textInputDateRef}
           />
         </InputWrapper>
@@ -276,6 +277,7 @@ Datepicker.propTypes = {
   firstDayOfWeek: PropTypes.number,
   datepickerProps: PropTypes.object,
   errorMessage: PropTypes.string,
+  inputState: PropTypes.oneOf(['initial', 'modified', 'error']),
   disabled: PropTypes.bool,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   hasYearDropdown: PropTypes.bool,
@@ -296,6 +298,7 @@ Datepicker.defaultProps = {
   firstDayOfWeek: 0,
   datepickerProps: {},
   errorMessage: null,
+  inputState: 'initial',
   disabled: false,
   customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
   hasYearDropdown: false,
