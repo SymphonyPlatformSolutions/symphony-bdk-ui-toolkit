@@ -8,6 +8,7 @@ import PortalBubble from './bubble';
 import DatepickerContext from './datepickerContext';
 import InputField from '../input-field';
 import { InputWrapper } from './theme';
+import { YEAR_SELECTOR_ID } from './Month';
 
 const MONTHS = [
   'Jan',
@@ -195,7 +196,7 @@ const Datepicker = (props) => {
   };
 
   const handleBlur = (e) => {
-    if (e.relatedTarget && e.relatedTarget.id === 'sdateselect') {
+    if (e.relatedTarget && e.relatedTarget.id === YEAR_SELECTOR_ID) {
       return;
     }
     closeCalendar();

@@ -32,6 +32,8 @@ const months = [
   { value: 11, label: 'Dec' },
 ];
 
+export const YEAR_SELECTOR_ID = 'sdateselect';
+
 const Month = (props) => {
   const {
     year,
@@ -90,7 +92,7 @@ const Month = (props) => {
 
     return (
       <YearDropdown
-        inputId="sdateselect"
+        inputId={YEAR_SELECTOR_ID}
         label=""
         value={chosenYear}
         options={years}
@@ -113,7 +115,7 @@ const Month = (props) => {
 
     return (
       <MonthDropdown
-        inputId="sdateselect"
+        inputId={YEAR_SELECTOR_ID}
         label=""
         value={chosenMonth}
         options={months}
