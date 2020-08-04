@@ -32,6 +32,8 @@ const months = [
   { value: 11, label: 'Dec' },
 ];
 
+export const YEAR_SELECTOR_ID = 'sdateselect';
+
 const Month = (props) => {
   const {
     year,
@@ -89,7 +91,14 @@ const Month = (props) => {
     };
 
     return (
-      <YearDropdown label="" value={chosenYear} options={years} onChange={onYearChange} onBlur={onDropdownBlur} />
+      <YearDropdown
+        inputId={YEAR_SELECTOR_ID}
+        label=""
+        value={chosenYear}
+        options={years}
+        onChange={onYearChange}
+        onBlur={onDropdownBlur}
+      />
     );
   };
 
@@ -105,7 +114,14 @@ const Month = (props) => {
     };
 
     return (
-      <MonthDropdown label="" value={chosenMonth} options={months} onChange={onMonthChange} onBlur={onDropdownBlur} />
+      <MonthDropdown
+        inputId={YEAR_SELECTOR_ID}
+        label=""
+        value={chosenMonth}
+        options={months}
+        onChange={onMonthChange}
+        onBlur={onDropdownBlur}
+      />
     );
   };
 

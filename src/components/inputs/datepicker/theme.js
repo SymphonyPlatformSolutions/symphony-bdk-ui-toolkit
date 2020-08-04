@@ -36,6 +36,9 @@ export const TitleText = styled(Text)`
   color: ${({ theme }) => theme.colors.grey_600};
   font-weight: bold;
   white-space: nowrap;
+  &:hover {
+    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) => (isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200)};
+  }
 `;
 export const WeekdayTextWrapper = styled.div`
   display: flex;
