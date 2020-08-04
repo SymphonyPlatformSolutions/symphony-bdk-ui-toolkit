@@ -89,7 +89,14 @@ const Month = (props) => {
     };
 
     return (
-      <YearDropdown label="" value={chosenYear} options={years} onChange={onYearChange} onBlur={onDropdownBlur} />
+      <YearDropdown
+        inputId="sdateselect"
+        label=""
+        value={chosenYear}
+        options={years}
+        onChange={onYearChange}
+        onBlur={onDropdownBlur}
+      />
     );
   };
 
@@ -105,7 +112,14 @@ const Month = (props) => {
     };
 
     return (
-      <MonthDropdown label="" value={chosenMonth} options={months} onChange={onMonthChange} onBlur={onDropdownBlur} />
+      <MonthDropdown
+        inputId="sdateselect"
+        label=""
+        value={chosenMonth}
+        options={months}
+        onChange={onMonthChange}
+        onBlur={onDropdownBlur}
+      />
     );
   };
 

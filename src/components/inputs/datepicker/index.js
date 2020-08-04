@@ -195,13 +195,10 @@ const Datepicker = (props) => {
   };
 
   const handleBlur = (e) => {
-    if (e.relatedTarget) {
-      if (e.relatedTarget.tagName.toUpperCase() !== 'INPUT') {
-        closeCalendar();
-      }
-    } else {
-      closeCalendar();
+    if (e.relatedTarget?.id === 'sdateselect') {
+      return;
     }
+    closeCalendar();
   };
 
   return (
