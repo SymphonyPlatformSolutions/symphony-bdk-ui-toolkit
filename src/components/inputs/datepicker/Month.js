@@ -173,7 +173,6 @@ const Month = (props) => {
 
   const onMonthOnlySelect = (m) => {
     handleChangeMonth(m, year);
-    console.log(textInputDateRef);
     setInputValue(`${months[m].label} ${year}`);
   };
 
@@ -274,7 +273,6 @@ const Month = (props) => {
       </div>
     );
   } if (isMonthPicker) {
-    console.log('MONTHPICKER!');
     if (displayMonths) {
       return (
         <div>
