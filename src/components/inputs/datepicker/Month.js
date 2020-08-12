@@ -46,9 +46,11 @@ const Month = (props) => {
     singleDay,
     customWeekdayLabels,
     textInputDateRef,
+    setInputValue,
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    isMonthPicker,
     displayMonths,
     displayYears,
     onClickForDays,
@@ -169,6 +171,12 @@ const Month = (props) => {
     onClickForDays();
   };
 
+  const onMonthOnlySelect = (m) => {
+    handleChangeMonth(m, year);
+    console.log(textInputDateRef);
+    setInputValue(`${months[m].label} ${year}`);
+  };
+
   if (isYearPicker) {
     if (displayMonths) {
       return (
@@ -265,6 +273,67 @@ const Month = (props) => {
         </WeekSeparator>
       </div>
     );
+  } if (isMonthPicker) {
+    console.log('MONTHPICKER!');
+    if (displayMonths) {
+      return (
+        <div>
+          <MonthTitleContainer>
+            <ChangeMonthButton
+              onClick={goBackOneYear}
+              show
+              turnLeft
+            >
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+            <TitleText onClick={onClickForYears}>{year}</TitleText>
+            <ChangeMonthButton onClick={goForwardOneYear} show>
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+          </MonthTitleContainer>
+          <WeekSeparator marginTop={8} displayFours>
+            {months.map((m) => (
+              <MonthA
+                label={m.label}
+                value={m.value}
+                key={`${m.value}-${year}`}
+                year={year}
+                onClick={onMonthOnlySelect}
+              />
+            ))}
+          </WeekSeparator>
+        </div>
+      );
+    }
+
+    if (displayYears) {
+      return (
+        <div>
+          <MonthTitleContainer>
+            <ChangeMonthButton
+              onClick={goBackOneDecade}
+              show
+              turnLeft
+            >
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+            <TitleText>Select a year</TitleText>
+            <ChangeMonthButton onClick={goForwardOneDecade} show>
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+          </MonthTitleContainer>
+          <WeekSeparator marginTop={8} displayFours>
+            {years.map((y) => (
+              <Year
+                key={y.value}
+                year={y.value}
+                onClick={onYearSelect}
+              />
+            ))}
+          </WeekSeparator>
+        </div>
+      );
+    }
   }
 
   return (
@@ -319,9 +388,11 @@ Month.propTypes = {
   singleDay: PropTypes.instanceOf(Date),
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   textInputDateRef: PropTypes.object,
+  setInputValue: PropTypes.func,
   hasMonthDropdown: PropTypes.bool,
   hasYearDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
   displayMonths: PropTypes.bool,
   displayYears: PropTypes.bool,
   onClickForDays: PropTypes.func,
@@ -338,9 +409,11 @@ Month.defaultProps = {
   goToNextYear: null,
   goToPreviousYear: null,
   textInputDateRef: null,
+  setInputValue: () => {},
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  isMonthPicker: false,
   displayMonths: false,
   displayYears: false,
   onClickForDays: () => {},

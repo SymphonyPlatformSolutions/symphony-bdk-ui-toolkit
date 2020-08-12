@@ -70,6 +70,7 @@ const Datepicker = (props) => {
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    isMonthPicker,
     closeOnClick,
     ...rest
   } = props;
@@ -83,11 +84,13 @@ const Datepicker = (props) => {
   const closeCalendar = () => {
     setTriggerClose(true);
     // Reset input to chosen date value
-    setInputValue(
-      dateValueFormatter
-        ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange),
-    );
+    if (!isMonthPicker) {
+      setInputValue(
+        dateValueFormatter
+          ? dateValueFormatter(value, endValue, isRange)
+          : formatDate(value, endValue, isRange),
+      );
+    }
     setTimeout(() => {
       setCalendarIsOpen(false);
       setTriggerClose(false);
@@ -155,7 +158,7 @@ const Datepicker = (props) => {
   const handleChangeMonth = (m, y) => {
     const newDate = new Date();
     newDate.setMonth(m);
-    newDate.setDate(1);
+    newDate.setDate(15);
     newDate.setFullYear(y);
     goToDate(newDate);
   };
@@ -234,7 +237,9 @@ const Datepicker = (props) => {
             hasMonthDropdown={hasMonthDropdown}
             customWeekdayLabels={customWeekdayLabels}
             textInputDateRef={textInputDateRef}
+            setInputValue={setInputValue}
             isYearPicker={isYearPicker}
+            isMonthPicker={isMonthPicker}
             handleChangeMonth={handleChangeMonth}
           />
         )}
@@ -281,6 +286,7 @@ Datepicker.propTypes = {
   hasYearDropdown: PropTypes.bool,
   hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
   closeOnClick: PropTypes.bool,
 };
 
@@ -302,6 +308,7 @@ Datepicker.defaultProps = {
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  isMonthPicker: false,
   closeOnClick: false,
 };
 

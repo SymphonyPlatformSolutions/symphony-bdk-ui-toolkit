@@ -12,6 +12,7 @@ export const datepickerContextDefaultValue = {
   onDateSelect: () => {},
   hasYearDropdown: () => false,
   isYearPicker: () => false,
+  isMonthPicker: () => false,
 };
 
 export default React.createContext(datepickerContextDefaultValue);
