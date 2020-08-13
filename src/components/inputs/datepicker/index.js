@@ -78,6 +78,10 @@ const Datepicker = (props) => {
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
+  const [yearSelected, changeYearSelected] = useState(false);
+  const [prevYear, changePrevYear] = useState(null);
+  const [monthSelected, changeMonthSelected] = useState(false);
+
   const divRef = useRef(null);
   const textInputDateRef = useRef();
 
@@ -155,8 +159,24 @@ const Datepicker = (props) => {
     ...datepickerProps,
   });
 
+  const today = new Date();
+  const disabledYear = (y) => (y < today.getFullYear());
+  const disabledMonth = (m, y) => {
+    if (y < today.getFullYear()) return true;
+    return (y === today.getFullYear() && m < today.getMonth());
+  };
+
+  const handleChangeYear = (newYear, oldYear) => {
+    changeYearSelected(true);
+    changePrevYear(oldYear);
+    if (newYear !== oldYear) changeMonthSelected(false);
+  };
+
   const handleChangeMonth = (m, y) => {
     if (!disabledMonth(m, y)) {
+      changeMonthSelected(true);
+      changeYearSelected(true);
+      changePrevYear(y);
       const newDate = new Date();
       newDate.setMonth(m);
       newDate.setDate(15);
@@ -165,13 +185,6 @@ const Datepicker = (props) => {
     } else {
       setInputValue('');
     }
-  };
-
-  const today = new Date();
-  const disabledYear = (y) => (y < today.getFullYear());
-  const disabledMonth = (m, y) => {
-    if (y < today.getFullYear()) return true;
-    return (y === today.getFullYear() && m < today.getMonth());
   };
 
   const specialKeyHandler = ({ keyCode }) => {
@@ -261,6 +274,10 @@ const Datepicker = (props) => {
             handleCloseOnClick={handleCloseOnClick}
             disabledMonth={disabledMonth}
             disabledYear={disabledYear}
+            handleChangeYear={handleChangeYear}
+            yearSelected={yearSelected}
+            monthSelected={monthSelected}
+            prevYear={prevYear}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}

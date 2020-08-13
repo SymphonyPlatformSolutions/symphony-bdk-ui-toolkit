@@ -61,6 +61,10 @@ const Month = (props) => {
     handleCloseOnClick,
     disabledMonth,
     disabledYear,
+    handleChangeYear,
+    yearSelected,
+    monthSelected,
+    prevYear,
   } = props;
 
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
@@ -161,6 +165,7 @@ const Month = (props) => {
   };
 
   const onYearSelect = (y) => {
+    handleChangeYear(y, year);
     const changeInYears = Math.abs(year - y);
     if (year > y) {
       goToPreviousYear(changeInYears);
@@ -168,6 +173,21 @@ const Month = (props) => {
       goToNextYear(changeInYears);
     }
     onClickForMonths();
+  };
+
+  const isSelectedYear = (y) => {
+    if (yearSelected) {
+      return (y === year);
+    }
+    return false;
+  };
+
+  const isSelectedMonth = (m, y) => {
+    if (monthSelected) {
+      if (y !== prevYear) return false;
+      return (m === month);
+    }
+    return false;
   };
 
   const onMonthSelect = (m) => {
@@ -208,6 +228,7 @@ const Month = (props) => {
                 year={year}
                 onClick={onMonthSelect}
                 disabled={disabledMonth(m.value, year)}
+                isSelected={isSelectedMonth(m.value, year)}
               />
             ))}
           </WeekSeparator>
@@ -238,6 +259,7 @@ const Month = (props) => {
                 year={y.value}
                 onClick={onYearSelect}
                 disabled={disabledYear(y.value)}
+                isSelected={isSelectedYear(y.value)}
               />
             ))}
           </WeekSeparator>
@@ -306,6 +328,7 @@ const Month = (props) => {
                 year={year}
                 onClick={onMonthOnlySelect}
                 disabled={disabledMonth(m.value, year)}
+                isSelected={isSelectedMonth(m.value, year)}
               />
             ))}
           </WeekSeparator>
@@ -336,6 +359,7 @@ const Month = (props) => {
                 year={y.value}
                 onClick={onYearSelect}
                 disabled={disabledYear(y.value)}
+                isSelected={isSelectedYear(y.value)}
               />
             ))}
           </WeekSeparator>
@@ -411,6 +435,10 @@ Month.propTypes = {
   handleCloseOnClick: PropTypes.func,
   disabledMonth: PropTypes.func,
   disabledYear: PropTypes.func,
+  handleChangeYear: PropTypes.func,
+  yearSelected: PropTypes.bool,
+  monthSelected: PropTypes.bool,
+  prevYear: PropTypes.number,
 };
 
 
@@ -437,6 +465,10 @@ Month.defaultProps = {
   handleCloseOnClick: () => {},
   disabledMonth: () => {},
   disabledYear: () => {},
+  handleChangeYear: () => {},
+  yearSelected: false,
+  monthSelected: false,
+  prevYear: null,
 };
 
 export default Month;
