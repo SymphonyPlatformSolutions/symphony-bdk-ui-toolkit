@@ -156,21 +156,37 @@ const Datepicker = (props) => {
   });
 
   const handleChangeMonth = (m, y) => {
-    const newDate = new Date();
-    newDate.setMonth(m);
-    newDate.setDate(15);
-    newDate.setFullYear(y);
-    goToDate(newDate);
+    if (!disabledMonth(m, y)) {
+      const newDate = new Date();
+      newDate.setMonth(m);
+      newDate.setDate(15);
+      newDate.setFullYear(y);
+      goToDate(newDate);
+    } else {
+      setInputValue('');
+    }
+  };
+
+  const today = new Date();
+  const disabledYear = (y) => (y < today.getFullYear());
+  const disabledMonth = (m, y) => {
+    if (y < today.getFullYear()) return true;
+    return (y === today.getFullYear() && m < today.getMonth());
   };
 
   const specialKeyHandler = ({ keyCode }) => {
     // Enter Key Handler
     if (keyCode === ENTER_KEY) {
-      if (!isRange) {
+      if (!isRange && !isMonthPicker) {
         const inputDate = new Date(inputValue);
         if (inputDate.toString() !== 'Invalid Date') {
           onChange(inputDate);
           onDateFocus(inputDate);
+        }
+      } else if (isMonthPicker) {
+        const inputDate = new Date(inputValue);
+        if (inputDate.toString() !== 'Invalid Date') {
+          handleChangeMonth(inputDate.getMonth(), inputDate.getFullYear());
         }
       } else {
         const [inputStart, inputEnd] = inputValue.split('-');
@@ -243,6 +259,8 @@ const Datepicker = (props) => {
             handleChangeMonth={handleChangeMonth}
             closeOnClick={closeOnClick}
             handleCloseOnClick={handleCloseOnClick}
+            disabledMonth={disabledMonth}
+            disabledYear={disabledYear}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}

@@ -59,6 +59,8 @@ const Month = (props) => {
     handleChangeMonth,
     closeOnClick,
     handleCloseOnClick,
+    disabledMonth,
+    disabledYear,
   } = props;
 
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
@@ -179,10 +181,6 @@ const Month = (props) => {
 
     if (closeOnClick) { handleCloseOnClick(); }
   };
-
-  const today = new Date();
-  const disabledYear = (y) => (y < today.getFullYear());
-  const disabledMonth = (m, y) => (y <= today.getFullYear() && m < today.getMonth());
 
   if (isYearPicker) {
     if (displayMonths) {
@@ -387,6 +385,31 @@ const Month = (props) => {
   );
 };
 
+Month.propTypes = {
+  singleDay: PropTypes.object,
+  customWeekdayLabels: PropTypes.array,
+  goToNextMonths: PropTypes.func,
+  goToPreviousMonths: PropTypes.func,
+  goToNextYear: PropTypes.func,
+  goToPreviousYear: PropTypes.func,
+  textInputDateRef: PropTypes.object,
+  setInputValue: PropTypes.func,
+  hasYearDropdown: PropTypes.bool,
+  hasMonthDropdown: PropTypes.bool,
+  isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
+  displayMonths: PropTypes.bool,
+  displayYears: PropTypes.bool,
+  onClickForDays: PropTypes.func,
+  onClickForMonths: PropTypes.func,
+  onClickForYears: PropTypes.func,
+  handleChangeMonth: PropTypes.func,
+  closeOnClick: PropTypes.bool,
+  handleCloseOnClick: PropTypes.func,
+  disabledMonth: PropTypes.func,
+  disabledYear: PropTypes.func,
+};
+
 
 Month.defaultProps = {
   singleDay: null,
@@ -409,6 +432,8 @@ Month.defaultProps = {
   handleChangeMonth: () => {},
   closeOnClick: false,
   handleCloseOnClick: () => {},
+  disabledMonth: () => {},
+  disabledYear: () => {},
 };
 
 export default Month;
