@@ -57,6 +57,8 @@ const Month = (props) => {
     onClickForMonths,
     onClickForYears,
     handleChangeMonth,
+    closeOnClick,
+    handleCloseOnClick,
   } = props;
 
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
@@ -174,7 +176,13 @@ const Month = (props) => {
   const onMonthOnlySelect = (m) => {
     handleChangeMonth(m, year);
     setInputValue(`${months[m].label} ${year}`);
+
+    if (closeOnClick) { handleCloseOnClick(); }
   };
+
+  const today = new Date();
+  const disabledYear = (y) => (y < today.getFullYear());
+  const disabledMonth = (m, y) => (y <= today.getFullYear() && m < today.getMonth());
 
   if (isYearPicker) {
     if (displayMonths) {
@@ -201,6 +209,7 @@ const Month = (props) => {
                 key={`${m.value}-${year}`}
                 year={year}
                 onClick={onMonthSelect}
+                disabled={disabledMonth(m.value, year)}
               />
             ))}
           </WeekSeparator>
@@ -230,6 +239,7 @@ const Month = (props) => {
                 key={y.value}
                 year={y.value}
                 onClick={onYearSelect}
+                disabled={disabledYear(y.value)}
               />
             ))}
           </WeekSeparator>
@@ -297,6 +307,7 @@ const Month = (props) => {
                 key={`${m.value}-${year}`}
                 year={year}
                 onClick={onMonthOnlySelect}
+                disabled={disabledMonth(m.value, year)}
               />
             ))}
           </WeekSeparator>
@@ -326,6 +337,7 @@ const Month = (props) => {
                 key={y.value}
                 year={y.value}
                 onClick={onYearSelect}
+                disabled={disabledYear(y.value)}
               />
             ))}
           </WeekSeparator>
@@ -375,29 +387,6 @@ const Month = (props) => {
   );
 };
 
-Month.propTypes = {
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  firstDayOfWeek: PropTypes.number.isRequired,
-  goToNextMonths: PropTypes.func,
-  goToPreviousMonths: PropTypes.func,
-  goToNextYear: PropTypes.func,
-  goToPreviousYear: PropTypes.func,
-  singleDay: PropTypes.instanceOf(Date),
-  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
-  textInputDateRef: PropTypes.object,
-  setInputValue: PropTypes.func,
-  hasMonthDropdown: PropTypes.bool,
-  hasYearDropdown: PropTypes.bool,
-  isYearPicker: PropTypes.bool,
-  isMonthPicker: PropTypes.bool,
-  displayMonths: PropTypes.bool,
-  displayYears: PropTypes.bool,
-  onClickForDays: PropTypes.func,
-  onClickForMonths: PropTypes.func,
-  onClickForYears: PropTypes.func,
-  handleChangeMonth: PropTypes.func,
-};
 
 Month.defaultProps = {
   singleDay: null,
@@ -418,6 +407,8 @@ Month.defaultProps = {
   onClickForMonths: () => {},
   onClickForYears: () => {},
   handleChangeMonth: () => {},
+  closeOnClick: false,
+  handleCloseOnClick: () => {},
 };
 
 export default Month;

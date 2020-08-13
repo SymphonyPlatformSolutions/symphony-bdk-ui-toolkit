@@ -241,6 +241,8 @@ const Datepicker = (props) => {
             isYearPicker={isYearPicker}
             isMonthPicker={isMonthPicker}
             handleChangeMonth={handleChangeMonth}
+            closeOnClick={closeOnClick}
+            handleCloseOnClick={handleCloseOnClick}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}

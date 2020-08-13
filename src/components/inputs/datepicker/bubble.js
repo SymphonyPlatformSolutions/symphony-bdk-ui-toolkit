@@ -26,6 +26,8 @@ const PortalBubble = (props) => {
     isYearPicker,
     isMonthPicker,
     handleChangeMonth,
+    closeOnClick,
+    handleCloseOnClick,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const bubbleRef = useRef();
@@ -95,6 +97,8 @@ const PortalBubble = (props) => {
           onClickForMonths={onClickForMonths}
           onClickForYears={onClickForYears}
           handleChangeMonth={handleChangeMonth}
+          closeOnClick={closeOnClick}
+          handleCloseOnClick={handleCloseOnClick}
         />
       )
         : activeMonths.map((month, index) => (
@@ -123,6 +127,8 @@ const PortalBubble = (props) => {
             onClickForMonths={onClickForMonths}
             onClickForYears={onClickForYears}
             handleChangeMonth={handleChangeMonth}
+            closeOnClick={closeOnClick}
+            handleCloseOnClick={handleCloseOnClick}
           />
         ))}
     </CalendarBubble>
@@ -149,6 +155,8 @@ PortalBubble.propTypes = {
   hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
   isMonthPicker: PropTypes.bool,
+  closeOnClick: PropTypes.bool,
+  handleCloseOnClick: PropTypes.func,
 };
 PortalBubble.defaultProps = {
   value: null,
@@ -167,6 +175,8 @@ PortalBubble.defaultProps = {
   hasMonthDropdown: false,
   isYearPicker: false,
   isMonthPicker: false,
+  closeOnClick: false,
+  handleCloseOnClick: () => {},
 };
 
 export default PortalBubble;

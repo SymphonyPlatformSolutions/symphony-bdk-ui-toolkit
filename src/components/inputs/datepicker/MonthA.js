@@ -7,7 +7,7 @@ import {
 } from './theme';
 
 function MonthA({
-  label, value, onClick,
+  label, value, onClick, disabled,
 }) {
   const monthRef = useRef(null);
 
@@ -16,7 +16,7 @@ function MonthA({
   }
 
   return (
-    <ButtonContainer>
+    <ButtonContainer disabled={disabled}>
       <MonthButton
         onClick={() => onClick(value)}
         type="button"
@@ -36,12 +36,14 @@ MonthA.propTypes = {
   label: PropTypes.string,
   value: PropTypes.number,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 MonthA.defaultProps = {
   label: null,
   value: null,
   onClick: () => {},
+  disabled: false,
 };
 
 export default MonthA;

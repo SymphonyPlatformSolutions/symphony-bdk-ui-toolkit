@@ -6,7 +6,7 @@ import {
   YearButton,
 } from './theme';
 
-function Year({ year, onClick }) {
+function Year({ year, onClick, disabled }) {
   const yearRef = useRef(null);
 
   if (!year) {
@@ -14,7 +14,7 @@ function Year({ year, onClick }) {
   }
 
   return (
-    <ButtonContainer>
+    <ButtonContainer disabled={disabled}>
       <YearButton
         onClick={() => onClick(year)}
         type="button"
@@ -33,11 +33,13 @@ function Year({ year, onClick }) {
 Year.propTypes = {
   year: PropTypes.number,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 Year.defaultProps = {
   year: null,
   onClick: () => {},
+  disabled: false,
 };
 
 export default Year;
