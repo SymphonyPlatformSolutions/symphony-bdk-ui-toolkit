@@ -386,8 +386,11 @@ const Month = (props) => {
 };
 
 Month.propTypes = {
-  singleDay: PropTypes.object,
-  customWeekdayLabels: PropTypes.array,
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  firstDayOfWeek: PropTypes.number.isRequired,
+  singleDay: PropTypes.instanceOf(Date),
+  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   goToNextMonths: PropTypes.func,
   goToPreviousMonths: PropTypes.func,
   goToNextYear: PropTypes.func,
