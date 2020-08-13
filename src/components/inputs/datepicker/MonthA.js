@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
+import DatepickerContext from './datepickerContext';
 import {
   ButtonContainer,
   MonthButtonText,
@@ -7,7 +8,7 @@ import {
 } from './theme';
 
 function MonthA({
-  label, value, onClick,
+  label, value, onClick, disabled, isSelected,
 }) {
   const monthRef = useRef(null);
 
@@ -16,11 +17,12 @@ function MonthA({
   }
 
   return (
-    <ButtonContainer>
+    <ButtonContainer disabled={disabled}>
       <MonthButton
         onClick={() => onClick(value)}
         type="button"
         ref={monthRef}
+        isSelected={isSelected}
       >
         <MonthButtonText
           size="small"
@@ -36,12 +38,16 @@ MonthA.propTypes = {
   label: PropTypes.string,
   value: PropTypes.number,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+  isSelected: PropTypes.bool,
 };
 
 MonthA.defaultProps = {
   label: null,
   value: null,
   onClick: () => {},
+  disabled: false,
+  isSelected: false,
 };
 
 export default MonthA;

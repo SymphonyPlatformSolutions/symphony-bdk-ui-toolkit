@@ -20,17 +20,27 @@ const PortalBubble = (props) => {
     relatedWidth,
     customWeekdayLabels,
     textInputDateRef,
+    setInputValue,
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    isMonthPicker,
     handleChangeMonth,
+    closeOnClick,
+    handleCloseOnClick,
+    disabledMonth,
+    disabledYear,
+    handleChangeYear,
+    yearSelected,
+    monthSelected,
+    prevYear,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const bubbleRef = useRef();
   const [initialHeight, setInitialHeight] = useState(0);
   const [currHeight, setCurrHeight] = useState(0);
 
-  const [displayMonths, changeDisplayMonths] = useState(false);
+  const [displayMonths, changeDisplayMonths] = useState(!!isMonthPicker);
   const [displayYears, changeDisplayYears] = useState(false);
 
   const onClickForMonths = () => {
@@ -82,15 +92,25 @@ const PortalBubble = (props) => {
           singleDay={isRange ? null : value}
           firstDayOfWeek={firstDayOfWeek}
           textInputDateRef={textInputDateRef}
+          setInputValue={setInputValue}
           hasYearDropdown={hasYearDropdown}
           hasMonthDropdown={hasMonthDropdown}
           isYearPicker={isYearPicker}
+          isMonthPicker={isMonthPicker}
           displayMonths={displayMonths}
           displayYears={displayYears}
           onClickForDays={onClickForDays}
           onClickForMonths={onClickForMonths}
           onClickForYears={onClickForYears}
           handleChangeMonth={handleChangeMonth}
+          closeOnClick={closeOnClick}
+          handleCloseOnClick={handleCloseOnClick}
+          disabledMonth={disabledMonth}
+          disabledYear={disabledYear}
+          handleChangeYear={handleChangeYear}
+          yearSelected={yearSelected}
+          monthSelected={monthSelected}
+          prevYear={prevYear}
         />
       )
         : activeMonths.map((month, index) => (
@@ -108,15 +128,25 @@ const PortalBubble = (props) => {
             singleDay={isRange ? null : value}
             firstDayOfWeek={firstDayOfWeek}
             textInputDateRef={textInputDateRef}
+            setInputValue={setInputValue}
             hasYearDropdown={hasYearDropdown}
             hasMonthDropdown={hasMonthDropdown}
             isYearPicker={isYearPicker}
+            isMonthPicker={isMonthPicker}
             displayMonths={displayMonths}
             displayYears={displayYears}
             onClickForDays={onClickForDays}
             onClickForMonths={onClickForMonths}
             onClickForYears={onClickForYears}
             handleChangeMonth={handleChangeMonth}
+            closeOnClick={closeOnClick}
+            handleCloseOnClick={handleCloseOnClick}
+            disabledMonth={disabledMonth}
+            disabledYear={disabledYear}
+            handleChangeYear={handleChangeYear}
+            yearSelected={yearSelected}
+            monthSelected={monthSelected}
+            prevYear={prevYear}
           />
         ))}
     </CalendarBubble>
@@ -138,9 +168,19 @@ PortalBubble.propTypes = {
   goToNextYear: PropTypes.func,
   goToPreviousYear: PropTypes.func,
   textInputDateRef: PropTypes.object,
+  setInputValue: PropTypes.func,
   hasYearDropdown: PropTypes.bool,
   hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
+  closeOnClick: PropTypes.bool,
+  handleCloseOnClick: PropTypes.func,
+  disabledMonth: PropTypes.func,
+  disabledYear: PropTypes.func,
+  handleChangeYear: PropTypes.func,
+  yearSelected: PropTypes.bool,
+  monthSelected: PropTypes.bool,
+  prevYear: PropTypes.number,
 };
 PortalBubble.defaultProps = {
   value: null,
@@ -154,9 +194,19 @@ PortalBubble.defaultProps = {
   goToNextYear: () => {},
   goToPreviousYear: () => {},
   textInputDateRef: null,
+  setInputValue: () => {},
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  isMonthPicker: false,
+  closeOnClick: false,
+  handleCloseOnClick: () => {},
+  disabledMonth: () => {},
+  disabledYear: () => {},
+  handleChangeYear: () => {},
+  yearSelected: false,
+  monthSelected: false,
+  prevYear: null,
 };
 
 export default PortalBubble;

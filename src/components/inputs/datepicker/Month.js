@@ -46,15 +46,25 @@ const Month = (props) => {
     singleDay,
     customWeekdayLabels,
     textInputDateRef,
+    setInputValue,
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    isMonthPicker,
     displayMonths,
     displayYears,
     onClickForDays,
     onClickForMonths,
     onClickForYears,
     handleChangeMonth,
+    closeOnClick,
+    handleCloseOnClick,
+    disabledMonth,
+    disabledYear,
+    handleChangeYear,
+    yearSelected,
+    monthSelected,
+    prevYear,
   } = props;
 
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
@@ -155,6 +165,7 @@ const Month = (props) => {
   };
 
   const onYearSelect = (y) => {
+    handleChangeYear(y, year);
     const changeInYears = Math.abs(year - y);
     if (year > y) {
       goToPreviousYear(changeInYears);
@@ -164,9 +175,31 @@ const Month = (props) => {
     onClickForMonths();
   };
 
+  const isSelectedYear = (y) => {
+    if (yearSelected) {
+      return (y === year);
+    }
+    return false;
+  };
+
+  const isSelectedMonth = (m, y) => {
+    if (monthSelected) {
+      if (y !== prevYear) return false;
+      return (m === month);
+    }
+    return false;
+  };
+
   const onMonthSelect = (m) => {
     handleChangeMonth(m, year);
     onClickForDays();
+  };
+
+  const onMonthOnlySelect = (m) => {
+    handleChangeMonth(m, year);
+    setInputValue(`${months[m].label} ${year}`);
+
+    if (closeOnClick) { handleCloseOnClick(); }
   };
 
   if (isYearPicker) {
@@ -194,6 +227,8 @@ const Month = (props) => {
                 key={`${m.value}-${year}`}
                 year={year}
                 onClick={onMonthSelect}
+                disabled={disabledMonth(m.value, year)}
+                isSelected={isSelectedMonth(m.value, year)}
               />
             ))}
           </WeekSeparator>
@@ -223,6 +258,8 @@ const Month = (props) => {
                 key={y.value}
                 year={y.value}
                 onClick={onYearSelect}
+                disabled={disabledYear(y.value)}
+                isSelected={isSelectedYear(y.value)}
               />
             ))}
           </WeekSeparator>
@@ -265,6 +302,70 @@ const Month = (props) => {
         </WeekSeparator>
       </div>
     );
+  } if (isMonthPicker) {
+    if (displayMonths) {
+      return (
+        <div>
+          <MonthTitleContainer>
+            <ChangeMonthButton
+              onClick={goBackOneYear}
+              show
+              turnLeft
+            >
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+            <TitleText onClick={onClickForYears}>{year}</TitleText>
+            <ChangeMonthButton onClick={goForwardOneYear} show>
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+          </MonthTitleContainer>
+          <WeekSeparator marginTop={8} displayFours>
+            {months.map((m) => (
+              <MonthA
+                label={m.label}
+                value={m.value}
+                key={`${m.value}-${year}`}
+                year={year}
+                onClick={onMonthOnlySelect}
+                disabled={disabledMonth(m.value, year)}
+                isSelected={isSelectedMonth(m.value, year)}
+              />
+            ))}
+          </WeekSeparator>
+        </div>
+      );
+    }
+
+    if (displayYears) {
+      return (
+        <div>
+          <MonthTitleContainer>
+            <ChangeMonthButton
+              onClick={goBackOneDecade}
+              show
+              turnLeft
+            >
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+            <TitleText>Select a year</TitleText>
+            <ChangeMonthButton onClick={goForwardOneDecade} show>
+              <DownChevron size={10} />
+            </ChangeMonthButton>
+          </MonthTitleContainer>
+          <WeekSeparator marginTop={8} displayFours>
+            {years.map((y) => (
+              <Year
+                key={y.value}
+                year={y.value}
+                onClick={onYearSelect}
+                disabled={disabledYear(y.value)}
+                isSelected={isSelectedYear(y.value)}
+              />
+            ))}
+          </WeekSeparator>
+        </div>
+      );
+    }
   }
 
   return (
@@ -312,23 +413,34 @@ Month.propTypes = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   firstDayOfWeek: PropTypes.number.isRequired,
+  singleDay: PropTypes.instanceOf(Date),
+  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   goToNextMonths: PropTypes.func,
   goToPreviousMonths: PropTypes.func,
   goToNextYear: PropTypes.func,
   goToPreviousYear: PropTypes.func,
-  singleDay: PropTypes.instanceOf(Date),
-  customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   textInputDateRef: PropTypes.object,
-  hasMonthDropdown: PropTypes.bool,
+  setInputValue: PropTypes.func,
   hasYearDropdown: PropTypes.bool,
+  hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
   displayMonths: PropTypes.bool,
   displayYears: PropTypes.bool,
   onClickForDays: PropTypes.func,
   onClickForMonths: PropTypes.func,
   onClickForYears: PropTypes.func,
   handleChangeMonth: PropTypes.func,
+  closeOnClick: PropTypes.bool,
+  handleCloseOnClick: PropTypes.func,
+  disabledMonth: PropTypes.func,
+  disabledYear: PropTypes.func,
+  handleChangeYear: PropTypes.func,
+  yearSelected: PropTypes.bool,
+  monthSelected: PropTypes.bool,
+  prevYear: PropTypes.number,
 };
+
 
 Month.defaultProps = {
   singleDay: null,
@@ -338,15 +450,25 @@ Month.defaultProps = {
   goToNextYear: null,
   goToPreviousYear: null,
   textInputDateRef: null,
+  setInputValue: () => {},
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  isMonthPicker: false,
   displayMonths: false,
   displayYears: false,
   onClickForDays: () => {},
   onClickForMonths: () => {},
   onClickForYears: () => {},
   handleChangeMonth: () => {},
+  closeOnClick: false,
+  handleCloseOnClick: () => {},
+  disabledMonth: () => {},
+  disabledYear: () => {},
+  handleChangeYear: () => {},
+  yearSelected: false,
+  monthSelected: false,
+  prevYear: null,
 };
 
 export default Month;

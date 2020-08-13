@@ -70,6 +70,7 @@ const Datepicker = (props) => {
     hasYearDropdown,
     hasMonthDropdown,
     isYearPicker,
+    isMonthPicker,
     closeOnClick,
     ...rest
   } = props;
@@ -77,17 +78,23 @@ const Datepicker = (props) => {
   const [triggerClose, setTriggerClose] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
+  const [yearSelected, changeYearSelected] = useState(false);
+  const [prevYear, changePrevYear] = useState(null);
+  const [monthSelected, changeMonthSelected] = useState(false);
+
   const divRef = useRef(null);
   const textInputDateRef = useRef();
 
   const closeCalendar = () => {
     setTriggerClose(true);
     // Reset input to chosen date value
-    setInputValue(
-      dateValueFormatter
-        ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange),
-    );
+    if (!isMonthPicker) {
+      setInputValue(
+        dateValueFormatter
+          ? dateValueFormatter(value, endValue, isRange)
+          : formatDate(value, endValue, isRange),
+      );
+    }
     setTimeout(() => {
       setCalendarIsOpen(false);
       setTriggerClose(false);
@@ -152,22 +159,47 @@ const Datepicker = (props) => {
     ...datepickerProps,
   });
 
+  const today = new Date();
+  const disabledYear = (y) => (y < today.getFullYear());
+  const disabledMonth = (m, y) => {
+    if (y < today.getFullYear()) return true;
+    return (y === today.getFullYear() && m < today.getMonth());
+  };
+
+  const handleChangeYear = (newYear, oldYear) => {
+    changeYearSelected(true);
+    changePrevYear(oldYear);
+    if (newYear !== oldYear) changeMonthSelected(false);
+  };
+
   const handleChangeMonth = (m, y) => {
-    const newDate = new Date();
-    newDate.setMonth(m);
-    newDate.setDate(1);
-    newDate.setFullYear(y);
-    goToDate(newDate);
+    if (!disabledMonth(m, y)) {
+      changeMonthSelected(true);
+      changeYearSelected(true);
+      changePrevYear(y);
+      const newDate = new Date();
+      newDate.setMonth(m);
+      newDate.setDate(15);
+      newDate.setFullYear(y);
+      goToDate(newDate);
+    } else {
+      setInputValue('');
+    }
   };
 
   const specialKeyHandler = ({ keyCode }) => {
     // Enter Key Handler
     if (keyCode === ENTER_KEY) {
-      if (!isRange) {
+      if (!isRange && !isMonthPicker) {
         const inputDate = new Date(inputValue);
         if (inputDate.toString() !== 'Invalid Date') {
           onChange(inputDate);
           onDateFocus(inputDate);
+        }
+      } else if (isMonthPicker) {
+        const inputDate = new Date(inputValue);
+        if (inputDate.toString() !== 'Invalid Date') {
+          handleChangeMonth(inputDate.getMonth(), inputDate.getFullYear());
         }
       } else {
         const [inputStart, inputEnd] = inputValue.split('-');
@@ -234,8 +266,18 @@ const Datepicker = (props) => {
             hasMonthDropdown={hasMonthDropdown}
             customWeekdayLabels={customWeekdayLabels}
             textInputDateRef={textInputDateRef}
+            setInputValue={setInputValue}
             isYearPicker={isYearPicker}
+            isMonthPicker={isMonthPicker}
             handleChangeMonth={handleChangeMonth}
+            closeOnClick={closeOnClick}
+            handleCloseOnClick={handleCloseOnClick}
+            disabledMonth={disabledMonth}
+            disabledYear={disabledYear}
+            handleChangeYear={handleChangeYear}
+            yearSelected={yearSelected}
+            monthSelected={monthSelected}
+            prevYear={prevYear}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}
@@ -281,6 +323,7 @@ Datepicker.propTypes = {
   hasYearDropdown: PropTypes.bool,
   hasMonthDropdown: PropTypes.bool,
   isYearPicker: PropTypes.bool,
+  isMonthPicker: PropTypes.bool,
   closeOnClick: PropTypes.bool,
 };
 
@@ -302,6 +345,7 @@ Datepicker.defaultProps = {
   hasYearDropdown: false,
   hasMonthDropdown: false,
   isYearPicker: false,
+  isMonthPicker: false,
   closeOnClick: false,
 };
 
