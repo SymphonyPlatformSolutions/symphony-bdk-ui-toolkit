@@ -10,7 +10,7 @@ import InputField from '../input-field';
 import { InputWrapper } from './theme';
 import { YEAR_SELECTOR_ID } from './Month';
 
-const MONTHS = [
+export const MONTHS = [
   'Jan',
   'Feb',
   'Mar',
@@ -88,13 +88,11 @@ const Datepicker = (props) => {
   const closeCalendar = () => {
     setTriggerClose(true);
     // Reset input to chosen date value
-    if (!isMonthPicker) {
-      setInputValue(
-        dateValueFormatter
-          ? dateValueFormatter(value, endValue, isRange)
-          : formatDate(value, endValue, isRange),
-      );
-    }
+    setInputValue(
+      dateValueFormatter
+        ? dateValueFormatter(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
+    );
     setTimeout(() => {
       setCalendarIsOpen(false);
       setTriggerClose(false);
@@ -182,6 +180,10 @@ const Datepicker = (props) => {
       newDate.setDate(15);
       newDate.setFullYear(y);
       goToDate(newDate);
+
+      if (isMonthPicker) {
+        onChange(newDate);
+      }
     } else {
       setInputValue('');
     }

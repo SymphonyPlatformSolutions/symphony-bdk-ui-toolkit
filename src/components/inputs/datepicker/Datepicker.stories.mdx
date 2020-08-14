@@ -8,7 +8,8 @@ import {
   Link
 } from "@storybook/addon-docs/blocks";
 import Datepicker from './index.js';
-import { DatepickerController, RangeController } from './samples/simple';
+import { MONTHS } from './index.js';
+import { DatepickerController, RangeController, MonthpickerController } from './samples/simple';
 
 <Meta title="components/Inputs/Datepicker" component={Datepicker} parameters={{order: 230}}/>
 
@@ -227,14 +228,22 @@ To create a year picker in which you can click on the titles to select year and 
 
 ### Month Picker
 
-To create a picker where only the month and year can be chosed, simply set `isMonthPicker` to `true`.
+To create a picker where only the month and year can be chosed, simply set `isMonthPicker` to `true`. A `dateValueFormatter` must also be used to avoid showing day information.
 
 > Note: the Month Picker does not take into account `numberOfMonths`.
 
 <Preview>
   <Story name="Month Picker">
     <Box>
-      <DatepickerController isMonthPicker/>
+      {/* <MonthpickerController/> */}
+      <DatepickerController
+        isMonthPicker
+        dateValueFormatter={(start) => {
+          const boole = start && (start.toString() !== 'Invalid Date');
+          if (boole) return `${MONTHS[start.getMonth()]} ${start.getFullYear()}`;
+          return '';
+        }}
+      />
     </Box>
   </Story>
 </Preview>
