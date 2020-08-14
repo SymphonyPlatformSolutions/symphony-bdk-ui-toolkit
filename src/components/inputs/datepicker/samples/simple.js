@@ -8,7 +8,14 @@ export const DatepickerController = (props) => {
     minBookingDate: new Date(),
   };
 
-  return <Datepicker value={simpleDate} onChange={setSimpleDate} {...props} datepickerProps={additionalProps} />;
+  return (
+    <Datepicker
+      value={simpleDate}
+      onChange={setSimpleDate}
+      {...props}
+      datepickerProps={additionalProps}
+    />
+  );
 };
 
 export const RangeController = (props) => {

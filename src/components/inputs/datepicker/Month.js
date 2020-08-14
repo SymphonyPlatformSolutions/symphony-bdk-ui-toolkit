@@ -197,7 +197,6 @@ const Month = (props) => {
 
   const onMonthOnlySelect = (m) => {
     handleChangeMonth(m, year);
-    setInputValue(`${months[m].label} ${year}`);
 
     if (closeOnClick) { handleCloseOnClick(); }
   };
