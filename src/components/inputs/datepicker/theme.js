@@ -62,33 +62,68 @@ export const WeekdayBubble = styled.div`
   justify-content: center;
 `;
 const BASE_BUBBLE_TRANSLATE = 18;
+
 const getUpTransform = ({ heightDelta }) => {
   const base = heightDelta - BASE_BUBBLE_TRANSLATE;
   return `${base}px`;
 };
-const fadeIn = ({ isUp, relatedShift }) => keyframes`
+
+const getRightTransform = ({
+  relatedShift = 0,
+  horizontalShift = 0,
+  isLeft = false,
+}) => {
+  if (isLeft) {
+    return 'translateX(-12px)';
+  }
+  return `translateX(calc(-50% + ${relatedShift + horizontalShift}px))`;
+};
+
+const fadeIn = (props) => keyframes`
   0% {
     opacity: 0;
-    transform: translateX(calc(-50% + ${relatedShift}px)) translateY(0);
+    transform: 
+    ${getRightTransform(props)}
+     translateY(0);
   }
   100% {
     opacity: 1;
-    transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? `-${BASE_BUBBLE_TRANSLATE}px` : `${BASE_BUBBLE_TRANSLATE}px`});
+    transform: 
+    ${getRightTransform(props)}
+    translateY(${
+  props.isUp ? `-${BASE_BUBBLE_TRANSLATE}px` : `${BASE_BUBBLE_TRANSLATE}px`
+});
   }
 `;
-const fadeOut = ({ isUp, relatedShift, heightDelta }) => keyframes`
+const fadeOut = (props) => keyframes`
 100% {
   opacity: 0;
-  transform: translateX(calc(-50% + ${relatedShift}px)) translateY(0);
+  transform: 
+  ${getRightTransform(props)}
+   translateY(0);
 }
 0% {
   opacity: 1;
-  transform: translateX(calc(-50% + ${relatedShift}px))translateY(${isUp ? getUpTransform({ heightDelta }) : `${BASE_BUBBLE_TRANSLATE}px`});
+  transform: 
+  ${getRightTransform(props)}
+  translateY(${
+  props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`
+});
 }
 `;
-const getAnimation = ({
-  out, isUp, relatedShift, heightDelta,
-}) => (out ? fadeOut({ isUp, relatedShift, heightDelta }) : fadeIn({ isUp, relatedShift }));
+const getAnimation = (props) => {
+  if (props.out) {
+    return fadeOut(props);
+  }
+  return fadeIn(props);
+};
+
+const getBubbleTipPlacement = ({ isLeft, horizontalShift }) => {
+  if (isLeft) {
+    return '85%';
+  }
+  return `calc(50% + (${-horizontalShift}px))`;
+};
 
 export const CalendarBubble = styled.div`
   background-color: ${({ theme }) => theme.colors.mainbackground};
@@ -97,8 +132,10 @@ export const CalendarBubble = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.grey_200};
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
-  transform: translateX(calc(-50% + ${({ relatedShift }) => relatedShift}px))
-  translateY(${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)});
+  transform: ${(props) => getRightTransform(props)}
+    translateY(
+      ${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)}
+    );
   display: grid;
   grid-template-columns: ${({ displaySmaller, size }) => (displaySmaller ? 'repeat(1, auto)' : `repeat(${size}, auto)`)};
   grid-gap: 0 40px;
@@ -108,7 +145,7 @@ export const CalendarBubble = styled.div`
   &:before {
     bottom: ${({ isUp }) => (isUp ? undefined : '100%')};
     top: ${({ isUp }) => (isUp ? '100%' : undefined)};
-    left: 50%;
+    left: ${(props) => getBubbleTipPlacement(props)};
     border: solid transparent;
     content: " ";
     height: 0;
@@ -179,11 +216,13 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   cursor: pointer;
   margin: 4px 2px 0 2px;
-  
-  ${({ disabled }) => (disabled ? `
+
+  ${({ disabled }) => (disabled
+    ? `
     opacity: 0.3;
     pointer-events: none;
-  ` : null)}
+  `
+    : null)}
 `;
 
 export const MonthButton = styled(DayButton)`
