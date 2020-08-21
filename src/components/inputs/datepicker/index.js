@@ -1,6 +1,4 @@
-import React, {
-  useState, useRef, useEffect,
-} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
@@ -122,7 +120,9 @@ const Datepicker = (props) => {
         isStart: data.focusedInput === START_DATE,
       });
     }
-    if (closeOnClick) { handleCloseOnClick(); }
+    if (closeOnClick) {
+      handleCloseOnClick();
+    }
   }
 
   const getFocused = () => {
@@ -158,10 +158,10 @@ const Datepicker = (props) => {
   });
 
   const today = new Date();
-  const disabledYear = (y) => (y < today.getFullYear());
+  const disabledYear = (y) => y < today.getFullYear();
   const disabledMonth = (m, y) => {
     if (y < today.getFullYear()) return true;
-    return (y === today.getFullYear() && m < today.getMonth());
+    return y === today.getFullYear() && m < today.getMonth();
   };
 
   const handleChangeYear = (newYear, oldYear) => {
@@ -251,10 +251,11 @@ const Datepicker = (props) => {
     >
       <PositioningPortal
         isOpen={calendarIsOpen}
-        portalContent={({ relatedWidth, strategy }) => (
+        portalContent={(allProps) => (
           <PortalBubble
-            strategy={strategy}
-            relatedWidth={relatedWidth}
+            allProps={allProps}
+            strategy={allProps.strategy}
+            relatedWidth={allProps.relatedWidth}
             triggerClose={triggerClose}
             activeMonths={activeMonths}
             goToNextMonths={goToNextMonths}

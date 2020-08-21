@@ -1,5 +1,5 @@
 import React, {
-  useState, useRef, useLayoutEffect,
+  useState, useRef, useLayoutEffect, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import Month from './Month';
@@ -36,8 +36,10 @@ const PortalBubble = (props) => {
     prevYear,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
+  const isLeft = strategy && strategy.includes('LEFT');
   const bubbleRef = useRef();
   const [initialHeight, setInitialHeight] = useState(0);
+  const [outOfBoundsShift, setOutOfBoundsShift] = useState(0);
   const [currHeight, setCurrHeight] = useState(0);
 
   const [displayMonths, changeDisplayMonths] = useState(!!isMonthPicker);
@@ -58,7 +60,6 @@ const PortalBubble = (props) => {
     changeDisplayYears(false);
   };
 
-
   useLayoutEffect(() => {
     if (!initialHeight) {
       setInitialHeight(bubbleRef.current.getBoundingClientRect().height);
@@ -66,20 +67,34 @@ const PortalBubble = (props) => {
     setCurrHeight(bubbleRef.current.getBoundingClientRect().height);
   }, [activeMonths]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (bubbleRef.current) {
+        const rect = bubbleRef.current.getBoundingClientRect();
+        if (rect && rect.x < 0) {
+          setOutOfBoundsShift(12 - rect.x);
+        }
+      }
+    }, 5);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <CalendarBubble
       ref={bubbleRef}
       relatedShift={relatedWidth / 2}
+      horizontalShift={outOfBoundsShift}
       onMouseDown={(e) => {
         e.preventDefault();
       }}
       size={activeMonths.length}
       out={triggerClose}
       isUp={isUp}
+      isLeft={isLeft}
       heightDelta={initialHeight ? initialHeight - currHeight : 0}
       displaySmaller={displayMonths || displayYears}
     >
-      {(displayMonths || displayYears) ? (
+      {displayMonths || displayYears ? (
         <Month
           goToNextMonths={goToNextMonths}
           customWeekdayLabels={customWeekdayLabels}
@@ -112,12 +127,12 @@ const PortalBubble = (props) => {
           monthSelected={monthSelected}
           prevYear={prevYear}
         />
-      )
-        : activeMonths.map((month, index) => (
+      ) : (
+        activeMonths.map((month, index) => (
           <Month
             goToNextMonths={
-            index === activeMonths.length - 1 ? goToNextMonths : null
-          }
+              index === activeMonths.length - 1 ? goToNextMonths : null
+            }
             customWeekdayLabels={customWeekdayLabels}
             goToPreviousMonths={index === 0 ? goToPreviousMonths : null}
             goToNextYear={goToNextYear}
@@ -148,7 +163,8 @@ const PortalBubble = (props) => {
             monthSelected={monthSelected}
             prevYear={prevYear}
           />
-        ))}
+        ))
+      )}
     </CalendarBubble>
   );
 };
