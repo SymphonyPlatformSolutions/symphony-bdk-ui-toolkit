@@ -69,9 +69,11 @@ const PortalBubble = (props) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const rect = bubbleRef.current?.getBoundingClientRect();
-      if (rect && rect.x < 0) {
-        setOutOfBoundsShift(12 - rect.x);
+      if (bubbleRef.current) {
+        const rect = bubbleRef.current.getBoundingClientRect();
+        if (rect && rect.x < 0) {
+          setOutOfBoundsShift(12 - rect.x);
+        }
       }
     }, 5);
     return () => clearTimeout(timeout);
