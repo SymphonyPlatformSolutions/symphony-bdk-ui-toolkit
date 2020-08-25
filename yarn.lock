@@ -7834,6 +7834,11 @@ fast-deep-equal@^2.0.1:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
+fast-deep-equal@^3.0.0:
+  version "3.1.3"
+  resolved "https://repo.symphony.com/artifactory/api/npm/npm-virtual-dev/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
+  integrity sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=
+
 fast-glob@^2.0.2:
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.7.tgz#6953857c3afa475fff92ee6015d52da70a4cd39d"
@@ -16531,6 +16536,14 @@ storybook-chromatic@^2.2.2:
     tmp "^0.1.0"
     tree-kill "^1.1.0"
     uuid "^3.3.2"
+
+storybook-dark-mode@^1.0.0:
+  version "1.0.0"
+  resolved "https://repo.symphony.com/artifactory/api/npm/npm-virtual-dev/storybook-dark-mode/-/storybook-dark-mode-1.0.0.tgz#9b14d62b5de64fb5d2b3c2f080ee9b770d45d884"
+  integrity sha1-mxTWK13mT7XSs8LwgO6bdw1F2IQ=
+  dependencies:
+    fast-deep-equal "^3.0.0"
+    memoizerific "^1.11.3"
 
 stream-browserify@^2.0.1:
   version "2.0.2"

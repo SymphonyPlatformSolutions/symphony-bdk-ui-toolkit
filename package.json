@@ -80,6 +80,7 @@
     "sass-loader": "^8.0.0",
     "storybook-addon-jsx": "^7.1.13",
     "storybook-addon-styled-component-theme": "^1.2.5",
+    "storybook-dark-mode": "^1.0.0",
     "style-loader": "^1.0.1",
     "styled-components": "^4.3.2",
     "styled-icons": "^9.0.1",

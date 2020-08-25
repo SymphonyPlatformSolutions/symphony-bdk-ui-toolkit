@@ -7,5 +7,6 @@ module.exports = {
     '@storybook/addon-docs',
     'storybook-addon-styled-component-theme/dist/src/register.js',
     './.storybook/custom-addons/text-sizer/register.js',
+    'storybook-dark-mode/register',
   ],
 };
