@@ -329,3 +329,11 @@ export const DocumentTildeIcon = withTheme(({
     </svg>
   </IconWrapper>
 ));
+
+export const FileIcon = withTheme(({ size = 16, blueprint }) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg width={size || 24} height={size || 24} viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.586 0H1C0.45 0 0 0.45 0 1V9C0 9.55 0.45 10 1 10H7C7.55 10 8 9.55 8 9V3.414C8 3.149 7.8945 2.8945 7.707 2.707L5.293 0.293C5.1055 0.1055 4.851 0 4.586 0ZM7.25 3.5H4.5V0.75L7.25 3.5Z" fill="#BDBDBD" />
+    </svg>
+  </IconWrapper>
+));
