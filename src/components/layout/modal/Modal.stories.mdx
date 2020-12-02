@@ -69,6 +69,24 @@ The ```showModal``` function also plugs in the ```hideModal``` function directly
 
 <Props of={TitleBar} />
 
+As an example, here's a SampleModal component used in the examples below:
+
+```jsx
+const SampleModal = ({ hideModal }) => (
+  <Box align="center">
+    <Text>
+      This Modal is used to show that you can call a modal from everywhere in
+      your application! It uses React Provider and React Consumer to able to so.
+      <br />
+      Really handy tools indeed...!
+    </Text>
+    <Box horizontal justify="center">
+      <Button onClick={hideModal}>Close Modal</Button>
+    </Box>
+  </Box>
+);
+```
+
 ### Sizes
 
 <Preview>

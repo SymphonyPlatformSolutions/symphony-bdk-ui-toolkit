@@ -338,6 +338,15 @@ export const FileIcon = withTheme(({ size = 16, blueprint }) => (
   </IconWrapper>
 ));
 
+export const RightArrowIcon = withTheme(({ size = 16, blueprint }) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg width={size || 16} height={size || 16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 6.66602L13.3333 9.99935L10 13.3327" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M2.6665 2.66602V7.33268C2.6665 8.03993 2.94746 8.7182 3.44755 9.2183C3.94765 9.7184 4.62593 9.99935 5.33317 9.99935H13.3332" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </IconWrapper>
+));
+
 export const ExclamationCircleIcon = withTheme(({ size = 16, blueprint }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg width={size || 24} height={size || 24} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

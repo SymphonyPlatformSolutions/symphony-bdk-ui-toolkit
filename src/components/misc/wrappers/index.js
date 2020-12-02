@@ -18,6 +18,7 @@ const Wrapper = styled(Box)`
   justify-content: center;
   align-items: center;
   margin: 40px 0;
+  overflow-y: hidden;
 `;
 const getFontSize = ({ theme }) => {
   switch (theme.size) {
