@@ -9,7 +9,7 @@ import {
 } from "@storybook/addon-docs/blocks";
 import Datepicker from './index.js';
 import { MONTHS } from './index.js';
-import { DatepickerController, RangeController } from './samples/simple';
+import { DatepickerController, RangeController, RangeNavigationController, RangeNavigation1MonthController} from './samples/simple';
 
 <Meta title="components/Inputs/Datepicker" component={Datepicker} parameters={{order: 230}}/>
 
@@ -248,6 +248,25 @@ To create a picker where only the month and year can be chosed, simply set `isMo
   </Story>
 </Preview>
 
+## Footer navigation 2 months
+
+<Preview>
+  <Story name="Footer navigation 2 months">
+    <Box>
+      <RangeNavigationController />
+    </Box>
+  </Story>
+</Preview>
+
+## Footer navigation 1 month
+
+<Preview>
+  <Story name="Footer navigation 1 month">
+    <Box>
+      <RangeNavigation1MonthController />
+    </Box>
+  </Story>
+</Preview>
 
 <Props of={Datepicker} />
 
