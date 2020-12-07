@@ -35,8 +35,13 @@ const Month = ({
   return (
     <>
       <Header>
-        <ChevronButton type="button" onClick={goToPreviousYear} reverse>
-          <DoubleChevron size={10} />
+        <ChevronButton
+          type="button"
+          onClick={goToPreviousYear}
+          reverse
+          marginRight={4}
+        >
+          <DoubleChevron width={12.5} height={10} />
         </ChevronButton>
         <ChevronButton type="button" onClick={goToPreviousMonth} turnLeft>
           <DownChevron size={10} color={CHEVRON_COLOR} />
@@ -47,8 +52,13 @@ const Month = ({
         <ChevronButton type="button" onClick={goToNextMonth}>
           <DownChevron size={10} color={CHEVRON_COLOR} />
         </ChevronButton>
-        <ChevronButton type="button" onClick={goToNextYear} keepOrientation>
-          <DoubleChevron size={10} />
+        <ChevronButton
+          type="button"
+          onClick={goToNextYear}
+          keepOrientation
+          marginLeft={4}
+        >
+          <DoubleChevron width={12.5} height={10} />
         </ChevronButton>
       </Header>
 

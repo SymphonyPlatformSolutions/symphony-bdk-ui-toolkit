@@ -3,13 +3,15 @@ import styled from 'styled-components';
 export const Header = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   margin: 16px 0;
+  padding: 0 18px;
 `;
 
 export const MonthLabelContainer = styled.div`
   text-align: center;
+  flex: 1;
 `;
 
 export const MonthLabel = styled.span`
@@ -51,4 +53,9 @@ export const ChevronButton = styled.button`
   border: none;
   cursor: pointer;
   transform: ${getTransformForButton};
+  padding: 0;
+  margin: 0;
+
+  margin-right: ${({ marginRight }) => marginRight}px;
+  margin-left: ${({ marginLeft }) => marginLeft}px;
 `;

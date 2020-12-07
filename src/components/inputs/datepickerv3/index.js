@@ -24,8 +24,18 @@ const DatepickerV3 = (props) => {
     size,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const handleOnClose = () => setIsOpen(false);
-  const handleOnOpen = () => setIsOpen(true);
+  const [shouldRunFadeOut, setShouldRunFadeOut] = useState(false);
+
+  const handleOnOpen = () => {
+    setShouldRunFadeOut(false);
+    setIsOpen(true);
+  };
+
+  const handleOnClose = () => {
+    setShouldRunFadeOut(true);
+
+    setTimeout(() => setIsOpen(false), 100);
+  };
 
   const [state, setState] = useState({
     startDate: null,
@@ -108,7 +118,7 @@ const DatepickerV3 = (props) => {
       <PositioningPortal
         isOpen={isOpen}
         portalContent={() => (
-          <Wrapper isOpen={isOpen}>
+          <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
               activeMonths={activeMonths}
