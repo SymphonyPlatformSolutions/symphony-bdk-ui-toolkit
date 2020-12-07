@@ -37,6 +37,11 @@ const DatepickerV3 = (props) => {
     }
 
     if (closeOnSelect) {
+      // Don't close if it's range and both dates aren't provided.
+      if (isRange && (!data.startDate || !data.endDate)) {
+        return;
+      }
+
       handleOnClose();
     }
   };
