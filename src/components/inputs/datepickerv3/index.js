@@ -18,6 +18,10 @@ const DatepickerV3 = (props) => {
     firstDayOfWeek,
     navButtons,
     closeOnSelect,
+    errorMessage,
+    disabled,
+    placeholder,
+    size,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const handleOnClose = () => setIsOpen(false);
@@ -116,19 +120,6 @@ const DatepickerV3 = (props) => {
         )}
         onClose={handleOnClose}
       >
-        {/* <div>
-          <strong>Focused input: </strong>
-          {state.focusedInput}
-        </div>
-        <div>
-          <strong>Start date: </strong>
-          {state.startDate && state.startDate.toLocaleString()}
-        </div>
-        <div>
-          <strong>End date: </strong>
-          {state.endDate && state.endDate.toLocaleString()}
-        </div> */}
-
         <InputField
           // onKeyDown={specialKeyHandler}
           onFocus={handleOnOpen}
@@ -137,10 +128,10 @@ const DatepickerV3 = (props) => {
           // onChange={(e) => {
           //   setInputValue(e.target.value);
           // }}
-          // placeholder={placeholder}
-          // size={size}
-          // disabled={disabled}
-          // errorMessage={errorMessage}
+          placeholder={placeholder}
+          size={size}
+          disabled={disabled}
+          errorMessage={errorMessage}
           // inputState={inputState}
         />
       </PositioningPortal>
@@ -160,6 +151,10 @@ DatepickerV3.propTypes = {
     })
   ),
   closeOnSelect: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  disabled: PropTypes.bool,
+  placeholder: PropTypes.string,
+  size: PropTypes.oneOf(['regular', 'large']),
 };
 
 DatepickerV3.defaultProps = {
@@ -168,7 +163,11 @@ DatepickerV3.defaultProps = {
   isRange: false,
   customWeekdayLabels: ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
   navButtons: [],
-  closeOnSelect: true,
+  closeOnSelect: false,
+  errorMessage: null,
+  disabled: false,
+  placeholder: 'Choose date...',
+  size: 'regular',
 };
 
 export default DatepickerV3;
