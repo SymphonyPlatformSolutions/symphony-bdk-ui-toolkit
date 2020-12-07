@@ -7,7 +7,7 @@ import DatepickerContext from './datepickerContext';
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
 import { getFocusedInput, formatDate } from './utils';
-import { Wrapper } from './theme';
+import { Wrapper, MultipleCalendarWrapper } from './theme';
 import InputField from '../input-field';
 
 const DatepickerV3 = (props) => {
@@ -72,25 +72,18 @@ const DatepickerV3 = (props) => {
 
   const {
     activeMonths,
-    isDateSelected,
-    isDateHovered,
-    isFirstOrLastSelectedDate,
-    isDateBlocked,
-    isDateFocused,
-    focusedDate,
-    onDateHover,
-    onDateSelect,
-    onDateFocus,
     goToPreviousMonths,
     goToNextMonths,
     goToPreviousYear,
     goToNextYear,
+    ...otherCalendarProps
   } = useDatepicker({
     startDate: state.startDate,
     endDate: isRange ? state.endDate : null,
     focusedInput: getFocusedInput(isRange, state.focusedInput === START_DATE),
     onDatesChange: handleDateChange,
-    numberOfMonths,
+    // Always keep 1 there, because we don't want the default behaviour of the lib.
+    numberOfMonths: 1,
     firstDayOfWeek,
   });
 
@@ -102,49 +95,39 @@ const DatepickerV3 = (props) => {
   };
 
   return (
-    <DatepickerContext.Provider
-      value={{
-        focusedDate,
-        isDateFocused,
-        isDateSelected,
-        isDateHovered,
-        isDateBlocked,
-        isFirstOrLastSelectedDate,
-        onDateSelect,
-        onDateFocus,
-        onDateHover,
-      }}
-    >
-      <PositioningPortal
-        isOpen={isOpen}
-        portalContent={() => (
-          <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
-            <Calendar
-              firstDayOfWeek={firstDayOfWeek}
-              activeMonths={activeMonths}
-              customWeekdayLabels={customWeekdayLabels}
-              goToPreviousMonth={goToPreviousMonths}
-              goToNextMonth={goToNextMonths}
-              goToPreviousYear={() => goToPreviousYear(1)}
-              goToNextYear={() => goToNextYear(1)}
-            />
+    <PositioningPortal
+      isOpen={isOpen}
+      portalContent={() => (
+        <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
+          <MultipleCalendarWrapper numberOfMonths={numberOfMonths}>
+            <DatepickerContext.Provider value={otherCalendarProps}>
+              <Calendar
+                firstDayOfWeek={firstDayOfWeek}
+                activeMonths={activeMonths}
+                customWeekdayLabels={customWeekdayLabels}
+                goToPreviousMonth={goToPreviousMonths}
+                goToNextMonth={goToNextMonths}
+                goToPreviousYear={() => goToPreviousYear(1)}
+                goToNextYear={() => goToNextYear(1)}
+              />
+            </DatepickerContext.Provider>
+          </MultipleCalendarWrapper>
 
-            <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
-          </Wrapper>
-        )}
-        onClose={handleOnClose}
-      >
-        <InputField
-          onFocus={handleOnOpen}
-          onBlur={(e) => handleOnBlur(e)}
-          placeholder={placeholder}
-          size={size}
-          disabled={disabled}
-          errorMessage={errorMessage}
-          value={formatDate(state, isRange)}
-        />
-      </PositioningPortal>
-    </DatepickerContext.Provider>
+          <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
+        </Wrapper>
+      )}
+      onClose={handleOnClose}
+    >
+      <InputField
+        onFocus={handleOnOpen}
+        onBlur={(e) => handleOnBlur(e)}
+        placeholder={placeholder}
+        size={size}
+        disabled={disabled}
+        errorMessage={errorMessage}
+        value={formatDate(state, isRange)}
+      />
+    </PositioningPortal>
   );
 };
 

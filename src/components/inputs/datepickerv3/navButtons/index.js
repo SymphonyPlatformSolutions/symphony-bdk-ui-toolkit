@@ -13,7 +13,11 @@ const NavButtons = (props) => {
   return (
     <Wrapper>
       {buttons.map((button) => (
-        <Button type="button" onClick={() => onNavigate(button.daysToAdd)}>
+        <Button
+          key={button.label}
+          type="button"
+          onClick={() => onNavigate(button.daysToAdd)}
+        >
           {button.label}
         </Button>
       ))}

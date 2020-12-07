@@ -54,3 +54,19 @@ export const Wrapper = styled.div`
   animation: ${getFadeInOrOutAnimation} 0.3s;
   animation-fill-mode: forwards;
 `;
+
+const getMultipleCalendarStyle = ({ numberOfMonths = 1 }) => {
+  if (numberOfMonths === 1) {
+    return '';
+  }
+
+  return `
+  width: 400px;
+    display: flex;
+    flex-direction: row;
+  `;
+};
+
+export const MultipleCalendarWrapper = styled.div`
+  ${getMultipleCalendarStyle}
+`;
