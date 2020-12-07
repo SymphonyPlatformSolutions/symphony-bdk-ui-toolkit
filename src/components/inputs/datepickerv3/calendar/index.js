@@ -7,8 +7,10 @@ const Calendar = (props) => {
   const {
     firstDayOfWeek,
     activeMonths,
-    goToPreviousMonths,
-    goToNextMonths,
+    goToPreviousMonth,
+    goToNextMonth,
+    goToPreviousYear,
+    goToNextYear,
     customWeekdayLabels,
   } = props;
 
@@ -28,9 +30,11 @@ const Calendar = (props) => {
             year={month.year}
             month={month.month}
             firstDayOfWeek={firstDayOfWeek}
-            goToPreviousMonths={goToPreviousMonths}
-            goToNextMonths={goToNextMonths}
             customWeekdayLabels={customWeekdayLabels}
+            goToPreviousMonth={goToPreviousMonth}
+            goToNextMonth={goToNextMonth}
+            goToPreviousYear={goToPreviousYear}
+            goToNextYear={goToNextYear}
           />
         ))}
       </div>
@@ -41,16 +45,20 @@ const Calendar = (props) => {
 Calendar.propTypes = {
   firstDayOfWeek: PropTypes.string,
   activeMonths: PropTypes.number,
-  goToPreviousMonths: PropTypes.func,
-  goToNextMonths: PropTypes.func,
+  goToPreviousMonth: PropTypes.func,
+  goToNextMonth: PropTypes.func,
+  goToPreviousYear: PropTypes.func,
+  goToNextYear: PropTypes.func,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Calendar.defaultProps = {
   firstDayOfWeek: '',
   activeMonths: 1,
-  goToPreviousMonths: () => {},
-  goToNextMonths: () => {},
+  goToPreviousMonth: () => {},
+  goToNextMonth: () => {},
+  goToPreviousYear: () => {},
+  goToNextYear: () => {},
 };
 
 export default Calendar;

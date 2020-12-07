@@ -73,6 +73,8 @@ const DatepickerV3 = (props) => {
     onDateFocus,
     goToPreviousMonths,
     goToNextMonths,
+    goToPreviousYear,
+    goToNextYear,
   } = useDatepicker({
     startDate: state.startDate,
     endDate: isRange ? state.endDate : null,
@@ -111,8 +113,10 @@ const DatepickerV3 = (props) => {
               firstDayOfWeek={firstDayOfWeek}
               activeMonths={activeMonths}
               customWeekdayLabels={customWeekdayLabels}
-              goToPreviousMonths={goToPreviousMonths}
-              goToNextMonths={goToNextMonths}
+              goToPreviousMonth={goToPreviousMonths}
+              goToNextMonth={goToNextMonths}
+              goToPreviousYear={() => goToPreviousYear(1)}
+              goToNextYear={() => goToNextYear(1)}
             />
 
             <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />

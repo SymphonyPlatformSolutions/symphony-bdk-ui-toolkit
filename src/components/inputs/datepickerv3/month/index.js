@@ -10,7 +10,7 @@ import {
   ChevronButton,
 } from './theme';
 import Day from '../day/index';
-import { DownChevron } from '../../../misc/icons';
+import { DownChevron, DoubleChevron } from '../../../misc/icons';
 
 const CHEVRON_COLOR = '#008EFF';
 
@@ -18,9 +18,11 @@ const Month = ({
   year,
   month,
   firstDayOfWeek,
-  goToNextMonths,
-  goToPreviousMonths,
   customWeekdayLabels,
+  goToNextMonth,
+  goToPreviousMonth,
+  goToNextYear,
+  goToPreviousYear,
 }) => {
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
   const { days, weekdayLabels, monthLabel } = useMonth({
@@ -33,14 +35,20 @@ const Month = ({
   return (
     <>
       <Header>
-        <ChevronButton type="button" onClick={goToPreviousMonths} show turnLeft>
+        <ChevronButton type="button" onClick={goToPreviousYear} reverse>
+          <DoubleChevron size={10} />
+        </ChevronButton>
+        <ChevronButton type="button" onClick={goToPreviousMonth} turnLeft>
           <DownChevron size={10} color={CHEVRON_COLOR} />
         </ChevronButton>
         <MonthLabelContainer>
           <MonthLabel>{monthLabel}</MonthLabel>
         </MonthLabelContainer>
-        <ChevronButton type="button" onClick={goToNextMonths}>
+        <ChevronButton type="button" onClick={goToNextMonth}>
           <DownChevron size={10} color={CHEVRON_COLOR} />
+        </ChevronButton>
+        <ChevronButton type="button" onClick={goToNextYear} keepOrientation>
+          <DoubleChevron size={10} />
         </ChevronButton>
       </Header>
 
@@ -72,16 +80,22 @@ const Month = ({
 };
 
 Month.propTypes = {
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
   firstDayOfWeek: PropTypes.number,
-  goToPreviousMonths: PropTypes.func,
-  goToNextMonths: PropTypes.func,
+  goToPreviousMonth: PropTypes.func,
+  goToNextMonth: PropTypes.func,
+  goToPreviousYear: PropTypes.func,
+  goToNextYear: PropTypes.func,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Month.defaultProps = {
   firstDayOfWeek: 0,
-  goToPreviousMonths: () => {},
-  goToNextMonths: () => {},
+  goToPreviousMonth: () => {},
+  goToNextMonth: () => {},
+  goToPreviousYear: () => {},
+  goToNextYear: () => {},
 };
 
 export default Month;

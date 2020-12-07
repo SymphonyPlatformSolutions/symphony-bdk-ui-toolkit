@@ -34,7 +34,15 @@ export const WeekdayLabel = styled.div`
   text-transform: uppercase;
 `;
 
-const getTransformForButton = ({ turnLeft }) => {
+const getTransformForButton = ({ turnLeft, reverse, keepOrientation }) => {
+  if (keepOrientation) {
+    return '';
+  }
+
+  if (reverse) {
+    return 'rotate(180deg)';
+  }
+
   return turnLeft ? 'rotate(90deg)' : 'rotate(-90deg)';
 };
 
