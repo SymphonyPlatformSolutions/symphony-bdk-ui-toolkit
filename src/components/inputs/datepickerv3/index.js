@@ -8,6 +8,7 @@ import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
 import { getFocusedInput } from './utils';
 import { Wrapper } from './theme';
+import InputField from '../input-field';
 
 const DatepickerV3 = (props) => {
   const {
@@ -16,9 +17,9 @@ const DatepickerV3 = (props) => {
     customWeekdayLabels,
     firstDayOfWeek,
     navButtons,
+    closeOnSelect,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
-
   const handleOnClose = () => setIsOpen(false);
   const handleOnOpen = () => setIsOpen(true);
 
@@ -33,6 +34,10 @@ const DatepickerV3 = (props) => {
       setState({ ...data, focusedInput: START_DATE });
     } else {
       setState(data);
+    }
+
+    if (closeOnSelect) {
+      handleOnClose();
     }
   };
 
@@ -68,6 +73,13 @@ const DatepickerV3 = (props) => {
     firstDayOfWeek,
   });
 
+  const handleOnBlur = (e) => {
+    if (e.relatedTarget) {
+      return;
+    }
+    handleOnClose();
+  };
+
   return (
     <DatepickerContext.Provider
       value={{
@@ -85,7 +97,7 @@ const DatepickerV3 = (props) => {
       <PositioningPortal
         isOpen={isOpen}
         portalContent={() => (
-          <Wrapper>
+          <Wrapper isOpen={isOpen}>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
               activeMonths={activeMonths}
@@ -112,7 +124,20 @@ const DatepickerV3 = (props) => {
           {state.endDate && state.endDate.toLocaleString()}
         </div> */}
 
-        <input type="text" onFocus={handleOnOpen} />
+        <InputField
+          // onKeyDown={specialKeyHandler}
+          onFocus={handleOnOpen}
+          onBlur={(e) => handleOnBlur(e)}
+          value={state.startDate}
+          // onChange={(e) => {
+          //   setInputValue(e.target.value);
+          // }}
+          // placeholder={placeholder}
+          // size={size}
+          // disabled={disabled}
+          // errorMessage={errorMessage}
+          // inputState={inputState}
+        />
       </PositioningPortal>
     </DatepickerContext.Provider>
   );
@@ -129,6 +154,7 @@ DatepickerV3.propTypes = {
       daysToAdd: PropTypes.number.isRequired,
     })
   ),
+  closeOnSelect: PropTypes.bool,
 };
 
 DatepickerV3.defaultProps = {
@@ -137,6 +163,7 @@ DatepickerV3.defaultProps = {
   isRange: false,
   customWeekdayLabels: ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
   navButtons: [],
+  closeOnSelect: true,
 };
 
 export default DatepickerV3;

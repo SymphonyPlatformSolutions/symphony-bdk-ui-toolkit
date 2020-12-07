@@ -1,6 +1,28 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const WRAPPER_TRANSLATE_X = -25;
+
+/**
+ * ANIMATION
+ */
+const fadeIn = () => keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+const fadeOut = () => keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const getFadeInOrOutAnimation = ({ isOpen }) => (isOpen ? fadeIn() : fadeOut());
 
 export const Wrapper = styled.div`
   display: flex;
@@ -17,4 +39,6 @@ export const Wrapper = styled.div`
     font-family: 'SymphonyLato', 'Lato', 'Segoe UI', 'Helvetica Neue', 'Verdana',
       'Arial', sans-serif !important;
   }
+
+  animation: ${getFadeInOrOutAnimation} 0.3s;
 `;
