@@ -1,0 +1,77 @@
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link,
+} from '@storybook/addon-docs/blocks';
+import Datepicker from './index';
+
+<Meta
+  title="components/Inputs/Datepicker V3"
+  component={Datepicker}
+  parameters={{ order: 230 }}
+/>
+
+# Datepicker
+
+Datepicker component that implements a pop-up calendar to easily choose a single date or a range of dates.
+
+This component uses the headless hook version of [@datepicker-react/hooks](https://www.npmjs.com/package/@datepicker-react/hooks) to implement all logic.
+
+As with all controlled components, the Datepicker requires a parent that holds the state and controls (sample code will be shown below).
+
+## Use
+
+The Calendar opens on InputField focus. As soon as it appears, freely navigate the Calendar and click on selected dates.
+
+It is also possible to type out a date. The typed out value is only applied when the **Enter** key is pressed. The date can be in any Javascript Date object recognizable format. If the date cannot be parsed by the Javascript engine, nothing will happen. The Custom date string formatter does not interfere with typed input because the date is only applied when the Enter key is pressed.
+
+> Important: Typed Dates cannot contain a "-" character if it's a date range.
+
+To type out a Date range, the two dates **necessarily** need to be separated by a dash "-". Simply input two dates in any recognizable format input a range.
+
+## 1 month single
+
+For a single date, the controller component must inject a _`value`_ prop. The onChange function will return a javascript Date object to be used.
+
+<Preview>
+  <Story name="1 month single">
+    <Box>
+      <Datepicker />
+    </Box>
+  </Story>
+</Preview>
+
+## 1 month single navigation
+
+<Preview>
+  <Story name="1 month single navigation">
+    <Box>
+      <Datepicker navButtons={[{ label: 'TODAY', daysToAdd: 0 }]} />
+    </Box>
+  </Story>
+</Preview>
+
+## 1 month range
+
+<Preview>
+  <Story name="1 month range">
+    <Box>
+      <Datepicker isRange />
+    </Box>
+  </Story>
+</Preview>
+
+## 1 month range navigation
+
+<Preview>
+  <Story name="1 month range navigation">
+    <Box>
+      <Datepicker
+        isRange
+        navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]}
+      />
+    </Box>
+  </Story>
+</Preview>

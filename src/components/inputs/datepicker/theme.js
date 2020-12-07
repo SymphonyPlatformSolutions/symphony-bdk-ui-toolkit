@@ -24,11 +24,13 @@ export const ChangeMonthButton = styled.button`
   border: none;
   cursor: pointer;
   visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
-  transform: ${({ turnLeft }) => (turnLeft ? 'rotate(90deg)' : 'rotate(-90deg)')};
+  transform: ${({ turnLeft }) =>
+    turnLeft ? 'rotate(90deg)' : 'rotate(-90deg)'};
 `;
 export const WeekSeparator = styled.div`
   display: grid;
-  grid-template-columns: ${({ displayFours }) => (displayFours ? 'repeat(4, 1fr)' : 'repeat(7, 1fr)')};
+  grid-template-columns: ${({ displayFours }) =>
+    displayFours ? 'repeat(4, 1fr)' : 'repeat(7, 1fr)'};
   justify-content: center;
   margin-top: ${({ marginTop }) => `${marginTop}px`};
 `;
@@ -37,7 +39,8 @@ export const TitleText = styled(Text)`
   font-weight: bold;
   white-space: nowrap;
   &:hover {
-    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) => (isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200)};
+    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) =>
+      isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200};
   }
 `;
 export const WeekdayTextWrapper = styled.div`
@@ -56,7 +59,8 @@ export const WeekdayBubble = styled.div`
   width: 26px;
   display: flex;
   border-radius: 50%;
-  background-color: ${({ hilighted, theme }) => (hilighted ? transparentize(0.6, theme.colors.primary_400) : 'transparent')};
+  background-color: ${({ hilighted, theme }) =>
+    hilighted ? transparentize(0.6, theme.colors.primary_400) : 'transparent'};
   align-items: center;
   transition: all 0.3s;
   justify-content: center;
@@ -91,8 +95,8 @@ const fadeIn = (props) => keyframes`
     transform: 
     ${getRightTransform(props)}
     translateY(${
-  props.isUp ? `-${BASE_BUBBLE_TRANSLATE}px` : `${BASE_BUBBLE_TRANSLATE}px`
-});
+      props.isUp ? `-${BASE_BUBBLE_TRANSLATE}px` : `${BASE_BUBBLE_TRANSLATE}px`
+    });
   }
 `;
 const fadeOut = (props) => keyframes`
@@ -107,8 +111,8 @@ const fadeOut = (props) => keyframes`
   transform: 
   ${getRightTransform(props)}
   translateY(${
-  props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`
-});
+    props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`
+  });
 }
 `;
 const getAnimation = (props) => {
@@ -134,10 +138,12 @@ export const CalendarBubble = styled.div`
   display: flex;
   transform: ${(props) => getRightTransform(props)}
     translateY(
-      ${(props) => (props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`)}
+      ${(props) =>
+        props.isUp ? getUpTransform(props) : `${BASE_BUBBLE_TRANSLATE}px`}
     );
   display: grid;
-  grid-template-columns: ${({ displaySmaller, size }) => (displaySmaller ? 'repeat(1, auto)' : `repeat(${size}, auto)`)};
+  grid-template-columns: ${({ displaySmaller, size }) =>
+    displaySmaller ? 'repeat(1, auto)' : `repeat(${size}, auto)`};
   grid-gap: 0 40px;
   animation: ${(props) => getAnimation(props)} 0.3s;
   transition: all 0.3s;
@@ -147,21 +153,25 @@ export const CalendarBubble = styled.div`
     top: ${({ isUp }) => (isUp ? '100%' : undefined)};
     left: ${(props) => getBubbleTipPlacement(props)};
     border: solid transparent;
-    content: " ";
+    content: ' ';
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
   }
   &:after {
-    border-top-color: ${({ theme, isUp }) => (isUp ? theme.colors.mainbackground : undefined)};
-    border-bottom-color: ${({ theme, isUp }) => (isUp ? undefined : theme.colors.mainbackground)};
+    border-top-color: ${({ theme, isUp }) =>
+      isUp ? theme.colors.mainbackground : undefined};
+    border-bottom-color: ${({ theme, isUp }) =>
+      isUp ? undefined : theme.colors.mainbackground};
     border-width: 10px;
     margin-left: -10px;
   }
   &:before {
-    border-top-color: ${({ theme, isUp }) => (isUp ? theme.colors.grey_200 : undefined)};
-    border-bottom-color: ${({ theme, isUp }) => (isUp ? undefined : theme.colors.grey_200)};
+    border-top-color: ${({ theme, isUp }) =>
+      isUp ? theme.colors.grey_200 : undefined};
+    border-bottom-color: ${({ theme, isUp }) =>
+      isUp ? undefined : theme.colors.grey_200};
     border-width: 11px;
     margin-left: -11px;
   }
@@ -189,7 +199,8 @@ export const DayButton = styled.button`
   transition: all 0.3s;
   border-radius: 4px;
   &:hover {
-    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) => (isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200)};
+    background-color: ${({ theme, isSelected, isSelectedStartOrEnd }) =>
+      isSelected || isSelectedStartOrEnd ? undefined : theme.colors.grey_200};
   }
   cursor: pointer;
   padding: 8px 10px;
@@ -217,12 +228,13 @@ export const ButtonContainer = styled.div`
   cursor: pointer;
   margin: 4px 2px 0 2px;
 
-  ${({ disabled }) => (disabled
-    ? `
+  ${({ disabled }) =>
+    disabled
+      ? `
     opacity: 0.3;
     pointer-events: none;
   `
-    : null)}
+      : null}
 `;
 
 export const MonthButton = styled(DayButton)`

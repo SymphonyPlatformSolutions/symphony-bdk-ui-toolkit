@@ -5,3 +5,4 @@ build/*
 examples/node_modules
 
 .now
+.vscode
