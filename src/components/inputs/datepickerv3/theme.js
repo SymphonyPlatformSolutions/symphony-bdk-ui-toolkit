@@ -12,4 +12,9 @@ export const Wrapper = styled.div`
 
   transform: translateX(${WRAPPER_TRANSLATE_X}px);
   border-radius: 8px;
+
+  * {
+    font-family: 'SymphonyLato', 'Lato', 'Segoe UI', 'Helvetica Neue', 'Verdana',
+      'Arial', sans-serif !important;
+  }
 `;

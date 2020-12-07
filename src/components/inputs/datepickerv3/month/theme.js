@@ -5,15 +5,14 @@ export const Header = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  margin: 16px 0;
 `;
 
 export const MonthLabelContainer = styled.div`
   text-align: center;
-  margin: 0 0 16px;
 `;
 
 export const MonthLabel = styled.span`
-  font-family: Segoe UI;
   font-size: 12px;
   line-height: 16px;
   color: #17181b;
