@@ -1,9 +1,49 @@
 import { START_DATE, END_DATE } from '@datepicker-react/hooks';
 
+export const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 export const getFocusedInput = (isRange, isStart) => {
   if (!isRange) {
     return START_DATE;
   }
 
   return isStart ? START_DATE : END_DATE;
+};
+
+export const formatDate = (state, isRange) => {
+  const { startDate, endDate } = state;
+  if (!startDate) {
+    return '';
+  }
+  if (!isRange) {
+    return `${
+      MONTHS[startDate.getMonth()]
+    } ${startDate.getDate()} ${startDate.getFullYear()}`;
+  }
+  let leftPart = 'Start';
+  let rightPart = 'End';
+  if (startDate) {
+    leftPart = `${
+      MONTHS[startDate.getMonth()]
+    } ${startDate.getDate()} ${startDate.getFullYear()}`;
+  }
+  if (endDate) {
+    rightPart = `${
+      MONTHS[endDate.getMonth()]
+    } ${endDate.getDate()} ${endDate.getFullYear()}`;
+  }
+  return `${leftPart} - ${rightPart}`;
 };

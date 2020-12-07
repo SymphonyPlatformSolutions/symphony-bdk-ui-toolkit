@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import DatepickerContext from './datepickerContext';
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
-import { getFocusedInput } from './utils';
+import { getFocusedInput, formatDate } from './utils';
 import { Wrapper } from './theme';
 import InputField from '../input-field';
 
@@ -125,18 +125,13 @@ const DatepickerV3 = (props) => {
         onClose={handleOnClose}
       >
         <InputField
-          // onKeyDown={specialKeyHandler}
           onFocus={handleOnOpen}
           onBlur={(e) => handleOnBlur(e)}
-          value={state.startDate}
-          // onChange={(e) => {
-          //   setInputValue(e.target.value);
-          // }}
           placeholder={placeholder}
           size={size}
           disabled={disabled}
           errorMessage={errorMessage}
-          // inputState={inputState}
+          value={formatDate(state, isRange)}
         />
       </PositioningPortal>
     </DatepickerContext.Provider>

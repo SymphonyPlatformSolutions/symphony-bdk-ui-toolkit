@@ -231,7 +231,6 @@ const Datepicker = (props) => {
   };
 
   const handleBlur = (e) => {
-    console.log('handleOnBlur');
     if (e.relatedTarget && e.relatedTarget.id === YEAR_SELECTOR_ID) {
       return;
     }
