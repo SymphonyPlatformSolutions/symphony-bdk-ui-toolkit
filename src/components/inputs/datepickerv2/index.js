@@ -69,6 +69,10 @@ const DatepickerV3 = (props) => {
       tempState.endDate = now;
     }
 
+    if (closeOnSelect) {
+      handleOnClose();
+    }
+
     setState(tempState);
   };
 

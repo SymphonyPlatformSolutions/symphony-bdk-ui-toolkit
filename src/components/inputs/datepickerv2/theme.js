@@ -54,7 +54,6 @@ export const Wrapper = styled.div`
 `;
 
 export const MultipleCalendarWrapper = styled.div`
-  width: 400px;
   display: flex;
   flex-direction: row;
 `;

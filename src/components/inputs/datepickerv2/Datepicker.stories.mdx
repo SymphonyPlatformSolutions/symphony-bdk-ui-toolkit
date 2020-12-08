@@ -61,7 +61,7 @@ For a single date, the controller component must inject a _`value`_ prop. The on
 <Preview>
   <Story name="1 month range">
     <Box>
-      <Datepicker isRange />
+      <Datepicker isRange closeOnSelect />
     </Box>
   </Story>
 </Preview>
@@ -73,6 +73,7 @@ For a single date, the controller component must inject a _`value`_ prop. The on
     <Box>
       <Datepicker
         isRange
+        closeOnSelect
         navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]}
       />
     </Box>
