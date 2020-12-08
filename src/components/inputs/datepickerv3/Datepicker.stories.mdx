@@ -84,7 +84,14 @@ For a single date, the controller component must inject a _`value`_ prop. The on
 <Preview>
   <Story name="Dual range navigation">
     <Box>
-      <Datepicker dual navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]} />
+      <Datepicker
+        dual
+        navButtons={[
+          { label: 'TODAY', daysToAdd: 0 },
+          { label: 'LAST 7 DAYS', daysToAdd: -6 },
+          { label: 'LAST 30 DAYS', daysToAdd: -29 },
+        ]}
+      />
     </Box>
   </Story>
 </Preview>

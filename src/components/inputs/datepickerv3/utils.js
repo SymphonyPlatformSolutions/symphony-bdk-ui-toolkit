@@ -48,3 +48,10 @@ export const formatDate = (state, args) => {
   }
   return `${leftPart} - ${rightPart}`;
 };
+
+export const addDaysToDate = (date, daysToAdd) => {
+  const currentDays = date.getDate();
+  const outputDate = new Date();
+  outputDate.setDate(currentDays + daysToAdd);
+  return outputDate;
+};

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
-import { START_DATE, END_DATE } from '@datepicker-react/hooks';
+import { START_DATE } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
 
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
-import { formatDate } from './utils';
+import { formatDate, addDaysToDate } from './utils';
 import { Wrapper, MultipleCalendarWrapper } from './theme';
 import InputField from '../input-field';
 
@@ -56,6 +56,22 @@ const DatepickerV3 = (props) => {
     handleOnClose();
   };
 
+  const handleOnNavigate = (daysToAdd) => {
+    const tempState = { ...state };
+    const now = new Date();
+
+    // Means "TODAY" button click.
+    if (daysToAdd === 0) {
+      tempState.startDate = now;
+      tempState.endDate = isRange ? now : null;
+    } else {
+      tempState.startDate = addDaysToDate(now, daysToAdd);
+      tempState.endDate = now;
+    }
+
+    setState(tempState);
+  };
+
   return (
     <PositioningPortal
       isOpen={isOpen}
@@ -87,7 +103,7 @@ const DatepickerV3 = (props) => {
             )}
           </MultipleCalendarWrapper>
 
-          <NavButtons buttons={navButtons} onNavigate={() => {}} />
+          <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
         </Wrapper>
       )}
       onClose={handleOnClose}
