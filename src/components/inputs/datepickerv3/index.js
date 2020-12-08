@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
-import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
+import { START_DATE, END_DATE } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
 
-import DatepickerContext from './datepickerContext';
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
-import { getFocusedInput, formatDate } from './utils';
+import { formatDate } from './utils';
 import { Wrapper, MultipleCalendarWrapper } from './theme';
 import InputField from '../input-field';
 
 const DatepickerV3 = (props) => {
   const {
     isRange,
-    numberOfMonths,
+    dual,
     customWeekdayLabels,
     firstDayOfWeek,
     navButtons,
@@ -25,6 +24,11 @@ const DatepickerV3 = (props) => {
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [shouldRunFadeOut, setShouldRunFadeOut] = useState(false);
+  const [state, setState] = useState({
+    startDate: null,
+    endDate: null,
+    focusedInput: START_DATE,
+  });
 
   const handleOnOpen = () => {
     setShouldRunFadeOut(false);
@@ -33,59 +37,17 @@ const DatepickerV3 = (props) => {
 
   const handleOnClose = () => {
     setShouldRunFadeOut(true);
-
     setTimeout(() => setIsOpen(false), 100);
   };
 
-  const [state, setState] = useState({
-    startDate: null,
-    endDate: null,
-    focusedInput: START_DATE,
-  });
-
-  const handleDateChange = (data) => {
-    if (!data.focusedInput) {
-      setState({ ...data, focusedInput: START_DATE });
-    } else {
-      setState(data);
+  const handleOnDateChange = (dateState, isOnlyEndDate) => {
+    if (isOnlyEndDate) {
+      setState({ ...state, endDate: dateState.startDate });
+      return;
     }
 
-    if (closeOnSelect) {
-      // Don't close if it's range and both dates aren't provided.
-      if (isRange && (!data.startDate || !data.endDate)) {
-        return;
-      }
-
-      handleOnClose();
-    }
+    setState(dateState);
   };
-
-  const handleOnNavigate = (daysToAdd = 0) => {
-    const tempState = { startDate: new Date(), endDate: new Date() };
-    const dateKeyToChange = daysToAdd < 0 ? 'startDate' : 'endDate';
-
-    const currentDateValue = tempState[dateKeyToChange].getDate();
-    tempState[dateKeyToChange].setDate(currentDateValue + daysToAdd);
-
-    handleDateChange(tempState);
-  };
-
-  const {
-    activeMonths,
-    goToPreviousMonths,
-    goToNextMonths,
-    goToPreviousYear,
-    goToNextYear,
-    ...otherCalendarProps
-  } = useDatepicker({
-    startDate: state.startDate,
-    endDate: isRange ? state.endDate : null,
-    focusedInput: getFocusedInput(isRange, state.focusedInput === START_DATE),
-    onDatesChange: handleDateChange,
-    // Always keep 1 there, because we don't want the default behaviour of the lib.
-    numberOfMonths: 1,
-    firstDayOfWeek,
-  });
 
   const handleOnBlur = (e) => {
     if (e.relatedTarget) {
@@ -99,21 +61,33 @@ const DatepickerV3 = (props) => {
       isOpen={isOpen}
       portalContent={() => (
         <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
-          <MultipleCalendarWrapper numberOfMonths={numberOfMonths}>
-            <DatepickerContext.Provider value={otherCalendarProps}>
+          <MultipleCalendarWrapper dual={dual}>
+            <Calendar
+              firstDayOfWeek={firstDayOfWeek}
+              customWeekdayLabels={customWeekdayLabels}
+              closeOnSelect={closeOnSelect}
+              isRange={dual || isRange}
+              onChange={handleOnDateChange}
+              onClose={handleOnClose}
+              defaultState={state}
+              forcedFocusedInput={dual ? START_DATE : null}
+            />
+
+            {dual && (
               <Calendar
                 firstDayOfWeek={firstDayOfWeek}
-                activeMonths={activeMonths}
                 customWeekdayLabels={customWeekdayLabels}
-                goToPreviousMonth={goToPreviousMonths}
-                goToNextMonth={goToNextMonths}
-                goToPreviousYear={() => goToPreviousYear(1)}
-                goToNextYear={() => goToNextYear(1)}
+                closeOnSelect={closeOnSelect}
+                isRange={dual || isRange}
+                onChange={(args) => handleOnDateChange(args, true)}
+                onClose={handleOnClose}
+                defaultState={state}
+                forcedFocusedInput={START_DATE}
               />
-            </DatepickerContext.Provider>
+            )}
           </MultipleCalendarWrapper>
 
-          <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
+          <NavButtons buttons={navButtons} onNavigate={() => {}} />
         </Wrapper>
       )}
       onClose={handleOnClose}
@@ -133,7 +107,7 @@ const DatepickerV3 = (props) => {
 
 DatepickerV3.propTypes = {
   firstDayOfWeek: PropTypes.number,
-  numberOfMonths: PropTypes.number,
+  dual: PropTypes.bool,
   isRange: PropTypes.bool,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   navButtons: PropTypes.arrayOf(
@@ -150,7 +124,7 @@ DatepickerV3.propTypes = {
 };
 
 DatepickerV3.defaultProps = {
-  numberOfMonths: 1,
+  dual: false,
   firstDayOfWeek: 0,
   isRange: false,
   customWeekdayLabels: ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],

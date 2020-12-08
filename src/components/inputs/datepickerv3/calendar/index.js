@@ -1,18 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
+
+import DatepickerContext from '../datepickerContext';
+import { getFocusedInput } from '../utils';
 
 import Month from '../month/index';
 
 const Calendar = (props) => {
   const {
     firstDayOfWeek,
+    customWeekdayLabels,
+    isRange,
+    closeOnSelect,
+    onChange,
+    onClose,
+    defaultState,
+    forcedFocusedInput,
+  } = props;
+
+  const handleDateChange = (data) => {
+    let newData = data;
+
+    if (!data.focusedInput) {
+      newData = { ...data, focusedInput: START_DATE };
+    }
+
+    onChange(newData);
+
+    if (closeOnSelect) {
+      // Don't close if it's range and both dates aren't provided.
+      if (isRange && (!newData.startDate || !newData.endDate)) {
+        return;
+      }
+
+      onClose();
+    }
+  };
+
+  const {
     activeMonths,
-    goToPreviousMonth,
-    goToNextMonth,
+    goToPreviousMonths,
+    goToNextMonths,
     goToPreviousYear,
     goToNextYear,
-    customWeekdayLabels,
-  } = props;
+    ...otherCalendarProps
+  } = useDatepicker({
+    startDate: defaultState.startDate,
+    endDate: isRange ? defaultState.endDate : null,
+    focusedInput:
+      forcedFocusedInput ||
+      getFocusedInput(isRange, defaultState.focusedInput === START_DATE),
+
+    onDatesChange: handleDateChange,
+    // Always keep 1 there, because we don't want the default behaviour of the lib.
+    numberOfMonths: 1,
+    firstDayOfWeek,
+  });
 
   return (
     <>
@@ -24,19 +68,19 @@ const Calendar = (props) => {
           gridGap: '0 64px',
         }}
       >
-        {activeMonths.map((month) => (
+        <DatepickerContext.Provider value={otherCalendarProps}>
           <Month
-            key={`${month.year}-${month.month}`}
-            year={month.year}
-            month={month.month}
+            key={`${activeMonths[0].year}-${activeMonths[0].month}`}
+            year={activeMonths[0].year}
+            month={activeMonths[0].month}
             firstDayOfWeek={firstDayOfWeek}
             customWeekdayLabels={customWeekdayLabels}
-            goToPreviousMonth={goToPreviousMonth}
-            goToNextMonth={goToNextMonth}
+            goToPreviousMonth={goToPreviousMonths}
+            goToNextMonth={goToNextMonths}
             goToPreviousYear={goToPreviousYear}
             goToNextYear={goToNextYear}
           />
-        ))}
+        </DatepickerContext.Provider>
       </div>
     </>
   );
@@ -44,21 +88,27 @@ const Calendar = (props) => {
 
 Calendar.propTypes = {
   firstDayOfWeek: PropTypes.string,
-  activeMonths: PropTypes.number,
-  goToPreviousMonth: PropTypes.func,
-  goToNextMonth: PropTypes.func,
-  goToPreviousYear: PropTypes.func,
-  goToNextYear: PropTypes.func,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func,
+  onClose: PropTypes.func,
+  isRange: PropTypes.bool,
+  closeOnSelect: PropTypes.bool,
+  defaultState: PropTypes.shape({
+    startDate: PropTypes.any,
+    endDate: PropTypes.any,
+    focusedInput: PropTypes.string,
+  }),
+  forcedFocusedInput: PropTypes.string,
 };
 
 Calendar.defaultProps = {
   firstDayOfWeek: '',
-  activeMonths: 1,
-  goToPreviousMonth: () => {},
-  goToNextMonth: () => {},
-  goToPreviousYear: () => {},
-  goToNextYear: () => {},
+  onChange: () => {},
+  onClose: () => {},
+  isRange: false,
+  closeOnSelect: false,
+  defaultState: { startDate: null, endDate: null, focusedInput: START_DATE },
+  forcedFocusedInput: null,
 };
 
 export default Calendar;

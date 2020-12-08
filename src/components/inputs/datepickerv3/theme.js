@@ -55,8 +55,8 @@ export const Wrapper = styled.div`
   animation-fill-mode: forwards;
 `;
 
-const getMultipleCalendarStyle = ({ numberOfMonths = 1 }) => {
-  if (numberOfMonths === 1) {
+const getMultipleCalendarStyle = ({ dual = false }) => {
+  if (!dual) {
     return '';
   }
 
