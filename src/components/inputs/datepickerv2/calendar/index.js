@@ -5,19 +5,20 @@ import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
 import DatepickerContext from '../datepickerContext';
 import { getFocusedInput } from '../utils';
 import { Wrapper } from './theme';
+import Header from '../header/index';
 
 import Month from '../month/index';
 
 const Calendar = (props) => {
   const {
     firstDayOfWeek,
+    numberOfMonths,
     customWeekdayLabels,
     isRange,
     closeOnSelect,
     onChange,
     onClose,
     defaultState,
-    forcedFocusedInput,
   } = props;
 
   const handleDateChange = (data) => {
@@ -42,44 +43,52 @@ const Calendar = (props) => {
   const {
     activeMonths,
     goToPreviousMonths,
-    goToNextMonths,
+    goToNextMonthsByOneMonth,
+    goToPreviousMonthsByOneMonth,
     goToPreviousYear,
     goToNextYear,
     ...otherCalendarProps
   } = useDatepicker({
     startDate: defaultState.startDate,
     endDate: isRange ? defaultState.endDate : null,
-    focusedInput:
-      forcedFocusedInput ||
-      getFocusedInput(isRange, defaultState.focusedInput === START_DATE),
-
+    focusedInput: getFocusedInput(
+      isRange,
+      defaultState.focusedInput === START_DATE
+    ),
     onDatesChange: handleDateChange,
-    // Always keep 1 there, because we don't want the default behaviour of the lib.
-    numberOfMonths: 1,
+    numberOfMonths,
     firstDayOfWeek,
   });
 
   return (
-    <Wrapper activeMonths={activeMonths}>
-      <DatepickerContext.Provider value={otherCalendarProps}>
-        <Month
-          key={`${activeMonths[0].year}-${activeMonths[0].month}`}
-          year={activeMonths[0].year}
-          month={activeMonths[0].month}
-          firstDayOfWeek={firstDayOfWeek}
-          customWeekdayLabels={customWeekdayLabels}
-          goToPreviousMonth={goToPreviousMonths}
-          goToNextMonth={goToNextMonths}
-          goToPreviousYear={() => goToPreviousYear(1)}
-          goToNextYear={() => goToNextYear(1)}
-        />
-      </DatepickerContext.Provider>
-    </Wrapper>
+    <>
+      <Header
+        goToPreviousMonth={goToPreviousMonthsByOneMonth}
+        goToNextMonth={goToNextMonthsByOneMonth}
+        goToPreviousYear={() => goToPreviousYear(1)}
+        goToNextYear={() => goToNextYear(1)}
+      />
+
+      <Wrapper activeMonths={activeMonths}>
+        <DatepickerContext.Provider value={otherCalendarProps}>
+          {activeMonths.map((month) => (
+            <Month
+              key={`${month.year}-${month.month}`}
+              year={month.year}
+              month={month.month}
+              firstDayOfWeek={firstDayOfWeek}
+              customWeekdayLabels={customWeekdayLabels}
+            />
+          ))}
+        </DatepickerContext.Provider>
+      </Wrapper>
+    </>
   );
 };
 
 Calendar.propTypes = {
   firstDayOfWeek: PropTypes.string,
+  numberOfMonths: PropTypes.number,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -90,17 +99,16 @@ Calendar.propTypes = {
     endDate: PropTypes.any,
     focusedInput: PropTypes.string,
   }),
-  forcedFocusedInput: PropTypes.string,
 };
 
 Calendar.defaultProps = {
   firstDayOfWeek: '',
+  numberOfMonths: 1,
   onChange: () => {},
   onClose: () => {},
   isRange: false,
   closeOnSelect: false,
   defaultState: { startDate: null, endDate: null, focusedInput: START_DATE },
-  forcedFocusedInput: null,
 };
 
 export default Calendar;

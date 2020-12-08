@@ -38,7 +38,6 @@ const getFadeInOrOutAnimation = ({ isOpen, shouldRunFadeOut }) => {
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 
   background: #fff;
   transition: opacity 0.2s linear;
@@ -54,18 +53,8 @@ export const Wrapper = styled.div`
   animation-fill-mode: forwards;
 `;
 
-const getMultipleCalendarStyle = ({ dual = false }) => {
-  if (!dual) {
-    return '';
-  }
-
-  return `
-  width: 400px;
-    display: flex;
-    flex-direction: row;
-  `;
-};
-
 export const MultipleCalendarWrapper = styled.div`
-  ${getMultipleCalendarStyle}
+  width: 400px;
+  display: flex;
+  flex-direction: row;
 `;

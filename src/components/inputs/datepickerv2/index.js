@@ -12,9 +12,9 @@ import InputField from '../input-field';
 const DatepickerV3 = (props) => {
   const {
     isRange,
-    dual,
     customWeekdayLabels,
     firstDayOfWeek,
+    numberOfMonths,
     navButtons,
     closeOnSelect,
     errorMessage,
@@ -77,30 +77,17 @@ const DatepickerV3 = (props) => {
       isOpen={isOpen}
       portalContent={() => (
         <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
-          <MultipleCalendarWrapper dual={dual}>
+          <MultipleCalendarWrapper>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
+              numberOfMonths={numberOfMonths}
               customWeekdayLabels={customWeekdayLabels}
               closeOnSelect={closeOnSelect}
-              isRange={dual || isRange}
+              isRange={isRange}
               onChange={handleOnDateChange}
               onClose={handleOnClose}
               defaultState={state}
-              forcedFocusedInput={dual ? START_DATE : null}
             />
-
-            {dual && (
-              <Calendar
-                firstDayOfWeek={firstDayOfWeek}
-                customWeekdayLabels={customWeekdayLabels}
-                closeOnSelect={closeOnSelect}
-                isRange={dual || isRange}
-                onChange={(args) => handleOnDateChange(args, true)}
-                onClose={handleOnClose}
-                defaultState={state}
-                forcedFocusedInput={START_DATE}
-              />
-            )}
           </MultipleCalendarWrapper>
 
           <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
@@ -115,7 +102,7 @@ const DatepickerV3 = (props) => {
         size={size}
         disabled={disabled}
         errorMessage={errorMessage}
-        value={formatDate(state, { isRange, dual })}
+        value={formatDate(state, { isRange })}
       />
     </PositioningPortal>
   );
@@ -123,7 +110,7 @@ const DatepickerV3 = (props) => {
 
 DatepickerV3.propTypes = {
   firstDayOfWeek: PropTypes.number,
-  dual: PropTypes.bool,
+  numberOfMonths: PropTypes.number,
   isRange: PropTypes.bool,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string),
   navButtons: PropTypes.arrayOf(
@@ -140,8 +127,8 @@ DatepickerV3.propTypes = {
 };
 
 DatepickerV3.defaultProps = {
-  dual: false,
   firstDayOfWeek: 0,
+  numberOfMonths: 1,
   isRange: false,
   customWeekdayLabels: ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
   navButtons: [],

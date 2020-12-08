@@ -42,7 +42,7 @@ const Day = ({ day, date }) => {
   });
 
   if (!day) {
-    return <div />;
+    return <></>;
   }
 
   return (

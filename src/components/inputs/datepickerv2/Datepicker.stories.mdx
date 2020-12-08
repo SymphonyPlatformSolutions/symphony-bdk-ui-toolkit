@@ -8,7 +8,7 @@ import {
 import Datepicker from './index';
 
 <Meta
-  title="components/Inputs/Datepicker V3"
+  title="components/Inputs/Datepicker V2"
   component={Datepicker}
   parameters={{ order: 230 }}
 />
@@ -85,7 +85,9 @@ For a single date, the controller component must inject a _`value`_ prop. The on
   <Story name="Dual range navigation">
     <Box>
       <Datepicker
-        dual
+        isRange
+        numberOfMonths={2}
+        closeOnSelect
         navButtons={[
           { label: 'TODAY', daysToAdd: 0 },
           { label: 'LAST 7 DAYS', daysToAdd: -6 },
