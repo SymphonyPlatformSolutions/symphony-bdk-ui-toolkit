@@ -8,6 +8,7 @@ import {
   MonthLabel,
   WeekdayLabel,
   ChevronButton,
+  WeekdaysAndDaysContainer,
 } from './theme';
 import Day from '../day/index';
 import { DownChevron, DoubleChevron } from '../../../misc/icons';
@@ -62,29 +63,17 @@ const Month = ({
         </ChevronButton>
       </Header>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(7, 24px)',
-          justifyContent: 'center',
-        }}
-      >
+      <WeekdaysAndDaysContainer>
         {weekdayLabels.map((dayLabel) => (
           <WeekdayLabel key={dayLabel}>{dayLabel}</WeekdayLabel>
         ))}
-      </div>
+      </WeekdaysAndDaysContainer>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(7, 24px)',
-          justifyContent: 'center',
-        }}
-      >
+      <WeekdaysAndDaysContainer>
         {days.map((day) => (
           <Day key={day.dayLabel} date={day.date} day={day.dayLabel} />
         ))}
-      </div>
+      </WeekdaysAndDaysContainer>
     </>
   );
 };

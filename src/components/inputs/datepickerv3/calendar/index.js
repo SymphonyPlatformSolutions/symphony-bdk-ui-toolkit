@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
+import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
 
 import DatepickerContext from '../datepickerContext';
 import { getFocusedInput } from '../utils';
+import { Wrapper } from './theme';
 
 import Month from '../month/index';
 
@@ -59,30 +60,21 @@ const Calendar = (props) => {
   });
 
   return (
-    <>
-      <div
-        style={{
-          width: 200,
-          display: 'grid',
-          gridTemplateColumns: `repeat(${activeMonths.length}, 200px)`,
-          gridGap: '0 64px',
-        }}
-      >
-        <DatepickerContext.Provider value={otherCalendarProps}>
-          <Month
-            key={`${activeMonths[0].year}-${activeMonths[0].month}`}
-            year={activeMonths[0].year}
-            month={activeMonths[0].month}
-            firstDayOfWeek={firstDayOfWeek}
-            customWeekdayLabels={customWeekdayLabels}
-            goToPreviousMonth={goToPreviousMonths}
-            goToNextMonth={goToNextMonths}
-            goToPreviousYear={goToPreviousYear}
-            goToNextYear={goToNextYear}
-          />
-        </DatepickerContext.Provider>
-      </div>
-    </>
+    <Wrapper activeMonths={activeMonths}>
+      <DatepickerContext.Provider value={otherCalendarProps}>
+        <Month
+          key={`${activeMonths[0].year}-${activeMonths[0].month}`}
+          year={activeMonths[0].year}
+          month={activeMonths[0].month}
+          firstDayOfWeek={firstDayOfWeek}
+          customWeekdayLabels={customWeekdayLabels}
+          goToPreviousMonth={goToPreviousMonths}
+          goToNextMonth={goToNextMonths}
+          goToPreviousYear={() => goToPreviousYear(1)}
+          goToNextYear={() => goToNextYear(1)}
+        />
+      </DatepickerContext.Provider>
+    </Wrapper>
   );
 };
 

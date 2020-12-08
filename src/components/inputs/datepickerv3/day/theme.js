@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const CURRENT_DAY_DOT_SIZE = 3;
+
 const getBackgroundColorOfDayButton = ({
   isSelected,
   isSelectedStartOrEnd,
@@ -31,7 +33,24 @@ const getBorderRadius = ({ isSelectedStartOrEnd }) => {
   return isSelectedStartOrEnd ? '2px' : 0;
 };
 
+const generateDotForNow = ({ isNow = false }) => {
+  if (!isNow) {
+    return '';
+  }
+
+  return `
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    width: ${CURRENT_DAY_DOT_SIZE}px;
+    height: ${CURRENT_DAY_DOT_SIZE}px;
+    background-color: #fff;
+    border-radius: 25px;
+  `;
+};
+
 export const DayButton = styled.button`
+  position: relative;
   width: 24px;
   height: 28px;
   display: flex;
@@ -54,5 +73,9 @@ export const DayButton = styled.button`
     color: #17181b;
     border-color: #008eff;
     border-radius: 2px;
+  }
+
+  &:after {
+    ${generateDotForNow}
   }
 `;

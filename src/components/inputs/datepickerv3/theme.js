@@ -43,7 +43,6 @@ export const Wrapper = styled.div`
   background: #fff;
   transition: opacity 0.2s linear;
 
-  transform: translateX(${WRAPPER_TRANSLATE_X}px);
   border-radius: 8px;
 
   * {

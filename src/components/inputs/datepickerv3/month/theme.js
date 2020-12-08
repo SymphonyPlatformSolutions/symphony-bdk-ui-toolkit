@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+const getTransformForButton = ({ turnLeft, reverse, keepOrientation }) => {
+  if (keepOrientation) {
+    return '';
+  }
+
+  if (reverse) {
+    return 'rotate(180deg)';
+  }
+
+  return turnLeft ? 'rotate(90deg)' : 'rotate(-90deg)';
+};
+
 export const Header = styled.div`
   display: flex;
   flex-direction: row;
@@ -36,18 +48,6 @@ export const WeekdayLabel = styled.div`
   text-transform: uppercase;
 `;
 
-const getTransformForButton = ({ turnLeft, reverse, keepOrientation }) => {
-  if (keepOrientation) {
-    return '';
-  }
-
-  if (reverse) {
-    return 'rotate(180deg)';
-  }
-
-  return turnLeft ? 'rotate(90deg)' : 'rotate(-90deg)';
-};
-
 export const ChevronButton = styled.button`
   background-color: transparent;
   border: none;
@@ -58,4 +58,10 @@ export const ChevronButton = styled.button`
 
   margin-right: ${({ marginRight }) => marginRight}px;
   margin-left: ${({ marginLeft }) => marginLeft}px;
+`;
+
+export const WeekdaysAndDaysContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 24px);
+  justify-content: center;
 `;

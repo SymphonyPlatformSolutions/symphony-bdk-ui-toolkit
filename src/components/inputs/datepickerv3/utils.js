@@ -55,3 +55,18 @@ export const addDaysToDate = (date, daysToAdd) => {
   outputDate.setDate(currentDays + daysToAdd);
   return outputDate;
 };
+
+export const isNow = (date) => {
+  if (!date) {
+    return false;
+  }
+
+  const now = new Date();
+  const methods = ['getFullYear', 'getMonth', 'getDate'];
+
+  const hasFalsyValue = methods
+    .map((method) => date[method]() === now[method]())
+    .some((booleanValue) => !booleanValue);
+
+  return !hasFalsyValue;
+};
