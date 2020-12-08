@@ -99,7 +99,7 @@ const DatepickerV3 = (props) => {
         size={size}
         disabled={disabled}
         errorMessage={errorMessage}
-        value={formatDate(state, isRange)}
+        value={formatDate(state, { isRange, dual })}
       />
     </PositioningPortal>
   );

@@ -23,12 +23,13 @@ export const getFocusedInput = (isRange, isStart) => {
   return isStart ? START_DATE : END_DATE;
 };
 
-export const formatDate = (state, isRange) => {
+export const formatDate = (state, args) => {
+  const { isRange, dual } = args;
   const { startDate, endDate } = state;
   if (!startDate) {
     return '';
   }
-  if (!isRange) {
+  if (!isRange && !dual) {
     return `${
       MONTHS[startDate.getMonth()]
     } ${startDate.getDate()} ${startDate.getFullYear()}`;
