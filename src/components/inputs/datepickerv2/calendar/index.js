@@ -92,7 +92,7 @@ const Calendar = (props) => {
 };
 
 Calendar.propTypes = {
-  firstDayOfWeek: PropTypes.string,
+  firstDayOfWeek: PropTypes.number,
   numberOfMonths: PropTypes.number,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func,
@@ -104,7 +104,7 @@ Calendar.propTypes = {
     endDate: PropTypes.any,
     focusedInput: PropTypes.string,
   }),
-  defaultInitialVisibleMonth: PropTypes.any,
+  initialVisibleMonth: PropTypes.any,
 };
 
 Calendar.defaultProps = {
@@ -115,7 +115,7 @@ Calendar.defaultProps = {
   isRange: false,
   closeOnSelect: false,
   defaultState: { startDate: null, endDate: null, focusedInput: START_DATE },
-  defaultInitialVisibleMonth: new Date(),
+  initialVisibleMonth: new Date(),
 };
 
 export default Calendar;

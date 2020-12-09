@@ -9,7 +9,7 @@ import { formatDate, addDaysToDate } from './utils';
 import { Wrapper, MultipleCalendarWrapper } from './theme';
 import InputField from '../input-field';
 
-const DatepickerV3 = (props) => {
+const DatepickerV2 = (props) => {
   const {
     isRange,
     customWeekdayLabels,
@@ -137,6 +137,7 @@ const DatepickerV3 = (props) => {
         size={size}
         disabled={disabled}
         errorMessage={errorMessage}
+        defaultValue=""
         value={formatDate(state, { isRange })}
         onMouseEnter={() => setMouseLeaveInput(false)}
         onMouseLeave={() => setMouseLeaveInput(true)}
@@ -145,7 +146,7 @@ const DatepickerV3 = (props) => {
   );
 };
 
-DatepickerV3.propTypes = {
+DatepickerV2.propTypes = {
   firstDayOfWeek: PropTypes.number,
   numberOfMonths: PropTypes.number,
   isRange: PropTypes.bool,
@@ -164,7 +165,7 @@ DatepickerV3.propTypes = {
   defaultInitialVisibleMonth: PropTypes.any,
 };
 
-DatepickerV3.defaultProps = {
+DatepickerV2.defaultProps = {
   firstDayOfWeek: 0,
   numberOfMonths: 1,
   isRange: false,
@@ -178,4 +179,4 @@ DatepickerV3.defaultProps = {
   defaultInitialVisibleMonth: new Date(),
 };
 
-export default DatepickerV3;
+export default DatepickerV2;
