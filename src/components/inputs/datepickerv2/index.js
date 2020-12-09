@@ -80,7 +80,11 @@ const DatepickerV3 = (props) => {
     <PositioningPortal
       isOpen={isOpen}
       portalContent={() => (
-        <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
+        <Wrapper
+          isOpen={isOpen}
+          shouldRunFadeOut={shouldRunFadeOut}
+          onMouseLeave={handleOnClose}
+        >
           <MultipleCalendarWrapper>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
