@@ -47,7 +47,6 @@ function Day({ day, date }) {
       isSelected={isSelected}
     >
       <DayButton
-        className="day-button"
         onClick={onClick}
         tabIndex={tabIndex}
         type="button"
