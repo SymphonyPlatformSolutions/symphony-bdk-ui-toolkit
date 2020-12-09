@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
 
@@ -19,9 +19,10 @@ const Calendar = (props) => {
     onChange,
     onClose,
     defaultState,
+    initialVisibleMonth,
   } = props;
 
-  const handleDateChange = (data) => {
+  const onDatesChange = (data) => {
     let newData = data;
 
     if (!data.focusedInput) {
@@ -47,6 +48,7 @@ const Calendar = (props) => {
     goToPreviousMonthsByOneMonth,
     goToPreviousYear,
     goToNextYear,
+    goToDate,
     ...otherCalendarProps
   } = useDatepicker({
     startDate: defaultState.startDate,
@@ -55,10 +57,13 @@ const Calendar = (props) => {
       isRange,
       defaultState.focusedInput === START_DATE
     ),
-    onDatesChange: handleDateChange,
+    onDatesChange,
     numberOfMonths,
     firstDayOfWeek,
+    initialVisibleMonth,
   });
+
+  useEffect(() => goToDate(initialVisibleMonth), [initialVisibleMonth]);
 
   return (
     <>
@@ -99,6 +104,7 @@ Calendar.propTypes = {
     endDate: PropTypes.any,
     focusedInput: PropTypes.string,
   }),
+  defaultInitialVisibleMonth: PropTypes.any,
 };
 
 Calendar.defaultProps = {
@@ -109,6 +115,7 @@ Calendar.defaultProps = {
   isRange: false,
   closeOnSelect: false,
   defaultState: { startDate: null, endDate: null, focusedInput: START_DATE },
+  defaultInitialVisibleMonth: new Date(),
 };
 
 export default Calendar;

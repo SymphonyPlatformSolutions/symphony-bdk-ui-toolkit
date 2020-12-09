@@ -66,6 +66,19 @@ For a single date, the controller component must inject a _`value`_ prop. The on
   </Story>
 </Preview>
 
+## Single day initial month
+
+<Preview>
+  <Story name="Single day initial month">
+    <Box>
+      <Datepicker
+        navButtons={[{ label: 'TODAY', daysToAdd: 0 }]}
+        defaultInitialVisibleMonth={new Date('2021-05-01')}
+      />
+    </Box>
+  </Story>
+</Preview>
+
 ## Range
 
 <Preview>

@@ -21,12 +21,16 @@ const DatepickerV3 = (props) => {
     disabled,
     placeholder,
     size,
+    defaultInitialVisibleMonth,
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shouldRunFadeOut, setShouldRunFadeOut] = useState(false);
   const [mouseLeaveInput, setMouseLeaveInput] = useState(true);
   const [mouseLeaveWrapper, setMouseLeaveWrapper] = useState(true);
+  const [initialVisibleMonth, setInitialVisibleMonth] = useState(
+    defaultInitialVisibleMonth
+  );
   const [state, setState] = useState({
     startDate: null,
     endDate: null,
@@ -88,6 +92,14 @@ const DatepickerV3 = (props) => {
     handleOnClose();
   }, [mouseLeaveInput, mouseLeaveWrapper]);
 
+  useEffect(() => {
+    if (!state?.startDate) {
+      return;
+    }
+
+    setInitialVisibleMonth(state.startDate);
+  }, [state]);
+
   return (
     <PositioningPortal
       isOpen={isOpen}
@@ -108,6 +120,7 @@ const DatepickerV3 = (props) => {
               onChange={handleOnDateChange}
               onClose={handleOnClose}
               defaultState={state}
+              initialVisibleMonth={initialVisibleMonth}
             />
           </MultipleCalendarWrapper>
 
@@ -148,6 +161,7 @@ DatepickerV3.propTypes = {
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['regular', 'large']),
+  defaultInitialVisibleMonth: PropTypes.any,
 };
 
 DatepickerV3.defaultProps = {
@@ -161,6 +175,7 @@ DatepickerV3.defaultProps = {
   disabled: false,
   placeholder: 'Choose date...',
   size: 'regular',
+  defaultInitialVisibleMonth: new Date(),
 };
 
 export default DatepickerV3;
