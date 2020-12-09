@@ -64,9 +64,9 @@ export const isNow = (date) => {
   const now = new Date();
   const methods = ['getFullYear', 'getMonth', 'getDate'];
 
-  const hasFalsyValue = methods
+  const dateAreDifferent = methods
     .map((method) => date[method]() === now[method]())
-    .some((booleanValue) => !booleanValue);
+    .every((booleanValue) => booleanValue);
 
-  return !hasFalsyValue;
+  return dateAreDifferent;
 };

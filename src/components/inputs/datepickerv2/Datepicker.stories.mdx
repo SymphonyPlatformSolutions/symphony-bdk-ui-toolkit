@@ -31,59 +31,78 @@ It is also possible to type out a date. The typed out value is only applied when
 
 To type out a Date range, the two dates **necessarily** need to be separated by a dash "-". Simply input two dates in any recognizable format input a range.
 
-## 1 month single
+## Single day
 
 For a single date, the controller component must inject a _`value`_ prop. The onChange function will return a javascript Date object to be used.
 
 <Preview>
-  <Story name="1 month single">
+  <Story name="Single day">
     <Box>
-      <Datepicker closeOnSelect />
+      <Datepicker />
     </Box>
   </Story>
 </Preview>
 
-## 1 month single navigation
+## Single day auto close
 
 <Preview>
-  <Story name="1 month single navigation">
+  <Story name="Single day auto close">
     <Box>
       <Datepicker
-        navButtons={[{ label: 'TODAY', daysToAdd: 0 }]}
         closeOnSelect
+        navButtons={[{ label: 'TODAY', daysToAdd: 0 }]}
       />
     </Box>
   </Story>
 </Preview>
 
-## 1 month range
+## Single day navigation
 
 <Preview>
-  <Story name="1 month range">
+  <Story name="Single day navigation">
+    <Box>
+      <Datepicker navButtons={[{ label: 'TODAY', daysToAdd: 0 }]} />
+    </Box>
+  </Story>
+</Preview>
+
+## Range
+
+<Preview>
+  <Story name="Range">
+    <Box>
+      <Datepicker isRange />
+    </Box>
+  </Story>
+</Preview>
+
+## Range auto close
+
+<Preview>
+  <Story name="Range auto close">
     <Box>
       <Datepicker isRange closeOnSelect />
     </Box>
   </Story>
 </Preview>
 
-## 1 month range navigation
+## Range navigation
 
 <Preview>
-  <Story name="1 month range navigation">
+  <Story name="Range navigation">
     <Box>
       <Datepicker
         isRange
-        closeOnSelect
         navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]}
       />
     </Box>
   </Story>
 </Preview>
 
-## 2 month range navigation
+## Two month navigation
 
 <Preview>
-  <Story name="Dual range navigation">
+  <Story name="Two month navigation">
     <Box>
       <Datepicker
         isRange
@@ -94,6 +113,16 @@ For a single date, the controller component must inject a _`value`_ prop. The on
           { label: 'LAST 30 DAYS', daysToAdd: -29 },
         ]}
       />
+    </Box>
+  </Story>
+</Preview>
+
+## Two month
+
+<Preview>
+  <Story name="Two month">
+    <Box>
+      <Datepicker isRange numberOfMonths={2} />
     </Box>
   </Story>
 </Preview>

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  margin-bottom: 10px;
+`;
+
 export const MonthLabelContainer = styled.div`
   text-align: center;
   margin: 15px 0;

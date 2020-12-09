@@ -3,6 +3,7 @@ import { useMonth } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
 
 import {
+  Wrapper,
   MonthLabelContainer,
   MonthLabel,
   WeekdayLabel,
@@ -20,7 +21,7 @@ const Month = ({ year, month, firstDayOfWeek, customWeekdayLabels }) => {
   });
 
   return (
-    <div>
+    <Wrapper>
       <MonthLabelContainer>
         <MonthLabel>{monthLabel}</MonthLabel>
       </MonthLabelContainer>
@@ -36,7 +37,7 @@ const Month = ({ year, month, firstDayOfWeek, customWeekdayLabels }) => {
           <Day key={day.dayLabel} date={day.date} day={day.dayLabel} />
         ))}
       </WeekdaysAndDaysContainer>
-    </div>
+    </Wrapper>
   );
 };
 
