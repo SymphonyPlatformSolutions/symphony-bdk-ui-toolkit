@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
 import { START_DATE } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
@@ -22,8 +22,11 @@ const DatepickerV3 = (props) => {
     placeholder,
     size,
   } = props;
+  const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shouldRunFadeOut, setShouldRunFadeOut] = useState(false);
+  const [mouseLeaveInput, setMouseLeaveInput] = useState(true);
+  const [mouseLeaveWrapper, setMouseLeaveWrapper] = useState(true);
   const [state, setState] = useState({
     startDate: null,
     endDate: null,
@@ -36,6 +39,7 @@ const DatepickerV3 = (props) => {
   };
 
   const handleOnClose = () => {
+    inputRef.current.blur();
     setShouldRunFadeOut(true);
     setTimeout(() => setIsOpen(false), 100);
   };
@@ -76,6 +80,14 @@ const DatepickerV3 = (props) => {
     setState(tempState);
   };
 
+  useEffect(() => {
+    if (!mouseLeaveInput || !mouseLeaveWrapper) {
+      return;
+    }
+
+    handleOnClose();
+  }, [mouseLeaveInput, mouseLeaveWrapper]);
+
   return (
     <PositioningPortal
       isOpen={isOpen}
@@ -83,7 +95,8 @@ const DatepickerV3 = (props) => {
         <Wrapper
           isOpen={isOpen}
           shouldRunFadeOut={shouldRunFadeOut}
-          onMouseLeave={handleOnClose}
+          onMouseEnter={() => setMouseLeaveWrapper(false)}
+          onMouseLeave={() => setMouseLeaveWrapper(true)}
         >
           <MultipleCalendarWrapper>
             <Calendar
@@ -104,6 +117,7 @@ const DatepickerV3 = (props) => {
       onClose={handleOnClose}
     >
       <InputField
+        ref={inputRef}
         onFocus={handleOnOpen}
         onBlur={(e) => handleOnBlur(e)}
         placeholder={placeholder}
@@ -111,6 +125,8 @@ const DatepickerV3 = (props) => {
         disabled={disabled}
         errorMessage={errorMessage}
         value={formatDate(state, { isRange })}
+        onMouseEnter={() => setMouseLeaveInput(false)}
+        onMouseLeave={() => setMouseLeaveInput(true)}
       />
     </PositioningPortal>
   );
