@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
-import Text from '../text';
+import { withTheme } from 'styled-components';
 
-const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.primary_200};
-`;
+import { StyledText } from './theme';
 
 const TextLink = (props) => {
   const { children, ...rest } = props;
+
   return (
-    <StyledText
-      {...rest}
-      isLink
-    >{children}
+    <StyledText {...rest} isLink>
+      {children}
     </StyledText>
   );
 };
@@ -21,6 +17,7 @@ const TextLink = (props) => {
 TextLink.propTypes = {
   children: PropTypes.string,
 };
+
 TextLink.defaultProps = {
   children: null,
 };

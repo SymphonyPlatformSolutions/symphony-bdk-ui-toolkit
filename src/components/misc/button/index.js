@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Loader from '../loader';
 import {
@@ -9,19 +9,21 @@ import {
   BUTTON_TYPES,
   TextContainer,
   FILL_TYPES,
+  LoaderContainer,
 } from './theme';
 import { NoOp } from '../../../utils/helpers';
 
-const LoaderContainer = styled.div`
-  display: flex;
-  padding: 0 20px;
-  position: absolute;
-  height: 16px;
-  opacity: ${({ isLoading }) => (isLoading ? '1' : '0')};
-`;
-
 const Button = ({
-  children, size, type, fill, theme, loading, disabled, htmlType, circular, ...rest
+  children,
+  size,
+  type,
+  fill,
+  theme,
+  loading,
+  disabled,
+  htmlType,
+  circular,
+  ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,7 +38,7 @@ const Button = ({
       setIsLoading(true);
       Promise.resolve()
         .then(onClick)
-        .catch(err => err)
+        .catch((err) => err)
         .then(() => setIsLoading(false));
     } else {
       onClick();
@@ -55,19 +57,26 @@ const Button = ({
       circular={circular}
       disabled={isLoading || disabled}
     >
-      <Container justify="center" align="center" type="flat" circular={circular}>
+      <Container
+        justify="center"
+        align="center"
+        type="flat"
+        circular={circular}
+      >
         {isLoading && (
-        <LoaderContainer circular={circular} size={size} isLoading={isLoading}>
-          <Loader
-            color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
-            size="small"
-          />
-        </LoaderContainer>
+          <LoaderContainer
+            circular={circular}
+            size={size}
+            isLoading={isLoading}
+          >
+            <Loader
+              color={fill === FILL_TYPES.FILLED ? 'white' : undefined}
+              size="small"
+            />
+          </LoaderContainer>
         )}
         <ChildrenContainer isLoading={isLoading} fill={fill}>
-          <TextContainer>
-            {children}
-          </TextContainer>
+          <TextContainer>{children}</TextContainer>
         </ChildrenContainer>
       </Container>
     </BaseButton>

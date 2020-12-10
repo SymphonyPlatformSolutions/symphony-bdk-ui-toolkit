@@ -1,14 +1,7 @@
 import React from 'react';
 
-import styled from 'styled-components';
+import { BaseSeparator } from './theme';
 
-export default function Separator() {
-  return (
-    <BaseSeparator />
-  );
-}
+const Separator = () => <BaseSeparator />;
 
-const BaseSeparator = styled.div`
-  width: 100%;
-  border: ${({ theme }) => `1px ${theme.colors.grey_200} solid`};
-`;
+export default Separator;

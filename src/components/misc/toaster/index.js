@@ -1,55 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes, css } from 'styled-components';
+
+import { ToastContainer, AnimationProvider } from './theme';
 import MessageBox from '../message-box';
-
-const AnimationMoveInTop = keyframes`
-0% {
-  opacity: 0;
-  transform: translateY(-7rem);
-}
-
-6% {
-  opacity: 1;
-  transform: translateY(0.7rem);
-}
-
-8% {
-  transform: translate(0);
-}
-
-92% {
-  transform: translate(0);
-}
-
-94% {
-  opacity: 1;
-  transform: translateY(0.7rem);
-}
-
-100% {
-  opacity: 0;
-  transform: translateY(-7em);
-}
-`;
-
-const Animation = css`
-  animation: ${AnimationMoveInTop} 5s ease-out 0.2s;
-  animation-fill-mode: backwards;
-  position: fixed;
-`;
-
-const AnimationProvider = styled.div`
-  ${Animation}
-`;
-
-export const ToastContainer = styled.div`
-  margin-top: 1rem;
-  display: inherit;
-  left: 50%;
-  position: absolute;
-  z-index: 10;
-`;
 
 const Toast = (props) => {
   const { children, type, hideToast } = props;
