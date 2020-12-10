@@ -1,18 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import {
-  labelize,
-} from './helpers';
-import {
-  DropdownControl,
-  DropdownMenu,
-} from './components';
-import {
-  ShrinkingBorder,
-  Wrapper,
-  MenuWrapper,
-} from './theme';
+import { labelize } from './helpers';
+import { DropdownControl, DropdownMenu } from './components';
+import { ShrinkingBorder, Wrapper, MenuWrapper } from './theme';
 import { ErrorWrapper } from '../input-field';
 
 const UP_KEY = 38;
@@ -38,6 +29,7 @@ const DecisionDropdown = (props) => {
     CustomValue,
     hideClear,
     CustomChevron,
+    closeMenuOnSelect,
     ...rest
   } = props;
 
@@ -65,7 +57,7 @@ const DecisionDropdown = (props) => {
       if (!value || !value.length) {
         onChange([item]);
       } else {
-        const newItemIndex = value.findIndex(x => x.value === item.value);
+        const newItemIndex = value.findIndex((x) => x.value === item.value);
         if (newItemIndex < 0) {
           onChange([...value, item]);
         } else {
@@ -76,7 +68,10 @@ const DecisionDropdown = (props) => {
       }
     } else {
       onChange(item);
-      controlRef.current.toggleInputBlur(true);
+
+      if (closeMenuOnSelect) {
+        controlRef.current.toggleInputBlur(true);
+      }
     }
   };
 
@@ -177,6 +172,7 @@ DecisionDropdown.propTypes = {
   CustomValue: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   hideClear: PropTypes.bool,
   CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  closeMenuOnSelect: PropTypes.bool,
 };
 
 DecisionDropdown.defaultProps = {
@@ -194,6 +190,7 @@ DecisionDropdown.defaultProps = {
   CustomValue: null,
   hideClear: false,
   CustomChevron: null,
+  closeMenuOnSelect: true,
 };
 
 export default withTheme(DecisionDropdown);
