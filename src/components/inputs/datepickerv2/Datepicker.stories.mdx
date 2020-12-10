@@ -1,0 +1,141 @@
+import {
+  Story,
+  Meta,
+  Preview,
+  Props,
+  Link,
+} from '@storybook/addon-docs/blocks';
+import Datepicker from './index';
+
+<Meta
+  title="components/Inputs/Datepicker V2"
+  component={Datepicker}
+  parameters={{ order: 230 }}
+/>
+
+# Datepicker
+
+Datepicker component that implements a pop-up calendar to easily choose a single date or a range of dates.
+
+This component uses the headless hook version of [@datepicker-react/hooks](https://www.npmjs.com/package/@datepicker-react/hooks) to implement all logic.
+
+As with all controlled components, the Datepicker requires a parent that holds the state and controls (sample code will be shown below).
+
+## Use
+
+The Calendar opens on InputField focus. As soon as it appears, freely navigate the Calendar and click on selected dates.
+
+It is also possible to type out a date. The typed out value is only applied when the **Enter** key is pressed. The date can be in any Javascript Date object recognizable format. If the date cannot be parsed by the Javascript engine, nothing will happen. The Custom date string formatter does not interfere with typed input because the date is only applied when the Enter key is pressed.
+
+> Important: Typed Dates cannot contain a "-" character if it's a date range.
+
+To type out a Date range, the two dates **necessarily** need to be separated by a dash "-". Simply input two dates in any recognizable format input a range.
+
+## Single day
+
+For a single date, the controller component must inject a _`value`_ prop. The onChange function will return a javascript Date object to be used.
+
+<Preview>
+  <Story name="Single day">
+    <Box>
+      <Datepicker />
+    </Box>
+  </Story>
+</Preview>
+
+## Single day auto close
+
+<Preview>
+  <Story name="Single day auto close">
+    <Box>
+      <Datepicker
+        closeOnSelect
+        navButtons={[{ label: 'TODAY', daysToAdd: 0 }]}
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## Single day navigation
+
+<Preview>
+  <Story name="Single day navigation">
+    <Box>
+      <Datepicker navButtons={[{ label: 'TODAY', daysToAdd: 0 }]} />
+    </Box>
+  </Story>
+</Preview>
+
+## Single day initial month
+
+<Preview>
+  <Story name="Single day initial month">
+    <Box>
+      <Datepicker
+        navButtons={[{ label: 'TODAY', daysToAdd: 0 }]}
+        defaultInitialVisibleMonth={new Date('2021-05-01')}
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## Range
+
+<Preview>
+  <Story name="Range">
+    <Box>
+      <Datepicker isRange />
+    </Box>
+  </Story>
+</Preview>
+
+## Range auto close
+
+<Preview>
+  <Story name="Range auto close">
+    <Box>
+      <Datepicker isRange closeOnSelect />
+    </Box>
+  </Story>
+</Preview>
+
+## Range navigation
+
+<Preview>
+  <Story name="Range navigation">
+    <Box>
+      <Datepicker
+        isRange
+        navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]}
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## Two month navigation
+
+<Preview>
+  <Story name="Two month navigation">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        navButtons={[
+          { label: 'TODAY', daysToAdd: 0 },
+          { label: 'LAST 7 DAYS', daysToAdd: -6 },
+          { label: 'LAST 30 DAYS', daysToAdd: -29 },
+        ]}
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## Two month
+
+<Preview>
+  <Story name="Two month">
+    <Box>
+      <Datepicker isRange numberOfMonths={2} />
+    </Box>
+  </Story>
+</Preview>

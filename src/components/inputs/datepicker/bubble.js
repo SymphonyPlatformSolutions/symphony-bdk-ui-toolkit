@@ -1,9 +1,8 @@
-import React, {
-  useState, useRef, useLayoutEffect, useEffect,
-} from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Month from './Month';
 import { CalendarBubble } from './theme';
+import Footer from './footer';
 
 const PortalBubble = (props) => {
   const {
@@ -34,6 +33,8 @@ const PortalBubble = (props) => {
     yearSelected,
     monthSelected,
     prevYear,
+    footerNavigationButtons,
+    onFooterNavigationClick,
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const isLeft = strategy && strategy.includes('LEFT');
@@ -165,6 +166,13 @@ const PortalBubble = (props) => {
           />
         ))
       )}
+
+      {footerNavigationButtons.length !== 0 && (
+        <Footer
+          footerNavigationButtons={footerNavigationButtons}
+          onFooterNavigationClick={onFooterNavigationClick}
+        />
+      )}
     </CalendarBubble>
   );
 };
@@ -197,7 +205,15 @@ PortalBubble.propTypes = {
   yearSelected: PropTypes.bool,
   monthSelected: PropTypes.bool,
   prevYear: PropTypes.number,
+  footerNavigationButtons: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      daysToSubstract: PropTypes.number.isRequired,
+    })
+  ),
+  onFooterNavigationClick: PropTypes.func,
 };
+
 PortalBubble.defaultProps = {
   value: null,
   isRange: false,
@@ -223,6 +239,8 @@ PortalBubble.defaultProps = {
   yearSelected: false,
   monthSelected: false,
   prevYear: null,
+  footerNavigationButtons: [],
+  onFooterNavigationClick: () => {},
 };
 
 export default PortalBubble;

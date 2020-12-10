@@ -2,11 +2,7 @@ import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useDay } from '@datepicker-react/hooks';
 import DatepickerContext from './datepickerContext';
-import {
-  ButtonContainer,
-  ButtonText,
-  DayButton,
-} from './theme';
+import { ButtonContainer, ButtonText, DayButton } from './theme';
 
 function Day({ day, date }) {
   const dayRef = useRef(null);
@@ -45,7 +41,11 @@ function Day({ day, date }) {
   }
 
   return (
-    <ButtonContainer disabled={disabledDate}>
+    <ButtonContainer
+      disabled={disabledDate}
+      isSelectedStartOrEnd={isSelectedStartOrEnd}
+      isSelected={isSelected}
+    >
       <DayButton
         onClick={onClick}
         tabIndex={tabIndex}

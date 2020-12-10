@@ -70,6 +70,7 @@ const Datepicker = (props) => {
     isYearPicker,
     isMonthPicker,
     closeOnClick,
+    footerNavigationButtons,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
@@ -89,7 +90,7 @@ const Datepicker = (props) => {
     setInputValue(
       dateValueFormatter
         ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange),
+        : formatDate(value, endValue, isRange)
     );
     setTimeout(() => {
       setCalendarIsOpen(false);
@@ -106,7 +107,7 @@ const Datepicker = (props) => {
     setInputValue(
       dateValueFormatter
         ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange),
+        : formatDate(value, endValue, isRange)
     );
   }, [value, endValue, isRange]);
 
@@ -281,6 +282,10 @@ const Datepicker = (props) => {
             yearSelected={yearSelected}
             monthSelected={monthSelected}
             prevYear={prevYear}
+            footerNavigationButtons={footerNavigationButtons}
+            onFooterNavigationClick={(args) => {
+              handleDateChange(args);
+            }}
           />
         )}
         portalElement={<div style={{ zIndex: 10 }} />}
@@ -328,6 +333,12 @@ Datepicker.propTypes = {
   isYearPicker: PropTypes.bool,
   isMonthPicker: PropTypes.bool,
   closeOnClick: PropTypes.bool,
+  footerNavigationButtons: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      daysToSubstract: PropTypes.number.isRequired,
+    })
+  ),
 };
 
 Datepicker.defaultProps = {
@@ -350,6 +361,7 @@ Datepicker.defaultProps = {
   isYearPicker: false,
   isMonthPicker: false,
   closeOnClick: false,
+  footerNavigationButtons: [],
 };
 
 export default Datepicker;
