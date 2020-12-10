@@ -20,15 +20,11 @@ import {
 } from './theme';
 import { MultiValueList } from './components';
 import { buildBackReference, deepInsert, deepReplaceLast } from './helpers';
+import { KEYCODES } from '../../utils/index';
 
 const INIT_DEBOUNCE = 500;
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
-const BACKSPACE_KEY = 8;
 
-const removeLast = values => {
+const removeLast = (values) => {
   if (!values || !values.length) {
     return null;
   }
@@ -45,7 +41,7 @@ const chooseItem = (item, value, endpoints) => {
   return newSet;
 };
 
-const Menu = props => {
+const Menu = (props) => {
   const {
     data,
     clickHandler,
@@ -92,7 +88,7 @@ const Menu = props => {
           <MenuItem
             theme={theme}
             key={el.label}
-            onMouseDown={e => {
+            onMouseDown={(e) => {
               e.preventDefault();
               clickHandler(el);
             }}
@@ -125,7 +121,7 @@ const makeRequestCreator = () => {
   };
 };
 
-const MultiValueInput = props => {
+const MultiValueInput = (props) => {
   const {
     theme,
     data,
@@ -157,9 +153,10 @@ const MultiValueInput = props => {
 
   const executeSearch = async () => {
     let currSearchEndpoint;
-    const currIndex = nextEndpointIndex >= flatEndpoints.length
-      ? nextEndpointIndex - 1
-      : nextEndpointIndex;
+    const currIndex =
+      nextEndpointIndex >= flatEndpoints.length
+        ? nextEndpointIndex - 1
+        : nextEndpointIndex;
 
     if (typeof flatEndpoints[currIndex] === 'string') {
       currSearchEndpoint = flatEndpoints[currIndex];
@@ -196,7 +193,7 @@ const MultiValueInput = props => {
     // return undefined;
   }, [typedTerm]);
 
-  const choseItem = item => {
+  const choseItem = (item) => {
     setTypedTerm('');
     setLightFocus(-1);
     if (nextEndpointIndex < flatEndpoints.length) {
@@ -218,20 +215,20 @@ const MultiValueInput = props => {
 
   const specialKeyHandler = ({ keyCode }) => {
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return setLightFocus((lightFocus + 1) % innerData.length);
-      case UP_KEY:
+      case KEYCODES.UP:
         return setLightFocus(
-          lightFocus - 1 < 0 ? innerData.length - 1 : lightFocus - 1,
+          lightFocus - 1 < 0 ? innerData.length - 1 : lightFocus - 1
         );
-      case ESC_KEY:
+      case KEYCODES.ESC:
         return inputRef.current.blur();
-      case BACKSPACE_KEY:
+      case KEYCODES.BACKSPACE:
         if (!typedTerm && value && value.length) {
           return removeHandler();
         }
         return null;
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         if (lightFocus < 0) {
           return null;
         }
@@ -306,7 +303,8 @@ const MultiValueInput = props => {
 MultiValueInput.propTypes = {
   theme: PropTypes.object.isRequired,
   endpoints: PropTypes.array.isRequired,
-  itemChooseHandler: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  itemChooseHandler: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+    .isRequired,
   debouncePeriod: PropTypes.number,
   placeholder: PropTypes.string,
   data: PropTypes.array,

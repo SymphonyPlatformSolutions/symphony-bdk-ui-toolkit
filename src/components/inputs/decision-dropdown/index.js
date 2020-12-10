@@ -5,11 +5,7 @@ import { labelize } from './helpers';
 import { DropdownControl, DropdownMenu } from './components';
 import { ShrinkingBorder, Wrapper, MenuWrapper } from './theme';
 import { ErrorWrapper } from '../input-field';
-
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
+import { KEYCODES } from '../../utils/index';
 
 const DecisionDropdown = (props) => {
   const {
@@ -94,13 +90,13 @@ const DecisionDropdown = (props) => {
   // References child component, due to parent owning the input
   const specialKeyController = ({ keyCode }) => {
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return menuRef.current.increaseLightFocus();
-      case UP_KEY:
+      case KEYCODES.UP:
         return menuRef.current.decreaseLightFocus();
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         return menuRef.current.enterOption();
-      case ESC_KEY:
+      case KEYCODES.ESC:
         return controlRef.current.toggleInputBlur(true);
       default:
         return null;

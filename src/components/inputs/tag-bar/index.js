@@ -21,18 +21,13 @@ import { CrossIcon, CloseIcon } from '../../misc/icons';
 import Tooltip from '../../misc/tooltip';
 import { ErrorWrapper } from '../input-field';
 import TagBarMenu from './components';
-
-const BS_KEY = 8;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
-const UP_KEY = 38;
-const DOWN_KEY = 40;
+import { KEYCODES } from '../../utils/index';
 
 const INIT_DEBOUNCE = 1500;
 
 const MultiSelectValue = ({ children, removeHandler }) => (
   <MultiSelectContainer
-    onMouseDown={e => {
+    onMouseDown={(e) => {
       if (e.button === 0) {
         e.preventDefault();
         removeHandler();
@@ -44,10 +39,8 @@ const MultiSelectValue = ({ children, removeHandler }) => (
   </MultiSelectContainer>
 );
 
-const MultiValueList = props => {
-  const {
-    value, removeHandler, size, CustomValue,
-  } = props;
+const MultiValueList = (props) => {
+  const { value, removeHandler, size, CustomValue } = props;
 
   if (!value || !value.length) {
     return null;
@@ -56,26 +49,28 @@ const MultiValueList = props => {
   return (
     <ValueContainer size={size}>
       <MultiValueContainer>
-        {value.map(l => (CustomValue ? (
-          <CustomValue
-            removeHandler={() => removeHandler(l)}
-            key={l.value}
-            value={l}
-          />
-        ) : (
-          <MultiSelectValue
-            removeHandler={() => removeHandler(l)}
-            key={l.value}
-          >
-            {l.value}
-          </MultiSelectValue>
-        )))}
+        {value.map((l) =>
+          CustomValue ? (
+            <CustomValue
+              removeHandler={() => removeHandler(l)}
+              key={l.value}
+              value={l}
+            />
+          ) : (
+            <MultiSelectValue
+              removeHandler={() => removeHandler(l)}
+              key={l.value}
+            >
+              {l.value}
+            </MultiSelectValue>
+          )
+        )}
       </MultiValueContainer>
     </ValueContainer>
   );
 };
 
-const TagBar = props => {
+const TagBar = (props) => {
   const {
     placeholder,
     value,
@@ -99,8 +94,8 @@ const TagBar = props => {
   const [currQuery, setCurrQuery] = useState(null);
   const [uidAutocompleteList] = useState(
     autocompleteList
-      ? autocompleteList.map(el => ({ value: el, uid: uuid.v4() }))
-      : null,
+      ? autocompleteList.map((el) => ({ value: el, uid: uuid.v4() }))
+      : null
   );
   const inputRef = useRef();
   const menuRef = useRef();
@@ -118,7 +113,12 @@ const TagBar = props => {
   }, [value]);
 
   const chooseValue = (newValue) => {
-    if (value && value.findIndex(el => el.value.toLowerCase() === newValue.toLowerCase()) >= 0) {
+    if (
+      value &&
+      value.findIndex(
+        (el) => el.value.toLowerCase() === newValue.toLowerCase()
+      ) >= 0
+    ) {
       return;
     }
     onChoose(newValue);
@@ -135,11 +135,11 @@ const TagBar = props => {
   const specialKeyController = ({ keyCode }) => {
     let lightFocusValue;
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return menuRef.current.increaseLightFocus();
-      case UP_KEY:
+      case KEYCODES.UP:
         return menuRef.current.decreaseLightFocus();
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         if (menuIsOpen && hasAutoList) {
           lightFocusValue = menuRef.current.getCurrentOption();
           if (lightFocusValue) {
@@ -149,10 +149,10 @@ const TagBar = props => {
           chooseValue(typedValue);
         }
         break;
-      case ESC_KEY:
+      case KEYCODES.ESC:
         inputRef.current.blur();
         break;
-      case BS_KEY:
+      case KEYCODES.BACKSPACE:
         backSpaceHandler();
         break;
       default:
@@ -172,10 +172,14 @@ const TagBar = props => {
     return () => clearTimeout(handler);
   }, [typedValue]);
 
-
   return (
     <ErrorWrapper error={hasError} errorMessage={errorMessage}>
-      <TagBarContainer disabled={disabled} error={hasError} menuIsOpen={menuIsOpen} {...rest}>
+      <TagBarContainer
+        disabled={disabled}
+        error={hasError}
+        menuIsOpen={menuIsOpen}
+        {...rest}
+      >
         <Binder>
           <ValueAndControl
             onClick={() => {
@@ -210,16 +214,18 @@ const TagBar = props => {
               />
               <IconsContainer>
                 {hasValue && (
-                <IconMarginContainer onMouseDown={e => (e.button === 0 ? onClear() : null)}>
-                  <CrossIcon />
-                </IconMarginContainer>
+                  <IconMarginContainer
+                    onMouseDown={(e) => (e.button === 0 ? onClear() : null)}
+                  >
+                    <CrossIcon />
+                  </IconMarginContainer>
                 )}
                 {tooltip && (
-                <TooltipMargin>
-                  <Tooltip size={14} color={theme.colors.grey_600}>
-                    {tooltip}
-                  </Tooltip>
-                </TooltipMargin>
+                  <TooltipMargin>
+                    <Tooltip size={14} color={theme.colors.grey_600}>
+                      {tooltip}
+                    </Tooltip>
+                  </TooltipMargin>
                 )}
               </IconsContainer>
             </div>
@@ -227,13 +233,13 @@ const TagBar = props => {
           <MenuWrapper error={!!errorMessage}>
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
             {menuIsOpen && hasAutoList && (
-            <TagBarMenu
-              ref={menuRef}
-              data={uidAutocompleteList}
-              currQuery={currQuery}
-              value={value}
-              chooseHandler={chooseValue}
-            />
+              <TagBarMenu
+                ref={menuRef}
+                data={uidAutocompleteList}
+                currQuery={currQuery}
+                value={value}
+                chooseHandler={chooseValue}
+              />
             )}
           </MenuWrapper>
         </Binder>
