@@ -1,0 +1,22 @@
+#!/bin/bash
+
+sudo apt-get install jq
+
+pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+-u $CIRCLE_USERNAME:$GH_BOT_ACCESS_TOKEN)
+
+if [ $(echo $pr_response | jq length) -eq 0 ]; then
+  echo "No PR found to update"
+  exit 0
+else
+  pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+fi
+
+echo "Storybook link: http://symphony--rfq--storybook-demo-site.s3-website.us-east-1.amazonaws.com/bdk-ui-toolkit/'$CIRCLE_SHA1'"
+
+curl --location --request POST "$pr_comment_url" \
+-u $CIRCLE_USERNAME:$GH_BOT_ACCESS_TOKEN \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "body": "Storybook link: http://symphony--rfq--storybook-demo-site.s3-website.us-east-1.amazonaws.com/bdk-ui-toolkit/'$CIRCLE_SHA1'"
+}'

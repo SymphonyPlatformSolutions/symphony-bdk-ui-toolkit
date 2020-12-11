@@ -62,6 +62,44 @@ jobs:
           root: ~/project
           paths:
           - ./
+
+  post-storybook-link-to-github:
+    docker:
+      - image: circleci/node:10.15.2
+    steps:
+      - checkout
+      - run:
+          command: bin/post-storybook-link-to-github
+          name:
+            Post link to storybook as a Github comment on the PR
+
+  build-storybook:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run: yarn && yarn build-storybook
+      - persist_to_workspace:
+          root: .
+          paths:
+            - symphony-bdk-ui-toolkit/storybook-static
+
+  deploy-storybook:
+    docker:
+      - image: circleci/python:2.7-stretch
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to Symphony S3
+          command:
+            aws s3 --region "us-east-1" sync --acl public-read
+            symphony-bdk-ui-toolkit/storybook-static
+            s3://symphony--rfq--storybook-demo-site/bdk-ui-toolkit/${CIRCLE_SHA1}
+
 #####################################################
 # Workflow
 #####################################################
@@ -73,3 +111,18 @@ workflows:
       - build:
           requires:
             - dependencies_install
+      - build-storybook
+      - deploy-storybook:
+          requires:
+            - build-storybook
+      - post-storybook-link-to-github:
+          requires:
+            - deploy-storybook
+#      - notify-about-storybook-deployment:
+#          requires:
+#            - deploy-storybook
+#          filters:
+#            branches:
+#              only:
+#                - develop
+#                - migration/develop
