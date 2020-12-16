@@ -21,26 +21,30 @@ const BaseTabs = styled.div`
 const TabHeader = styled.ol`
   padding-left: 0;
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 const TabHeaderLabel = styled(Text)`
-  font-size: 1.4rem;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 18px;
   cursor: pointer;
   font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};
-  color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary_500 : theme.colors.grey_600)};
+  color: ${({ isSelected, theme }) => (isSelected ? theme.colors.grey_700 : theme.colors.grey_500)};
   transition: color 0.2s ease;
   &:hover {
     color: ${({ isSelected, theme }) => (isSelected ? undefined : theme.colors.grey_700)};
   }
+  text-transform: uppercase;
 `;
+
+const separatorWidthInPx = 15;
 
 const TabHeaderItem = styled.li`
   user-select: none;
   display: inline-block;
   list-style: none;
   margin-bottom: -1px;
-  padding: 0 0.75rem 17px 0.75rem;
+  margin-right: ${separatorWidthInPx}px;
   border-bottom: 0px;
   text-align: ${props => getTabItemAlign(props)};
   float: ${props => getTabItemAlign(props)};
@@ -51,22 +55,23 @@ const TabHeaderItem = styled.li`
 
 const TabHeaderIndicator = styled.div`
   width: ${props => getHeaderIndicatorWidth(props)};
-  height: 1px;
+  height: 3px;
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
-  margin-top: 38px;
-  margin-left: ${props => getTabHeaderIndicatorMarginLeft(props)};
+  margin-top: 25px;
+  margin-left: ${props => getTabHeaderIndicatorMarginLeft({...props, separatorWidthInPx})};
   transition-property: margin, width;
   transition-duration: .5s;
   transition-timing-function: ease;
 `;
 
 export default function NavTabs({ children, activeTab, ...rest }) {
-  const elRef = useRef([...Array(children.length)].map(() => createRef()));
+  const childrenArray = React.Children.toArray(children);
+  const elRef = useRef([...Array(childrenArray.length)].map(() => createRef()));
   const [currentRef, setCurrentRef] = useState(null);
-  const [selectedTab, setActiveTab] = useState(children[activeTab].props.label);
+  const [selectedTab, setActiveTab] = useState(childrenArray[activeTab].props.label);
   const [activeTabIndex, setActiveTabIndex] = useState(activeTab);
-  const [activeTabAlign, setActiveTabAlign] = useState(children[activeTab].props.align);
+  const [activeTabAlign, setActiveTabAlign] = useState(childrenArray[activeTab].props.align);
 
   const onClickTabItem = (label, index, align) => {
     setActiveTab(label);
@@ -87,7 +92,7 @@ export default function NavTabs({ children, activeTab, ...rest }) {
     <BaseTabs {...rest}>
       <Box horizontal>
         <TabHeader>
-          {children.map((child, index) => {
+          {childrenArray.map((child, index) => {
             const { label, align } = child.props;
             return (
               <TabHeaderItem
@@ -111,11 +116,8 @@ export default function NavTabs({ children, activeTab, ...rest }) {
           )}
         </TabHeader>
       </Box>
-      <Box horizontal>
-        {children.map((child) => {
-          if (child.props.label !== selectedTab) return undefined;
-          return child.props.children;
-        })}
+      <Box vertical>
+        {childrenArray.filter((child) => child.props.label !== selectedTab).map((child) => child.props.children)}
       </Box>
     </BaseTabs>
   );
