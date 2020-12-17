@@ -21,22 +21,19 @@ import {
   ChevronWrapper,
 } from './theme';
 import { ErrorWrapper } from '../input-field';
+import { KEYCODES } from '../../utils/index';
 
 const INIT_DEBOUNCE = 500;
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
 
 export const simpleFilter = (data, value) => {
   if (!data || !value) {
     return null;
   }
   const lowercaseValue = value.toLowerCase();
-  return data.filter(el => el.toLowerCase().includes(lowercaseValue));
+  return data.filter((el) => el.toLowerCase().includes(lowercaseValue));
 };
 
-const Menu = props => {
+const Menu = (props) => {
   const {
     data,
     clickHandler,
@@ -84,7 +81,7 @@ const Menu = props => {
           <MenuItem
             theme={theme}
             key={el.uid}
-            onMouseDown={e => {
+            onMouseDown={(e) => {
               e.preventDefault();
               clickHandler(el);
             }}
@@ -103,9 +100,9 @@ const Menu = props => {
   );
 };
 
-const cleanUpData = data => {
+const cleanUpData = (data) => {
   if (data) {
-    return data.map(el => ({
+    return data.map((el) => ({
       uid: uuid.v4(),
       label: el,
     }));
@@ -113,7 +110,7 @@ const cleanUpData = data => {
   return null;
 };
 
-const Typehead = props => {
+const Typehead = (props) => {
   const {
     hideClear,
     theme,
@@ -143,7 +140,7 @@ const Typehead = props => {
 
   const inputRef = useRef(null);
 
-  const handleType = typedValue => {
+  const handleType = (typedValue) => {
     onChange(typedValue);
   };
 
@@ -168,7 +165,7 @@ const Typehead = props => {
     return undefined;
   }, [isInputFocused, value]);
 
-  const choseItem = item => {
+  const choseItem = (item) => {
     setLightFocus(-1);
     onChange(item.label);
     inputRef.current.blur();
@@ -182,15 +179,15 @@ const Typehead = props => {
 
   const specialKeyHandler = ({ keyCode }) => {
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return setLightFocus((lightFocus + 1) % cleanData.length);
-      case UP_KEY:
+      case KEYCODES.UP:
         return setLightFocus(
-          lightFocus - 1 < 0 ? cleanData.length - 1 : lightFocus - 1,
+          lightFocus - 1 < 0 ? cleanData.length - 1 : lightFocus - 1
         );
-      case ESC_KEY:
+      case KEYCODES.ESC:
         return inputRef.current.blur();
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         if (lightFocus < 0) {
           return null;
         }
@@ -200,11 +197,12 @@ const Typehead = props => {
     }
   };
 
-  const menuIsOpen = (shouldMenuOpen || !helpDebouncePeriod)
-    && isInputFocused
-    && !!value
-    && !!cleanData
-    && !!cleanData.length;
+  const menuIsOpen =
+    (shouldMenuOpen || !helpDebouncePeriod) &&
+    isInputFocused &&
+    !!value &&
+    !!cleanData &&
+    !!cleanData.length;
 
   const blurInput = () => inputRef.current.blur();
   const focusInput = () => inputRef.current.focus();
@@ -227,7 +225,7 @@ const Typehead = props => {
     return (
       <ChevronWrapper
         disabled={disabled}
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           e.preventDefault();
           if (menuIsOpen) {
             blurInput();

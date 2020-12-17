@@ -1,24 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
-import {
-  labelize,
-} from './helpers';
-import {
-  DropdownControl,
-  DropdownMenu,
-} from './components';
-import {
-  ShrinkingBorder,
-  Wrapper,
-  MenuWrapper,
-} from './theme';
+import { labelize } from './helpers';
+import { DropdownControl, DropdownMenu } from './components';
+import { ShrinkingBorder, Wrapper, MenuWrapper } from './theme';
 import { ErrorWrapper } from '../input-field';
-
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
+import { KEYCODES } from '../../utils/index';
 
 const DecisionDropdown = (props) => {
   const {
@@ -38,6 +25,7 @@ const DecisionDropdown = (props) => {
     CustomValue,
     hideClear,
     CustomChevron,
+    closeMenuOnSelect,
     ...rest
   } = props;
 
@@ -65,7 +53,7 @@ const DecisionDropdown = (props) => {
       if (!value || !value.length) {
         onChange([item]);
       } else {
-        const newItemIndex = value.findIndex(x => x.value === item.value);
+        const newItemIndex = value.findIndex((x) => x.value === item.value);
         if (newItemIndex < 0) {
           onChange([...value, item]);
         } else {
@@ -76,7 +64,10 @@ const DecisionDropdown = (props) => {
       }
     } else {
       onChange(item);
-      controlRef.current.toggleInputBlur(true);
+
+      if (closeMenuOnSelect) {
+        controlRef.current.toggleInputBlur(true);
+      }
     }
   };
 
@@ -99,13 +90,13 @@ const DecisionDropdown = (props) => {
   // References child component, due to parent owning the input
   const specialKeyController = ({ keyCode }) => {
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return menuRef.current.increaseLightFocus();
-      case UP_KEY:
+      case KEYCODES.UP:
         return menuRef.current.decreaseLightFocus();
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         return menuRef.current.enterOption();
-      case ESC_KEY:
+      case KEYCODES.ESC:
         return controlRef.current.toggleInputBlur(true);
       default:
         return null;
@@ -177,6 +168,7 @@ DecisionDropdown.propTypes = {
   CustomValue: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   hideClear: PropTypes.bool,
   CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  closeMenuOnSelect: PropTypes.bool,
 };
 
 DecisionDropdown.defaultProps = {
@@ -194,6 +186,7 @@ DecisionDropdown.defaultProps = {
   CustomValue: null,
   hideClear: false,
   CustomChevron: null,
+  closeMenuOnSelect: true,
 };
 
 export default withTheme(DecisionDropdown);

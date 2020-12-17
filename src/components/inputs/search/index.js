@@ -17,16 +17,10 @@ import {
   SearchInputWrapper,
 } from './theme';
 import { MultiValueList, MultiSelectTick } from './components';
-import {
-  SearchIcon,
-} from '../../misc/icons';
+import { SearchIcon } from '../../misc/icons';
+import { KEYCODES } from '../../utils/index';
 
 const INIT_DEBOUNCE = 500;
-const UP_KEY = 38;
-const DOWN_KEY = 40;
-const ENTER_KEY = 13;
-const ESC_KEY = 27;
-const BACKSPACE_KEY = 8;
 
 const chooseItem = (item, isMulti, value, isStack) => {
   if (!isMulti) {
@@ -35,13 +29,13 @@ const chooseItem = (item, isMulti, value, isStack) => {
   if (!value) {
     return [item];
   }
-  const chosenIndex = value.findIndex(l => l.value === item.value);
+  const chosenIndex = value.findIndex((l) => l.value === item.value);
 
   if (chosenIndex >= 0) {
     if (isStack && chosenIndex !== value.length - 1) {
       return value;
     }
-    return value.filter(l => l.value !== item.value);
+    return value.filter((l) => l.value !== item.value);
   }
 
   return [...value, item];
@@ -49,7 +43,6 @@ const chooseItem = (item, isMulti, value, isStack) => {
 
 const Menu = (props) => {
   const {
-    isStack,
     data,
     dataLabel,
     clickHandler,
@@ -97,8 +90,9 @@ const Menu = (props) => {
             ) : (
               <Text>{el[dataLabel]}</Text>
             )}
-            {hasValues && !!value.find(vEl => vEl.value === el.value)
-            && (<MultiSelectTick />)}
+            {hasValues && !!value.find((vEl) => vEl.value === el.value) && (
+              <MultiSelectTick />
+            )}
           </MenuItem>
         ))}
       </FloatWrapper>
@@ -167,25 +161,25 @@ const Search = (props) => {
   };
 
   const removeHandler = (removeValue) => {
-    itemChooseHandler(value.filter(l => l.value !== removeValue));
+    itemChooseHandler(value.filter((l) => l.value !== removeValue));
   };
 
   const specialKeyHandler = ({ keyCode }) => {
     switch (keyCode) {
-      case DOWN_KEY:
+      case KEYCODES.DOWN:
         return setLightFocus((lightFocus + 1) % data.length);
-      case UP_KEY:
+      case KEYCODES.UP:
         return setLightFocus(
-          lightFocus - 1 < 0 ? data.length - 1 : lightFocus - 1,
+          lightFocus - 1 < 0 ? data.length - 1 : lightFocus - 1
         );
-      case ESC_KEY:
+      case KEYCODES.ESC:
         return inputRef.current.blur();
-      case BACKSPACE_KEY:
+      case KEYCODES.BACKSPACE:
         if (!typedTerm && value && value.length) {
           return choseItem(value[value.length - 1]);
         }
         return null;
-      case ENTER_KEY:
+      case KEYCODES.ENTER:
         return choseItem(data[lightFocus]);
       default:
         return null;
@@ -202,15 +196,13 @@ const Search = (props) => {
           onClick={() => hideInput && inputRef.current.focus()}
         >
           {isMulti && (
-          <MultiValueList
-            isStack={isStack}
-            value={value}
-            removeHandler={removeHandler}
-          />
+            <MultiValueList
+              isStack={isStack}
+              value={value}
+              removeHandler={removeHandler}
+            />
           )}
-          <SearchInputWrapper
-            hide={hideInput}
-          >
+          <SearchInputWrapper hide={hideInput}>
             <SearchIconWrapper isLarge={size === 'large'}>
               <SearchIcon size={size === 'large' ? 18 : 14} />
             </SearchIconWrapper>

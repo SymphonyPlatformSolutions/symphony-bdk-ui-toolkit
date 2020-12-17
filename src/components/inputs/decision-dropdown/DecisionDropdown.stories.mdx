@@ -177,6 +177,28 @@ const SIMPLE_CONTENT = [
   </Story>
 </Preview>
 
+## Simple branch-less dropdown - closeMenuOnSelect=false
+
+The Component can also be used as a simple Dropdown, that contains no tree-routing logic. To do so, simply pass in a shallow data array.
+
+```javascript
+const SIMPLE_CONTENT = [
+  { label: 'Content 1', value: 'content1' },
+  { label: 'Content 2', value: 'content2' },
+  { label: 'Content 3', value: 'content3' },
+  { label: 'Content 4', value: 'content4' },
+  { label: 'Content 5', value: 'content5' },
+];
+```
+
+<Preview withSource="none">
+  <Story name="Simple Content no close">
+    <Box type="flat" style={{ height: '220px', marginTop: '8px'}}>
+      <DropdownHandler data={SIMPLE_CONTENT} closeMenuOnSelect={false} />
+    </Box>
+  </Story>
+</Preview>
+
 
 ## States
 
