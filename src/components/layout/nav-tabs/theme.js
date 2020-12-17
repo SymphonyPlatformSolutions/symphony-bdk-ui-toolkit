@@ -6,12 +6,12 @@ export const getHeaderIndicatorWidth = ({ activeTabIndex, tabs }) => {
   const clientWidth = tabs[activeTabIndex].clientWidth;
   return `${clientWidth}px`;
 };
-export const getTabHeaderIndicatorMarginLeft = ({ activeTabAlign, activeTabIndex, tabs }) => {
+export const getTabHeaderIndicatorMarginLeft = ({ activeTabAlign, activeTabIndex, tabs, separatorWidthInPx }) => {
   let travelDistance = 0;
   // eslint-disable-next-line prefer-destructuring
   const clientWidth = tabs[activeTabIndex].clientWidth;
   for (let i = 0; i < activeTabIndex; i++) {
-    travelDistance += tabs[i].clientWidth;
+    travelDistance += tabs[i].clientWidth + separatorWidthInPx;
   }
-  return (activeTabAlign === 'right' ? `calc(100% - ${clientWidth}px)` : `${travelDistance}px`);
+  return (activeTabAlign === 'right' ? `calc(100% - ${clientWidth + separatorWidthInPx}px)` : `${travelDistance}px`);
 };
