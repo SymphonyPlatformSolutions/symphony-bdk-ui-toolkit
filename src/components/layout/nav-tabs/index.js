@@ -117,7 +117,7 @@ export default function NavTabs({ children, activeTab, ...rest }) {
         </TabHeader>
       </Box>
       <Box vertical>
-        {childrenArray.filter((child) => child.props.label !== selectedTab).map((child) => child.props.children)}
+        {childrenArray.filter((child) => child.props.label === selectedTab).map((child) => child.props.children)}
       </Box>
     </BaseTabs>
   );
