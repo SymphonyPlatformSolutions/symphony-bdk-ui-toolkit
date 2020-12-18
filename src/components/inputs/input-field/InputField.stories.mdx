@@ -127,4 +127,17 @@ Set by setting the ```type``` prop to *textarea*.
   </Story>
 </Preview>
 
+### Spread Container props
+
+To access the Container that wraps the Input Field, one can use the ```controllerProps``` props.
+
+<Preview withSource="open">
+  <Story name="Container Props">
+    <Box horizontal>
+      <InputFieldController containerProps={{ style: { border: '4px solid green'}}} />
+    </Box>
+  </Story>
+</Preview>
+
+
 <Props of={InputField} />

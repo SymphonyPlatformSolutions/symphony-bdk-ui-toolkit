@@ -69,14 +69,14 @@ const SimpleItem = (props) => {
         clickHandler();
       }}
     >
-      {CustomItem
-        ? <CustomItem>{label}</CustomItem>
-        : (
-          <LabelContainer>
-            {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
-            {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
-          </LabelContainer>
-        )}
+      {CustomItem ? (
+        <CustomItem>{label}</CustomItem>
+      ) : (
+        <LabelContainer>
+          {label && <SimpleItemLabel>{label}</SimpleItemLabel>}
+          {sublabel && <SimpleItemSublabel>{sublabel}</SimpleItemSublabel>}
+        </LabelContainer>
+      )}
 
       {multiChosen && (
         <MultiChosenCheck>
@@ -107,13 +107,13 @@ export const MenuItem = (props) => {
 
   function renderEmptyContent() {
     if (!CustomEmptyComponent) {
-      return (<DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>);
+      return <DefaultEmptyMessage>{emptyMessage}</DefaultEmptyMessage>;
     }
-    return (CustomEmptyComponent);
+    return CustomEmptyComponent;
   }
   if (suboptions) {
     const filteredOptions = suboptions.filter(
-      x => !!selectableArray.find(y => y.value === x.value),
+      (x) => !!selectableArray.find((y) => y.value === x.value),
     );
     if (!filteredOptions.length && suboptions.length) {
       return null;
@@ -122,8 +122,8 @@ export const MenuItem = (props) => {
       <MenuItemContainer hasTopBar={hasTopBar} hasBottomBar={hasBottomBar}>
         {title && <MenuItemTitle>{title}</MenuItemTitle>}
         {subtitle && <MenuItemSubtitle>{subtitle}</MenuItemSubtitle>}
-        {suboptions.length ? (
-          filteredOptions.map(el => (
+        {suboptions.length
+          ? filteredOptions.map((el) => (
             <SimpleItem
               {...el}
               CustomItem={el.CustomItem}
@@ -133,16 +133,16 @@ export const MenuItem = (props) => {
               key={el.uid}
               clickHandler={() => chooseHandler(el)}
               multiChosen={
-                valueList && !!valueList.find(x => x.value === el.value)
-              }
+                  valueList && !!valueList.find((x) => x.value === el.value)
+                }
             />
           ))
-        ) : (renderEmptyContent())}
+          : renderEmptyContent()}
       </MenuItemContainer>
     );
   }
 
-  if (selectableArray.find(y => y.value === props.value)) {
+  if (selectableArray.find((y) => y.value === props.value)) {
     return (
       <SimpleItem
         {...props}
@@ -151,7 +151,7 @@ export const MenuItem = (props) => {
         lightFocusHandler={lightFocusHandler}
         clickHandler={() => chooseHandler(props)}
         multiChosen={
-          valueList && !!valueList.find(x => x.value === props.value)
+          valueList && !!valueList.find((x) => x.value === props.value)
         }
       />
     );
@@ -190,22 +190,20 @@ const MultiValueList = (props) => {
   return (
     <ValueContainer size={size}>
       <MultiValueContainer>
-        {value.map(l => (CustomValue
-          ? (
-            <CustomValue
-              removeHandler={() => chooseHandler(l)}
-              key={l.value}
-              value={l}
-            />
-          )
-          : (
-            <MultiSelectValue
-              removeHandler={() => chooseHandler(l)}
-              key={l.value}
-            >
-              {l.label}
-            </MultiSelectValue>
-          )))}
+        {value.map((l) => (CustomValue ? (
+          <CustomValue
+            removeHandler={() => chooseHandler(l)}
+            key={l.value}
+            value={l}
+          />
+        ) : (
+          <MultiSelectValue
+            removeHandler={() => chooseHandler(l)}
+            key={l.value}
+          >
+            {l.label}
+          </MultiSelectValue>
+        )))}
       </MultiValueContainer>
     </ValueContainer>
   );
@@ -228,12 +226,17 @@ export const DropdownControl = forwardRef((props, ref) => {
     tooltip,
     filterQueryHandler,
     CustomValue,
+    hideClear,
+    CustomChevron,
   } = props;
 
   const [typedValue, setTypedValue] = useState('');
   const inputRef = useRef();
 
   const toggleInputBlur = (isBlur) => {
+    if (disabled) {
+      return;
+    }
     if (isBlur) {
       inputRef.current.blur();
     } else {
@@ -268,7 +271,7 @@ export const DropdownControl = forwardRef((props, ref) => {
     }
   };
 
-  const shouldRenderClear = isMulti ? !!(value && value.length) : value;
+  const shouldRenderClear = !hideClear && (isMulti ? !!(value && value.length) : value);
   const hideInput = isMulti
     ? value && value.length && !menuIsOpen
     : value && !!CustomValue && !menuIsOpen;
@@ -280,14 +283,17 @@ export const DropdownControl = forwardRef((props, ref) => {
       disabled={disabled}
       error={error}
     >
-      <ValueAndControl onClick={() => { hideInput && inputRef.current.focus(); }} size={size}>
+      <ValueAndControl
+        onClick={() => hideInput && toggleInputBlur(false)}
+        size={size}
+      >
         {isMulti && (
-        <MultiValueList
-          CustomValue={CustomValue}
-          chooseHandler={chooseHandler}
-          value={value}
-          size={size}
-        />
+          <MultiValueList
+            CustomValue={CustomValue}
+            chooseHandler={chooseHandler}
+            value={value}
+            size={size}
+          />
         )}
         {!isMulti && CustomValue && value && !menuIsOpen && (
           <CustomValue value={value} />
@@ -309,8 +315,10 @@ export const DropdownControl = forwardRef((props, ref) => {
           }}
           onFocus={() => focusBlurHandler(true)}
           onBlur={() => {
-            if (value && !typedValue && !isMulti) {
+            if (value && !isMulti) {
               setTypedValue(value.label);
+            } else if (!value) {
+              setTypedValue('');
             }
             focusBlurHandler(false);
           }}
@@ -324,20 +332,32 @@ export const DropdownControl = forwardRef((props, ref) => {
             <CrossIcon />
           </IconMarginContainer>
         )}
-        <ChevronWrapper
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleInputBlur(menuIsOpen);
-          }}
-          turn={menuIsOpen}
-        >
-          <DownChevron
-            color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+        {CustomChevron ? (
+          <CustomChevron
+            blurInput={() => focusBlurHandler(true)}
+            focusInput={() => focusBlurHandler(false)}
+            menuIsOpen={menuIsOpen}
+            disabled={disabled}
           />
-        </ChevronWrapper>
+        ) : (
+          <ChevronWrapper
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleInputBlur(menuIsOpen);
+            }}
+            turn={menuIsOpen}
+          >
+            <DownChevron
+              color={disabled ? theme.colors.grey_300 : theme.colors.grey_600}
+            />
+          </ChevronWrapper>
+        )}
+
         {tooltip && (
           <TooltipMargin>
-            <Tooltip size={14} color={theme.colors.grey_600}>{tooltip}</Tooltip>
+            <Tooltip size={14} color={theme.colors.grey_600}>
+              {tooltip}
+            </Tooltip>
           </TooltipMargin>
         )}
       </ChevronContainer>
@@ -407,7 +427,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
     if (!uid) {
       return setLightFocus(-1);
     }
-    return setLightFocus(selectableArray.findIndex(el => el.uid === uid));
+    return setLightFocus(selectableArray.findIndex((el) => el.uid === uid));
   };
 
   const goBack = () => {
@@ -416,7 +436,7 @@ export const DropdownMenu = forwardRef((props, ref) => {
       let nextBranch;
       for (let i = 0; i < acc.length; i += 1) {
         const subTree = acc[i].suboptions ? acc[i].suboptions : acc[i];
-        nextBranch = subTree.find(branch => branch.value === el);
+        nextBranch = subTree.find((branch) => branch.value === el);
         if (nextBranch) {
           break;
         }
@@ -460,7 +480,9 @@ export const DropdownMenu = forwardRef((props, ref) => {
         />
       ));
     }
-    return <DefaultEmptyMessage>{currentData.emptyMessage}</DefaultEmptyMessage>;
+    return (
+      <DefaultEmptyMessage>{currentData.emptyMessage}</DefaultEmptyMessage>
+    );
   }
 
   return (

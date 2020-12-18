@@ -23,7 +23,7 @@ const INPUT_TYPES = {
 };
 
 export const ErrorWrapper = ({ children, error, errorMessage }) => (
-  <div>
+  <div style={{ width: '100%' }}>
     {children}
     {error && (
       <Text type="danger" style={{ marginTop: '3px' }} size="small">
@@ -58,7 +58,7 @@ const InputAddons = (props) => {
           disabled={disabled}
           onClick={copyInput ? copyToClipBoard : setShowPassword}
         >
-          {copyInput ? 'copy' : showPassword ? (<ClosedEyeIcon />) : (<EyeIcon />)}
+          {copyInput ? 'copy' : showPassword ? <ClosedEyeIcon /> : <EyeIcon />}
         </ToggleButtonText>
       )}
       {tooltip && (
@@ -95,6 +95,7 @@ const InputField = forwardRef((props, inputRef) => {
     readOnly,
     size,
     theme,
+    containerProps,
     ...rest
   } = props;
 
@@ -108,7 +109,7 @@ const InputField = forwardRef((props, inputRef) => {
   }
 
   function renderInputFieldForType(type) {
-    return type === INPUT_TYPES.TEXTAREA ?
+    return type === INPUT_TYPES.TEXTAREA ? (
       <TextArea
         {...rest}
         size={size}
@@ -122,8 +123,8 @@ const InputField = forwardRef((props, inputRef) => {
         rows="2"
         required={required}
       />
-    :
-      (<React.Fragment>
+    ) : (
+      <React.Fragment>
         <InputAddons
           copyToClipBoard={copyToClipBoard}
           setShowPassword={() => setShowPassword(!showPassword)}
@@ -145,16 +146,19 @@ const InputField = forwardRef((props, inputRef) => {
           inputState={inputState}
           required={required}
         />
-      </React.Fragment>);
+      </React.Fragment>
+    );
   }
-  
+
   return (
     <ErrorWrapper error={inputState === 'error'} errorMessage={errorMessage}>
-      {label && <label><InputLabel size="small">{label}</InputLabel></label>}
-      <Container disabled={disabled} error={inputState === 'error'}>
-        <InputWrapper>
-        {renderInputFieldForType(type)}
-        </InputWrapper>
+      {label && (
+        <label>
+          <InputLabel size="small">{label}</InputLabel>
+        </label>
+      )}
+      <Container disabled={disabled} error={inputState === 'error'} {...containerProps}>
+        <InputWrapper>{renderInputFieldForType(type)}</InputWrapper>
       </Container>
     </ErrorWrapper>
   );
@@ -176,6 +180,7 @@ InputField.propTypes = {
   type: PropTypes.oneOf(['password', 'textarea', 'copy', 'text', 'number']),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
+  containerProps: PropTypes.object,
 };
 
 InputField.defaultProps = {
@@ -185,7 +190,7 @@ InputField.defaultProps = {
   hasPasswordShow: true,
   inputState: 'initial',
   type: INPUT_TYPES.TEXT,
-  id: '',
+  id: undefined,
   onChange: undefined,
   placeholder: 'Input here...',
   errorMessage: 'Something went wrong!',
@@ -194,6 +199,7 @@ InputField.defaultProps = {
   tooltip: null,
   readOnly: false,
   size: 'regular',
+  containerProps: {},
 };
 
 export default withTheme(InputField);
