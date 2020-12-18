@@ -830,3 +830,35 @@ export const DoubleChevron = withTheme(
     </IconWrapper>
   )
 );
+
+export const ChatsIcon = withTheme(({
+  theme, color, size = 16, blueprint, ...rest
+}) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.99693 0C3.06513 0 1.49907 1.56702 1.49907 3.5C1.49907 3.90649 1.56831 4.29675 1.69564 4.65967L0.150384 6.13867C0.0419976 6.24242 -0.000965512 6.37255 1.6426e-05 6.5C0.00198406 6.75538 0.195219 7 0.495784 7H9.49417C11.426 7 12.992 5.43298 12.992 3.5C12.992 1.56702 11.426 0 9.49417 0H4.99693ZM9.49417 2C10.3221 2 10.9932 2.67157 10.9932 3.5C10.9932 4.32843 10.3221 5 9.49417 5H4.99693C4.16901 5 3.49785 4.32843 3.49785 3.5C3.49785 2.67157 4.16901 2 4.99693 2H9.49417Z" fill={color || theme.colors.error_700}/>
+      <path d="M10.9932 16C12.925 16 14.4911 14.433 14.4911 12.5C14.4911 12.0935 14.4219 11.7032 14.2945 11.3403L15.8398 9.86133C16.1654 9.54968 15.945 9 15.4944 9H6.49601C4.56421 9 2.99815 10.567 2.99815 12.5C2.99815 14.433 4.56421 16 6.49601 16H10.9932ZM6.49601 14C5.66809 14 4.99693 13.3284 4.99693 12.5C4.99693 11.6716 5.66809 11 6.49601 11H10.9932C11.8212 11 12.4923 11.6716 12.4923 12.5C12.4923 13.3284 11.8212 14 10.9932 14H6.49601Z" fill={color || theme.colors.error_700}/>
+    </svg>
+  </IconWrapper>
+));
+
+export const CopyIcon = withTheme(({
+  theme, color, size = 16, blueprint, ...rest
+}) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 0C4.44772 0 4 0.447715 4 1V2H14V12H15C15.5523 12 16 11.5523 16 11V1C16 0.447715 15.5523 0 15 0H5Z" fill={color || theme.colors.error_700}/>
+      <path d="M0 5C0 4.44771 0.447715 4 1 4H11C11.5523 4 12 4.44772 12 5V15C12 15.5523 11.5523 16 11 16H1C0.447715 16 0 15.5523 0 15V5ZM2 14H10V6H2V14Z" fill={color || theme.colors.error_700}/>
+    </svg>
+  </IconWrapper>
+));
+
+export const DirectoryIcon = withTheme(({
+  theme, color, size = 16, blueprint, ...rest
+}) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 0C3.16667 0 2 1 2 1V3H1C0.447715 3 0 3.44772 0 4C0 4.55228 0.447715 5 1 5H2V7H1C0.447715 7 0 7.44772 0 8C0 8.55229 0.447715 9 1 9H2V11H1C0.447715 11 0 11.4477 0 12C0 12.5523 0.447715 13 1 13H2V15C2 15 3.16667 16 9 16C14.8333 16 16 15 16 15V1C16 1 14.8333 0 9 0ZM4 13H5C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11H4V9H5C5.55228 9 6 8.55229 6 8C6 7.44772 5.55228 7 5 7H4V5H5C5.55228 5 6 4.55228 6 4C6 3.44772 5.55228 3 5 3H4V2.39373C4.86779 2.20494 6.41235 2 9 2C11.5877 2 13.1322 2.20494 14 2.39373V13.6063C13.1322 13.7951 11.5877 14 9 14C6.41235 14 4.86779 13.7951 4 13.6063V13Z" fill={color || theme.colors.error_700}/>
+    </svg>
+  </IconWrapper>
+)); 
