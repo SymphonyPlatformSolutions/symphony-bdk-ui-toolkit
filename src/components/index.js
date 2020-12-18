@@ -19,7 +19,13 @@ export { default as MessageBox } from './misc/message-box';
 export { default as TextLink } from './misc/text-link';
 export { default as QuoteProductTag } from './financial/quote-product-tag';
 export { default as QuotePanel } from './financial/quote-panel';
-export { default as QuoteCard } from './financial/quote-card';
+export {
+  default as QuoteCard,
+} from './financial/quote-card';
+export {
+  QuoteShortCodeLabel,
+  QuoteShortCodeName,
+} from './financial/quote-card/theme';
 export { default as DealerTag } from './financial/dealer-tags';
 export {
   default as FormBox,
@@ -73,9 +79,10 @@ export {
   DownloadIcon,
   DocumentTildeIcon,
   FileIcon,
-  ChatsIcon,
-  CopyIcon,
-  DirectoryIcon
+  RightArrowIcon,
+  ExclamationCircleIcon,
+  TimesCircleIcon,
+  ExclamationTriangleIcon,
 } from './misc/icons';
 export { default as Search } from './inputs/search';
 export { default as Toggle } from './inputs/toggle';
@@ -83,6 +90,10 @@ export { default as DecisionDropdown } from './inputs/decision-dropdown';
 export { default as ProgressIndicator } from './inputs/progress-indicator';
 export { default as MultiValueInput } from './inputs/multi-value-input';
 export { default as TagBar } from './inputs/tag-bar';
+export {
+  default as Typehead,
+  simpleFilter,
+} from './inputs/typehead';
 export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,
@@ -99,3 +110,4 @@ export {
 export {
   default as DynamicTabs,
 } from './layout/dynamic-panel';
+export { default as Datepicker } from './inputs/datepicker';
