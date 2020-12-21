@@ -3,6 +3,7 @@
 node_modules
 build/*
 examples/node_modules
+dist
 
 .now
 .vscode

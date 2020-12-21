@@ -19,9 +19,9 @@ export const getBorderColor = ({ theme, isChecked, disabled }, isHover) => {
   if (disabled) {
     return `1px solid ${theme.colors.grey_200}`;
   }
-  return `1px solid ${(
+  return `2px solid ${(
     isChecked
       ? (isHover ? theme.colors.primary_700 : theme.colors.primary_500)
-      : (isHover ? theme.colors.grey_600 : theme.colors.grey_400)
+      : (isHover ? theme.colors.primary_700 : theme.colors.grey_400)
   )}`;
 };

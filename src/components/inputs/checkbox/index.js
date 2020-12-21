@@ -49,12 +49,10 @@ const BaseCheckBox = styled.div`
   transition: all 0.2s ease;
 
   ${CheckBoxLabel}:hover & {
-    background: ${(props) => getBackgroundColor(props, true)};
     border: ${(props) => getBorderColor(props, true)};
   }
 
-  ${CheckBoxInput}:focus ~ & {
-    background: ${(props) => getBackgroundColor(props, true)};
+  ${CheckBoxInput}:focus & {
     border: ${(props) => getBorderColor(props, true)};
   }
 `;
