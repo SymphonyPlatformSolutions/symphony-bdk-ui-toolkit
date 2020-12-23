@@ -8,8 +8,13 @@ import {
 
 const RadioButton = (props) => {
   const {
-    id, groupName, checked, onChange, children, disabled,
-    theme, ...rest
+    id, groupName,
+    checked = false,
+    children = undefined,
+    onChange = undefined,
+    disabled = false,
+    theme, 
+    ...rest
   } = props;
 
   return (
@@ -39,13 +44,6 @@ RadioButton.propTypes = {
   children: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
-};
-
-RadioButton.defaultProps = {
-  checked: false,
-  children: undefined,
-  onChange: undefined,
-  disabled: false,
 };
 
 export default withTheme(RadioButton);

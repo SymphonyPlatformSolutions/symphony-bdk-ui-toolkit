@@ -5,7 +5,7 @@ import { ToastContainer, AnimationProvider } from './theme';
 import MessageBox from '../message-box';
 
 const Toast = (props) => {
-  const { children, type, hideToast } = props;
+  const { children, hideToast, type = 'info'} = props;
 
   let currentTimeout;
 
@@ -37,10 +37,6 @@ Toast.propTypes = {
   children: PropTypes.string.isRequired,
   hideToast: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['success', 'error', 'info', 'warning']),
-};
-
-Toast.defaultProps = {
-  type: 'info',
 };
 
 export default Toast;

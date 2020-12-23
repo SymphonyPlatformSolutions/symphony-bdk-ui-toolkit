@@ -4,7 +4,10 @@ import { useDay } from '@datepicker-react/hooks';
 import DatepickerContext from './datepickerContext';
 import { ButtonContainer, ButtonText, DayButton } from './theme';
 
-function Day({ day, date }) {
+function Day({ 
+    day = null,
+    date = null
+  }) {
   const dayRef = useRef(null);
   const context = useContext(DatepickerContext);
   const {
@@ -68,11 +71,6 @@ function Day({ day, date }) {
 Day.propTypes = {
   day: PropTypes.string,
   date: PropTypes.object,
-};
-
-Day.defaultProps = {
-  day: null,
-  date: null,
 };
 
 export default Day;

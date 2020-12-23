@@ -15,7 +15,11 @@ import Text from '../text';
 
 const MessageBox = (props) => {
   const {
-    type, children, hasButton, buttonHandler, style,
+    children,
+    type = 'info',
+    hasButton = false,
+    buttonHandler = null,
+    style = undefined,
   } = props;
 
   return (
@@ -52,13 +56,6 @@ MessageBox.propTypes = {
   hasButton: PropTypes.bool,
   buttonHandler: PropTypes.func,
   style: PropTypes.object,
-};
-
-MessageBox.defaultProps = {
-  type: 'info',
-  hasButton: false,
-  buttonHandler: null,
-  style: undefined,
 };
 
 export default withTheme(MessageBox);

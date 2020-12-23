@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FooterWrapper, Button } from './theme';
 
 const Footer = (props) => {
-  const { onFooterNavigationClick, footerNavigationButtons } = props;
+  const { onFooterNavigationClick, footerNavigationButtons = [] } = props;
 
   const handleOnClick = ({ daysToSubstract }) => {
     return () => {
@@ -44,7 +44,5 @@ Footer.propTypes = {
     })
   ),
 };
-
-Footer.defaultProps = { footerNavigationButtons: [] };
 
 export default Footer;

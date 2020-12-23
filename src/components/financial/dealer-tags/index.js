@@ -13,7 +13,11 @@ import {
 
 const DealerTag = (props) => {
   const {
-    children, subText, closeHandler, closeButtonSize, ...rest
+    children, 
+    closeButtonSize = 18,
+    subText = null,
+    closeHandler = null,
+    ...rest
   } = props;
 
   return (
@@ -37,9 +41,5 @@ DealerTag.propTypes = {
   closeButtonSize: PropTypes.number,
   closeHandler: PropTypes.func,
 };
-DealerTag.defaultProps = {
-  closeButtonSize: 18,
-  subText: null,
-  closeHandler: null,
-};
+
 export default withTheme(DealerTag);

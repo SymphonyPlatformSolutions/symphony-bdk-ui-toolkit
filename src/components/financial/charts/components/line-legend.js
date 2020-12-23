@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { THEME_TYPES } from '../../../..';
 
 export const LineChartLegend = withTheme(({
-  theme, height, fontFamily, containerHeight, margin, lineColors, padding, data,
+  theme, fontFamily, containerHeight, margin, lineColors, data,
+  height = 40,
+  padding = 15
 }) => {
   const [rect, setRect] = useState({
     x: padding,
@@ -69,10 +71,6 @@ export const LineChartLegend = withTheme(({
   );
 });
 
-LineChartLegend.defaultProps = {
-  height: 40,
-  padding: 15,
-};
 LineChartLegend.propTypes = {
   containerHeight: PropTypes.number.isRequired,
   margin: PropTypes.shape({

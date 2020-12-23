@@ -113,15 +113,10 @@ SSEventsContentWrapper.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-SSEventsContentWrapper.defaultProps = {
-  error: null,
-  eventType: null,
-};
-
 const SSEventsListWrapper = ({
-  children,
   sseEndpoint,
   autoFetchConfig,
+  children = null
 }) => {
   const [fetchData, setFetchData] = useState([]);
 
@@ -162,10 +157,5 @@ SSEventsListWrapper.propTypes = {
     handleData: PropTypes.any,
   }).isRequired,
 };
-
-SSEventsListWrapper.defaultProps = {
-  children: null,
-};
-
 
 export default SSEventsListWrapper;

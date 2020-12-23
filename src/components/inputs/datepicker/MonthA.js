@@ -8,7 +8,11 @@ import {
 } from './theme';
 
 function MonthA({
-  label, value, onClick, disabled, isSelected,
+  label = null,
+  value = null,
+  onClick = () => {},
+  disabled = false,
+  isSelected = false,
 }) {
   const monthRef = useRef(null);
 
@@ -40,14 +44,6 @@ MonthA.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   isSelected: PropTypes.bool,
-};
-
-MonthA.defaultProps = {
-  label: null,
-  value: null,
-  onClick: () => {},
-  disabled: false,
-  isSelected: false,
 };
 
 export default MonthA;

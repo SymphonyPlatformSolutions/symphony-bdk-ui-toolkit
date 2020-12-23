@@ -16,7 +16,7 @@ const BOX_TYPES = {
   FLAT: 'flat',
 };
 
-const space = (props) => {
+const computeSpace = (props) => {
   let innerSpace;
   if (props.space) {
     innerSpace = props.space;
@@ -49,9 +49,33 @@ const space = (props) => {
 
 const direction = props => (props.horizontal ? 'row' : 'column');
 
-export default function Box(props) {
+export default function Box({
+  display = 'flex',
+  align = 'stretch',
+  justify = 'flex-start',
+  grow = 'initial',
+  space = 0,
+  bg = 'inherit',
+  p = 0,
+  mx = 0,
+  my = 0,
+  type = BOX_TYPES.PRIMARY,
+  ...rest
+}) {
   return (
-    <BaseBox {...props} />
+    <BaseBox
+      display={display}
+      align={align}
+      justify={justify}
+      grow={grow}
+      space={space}
+      bg={bg}
+      p={p}
+      mx={mx}
+      my={my}
+      type={type}
+      {...rest}
+    />
   );
 }
 
@@ -66,12 +90,11 @@ const BaseBox = styled.div`
   background: ${p => p.bg};
   overflow: ${p => p.overflow};
   margin: ${props => getMargin(props)};
-  ${space};
+  ${computeSpace};
 `;
 
 Box.propTypes = {
   display: PropTypes.string,
-  direction: PropTypes.string,
   align: PropTypes.string,
   justify: PropTypes.string,
   grow: PropTypes.string,
@@ -81,17 +104,4 @@ Box.propTypes = {
   mx: PropTypes.string,
   my: PropTypes.string,
   type: PropTypes.oneOf([BOX_TYPES.PRIMARY, BOX_TYPES.SECONDARY, BOX_TYPES.FLAT]),
-};
-Box.defaultProps = {
-  display: 'flex',
-  direction: 'flex-column',
-  align: 'stretch',
-  justify: 'flex-start',
-  grow: 'initial',
-  space: 0,
-  bg: 'inherit',
-  p: 0,
-  mx: null,
-  my: null,
-  type: BOX_TYPES.PRIMARY,
 };

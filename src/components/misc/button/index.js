@@ -15,15 +15,16 @@ import { NoOp } from '../../../utils/helpers';
 
 const Button = ({
   children,
-  size,
-  type,
-  fill,
   theme,
-  loading,
-  disabled,
-  darkenOnDisable,
-  htmlType,
-  circular,
+  type = 'primary',
+  size = 'regular',
+  fill = 'filled',
+  disabled = false,
+  onClick = NoOp,
+  loading = null,
+  htmlType = 'button',
+  circular = false,
+  darkenOnDisable = true,
   ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,18 +98,6 @@ Button.propTypes = {
   loading: PropTypes.bool,
   htmlType: PropTypes.string,
   circular: PropTypes.bool,
-};
-
-Button.defaultProps = {
-  type: 'primary',
-  size: 'regular',
-  fill: 'filled',
-  disabled: false,
-  darkenOnDisable: true,
-  onClick: NoOp,
-  loading: null,
-  htmlType: 'button',
-  circular: false,
 };
 
 export default withTheme(Button);

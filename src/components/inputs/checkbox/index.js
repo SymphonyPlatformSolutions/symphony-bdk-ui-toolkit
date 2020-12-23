@@ -72,8 +72,12 @@ const Drawing = styled.polyline`
 
 const CheckBox = (props) => {
   const {
-    disabled, checked, onChange, children,
-    size, indeterminate,
+    onChange,
+    disabled = false,
+    checked = false,
+    size = 'regular',
+    children = '',
+    indeterminate = false,
     ...rest
   } = props;
 
@@ -110,14 +114,6 @@ CheckBox.propTypes = {
   size: PropTypes.oneOf(['large', 'regular']),
   onChange: PropTypes.func.isRequired,
   indeterminate: PropTypes.bool,
-};
-
-CheckBox.defaultProps = {
-  disabled: false,
-  checked: false,
-  size: 'regular',
-  children: '',
-  indeterminate: false,
 };
 
 export default CheckBox;

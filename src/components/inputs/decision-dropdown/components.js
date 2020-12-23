@@ -102,7 +102,7 @@ export const MenuItem = (props) => {
     valueList,
     selectableArray,
     CustomItem,
-    CustomEmptyComponent,
+    CustomEmptyComponent = null,
   } = props;
 
   function renderEmptyContent() {
@@ -161,9 +161,6 @@ export const MenuItem = (props) => {
 
 MenuItem.propTypes = {
   CustomEmptyComponent: PropTypes.node,
-};
-MenuItem.defaultProps = {
-  CustomEmptyComponent: null,
 };
 
 const MultiSelectValue = ({ children, removeHandler }) => (

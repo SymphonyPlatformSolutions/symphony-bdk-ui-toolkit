@@ -14,9 +14,21 @@ import Tooltip from '../../misc/tooltip';
 import { NoOp } from '../../../utils/helpers';
 
 const PhoneInputField = ({
-  value, defaultValue, inputState, disabled, onChange,
-  disableAreaCodes, id, onBlur, errorMessage, hasSearchField,
-  onFocus, label, tooltip, theme,
+  theme,
+  disabled = false,
+  inputState = 'initial',
+  id = '',
+  placeholder = 'Input here...',
+  value = '',
+  onChange = NoOp,
+  onBlur = NoOp,
+  defaultValue = 'us',
+  disableAreaCodes = true,
+  errorMessage = 'Something went wrong!',
+  hasSearchField = false,
+  onFocus = NoOp,
+  label = 'Phone number',
+  tooltip = null,
   ...rest
 }) => {
   const [hasRef, setRef] = useState(null);
@@ -59,6 +71,7 @@ const PhoneInputField = ({
             inputExtraProps={{
               id,
             }}
+            placeholder={placeholder}
             {...rest}
           />
         </PhoneInputWrapper>
@@ -82,23 +95,6 @@ PhoneInputField.propTypes = {
   onFocus: PropTypes.func,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-};
-
-PhoneInputField.defaultProps = {
-  disabled: false,
-  inputState: 'initial',
-  id: '',
-  placeholder: 'Input here...',
-  value: '',
-  onChange: NoOp,
-  onBlur: NoOp,
-  defaultValue: 'us',
-  disableAreaCodes: true,
-  errorMessage: 'Something went wrong!',
-  hasSearchField: false,
-  onFocus: NoOp,
-  label: 'Phone number',
-  tooltip: null,
 };
 
 export default withTheme(PhoneInputField);

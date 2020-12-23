@@ -77,7 +77,7 @@ export const RangeNavigation1MonthController = (props) => {
       value={simpleDate}
       onChange={setSimpleDate}
       hasFooterNavigation
-      footerNavigationButtons={[{ label: 'TODAY' }]}
+      footerNavigationButtons={[{ label: 'TODAY', daysToSubstract: 0 }]}
       {...props}
     />
   );

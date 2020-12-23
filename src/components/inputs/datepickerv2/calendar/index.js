@@ -11,15 +11,15 @@ import Month from '../month/index';
 
 const Calendar = (props) => {
   const {
-    firstDayOfWeek,
-    numberOfMonths,
     customWeekdayLabels,
-    isRange,
-    closeOnSelect,
-    onChange,
-    onClose,
-    defaultState,
-    initialVisibleMonth,
+    firstDayOfWeek = '',
+    numberOfMonths = 1,
+    onChange = () => {},
+    onClose = () => {},
+    isRange = false,
+    closeOnSelect = false,
+    defaultState = { startDate: null, endDate: null, focusedInput: START_DATE },
+    initialVisibleMonth = new Date(),
   } = props;
 
   const onDatesChange = (data) => {
@@ -105,17 +105,6 @@ Calendar.propTypes = {
     focusedInput: PropTypes.string,
   }),
   initialVisibleMonth: PropTypes.any,
-};
-
-Calendar.defaultProps = {
-  firstDayOfWeek: '',
-  numberOfMonths: 1,
-  onChange: () => {},
-  onClose: () => {},
-  isRange: false,
-  closeOnSelect: false,
-  defaultState: { startDate: null, endDate: null, focusedInput: START_DATE },
-  initialVisibleMonth: new Date(),
 };
 
 export default Calendar;

@@ -12,7 +12,7 @@ import {
 
 const DataGrid = (
   {
-    rowGetter, data, columns, rowsCount,
+    rowGetter = null, data = null, columns, rowsCount = null,
     theme,
     ...rest
   },
@@ -91,12 +91,6 @@ DataGrid.propTypes = {
   columns: PropTypes.array.isRequired,
   rowsCount: PropTypes.number,
   theme: PropTypes.object.isRequired,
-};
-
-DataGrid.defaultProps = {
-  rowsCount: null,
-  data: null,
-  rowGetter: null,
 };
 
 export default withTheme(DataGrid);

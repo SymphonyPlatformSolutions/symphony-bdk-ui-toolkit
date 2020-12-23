@@ -30,7 +30,4 @@ QuotePanel.propTypes = {
   clientPayedValue: PropTypes.number.isRequired,
 };
 
-QuotePanel.defaultProps = {
-};
-
 export default withTheme(QuotePanel);

@@ -43,18 +43,18 @@ const chooseItem = (item, isMulti, value, isStack) => {
 
 const Menu = (props) => {
   const {
-    data,
     dataLabel,
     clickHandler,
     theme,
     noResultsMessage,
     lightFocus,
     setLightFocus,
-    CustomMenuItem,
     typedTerm,
     isLarge,
     isMulti,
     value,
+    data = [],
+    CustomMenuItem = null,
   } = props;
 
   const hasValues = !!(isMulti && value && value.length);
@@ -103,20 +103,20 @@ const Menu = (props) => {
 const Search = (props) => {
   const {
     theme,
-    data,
     searchHandler,
     resultHandler,
-    debouncePeriod,
-    size,
-    dataLabel,
-    placeholder,
-    noResultsMessage,
     itemChooseHandler,
-    CustomMenuItem,
-    disabled,
-    isMulti,
     value,
-    isStack,
+    debouncePeriod = INIT_DEBOUNCE,
+    dataLabel = 'label',
+    placeholder = 'Search...',
+    noResultsMessage = 'No results',
+    data = [],
+    size = 'regular',
+    CustomMenuItem = null,
+    disabled = false,
+    isMulti = false,
+    isStack = false,
     ...rest
   } = props;
 
@@ -257,10 +257,6 @@ Menu.propTypes = {
   noResultsMessage: PropTypes.string.isRequired,
   CustomMenuItem: PropTypes.node,
 };
-Menu.defaultProps = {
-  data: [],
-  CustomMenuItem: null,
-};
 
 Search.propTypes = {
   theme: PropTypes.object.isRequired,
@@ -277,18 +273,6 @@ Search.propTypes = {
   disabled: PropTypes.bool,
   isMulti: PropTypes.bool,
   isStack: PropTypes.bool,
-};
-Search.defaultProps = {
-  debouncePeriod: INIT_DEBOUNCE,
-  dataLabel: 'label',
-  placeholder: 'Search...',
-  noResultsMessage: 'No results',
-  data: [],
-  size: 'regular',
-  CustomMenuItem: null,
-  disabled: false,
-  isMulti: false,
-  isStack: false,
 };
 
 export default withTheme(Search);

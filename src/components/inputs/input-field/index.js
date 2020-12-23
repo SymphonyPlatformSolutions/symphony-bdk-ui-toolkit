@@ -79,23 +79,23 @@ const InputField = forwardRef((props, inputRef) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
-    id,
-    label,
-    disabled,
-    required,
-    onChange,
-    placeholder,
-    value,
-    inputState,
-    copyInput,
-    hasPasswordShow,
-    type,
-    errorMessage,
-    tooltip,
-    readOnly,
-    size,
     theme,
-    containerProps,
+    copyInput = false,
+    disabled = false,
+    required = true,
+    hasPasswordShow = true,
+    inputState = 'initial',
+    type = INPUT_TYPES.TEXT,
+    id = undefined,
+    onChange= undefined,
+    placeholder = 'Input here...',
+    errorMessage = 'Something went wrong!',
+    value = '',
+    label = null,
+    tooltip = null,
+    readOnly = false,
+    size = 'regular',
+    containerProps = {},
     ...rest
   } = props;
 
@@ -113,6 +113,7 @@ const InputField = forwardRef((props, inputRef) => {
       <TextArea
         {...rest}
         size={size}
+        theme={theme}
         placeholder={placeholder}
         textArea
         disabled={disabled}
@@ -135,6 +136,7 @@ const InputField = forwardRef((props, inputRef) => {
         <StyledInput
           {...rest}
           size={size}
+          theme={theme}
           readOnly={readOnly}
           disabled={disabled}
           id={id}
@@ -181,25 +183,6 @@ InputField.propTypes = {
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(['regular', 'large']),
   containerProps: PropTypes.object,
-};
-
-InputField.defaultProps = {
-  copyInput: false,
-  disabled: false,
-  required: true,
-  hasPasswordShow: true,
-  inputState: 'initial',
-  type: INPUT_TYPES.TEXT,
-  id: undefined,
-  onChange: undefined,
-  placeholder: 'Input here...',
-  errorMessage: 'Something went wrong!',
-  value: '',
-  label: null,
-  tooltip: null,
-  readOnly: false,
-  size: 'regular',
-  containerProps: {},
 };
 
 export default withTheme(InputField);

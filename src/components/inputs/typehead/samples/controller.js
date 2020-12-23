@@ -15,7 +15,7 @@ export const TypeheadWrapper = (props) => {
 
   return (
     <Box type="secondary">
-      <Box horizontal style={{ width: '400px' }}>
+      <Box style={{ width: '400px' }}>
         <Typehead
           {...props}
           value={currentValue}

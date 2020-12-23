@@ -30,21 +30,21 @@ const InputLabel = styled(Text)`
 
 const Dropdown = (props) => {
   const {
-    disabled,
-    options,
-    onChange,
-    value,
-    chosenValue,
-    noOptionsMessage,
-    components,
     theme,
-    clickHandler,
-    isLoading,
-    placeholder,
-    error,
-    errorMessage,
-    label,
-    tooltip,
+    disabled = false,
+    options = [],
+    onChange = null,
+    value = null,
+    chosenValue = null,
+    noOptionsMessage = 'No Data',
+    components = null,
+    placeholder = undefined,
+    isLoading = false,
+    clickHandler = null,
+    error = false,
+    errorMessage = 'Something went wrong!',
+    label = 'Dropdown input',
+    tooltip = null,
     ...rest
   } = props;
 
@@ -102,23 +102,6 @@ Dropdown.propTypes = {
   errorMessage: PropTypes.string,
   label: PropTypes.string,
   tooltip: PropTypes.string,
-};
-
-Dropdown.defaultProps = {
-  disabled: false,
-  options: [],
-  onChange: null,
-  value: null,
-  chosenValue: null,
-  noOptionsMessage: 'No Data',
-  components: null,
-  placeholder: undefined,
-  isLoading: false,
-  clickHandler: null,
-  error: false,
-  errorMessage: 'Something went wrong!',
-  label: 'Dropdown input',
-  tooltip: null,
 };
 
 export default withTheme(Dropdown);

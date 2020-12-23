@@ -50,27 +50,27 @@ const formatDate = (date, endDate, isRange) => {
 
 const Datepicker = (props) => {
   const {
-    value,
-    endValue,
     onChange,
-    numberOfMonths,
-    isRange,
-    isStart,
-    placeholder,
-    size,
-    dateValueFormatter,
-    firstDayOfWeek,
-    datepickerProps,
-    errorMessage,
-    inputState,
-    disabled,
-    customWeekdayLabels,
-    hasYearDropdown,
-    hasMonthDropdown,
-    isYearPicker,
-    isMonthPicker,
-    closeOnClick,
-    footerNavigationButtons,
+    value = null,
+    endValue = null,
+    isRange = false,
+    isStart = true,
+    size = 'regular',
+    numberOfMonths = 1,
+    placeholder = 'Choose date...',
+    dateValueFormatter = null,
+    firstDayOfWeek = 0,
+    datepickerProps = {},
+    errorMessage = null,
+    inputState = 'initial',
+    disabled = false,
+    customWeekdayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    hasYearDropdown = false,
+    hasMonthDropdown = false,
+    isYearPicker = false,
+    isMonthPicker = false,
+    closeOnClick = false,
+    footerNavigationButtons = [],
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
@@ -333,35 +333,10 @@ Datepicker.propTypes = {
   isYearPicker: PropTypes.bool,
   isMonthPicker: PropTypes.bool,
   closeOnClick: PropTypes.bool,
-  footerNavigationButtons: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      daysToSubstract: PropTypes.number.isRequired,
-    })
-  ),
-};
-
-Datepicker.defaultProps = {
-  value: null,
-  endValue: null,
-  isRange: false,
-  isStart: true,
-  size: 'regular',
-  numberOfMonths: 1,
-  placeholder: 'Choose date...',
-  dateValueFormatter: null,
-  firstDayOfWeek: 0,
-  datepickerProps: {},
-  errorMessage: null,
-  inputState: 'initial',
-  disabled: false,
-  customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-  hasYearDropdown: false,
-  hasMonthDropdown: false,
-  isYearPicker: false,
-  isMonthPicker: false,
-  closeOnClick: false,
-  footerNavigationButtons: [],
+  footerNavigationButtons: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    daysToSubstract: PropTypes.number.isRequired,
+  })),
 };
 
 export default Datepicker;

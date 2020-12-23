@@ -11,7 +11,7 @@ import {
 } from './theme';
 import Day from '../day/index';
 
-const Month = ({ year, month, firstDayOfWeek, customWeekdayLabels }) => {
+const Month = ({ year, month, firstDayOfWeek = 0, customWeekdayLabels }) => {
   const weekdayLabelFormat = (date) => customWeekdayLabels[date.getDay()];
   const { days, weekdayLabels, monthLabel } = useMonth({
     year,
@@ -49,10 +49,6 @@ Month.propTypes = {
   month: PropTypes.number.isRequired,
   firstDayOfWeek: PropTypes.number,
   customWeekdayLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-Month.defaultProps = {
-  firstDayOfWeek: 0,
 };
 
 export default Month;

@@ -7,11 +7,16 @@ import Separator from '../../misc/separator';
 
 export default function Card(props) {
   const {
-    children, titleText, hoverEffect, ...rest
+    children,
+    titleText = '',
+    hoverEffect = false,
+    p = 10,
+    overflow = 'hidden',
+    ...rest
   } = props;
 
   return (
-    <BaseCard {...rest} hoverEffect={hoverEffect}>
+    <BaseCard p={p} overflow={overflow} hoverEffect={hoverEffect} {...rest}>
       <Box space={10}>
         {titleText && (
         <CardTitle titleText={titleText}>
@@ -33,11 +38,4 @@ Card.propTypes = {
   hoverEffect: PropTypes.bool,
   p: PropTypes.number,
   overflow: PropTypes.string,
-};
-
-Card.defaultProps = {
-  titleText: '',
-  hoverEffect: false,
-  p: 10,
-  overflow: 'hidden',
 };

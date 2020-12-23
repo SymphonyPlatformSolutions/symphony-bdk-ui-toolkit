@@ -45,9 +45,14 @@ const tooltipContentHelper = ({ currentItem, xAccessor }) => ({
 
 
 const LineChart = ({
-  loading, data, theme,
-  hasTooltip, hasZoom, tickSizeY,
-  lineColors, yAxisLabel, yPadding, margin, ...rest
+  data, theme, tickSizeY, lineColors, margin, 
+  loading = false,
+  hasTooltip = false,
+  hasZoom = false,
+  yAxisLabel = null,
+  children = null,
+  yPadding = { top: 1, bottom: 1 },
+  ...rest
 }) => {
   const yExtents = useCallback((d) => d.prices.reduce((acc, curr, index) => {
     let value = curr.close;
@@ -181,15 +186,6 @@ const LineChart = ({
       )}
     </ChartContainer>
   );
-};
-
-LineChart.defaultProps = {
-  loading: false,
-  hasTooltip: false,
-  hasZoom: false,
-  yAxisLabel: null,
-  children: null,
-  yPadding: { top: 1, bottom: 1 },
 };
 
 LineChart.propTypes = {

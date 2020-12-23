@@ -11,7 +11,11 @@ import { NoOp } from '../../../utils/helpers';
 
 const Toggle = (props) => {
   const {
-    toggled, onChange, color, disabled, ...rest
+    onChange = NoOp,
+    toggled = false,
+    disabled = false,
+    color = null,
+    ...rest
   } = props;
 
   return (
@@ -29,12 +33,6 @@ Toggle.propTypes = {
   toggled: PropTypes.bool,
   color: PropTypes.string,
   disabled: PropTypes.bool,
-};
-Toggle.defaultProps = {
-  onChange: NoOp,
-  toggled: false,
-  disabled: false,
-  color: null,
 };
 
 export default withTheme(Toggle);

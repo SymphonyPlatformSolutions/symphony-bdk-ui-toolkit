@@ -6,35 +6,35 @@ import Footer from './footer';
 
 const PortalBubble = (props) => {
   const {
-    triggerClose,
     activeMonths,
     goToNextMonths,
     goToPreviousMonths,
-    goToNextYear,
-    goToPreviousYear,
-    firstDayOfWeek,
-    isRange,
-    value,
-    strategy,
-    relatedWidth,
-    customWeekdayLabels,
-    textInputDateRef,
-    setInputValue,
-    hasYearDropdown,
-    hasMonthDropdown,
-    isYearPicker,
-    isMonthPicker,
-    handleChangeMonth,
-    closeOnClick,
-    handleCloseOnClick,
-    disabledMonth,
-    disabledYear,
-    handleChangeYear,
-    yearSelected,
-    monthSelected,
-    prevYear,
-    footerNavigationButtons,
-    onFooterNavigationClick,
+    value = null,
+    isRange = false,
+    firstDayOfWeek = 0,
+    customWeekdayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    relatedWidth = 0,
+    strategy = '',
+    triggerClose = false,
+    handleChangeMonth = () => {},
+    goToNextYear = () => {},
+    goToPreviousYear = () => {},
+    textInputDateRef = null,
+    setInputValue = () => {},
+    hasYearDropdown = false,
+    hasMonthDropdown = false,
+    isYearPicker = false,
+    isMonthPicker = false,
+    closeOnClick = false,
+    handleCloseOnClick = () => {},
+    disabledMonth = () => {},
+    disabledYear = () => {},
+    handleChangeYear = () => {},
+    yearSelected = false,
+    monthSelected = false,
+    prevYear = null,
+    footerNavigationButtons = [],
+    onFooterNavigationClick = () => {},
   } = props;
   const isUp = strategy && strategy.includes('ABOVE');
   const isLeft = strategy && strategy.includes('LEFT');
@@ -167,7 +167,7 @@ const PortalBubble = (props) => {
         ))
       )}
 
-      {footerNavigationButtons.length !== 0 && (
+      {footerNavigationButtons.length > 0 && (
         <Footer
           footerNavigationButtons={footerNavigationButtons}
           onFooterNavigationClick={onFooterNavigationClick}
@@ -212,35 +212,6 @@ PortalBubble.propTypes = {
     })
   ),
   onFooterNavigationClick: PropTypes.func,
-};
-
-PortalBubble.defaultProps = {
-  value: null,
-  isRange: false,
-  firstDayOfWeek: 0,
-  customWeekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-  relatedWidth: 0,
-  strategy: '',
-  triggerClose: false,
-  handleChangeMonth: () => {},
-  goToNextYear: () => {},
-  goToPreviousYear: () => {},
-  textInputDateRef: null,
-  setInputValue: () => {},
-  hasYearDropdown: false,
-  hasMonthDropdown: false,
-  isYearPicker: false,
-  isMonthPicker: false,
-  closeOnClick: false,
-  handleCloseOnClick: () => {},
-  disabledMonth: () => {},
-  disabledYear: () => {},
-  handleChangeYear: () => {},
-  yearSelected: false,
-  monthSelected: false,
-  prevYear: null,
-  footerNavigationButtons: [],
-  onFooterNavigationClick: () => {},
 };
 
 export default PortalBubble;
