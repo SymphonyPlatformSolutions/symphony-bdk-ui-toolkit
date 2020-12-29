@@ -863,7 +863,7 @@ export const DirectoryIcon = withTheme(({
   </IconWrapper>
 ));
 
-export const TickRounded = withTheme(({
+export const TickRoundedIcon = withTheme(({
   theme, color, size = 16, blueprint, ...rest
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
