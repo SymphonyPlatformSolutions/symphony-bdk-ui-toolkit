@@ -60,6 +60,7 @@ export {
   InfoIcon,
   CrossIcon,
   TickIcon,
+  TickRounded,
   DownChevron,
   DeleteIcon,
   EditIcon,
