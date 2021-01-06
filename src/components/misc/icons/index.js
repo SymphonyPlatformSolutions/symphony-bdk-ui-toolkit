@@ -872,4 +872,14 @@ export const TickRoundedIcon = withTheme(({
       <path fillRule="evenodd" clipRule="evenodd" d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58173 3.58172 0 8 0C12.4183 0 16 3.58173 16 8ZM14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z" fill={color || theme.colors.error_700} />
     </svg>
   </IconWrapper>
+)); 
+
+export const DropdownIcon = withTheme(({
+  theme, color, size = 16, blueprint, ...rest
+}) => (
+  <IconWrapper size={size} blueprint={blueprint}>
+    <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.00003 0C0.595567 0 0.230931 0.243642 0.0761497 0.617317C-0.0786313 0.990991 0.00692442 1.42111 0.292922 1.70711L3.29292 4.70711C3.68345 5.09763 4.31661 5.09763 4.70714 4.70711L7.70714 1.70711C7.99313 1.42111 8.07869 0.990991 7.92391 0.617317C7.76913 0.243642 7.40449 0 7.00003 0H1.00003Z" fill={color || theme.colors.grey_600}/>
+    </svg>
+  </IconWrapper>
 ));

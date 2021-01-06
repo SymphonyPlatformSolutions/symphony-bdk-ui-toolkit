@@ -86,7 +86,8 @@ export {
   ExclamationTriangleIcon,
   ChatsIcon,
   CopyIcon,
-  DirectoryIcon
+  DirectoryIcon,
+  DropdownIcon
 } from './misc/icons';
 export { default as Search } from './inputs/search';
 export { default as Toggle } from './inputs/toggle';
