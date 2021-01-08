@@ -16,15 +16,11 @@ const StyledSmile = styled(Smile)`
   color: ${({ theme, menuIsOpen }) => (menuIsOpen ? theme.colors.warning_500 : theme.colors.grey_500)};
 `;
 
-export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
+export const CustomChevron = ({ menuIsOpen, toggleInputBlur }) => (
   <SmileContainer
-    onClick={e => {
+    onMouseDown={(e) => {
       e.preventDefault();
-      if (menuIsOpen) {
-        blurInput();
-      } else {
-        focusInput();
-      }
+      toggleInputBlur(menuIsOpen);
     }}
     menuIsOpen={menuIsOpen}
   >
