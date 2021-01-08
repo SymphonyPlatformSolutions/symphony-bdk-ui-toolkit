@@ -18,7 +18,7 @@ const StyledSmile = styled(Smile)`
 
 export const CustomChevron = ({ menuIsOpen, blurInput, focusInput }) => (
   <SmileContainer
-    onMouseDown={e => {
+    onClick={e => {
       e.preventDefault();
       if (menuIsOpen) {
         blurInput();
