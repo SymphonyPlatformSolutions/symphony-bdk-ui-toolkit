@@ -334,8 +334,8 @@ export const DropdownControl = forwardRef((props, ref) => {
         )}
         {CustomChevron ? (
           <CustomChevron
-            blurInput={() => focusBlurHandler(true)}
-            focusInput={() => focusBlurHandler(false)}
+            blurInput={() => focusBlurHandler(false)}
+            focusInput={() => focusBlurHandler(true)}
             menuIsOpen={menuIsOpen}
             disabled={disabled}
           />

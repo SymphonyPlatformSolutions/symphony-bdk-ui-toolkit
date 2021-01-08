@@ -107,7 +107,7 @@ const DecisionDropdown = (props) => {
 
   return (
     <ErrorWrapper error={!!errorMessage} errorMessage={errorMessage}>
-      <Wrapper ref={node} {...rest} onClick={() => focusBlurHandler(true)}>
+      <Wrapper ref={node} {...rest}>
         <div>
           <DropdownControl
             hideClear={hideClear}
@@ -129,7 +129,7 @@ const DecisionDropdown = (props) => {
             CustomValue={CustomValue}
             CustomChevron={CustomChevron}
           />
-          <MenuWrapper error={!!errorMessage}>
+          <MenuWrapper error={!!errorMessage} onClick={() => focusBlurHandler(true)}>
             <ShrinkingBorder show={menuIsOpen} error={!!errorMessage} />
             {menuIsOpen && !disabled && (
               <DropdownMenu

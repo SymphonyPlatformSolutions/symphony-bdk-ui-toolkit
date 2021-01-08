@@ -150,7 +150,7 @@ export const ControlInput = styled(StyledInput)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
   position: ${({ hide }) => (hide ? 'absolute' : undefined)};
   height:${({ hide }) => (hide ? 0 : undefined)}; 
-  width: ${({ hide }) => (hide ? 0 : undefined)};
+  width: ${({ hide }) => (hide ? 0 : 'auto')};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
   margin-left: ${({ size }) => (size === 'large' ? '0' : '4px')};
