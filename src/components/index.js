@@ -1,4 +1,5 @@
 export { default as Box } from './layout/box';
+export { default as Badge } from './misc/badge';
 export { default as Button } from './misc/button';
 export { default as Card } from './layout/card';
 export { default as Loader } from './misc/loader';
