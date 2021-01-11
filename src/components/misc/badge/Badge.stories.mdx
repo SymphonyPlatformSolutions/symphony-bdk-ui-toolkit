@@ -1,0 +1,24 @@
+import Text from '../../misc/text';
+import Box from '../../layout/box';
+import Badge from './index.js';
+
+import { Story, Meta, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="components/Misc/Badge" component={Badge} parameters={{order: 600}}/>
+
+# Badge
+
+<hr />
+This badge could be closable and you can react to it thank to the onClose event
+
+<Preview withSource="open">
+  <Story name="Badge">
+   <Box horizontal>
+      <Badge>Basic badge</Badge>
+      <Badge isClosable>Closable badge</Badge>
+   </Box>
+  </Story>
+</Preview>
+
+
+<Props of={Badge} />
