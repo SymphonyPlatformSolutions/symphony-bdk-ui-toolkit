@@ -59,7 +59,7 @@ const TabHeaderIndicator = styled.div`
   display: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
   margin-top: 25px;
-  margin-left: ${props => getTabHeaderIndicatorMarginLeft({...props, separatorWidthInPx})};
+  margin-left: ${props => getTabHeaderIndicatorMarginLeft({ ...props, separatorWidthInPx })};
   transition-property: margin, width;
   transition-duration: .5s;
   transition-timing-function: ease;
@@ -69,12 +69,10 @@ export default function NavTabs({ children, activeTab, ...rest }) {
   const childrenArray = React.Children.toArray(children);
   const elRef = useRef([...Array(childrenArray.length)].map(() => createRef()));
   const [currentRef, setCurrentRef] = useState(null);
-  const [selectedTab, setActiveTab] = useState(childrenArray[activeTab].props.label);
   const [activeTabIndex, setActiveTabIndex] = useState(activeTab);
   const [activeTabAlign, setActiveTabAlign] = useState(childrenArray[activeTab].props.align);
 
-  const onClickTabItem = (label, index, align) => {
-    setActiveTab(label);
+  const onClickTabItem = (index, align) => {
     setActiveTabIndex(index);
     setActiveTabAlign(align);
   };
@@ -97,13 +95,11 @@ export default function NavTabs({ children, activeTab, ...rest }) {
             return (
               <TabHeaderItem
                 key={label}
-                label={label}
-                activeTab={selectedTab}
                 ref={ref => elRef.current[index] = ref}
                 align={align}
-                onClick={() => onClickTabItem(label, index, align)}
+                onClick={() => onClickTabItem(index, align)}
               >
-                <TabHeaderLabel isSelected={selectedTab === label}>{label}</TabHeaderLabel>
+                <TabHeaderLabel isSelected={activeTabIndex === index}>{label}</TabHeaderLabel>
               </TabHeaderItem>
             );
           })}
@@ -117,7 +113,7 @@ export default function NavTabs({ children, activeTab, ...rest }) {
         </TabHeader>
       </Box>
       <Box vertical>
-        {childrenArray.filter((child) => child.props.label === selectedTab).map((child) => child.props.children)}
+        {childrenArray.filter((child, index) => index === activeTabIndex).map((child) => child.props.children)}
       </Box>
     </BaseTabs>
   );
