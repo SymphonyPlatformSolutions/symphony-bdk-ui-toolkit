@@ -93,3 +93,6 @@ Having the library up in running, simply import the components you want to use:
 import { Box , Text, Button } from 'symphony-bdk-ui-toolkit';
 ```
 
+## How create a release
+Open a terminal in at the root of your git
+And run `yarn create-release [patch|minor|major] "your commit message"`
