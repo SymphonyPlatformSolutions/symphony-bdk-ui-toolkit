@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import {withTheme} from 'styled-components';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { NoOp } from '../../../utils/helpers';
-import {CloseIcon} from '../icons';
-import {Wrapper, IconWrapper} from './theme';
+import { CloseIcon } from '../icons';
+import { Wrapper, IconWrapper, TextWrapper } from './theme';
 
 const Badge = ({
-  children, isClosable, onClose, theme
+  children, isClosable, onClose
 }) => {
-  const [isHovering, setIsHovering] = useState(false);
   return (
     <Wrapper>
-      { children }
+      <TextWrapper>{ children }</TextWrapper>
       { isClosable && 
         <IconWrapper
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
           onClick={onClose}>
           <CloseIcon
             size="8"
-            color={isHovering ? theme.colors.grey_600 : theme.colors.grey_400}
+            color="#000"
           />
         </IconWrapper>
       }
@@ -30,8 +26,7 @@ const Badge = ({
 Badge.propTypes = {
   isClosable: PropTypes.bool,
   onClose: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  theme: PropTypes.object.isRequired
+  children: PropTypes.node.isRequired
 };
 
 Badge.defaultProps = {
@@ -39,4 +34,4 @@ Badge.defaultProps = {
   onClose: NoOp
 };
 
-export default withTheme(Badge);
+export default Badge;
