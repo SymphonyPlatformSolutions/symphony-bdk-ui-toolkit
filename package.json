@@ -1,6 +1,6 @@
 {
   "name": "symphony-bdk-ui-toolkit",
-  "version": "1.0.63",
+  "version": "1.0.66",
   "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
