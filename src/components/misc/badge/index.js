@@ -19,7 +19,7 @@ const Badge = ({
           onClick={onClose}>
           <CloseIcon
             size="8"
-            color={isHovering ? theme.colors.grey_400 : theme.colors.grey_200}
+            color={isHovering ? theme.colors.grey_600 : theme.colors.grey_400}
           />
         </IconWrapper>
       }
