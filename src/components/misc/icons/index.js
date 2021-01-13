@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 
 const IconWrapper = styled.div`
@@ -35,6 +36,40 @@ const IconWrapper = styled.div`
     margin: auto;
   }
 `;
+
+export const MinusRound = ({ color, size }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 7C11.5523 7 12 7.44772 12 8C12 8.55228 11.5523 9 11 9C7.2224 9 8.17128 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7H11Z" fill={color} />
+    <path d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58173 3.58172 0 8 0C12.4183 0 16 3.58173 16 8ZM14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8Z" fill={color} />
+  </svg>
+);
+
+MinusRound.propTypes = {
+  color: PropTypes.string,
+  size: PropTypes.number,
+};
+
+MinusRound.defaultProps = {
+  color: '#525760',
+  size: 16,
+};
+
+export const PlusRound = ({ color, size }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 7V5C7 4.44772 7.44772 4 8 4C8.55228 4 9 4.44772 9 5V7H11C11.5523 7 12 7.44772 12 8C12 8.55228 11.5523 9 11 9H9V11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11V9H5C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7H7Z" fill={color} />
+    <path d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58173 3.58172 0 8 0C12.4183 0 16 3.58173 16 8ZM14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8Z" fill={color} />
+  </svg>
+);
+
+PlusRound.propTypes = {
+  color: PropTypes.string,
+  size: PropTypes.number,
+};
+
+PlusRound.defaultProps = {
+  color: '#525760',
+  size: 16,
+};
 
 export const DownChevron = withTheme(
   ({ theme, color, size = 10, blueprint, ...rest }) => (
