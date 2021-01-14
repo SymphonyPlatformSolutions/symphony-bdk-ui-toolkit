@@ -51,6 +51,7 @@ const TabHeaderItem = styled.li`
   &:hover {
     color: ${({ theme }) => theme.colors.primary_500}
   }
+  position: relative;
 `;
 
 const TabHeaderIndicator = styled.div`
@@ -65,6 +66,16 @@ const TabHeaderIndicator = styled.div`
   transition-timing-function: ease;
 `;
 
+const TabHeaderBadge = styled.div`
+  width: 5px;
+  height: 5px;
+  background: ${props => getHeaderIndicatorBackground(props)};
+  border-radius: 50%;
+  position: absolute;
+  right: -8px;
+  top: 5px;
+`;
+
 export default function NavTabs({ children, activeTab, ...rest }) {
   const childrenArray = React.Children.toArray(children);
   const elRef = useRef([...Array(childrenArray.length)].map(() => createRef()));
@@ -72,9 +83,12 @@ export default function NavTabs({ children, activeTab, ...rest }) {
   const [activeTabIndex, setActiveTabIndex] = useState(activeTab);
   const [activeTabAlign, setActiveTabAlign] = useState(childrenArray[activeTab].props.align);
 
-  const onClickTabItem = (index, align) => {
+  const onClickTabItem = (index, align, handleOnClick) => {
     setActiveTabIndex(index);
     setActiveTabAlign(align);
+    if (typeof handleOnClick === 'function') {
+      handleOnClick();
+    }
   };
 
   useEffect(() => {
@@ -91,15 +105,18 @@ export default function NavTabs({ children, activeTab, ...rest }) {
       <Box horizontal>
         <TabHeader>
           {childrenArray.map((child, index) => {
-            const { label, align } = child.props;
+            const {
+              label, align, badged, handleOnClick,
+            } = child.props;
             return (
               <TabHeaderItem
                 key={label}
                 ref={ref => elRef.current[index] = ref}
                 align={align}
-                onClick={() => onClickTabItem(index, align)}
+                onClick={() => onClickTabItem(index, align, handleOnClick)}
               >
                 <TabHeaderLabel isSelected={activeTabIndex === index}>{label}</TabHeaderLabel>
+                {badged && <TabHeaderBadge />}
               </TabHeaderItem>
             );
           })}
