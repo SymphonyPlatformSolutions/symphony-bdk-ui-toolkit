@@ -8,7 +8,7 @@ const COMMON_COLORS = {
   primary_800: '#0467CB',
   primary_700: '#0478DD',
   primary_600: '#048BF1',
-  primary_500: '#0098FF',
+  primary_500: '#008EFF',
   primary_400: '#38A8FF',
   primary_300: '#5FB8FF',
   primary_200: '#8ECCFF',
