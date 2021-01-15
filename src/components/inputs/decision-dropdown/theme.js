@@ -106,6 +106,7 @@ export const ValueContainer = styled.div`
 `;
 export const ChevronContainer = styled.div`
   margin-right: 8px;
+  margin-left: 4px;
   display: flex;
   align-items: center;
 `;
@@ -150,18 +151,19 @@ export const ControlInput = styled(StyledInput)`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
   position: ${({ hide }) => (hide ? 'absolute' : undefined)};
   height:${({ hide }) => (hide ? 0 : undefined)}; 
-  width: ${({ hide }) => (hide ? 0 : 'auto')};
+  width: ${({ hide }) => (hide ? 0 : undefined)};
   z-index: ${({ hide }) => (hide ? -1 : 2)};
   transition: ${({ hide }) => (hide ? 'none' : undefined)};
   margin-left: ${({ size }) => (size === 'large' ? '0' : '4px')};
   padding-right: ${({ size }) => (size === 'large' ? '0' : undefined)};
   border: none;
+  box-sizing: border-box;
 `;
 export const ValueAndControl = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${({ size }) => (size === 'large' ? '80%' : '100%')};
   box-sizing: border-box;
+  flex: 1;
 `;
 export const MenuWrapper = styled.div`
   position: relative;
