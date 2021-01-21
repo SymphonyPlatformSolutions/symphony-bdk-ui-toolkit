@@ -15,7 +15,7 @@ const TITLE_PADDING = {
 };
 
 const Padder = styled.div`
-  padding: 28px;
+  padding: ${({ componentPadding }) => componentPadding || '28px'};
 `;
 
 const CloseContainer = styled.div`
@@ -40,7 +40,7 @@ const TitleContainer = styled.div`
   background-color: ${({ theme, filledTitle }) => (filledTitle ? theme.colors.grey_100 : 'none')};
 `;
 const TextWrapper = styled.div`
-  padding: ${({ titleSize }) => TITLE_PADDING[titleSize]};
+  padding: ${({ titleSize, titlePadding }) => (titlePadding || TITLE_PADDING[titleSize])};
 `;
 const ModalTitle = styled(Text)`
   color: ${({ theme, filledTitle }) => (filledTitle ? theme.colors.grey_800 : theme.colors.grey_700)};
@@ -59,6 +59,7 @@ const Close = (props) => {
 export const TitleBar = (props) => {
   const {
     titleSize = 'regular',
+    titlePadding = null,
     hasClose = true,
     modalTitle,
     filledTitle,
@@ -77,7 +78,7 @@ export const TitleBar = (props) => {
 
   return (
     <TitleContainer filledTitle={filledTitle}>
-      <TextWrapper titleSize={titleSize}>
+      <TextWrapper titleSize={titleSize} titlePadding={titlePadding}>
         <ModalTitle isTitle size={titleSize} filledTitle={filledTitle}>
           {modalTitle}
         </ModalTitle>
@@ -92,6 +93,7 @@ export const TitleBar = (props) => {
 };
 TitleBar.propTypes = {
   titleSize: PropTypes.oneOf(['small', 'regular', 'large']),
+  titlePadding: PropTypes.string,
   hasClose: PropTypes.bool,
   modalTitle: PropTypes.string,
   filledTitle: PropTypes.bool,
@@ -101,6 +103,7 @@ TitleBar.defaultProps = {
   filledTitle: false,
   modalTitle: null,
   titleSize: 'regular',
+  titlePadding: null,
 };
 
 const ModalRoot = ({ theme }) => (
@@ -111,7 +114,7 @@ const ModalRoot = ({ theme }) => (
       <Overlay open={!!Component}>
         <Modal theme={theme} open={!!Component} {...modalProps}>
           <TitleBar {...modalProps} clickHandler={hideModal} />
-          <Padder>
+          <Padder {...modalProps}>
             {Component ? <Component {...props} hideModal={hideModal} /> : null}
           </Padder>
         </Modal>

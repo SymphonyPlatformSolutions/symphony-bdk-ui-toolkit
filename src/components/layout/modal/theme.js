@@ -17,7 +17,7 @@ export const Overlay = styled.div`
 const getBackgroundColor = ({ theme }) => (theme.colors.mainbackground);
 
 export const Modal = styled.div`
-  width: 420px;
+  width: ${({ modalWidth }) => modalWidth || '420px'};
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   overflow: visible;
   background: ${props => getBackgroundColor(props)};

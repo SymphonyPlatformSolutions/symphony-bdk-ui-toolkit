@@ -132,6 +132,31 @@ const SampleModal = ({ hideModal }) => (
   </Story>
 </Preview>
 
+### Custom Sizes
+
+<Preview>
+  <Story name="Custom Sizes">
+    <ModalProvider>
+      <ModalRoot />
+      <Box horizontal style={{ height: '270px'}} align="center" justify="center" >
+        <ModalConsumer>
+          {context => (
+            <Button
+              onClick={() => context.showModal(
+                SampleModal, {}, {
+                  modalTitle: "My custom modal",
+                  titleSize: "small",
+                  titlePadding: "10px 16px",
+                  modalWidth: "320px",
+                  componentPadding: "10px 16px 16px 16px"
+              })}>Custom modal widths and paddings</Button>
+          )}
+        </ModalConsumer>
+      </Box>
+    </ModalProvider>
+  </Story>
+</Preview>
+
 ### Title Types
 
 <Preview>
