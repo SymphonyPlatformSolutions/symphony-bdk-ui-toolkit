@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 export { default as Box } from './layout/box';
 export { default as Badge } from './misc/badge';
 export { default as Button } from './misc/button';
@@ -91,6 +92,7 @@ export {
   DropdownIcon,
   PlusRound,
   MinusRound,
+  UpArrowIcon,
 } from './misc/icons';
 export { default as Search } from './inputs/search';
 export { default as Toggle } from './inputs/toggle';

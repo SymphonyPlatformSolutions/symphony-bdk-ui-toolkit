@@ -8,21 +8,21 @@ const IconWrapper = styled.div`
     position: absolute;
     height: ${(props) => props.size}px;
     width: ${(props) => props.size}px;
-    background: ${(props) =>
-      props.blueprint
-        ? `linear-gradient(to top left,
-             rgba(0,0,0,0) 0%,
-             rgba(0,0,0,0) calc(50% - 0.8px),
-             rgba(0,0,0,1) 50%,
-             rgba(0,0,0,0) calc(50% + 0.8px),
-             rgba(0,0,0,0) 100%),
-         linear-gradient(to top right,
-             rgba(0,0,0,0) 0%,
-             rgba(0,0,0,0) calc(50% - 0.8px),
-             rgba(0,0,0,1) 50%,
-             rgba(0,0,0,0) calc(50% + 0.8px),
-             rgba(0,0,0,0) 100%)`
-        : null};
+    background: ${(props) => (
+    props.blueprint
+      ? `linear-gradient(to top left,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%),
+        linear-gradient(to top right,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%)`
+      : null)};
   }
 
   background-color: ${(props) => (props.blueprint ? 'red' : null)};
@@ -72,7 +72,9 @@ PlusRound.defaultProps = {
 };
 
 export const DownChevron = withTheme(
-  ({ theme, color, size = 10, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 10, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -97,11 +99,13 @@ export const DownChevron = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const EyeIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -119,11 +123,13 @@ export const EyeIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const ClosedEyeIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -137,11 +143,13 @@ export const ClosedEyeIcon = withTheme(
         <polyline points="5 12 19 12" />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const SearchIcon = withTheme(
-  ({ theme, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -157,7 +165,7 @@ export const SearchIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const SettingsIcon = withTheme(({
@@ -165,13 +173,15 @@ export const SettingsIcon = withTheme(({
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg {...rest} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9.52088 0.73327C9.50705 0.523513 9.44879 0.310752 9.26196 0.214401C9.05613 0.108251 8.67962 0 8.00001 0C7.32039 0 6.94389 0.108252 6.73806 0.214401C6.55123 0.310752 6.49296 0.523512 6.47913 0.733269L6.38104 2.22102C5.91491 2.35133 5.47169 2.53653 5.05879 2.76919L3.93707 1.78624C3.77897 1.6477 3.58732 1.53845 3.38708 1.60243C3.16648 1.67292 2.8237 1.8626 2.34314 2.34316C1.86259 2.82372 1.6729 3.1665 1.60242 3.3871C1.53844 3.58734 1.64768 3.77898 1.78622 3.93708L2.76917 5.05879C2.5365 5.47169 2.3513 5.91491 2.22099 6.38103L0.73327 6.47913C0.523513 6.49296 0.310753 6.55122 0.214401 6.73805C0.108251 6.94388 0 7.32039 0 8C0 8.67961 0.108251 9.05612 0.214401 9.26195C0.310752 9.44878 0.523512 9.50704 0.733268 9.52087L2.22095 9.61896C2.35126 10.0851 2.53646 10.5284 2.76914 10.9413L1.78623 12.063C1.64769 12.2211 1.53845 12.4127 1.60243 12.6129C1.67291 12.8335 1.8626 13.1763 2.34315 13.6569C2.82371 14.1374 3.16649 14.3271 3.38709 14.3976C3.58733 14.4616 3.77897 14.3523 3.93707 14.2138L5.05873 13.2309C5.47165 13.4636 5.9149 13.6488 6.38105 13.7791L6.47914 15.2667C6.49297 15.4765 6.55123 15.6892 6.73806 15.7856C6.94389 15.8917 7.3204 16 8.00001 16C8.67962 16 9.05613 15.8917 9.26196 15.7856C9.44879 15.6892 9.50706 15.4765 9.52089 15.2667L9.61897 13.7791C10.0851 13.6488 10.5284 13.4636 10.9413 13.2309L12.0629 14.2138C12.221 14.3523 12.4127 14.4616 12.6129 14.3976C12.8335 14.3271 13.1763 14.1374 13.6569 13.6569C14.1374 13.1763 14.3271 12.8335 14.3976 12.6129C14.4616 12.4127 14.3523 12.2211 14.2138 12.063L13.2309 10.9413C13.4636 10.5284 13.6488 10.0851 13.7791 9.61896L15.2667 9.52087C15.4765 9.50704 15.6893 9.44878 15.7856 9.26195C15.8918 9.05612 16 8.67961 16 8C16 7.32039 15.8918 6.94388 15.7856 6.73805C15.6893 6.55122 15.4765 6.49296 15.2667 6.47913L13.779 6.38103C13.6487 5.91491 13.4635 5.47169 13.2308 5.05879L14.2138 3.93709C14.3523 3.77899 14.4616 3.58734 14.3976 3.3871C14.3271 3.1665 14.1374 2.82372 13.6569 2.34317C13.1763 1.86261 12.8335 1.67292 12.6129 1.60244C12.4127 1.53846 12.221 1.6477 12.0629 1.78624L10.9412 2.76919C10.5283 2.53653 10.0851 2.35133 9.61898 2.22102L9.52088 0.73327ZM8.00001 12.0001C5.79087 12.0001 4.00001 10.2092 4.00001 8.00006C4.00001 5.79092 5.79087 4.00006 8.00001 4.00006C10.2091 4.00006 12 5.79092 12 8.00006C12 10.2092 10.2091 12.0001 8.00001 12.0001Z" fill={color}/>
+      <path d="M9.52088 0.73327C9.50705 0.523513 9.44879 0.310752 9.26196 0.214401C9.05613 0.108251 8.67962 0 8.00001 0C7.32039 0 6.94389 0.108252 6.73806 0.214401C6.55123 0.310752 6.49296 0.523512 6.47913 0.733269L6.38104 2.22102C5.91491 2.35133 5.47169 2.53653 5.05879 2.76919L3.93707 1.78624C3.77897 1.6477 3.58732 1.53845 3.38708 1.60243C3.16648 1.67292 2.8237 1.8626 2.34314 2.34316C1.86259 2.82372 1.6729 3.1665 1.60242 3.3871C1.53844 3.58734 1.64768 3.77898 1.78622 3.93708L2.76917 5.05879C2.5365 5.47169 2.3513 5.91491 2.22099 6.38103L0.73327 6.47913C0.523513 6.49296 0.310753 6.55122 0.214401 6.73805C0.108251 6.94388 0 7.32039 0 8C0 8.67961 0.108251 9.05612 0.214401 9.26195C0.310752 9.44878 0.523512 9.50704 0.733268 9.52087L2.22095 9.61896C2.35126 10.0851 2.53646 10.5284 2.76914 10.9413L1.78623 12.063C1.64769 12.2211 1.53845 12.4127 1.60243 12.6129C1.67291 12.8335 1.8626 13.1763 2.34315 13.6569C2.82371 14.1374 3.16649 14.3271 3.38709 14.3976C3.58733 14.4616 3.77897 14.3523 3.93707 14.2138L5.05873 13.2309C5.47165 13.4636 5.9149 13.6488 6.38105 13.7791L6.47914 15.2667C6.49297 15.4765 6.55123 15.6892 6.73806 15.7856C6.94389 15.8917 7.3204 16 8.00001 16C8.67962 16 9.05613 15.8917 9.26196 15.7856C9.44879 15.6892 9.50706 15.4765 9.52089 15.2667L9.61897 13.7791C10.0851 13.6488 10.5284 13.4636 10.9413 13.2309L12.0629 14.2138C12.221 14.3523 12.4127 14.4616 12.6129 14.3976C12.8335 14.3271 13.1763 14.1374 13.6569 13.6569C14.1374 13.1763 14.3271 12.8335 14.3976 12.6129C14.4616 12.4127 14.3523 12.2211 14.2138 12.063L13.2309 10.9413C13.4636 10.5284 13.6488 10.0851 13.7791 9.61896L15.2667 9.52087C15.4765 9.50704 15.6893 9.44878 15.7856 9.26195C15.8918 9.05612 16 8.67961 16 8C16 7.32039 15.8918 6.94388 15.7856 6.73805C15.6893 6.55122 15.4765 6.49296 15.2667 6.47913L13.779 6.38103C13.6487 5.91491 13.4635 5.47169 13.2308 5.05879L14.2138 3.93709C14.3523 3.77899 14.4616 3.58734 14.3976 3.3871C14.3271 3.1665 14.1374 2.82372 13.6569 2.34317C13.1763 1.86261 12.8335 1.67292 12.6129 1.60244C12.4127 1.53846 12.221 1.6477 12.0629 1.78624L10.9412 2.76919C10.5283 2.53653 10.0851 2.35133 9.61898 2.22102L9.52088 0.73327ZM8.00001 12.0001C5.79087 12.0001 4.00001 10.2092 4.00001 8.00006C4.00001 5.79092 5.79087 4.00006 8.00001 4.00006C10.2091 4.00006 12 5.79092 12 8.00006C12 10.2092 10.2091 12.0001 8.00001 12.0001Z" fill={color} />
     </svg>
   </IconWrapper>
 ));
 
 export const SecurityIcon = withTheme(
-  ({ theme, color, secondaryColor, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, secondaryColor, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -209,10 +219,12 @@ export const SecurityIcon = withTheme(
         </defs>
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const NotificationsIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -243,10 +255,12 @@ export const NotificationsIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const InteractionsIcon = withTheme(
-  ({ theme, color, secondaryColor, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, secondaryColor, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -278,10 +292,12 @@ export const InteractionsIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const CloudIcon = withTheme(
-  ({ theme, color, secondaryColor, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, secondaryColor, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -318,10 +334,12 @@ export const CloudIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const ServerIcon = withTheme(
-  ({ theme, color, secondaryColor, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, secondaryColor, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -370,10 +388,12 @@ export const ServerIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const EditIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -395,10 +415,12 @@ export const EditIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const DeleteIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -434,10 +456,12 @@ export const DeleteIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const TickIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -453,10 +477,12 @@ export const TickIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const CrossIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -472,10 +498,12 @@ export const CrossIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const PricingIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -491,10 +519,12 @@ export const PricingIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const InfoIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -518,10 +548,12 @@ export const InfoIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const EmptyStarIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -537,10 +569,12 @@ export const EmptyStarIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const StarIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -556,10 +590,12 @@ export const StarIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const CloseIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -585,10 +621,12 @@ export const CloseIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const EllipsisIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -624,10 +662,12 @@ export const EllipsisIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const UploadIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -643,10 +683,12 @@ export const UploadIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const DownloadIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -663,10 +705,12 @@ export const DownloadIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const WarningIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -682,10 +726,12 @@ export const WarningIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 export const DocumentTildeIcon = withTheme(
-  ({ theme, color, size = 16, blueprint, ...rest }) => (
+  ({
+    theme, color, size = 16, blueprint, ...rest
+  }) => (
     <IconWrapper size={size} blueprint={blueprint}>
       <svg
         {...rest}
@@ -701,7 +747,7 @@ export const DocumentTildeIcon = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const FileIcon = withTheme(({ size = 16, blueprint }) => (
@@ -721,6 +767,18 @@ export const FileIcon = withTheme(({ size = 16, blueprint }) => (
   </IconWrapper>
 ));
 
+export const UpArrowIcon = withTheme(({ size = 9, color = '#42A5F5' }) => (
+  <svg width={size} height={size} viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M4.19064 1.12814C4.3615 0.957286 4.6385 0.957286 4.80936 1.12814L7.43436 3.75314C7.60521 3.924 7.60521 4.201 7.43436 4.37186C7.2635 4.54271 6.9865 4.54271 6.81564 4.37186L4.9375 2.49372L4.9375 7.5625C4.9375 7.80412 4.74162 8 4.5 8C4.25838 8 4.0625 7.80412 4.0625 7.5625L4.0625 2.49372L2.18436 4.37186C2.0135 4.54271 1.7365 4.54271 1.56564 4.37186C1.39479 4.201 1.39479 3.924 1.56564 3.75314L4.19064 1.12814Z"
+      fill={color}
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+));
+
 export const RightArrowIcon = withTheme(({ size = 16, blueprint }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg
@@ -733,14 +791,14 @@ export const RightArrowIcon = withTheme(({ size = 16, blueprint }) => (
       <path
         d="M10 6.66602L13.3333 9.99935L10 13.3327"
         stroke="#BDBDBD"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2.6665 2.66602V7.33268C2.6665 8.03993 2.94746 8.7182 3.44755 9.2183C3.94765 9.7184 4.62593 9.99935 5.33317 9.99935H13.3332"
         stroke="#BDBDBD"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   </IconWrapper>
@@ -837,7 +895,7 @@ export const DoubleChevron = withTheme(
         />
       </svg>
     </IconWrapper>
-  )
+  ),
 );
 
 export const ChatsIcon = withTheme(({
@@ -845,8 +903,8 @@ export const ChatsIcon = withTheme(({
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4.99693 0C3.06513 0 1.49907 1.56702 1.49907 3.5C1.49907 3.90649 1.56831 4.29675 1.69564 4.65967L0.150384 6.13867C0.0419976 6.24242 -0.000965512 6.37255 1.6426e-05 6.5C0.00198406 6.75538 0.195219 7 0.495784 7H9.49417C11.426 7 12.992 5.43298 12.992 3.5C12.992 1.56702 11.426 0 9.49417 0H4.99693ZM9.49417 2C10.3221 2 10.9932 2.67157 10.9932 3.5C10.9932 4.32843 10.3221 5 9.49417 5H4.99693C4.16901 5 3.49785 4.32843 3.49785 3.5C3.49785 2.67157 4.16901 2 4.99693 2H9.49417Z" fill={color || theme.colors.error_700}/>
-      <path d="M10.9932 16C12.925 16 14.4911 14.433 14.4911 12.5C14.4911 12.0935 14.4219 11.7032 14.2945 11.3403L15.8398 9.86133C16.1654 9.54968 15.945 9 15.4944 9H6.49601C4.56421 9 2.99815 10.567 2.99815 12.5C2.99815 14.433 4.56421 16 6.49601 16H10.9932ZM6.49601 14C5.66809 14 4.99693 13.3284 4.99693 12.5C4.99693 11.6716 5.66809 11 6.49601 11H10.9932C11.8212 11 12.4923 11.6716 12.4923 12.5C12.4923 13.3284 11.8212 14 10.9932 14H6.49601Z" fill={color || theme.colors.error_700}/>
+      <path d="M4.99693 0C3.06513 0 1.49907 1.56702 1.49907 3.5C1.49907 3.90649 1.56831 4.29675 1.69564 4.65967L0.150384 6.13867C0.0419976 6.24242 -0.000965512 6.37255 1.6426e-05 6.5C0.00198406 6.75538 0.195219 7 0.495784 7H9.49417C11.426 7 12.992 5.43298 12.992 3.5C12.992 1.56702 11.426 0 9.49417 0H4.99693ZM9.49417 2C10.3221 2 10.9932 2.67157 10.9932 3.5C10.9932 4.32843 10.3221 5 9.49417 5H4.99693C4.16901 5 3.49785 4.32843 3.49785 3.5C3.49785 2.67157 4.16901 2 4.99693 2H9.49417Z" fill={color || theme.colors.error_700} />
+      <path d="M10.9932 16C12.925 16 14.4911 14.433 14.4911 12.5C14.4911 12.0935 14.4219 11.7032 14.2945 11.3403L15.8398 9.86133C16.1654 9.54968 15.945 9 15.4944 9H6.49601C4.56421 9 2.99815 10.567 2.99815 12.5C2.99815 14.433 4.56421 16 6.49601 16H10.9932ZM6.49601 14C5.66809 14 4.99693 13.3284 4.99693 12.5C4.99693 11.6716 5.66809 11 6.49601 11H10.9932C11.8212 11 12.4923 11.6716 12.4923 12.5C12.4923 13.3284 11.8212 14 10.9932 14H6.49601Z" fill={color || theme.colors.error_700} />
     </svg>
   </IconWrapper>
 ));
@@ -856,8 +914,8 @@ export const CopyIcon = withTheme(({
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 0C4.44772 0 4 0.447715 4 1V2H14V12H15C15.5523 12 16 11.5523 16 11V1C16 0.447715 15.5523 0 15 0H5Z" fill={color || theme.colors.error_700}/>
-      <path d="M0 5C0 4.44771 0.447715 4 1 4H11C11.5523 4 12 4.44772 12 5V15C12 15.5523 11.5523 16 11 16H1C0.447715 16 0 15.5523 0 15V5ZM2 14H10V6H2V14Z" fill={color || theme.colors.error_700}/>
+      <path d="M5 0C4.44772 0 4 0.447715 4 1V2H14V12H15C15.5523 12 16 11.5523 16 11V1C16 0.447715 15.5523 0 15 0H5Z" fill={color || theme.colors.error_700} />
+      <path d="M0 5C0 4.44771 0.447715 4 1 4H11C11.5523 4 12 4.44772 12 5V15C12 15.5523 11.5523 16 11 16H1C0.447715 16 0 15.5523 0 15V5ZM2 14H10V6H2V14Z" fill={color || theme.colors.error_700} />
     </svg>
   </IconWrapper>
 ));
@@ -867,7 +925,7 @@ export const DirectoryIcon = withTheme(({
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 0C3.16667 0 2 1 2 1V3H1C0.447715 3 0 3.44772 0 4C0 4.55228 0.447715 5 1 5H2V7H1C0.447715 7 0 7.44772 0 8C0 8.55229 0.447715 9 1 9H2V11H1C0.447715 11 0 11.4477 0 12C0 12.5523 0.447715 13 1 13H2V15C2 15 3.16667 16 9 16C14.8333 16 16 15 16 15V1C16 1 14.8333 0 9 0ZM4 13H5C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11H4V9H5C5.55228 9 6 8.55229 6 8C6 7.44772 5.55228 7 5 7H4V5H5C5.55228 5 6 4.55228 6 4C6 3.44772 5.55228 3 5 3H4V2.39373C4.86779 2.20494 6.41235 2 9 2C11.5877 2 13.1322 2.20494 14 2.39373V13.6063C13.1322 13.7951 11.5877 14 9 14C6.41235 14 4.86779 13.7951 4 13.6063V13Z" fill={color || theme.colors.error_700}/>
+      <path d="M9 0C3.16667 0 2 1 2 1V3H1C0.447715 3 0 3.44772 0 4C0 4.55228 0.447715 5 1 5H2V7H1C0.447715 7 0 7.44772 0 8C0 8.55229 0.447715 9 1 9H2V11H1C0.447715 11 0 11.4477 0 12C0 12.5523 0.447715 13 1 13H2V15C2 15 3.16667 16 9 16C14.8333 16 16 15 16 15V1C16 1 14.8333 0 9 0ZM4 13H5C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11H4V9H5C5.55228 9 6 8.55229 6 8C6 7.44772 5.55228 7 5 7H4V5H5C5.55228 5 6 4.55228 6 4C6 3.44772 5.55228 3 5 3H4V2.39373C4.86779 2.20494 6.41235 2 9 2C11.5877 2 13.1322 2.20494 14 2.39373V13.6063C13.1322 13.7951 11.5877 14 9 14C6.41235 14 4.86779 13.7951 4 13.6063V13Z" fill={color || theme.colors.error_700} />
     </svg>
   </IconWrapper>
 ));
@@ -881,14 +939,14 @@ export const TickRoundedIcon = withTheme(({
       <path fillRule="evenodd" clipRule="evenodd" d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58173 3.58172 0 8 0C12.4183 0 16 3.58173 16 8ZM14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z" fill={color || theme.colors.error_700} />
     </svg>
   </IconWrapper>
-)); 
+));
 
 export const DropdownIcon = withTheme(({
   theme, color, size = 16, blueprint, ...rest
 }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg {...rest} width={size || 12} height={size || 12} viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1.00003 0C0.595567 0 0.230931 0.243642 0.0761497 0.617317C-0.0786313 0.990991 0.00692442 1.42111 0.292922 1.70711L3.29292 4.70711C3.68345 5.09763 4.31661 5.09763 4.70714 4.70711L7.70714 1.70711C7.99313 1.42111 8.07869 0.990991 7.92391 0.617317C7.76913 0.243642 7.40449 0 7.00003 0H1.00003Z" fill={color || theme.colors.grey_600}/>
+      <path d="M1.00003 0C0.595567 0 0.230931 0.243642 0.0761497 0.617317C-0.0786313 0.990991 0.00692442 1.42111 0.292922 1.70711L3.29292 4.70711C3.68345 5.09763 4.31661 5.09763 4.70714 4.70711L7.70714 1.70711C7.99313 1.42111 8.07869 0.990991 7.92391 0.617317C7.76913 0.243642 7.40449 0 7.00003 0H1.00003Z" fill={color || theme.colors.grey_600} />
     </svg>
   </IconWrapper>
 ));
