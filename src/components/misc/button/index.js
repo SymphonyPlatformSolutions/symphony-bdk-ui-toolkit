@@ -21,6 +21,7 @@ const Button = ({
   theme,
   loading,
   disabled,
+  darkenOnDisable,
   htmlType,
   circular,
   ...rest
@@ -51,6 +52,7 @@ const Button = ({
       type={type === BUTTON_TYPES.SUBMIT ? BUTTON_TYPES.SUBMIT : htmlType}
       buttonType={type}
       fill={fill}
+      darkenOnDisable={darkenOnDisable}
       {...rest}
       onClick={handleClick}
       isLoading={isLoading}
@@ -89,6 +91,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(['small', 'regular', 'large']),
   fill: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
   disabled: PropTypes.bool,
+  darkenOnDisable: PropTypes.bool,
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
   loading: PropTypes.bool,
@@ -101,6 +104,7 @@ Button.defaultProps = {
   size: 'regular',
   fill: 'filled',
   disabled: false,
+  darkenOnDisable: true,
   onClick: NoOp,
   loading: null,
   htmlType: 'button',

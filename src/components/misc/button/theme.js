@@ -138,7 +138,7 @@ export const BaseButton = styled.button.attrs({})`
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   }
   &:disabled {
-    opacity: 0.25;
+    opacity: ${({ darkenOnDisable }) => ( darkenOnDisable ? '0.25' : '1' )};
   }
 `;
 
