@@ -49,52 +49,42 @@ class RestClient {
     params: this.convertToAxiosParams(params),
   });
 
-  setJwt(jwt) {
+  setJwt = (jwt) => {
     this.jwt = jwt;
     this.headers = {
 
       ...this.headers,
       Authorization: `Bearer ${jwt}`,
     };
-  }
+  };
 
-  getJwt() {
-    return this.jwt;
-  }
+  getJwt = () => this.jwt;
 
-  setCustomHeaders(headers) {
+  setCustomHeaders = (headers) => {
     this.headers = headers;
-  }
+  };
 
-  get(endpoint, params = null, useBaseUrl = true) {
-    return axios.get(
-      this.makeUrl(endpoint, useBaseUrl),
-      this.makeApiAttributes(params),
-    );
-  }
+  get = (endpoint, params = null, useBaseUrl = true) => axios.get(
+    this.makeUrl(endpoint, useBaseUrl),
+    this.makeApiAttributes(params),
+  );
 
-  post(endpoint, body = null, params = null, useBaseUrl = true) {
-    return axios.post(
-      this.makeUrl(endpoint, useBaseUrl),
-      body,
-      this.makeApiAttributes(params),
-    );
-  }
+  post = (endpoint, body = null, params = null, useBaseUrl = true) => axios.post(
+    this.makeUrl(endpoint, useBaseUrl),
+    body,
+    this.makeApiAttributes(params),
+  );
 
-  put(endpoint, body = null, params = null, useBaseUrl = true) {
-    return axios.put(
-      this.makeUrl(endpoint, useBaseUrl),
-      body,
-      this.makeApiAttributes(params),
-    );
-  }
+  put = (endpoint, body = null, params = null, useBaseUrl = true) => axios.put(
+    this.makeUrl(endpoint, useBaseUrl),
+    body,
+    this.makeApiAttributes(params),
+  );
 
-  delete(endpoint, params = null, useBaseUrl = true) {
-    return axios.delete(
-      this.makeUrl(endpoint, useBaseUrl),
-      this.makeApiAttributes(params),
-    );
-  }
+  delete = (endpoint, params = null, useBaseUrl = true) => axios.delete(
+    this.makeUrl(endpoint, useBaseUrl),
+    this.makeApiAttributes(params),
+  );
 }
 
 // singleton instance
