@@ -4,14 +4,16 @@ if [ "$#" -ne 2 ]; then
   exit 1
 fi
 git fetch origin
-git checkout origin/feature/sparc-eq-derivatives
 yarn --frozen-lockfile
 yarn build
-mv ./dist /tmp/dist-tmp
+rm -rf /tmp/bdk-build && mkdir -p /tmp/bdk-build
+mv ./dist /tmp/bdk-build/.
+mv package.json /tmp/bdk-build/
 git checkout origin/nightly
 rm -rf dist/
-mv /tmp/dist-tmp dist
-git add dist
+mv /tmp/bdk-build/dist dist
+mv /tmp/bdk-build/package.json package.json
+git add dist package.json
 npm version $1 -m "release %s - $2" -f
 git push origin HEAD:nightly
 git push --tags

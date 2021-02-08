@@ -94,5 +94,8 @@ import { Box , Text, Button } from 'symphony-bdk-ui-toolkit';
 ```
 
 ## How create a release
-Open a terminal in at the root of your git
+Once your PR is merged to the destination branch (i.e `features/sparc-eq-derivatives`)
+1) Do git fetch
+2) Checkout the branch  
+3) Open a terminal in at the root of your git
 And run `yarn create-release [patch|minor|major] "your commit message"`
