@@ -11,6 +11,7 @@ export const BUTTON_TYPES = {
   SUBMIT: 'submit',
   PRIMARY: 'primary',
   DANGER: 'danger',
+  SECONDARY: 'secondary',
 };
 
 export const BUTTON_SIZES = {
@@ -40,6 +41,13 @@ const BUTTON_THEME = (theme, buttonType) => {
     return {
       main: theme.colors.error_500,
       hover: theme.colors.error_700,
+    };
+  }
+
+  if (buttonType === BUTTON_TYPES.SECONDARY) {
+    return {
+      main: '#525760',
+      hover: '#6E7279',
     };
   }
 
