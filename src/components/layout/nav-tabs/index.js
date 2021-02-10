@@ -76,7 +76,7 @@ const TabHeaderBadge = styled.div`
   top: 5px;
 `;
 
-export default function NavTabs({ children, activeTab, ...rest }) {
+export default function NavTabs({ children, activeTab, overflow, ...rest }) {
   const childrenArray = React.Children.toArray(children);
   const elRef = useRef([...Array(childrenArray.length)].map(() => createRef()));
   const [currentRef, setCurrentRef] = useState(null);
@@ -129,7 +129,7 @@ export default function NavTabs({ children, activeTab, ...rest }) {
           )}
         </TabHeader>
       </Box>
-      <Box vertical>
+      <Box vertical overflow={overflow}>
         {childrenArray.filter((child, index) => index === activeTabIndex).map((child) => child.props.children)}
       </Box>
     </BaseTabs>
@@ -138,9 +138,11 @@ export default function NavTabs({ children, activeTab, ...rest }) {
 
 NavTabs.propTypes = {
   activeTab: PropTypes.number,
+  overflow: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 NavTabs.defaultProps = {
   activeTab: 0,
+  overflow: 'inherit',
 };
