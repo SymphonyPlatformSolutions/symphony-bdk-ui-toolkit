@@ -64,6 +64,7 @@ const BaseBox = styled.div`
   align-items: ${p => p.align};
   padding: ${props => props.p};
   background: ${p => p.bg};
+  overflow: ${p => p.overflow};
   margin: ${props => getMargin(props)};
   ${space};
 `;
