@@ -42,7 +42,7 @@ export {
   ToasterProvider,
   ToasterConsumer,
 } from './misc/toaster/toaster-context';
-export { default as Tooltip } from './misc/tooltip';
+export { default as Tooltip, TooltipBubble } from './misc/tooltip';
 export { default as ModalRoot, DangerConfirmationModal } from './layout/modal';
 export {
   default as ModalContext,
