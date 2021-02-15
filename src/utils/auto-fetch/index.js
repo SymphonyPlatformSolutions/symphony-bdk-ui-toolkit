@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RestClient from '../rest-client';
 
-export const useAutoFetch = ({ endpoint, params, handleData }) => {
+export const useAutoFetch = ({ 
+  endpoint = null,
+  params = null,
+  handleData = null
+}) => {
   const [config, setConfig] = useState({ endpoint, params, handleData });
 
   const [results, setResults] = useState([]);
@@ -59,10 +63,4 @@ useAutoFetch.propTypes = {
   endpoint: PropTypes.string,
   params: PropTypes.object,
   handleData: PropTypes.Function,
-};
-
-useAutoFetch.defaultProps = {
-  endpoint: null,
-  params: null,
-  handleData: null,
 };

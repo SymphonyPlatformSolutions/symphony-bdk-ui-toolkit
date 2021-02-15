@@ -6,7 +6,7 @@ import DatepickerContext from '../datepickerContext';
 import { DayButton } from './theme';
 import { isNow } from '../utils';
 
-const Day = ({ day, date }) => {
+const Day = ({ day = null, date = null }) => {
   const dayRef = useRef(null);
   const currentDayIsNow = isNow(date);
   const {
@@ -66,7 +66,5 @@ Day.propTypes = {
   day: PropTypes.string,
   date: PropTypes.any,
 };
-
-Day.defaultProps = { day: null, date: null };
 
 export default Day;

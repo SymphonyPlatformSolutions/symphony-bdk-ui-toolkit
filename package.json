@@ -13,7 +13,8 @@
     "mock": "nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
     "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks && rm dist/index.module.js dist/index.module.js.map",
-    "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks --watch --compress false --raw  true"
+    "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks --watch --compress false --raw  true",
+    "eslint": "eslint src"
   },
   "files": [
     "dist"
@@ -33,6 +34,7 @@
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.6",
+    "@babel/preset-modules": "^0.1.4",
     "@babel/preset-react": "^7.7.4",
     "@storybook/addon-a11y": "^5.3.3",
     "@storybook/addon-actions": "^5.3.3",
@@ -102,6 +104,7 @@
     "react-window": "^1.8.5"
   },
   "peerDependencies": {
+    "@datepicker-react/hooks": "^2.7.0",
     "axios": "^0.19.0",
     "d3-scale": "^3.2.1",
     "d3-shape": "^1.3.7",
@@ -111,7 +114,6 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-stockcharts": "^0.7.8",
-    "styled-components": "^4.4.1",
-    "@datepicker-react/hooks": "^2.7.0"
+    "styled-components": "^4.4.1"
   }
 }

@@ -17,7 +17,9 @@ const SET_HEIGHT = 350;
 
 const ProgressIndicator = (props) => {
   const {
-    horizontal, numberOfSteps, currentStep, length,
+    numberOfSteps, currentStep,
+    horizontal = false,
+    length = SET_HEIGHT
   } = props;
   const [buttonIDs] = useState(Array(numberOfSteps).fill().map(() => uuid.v4()));
   if (numberOfSteps <= 0) {
@@ -49,11 +51,6 @@ ProgressIndicator.propTypes = {
   horizontal: PropTypes.bool,
   numberOfSteps: PropTypes.number.isRequired,
   currentStep: PropTypes.number.isRequired,
-};
-
-ProgressIndicator.defaultProps = {
-  horizontal: false,
-  length: SET_HEIGHT,
 };
 
 export default withTheme(ProgressIndicator);

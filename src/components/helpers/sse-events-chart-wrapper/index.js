@@ -18,8 +18,9 @@ const SSE_EVENT_TYPES = {
 const SSEventsContentWrapper = ({
   fetchData,
   loading,
-  error,
   refreshData,
+  error = null,
+  eventType = null,
   children,
 }) => {
   const updatedState = useSSE(SSE_EVENT_TYPES.UPDATE);
@@ -88,11 +89,6 @@ SSEventsContentWrapper.propTypes = {
   refreshData: PropTypes.func.isRequired,
   eventType: PropTypes.string,
   children: PropTypes.node.isRequired,
-};
-
-SSEventsContentWrapper.defaultProps = {
-  error: null,
-  eventType: null,
 };
 
 const SSEventsListWrapper = ({

@@ -8,7 +8,7 @@ import {
   ExcessIconContainer, ExcessEllipsis,
 } from './themes';
 
-export const TabTitleComponent = ({ title }) => {
+export const TabTitleComponent = ({ title = null }) => {
   const titleRef = useRef();
 
   return <TabTitle ref={titleRef}>{title}</TabTitle>;
@@ -17,25 +17,23 @@ export const TabTitleComponent = ({ title }) => {
 TabTitleComponent.propTypes = {
   title: PropTypes.string,
 };
-TabTitleComponent.defaultProps = {
-  title: null,
-};
 
 const LEFT_MOUSE_BUTTON = 0;
 const MIDDLE_MOUSE_BUTTON = 1;
 
 export const Tab = props => {
   const {
-    title,
     clickHandler,
-    hasClose,
-    closeHandler,
-    isActive,
-    TabComponent,
     widthHandler,
+    title = null,
+    hasClose = false,
+    closeHandler = null,
+    isActive = false,
+    TabComponent = null,
+    currWidth = null,
   } = props;
 
-  const [currWidth, setCurrWidth] = useState(null);
+  const [currentWidth, setCurrentWidth] = useState(currWidth);
 
   const closeClickHandler = e => {
     if (e.button === LEFT_MOUSE_BUTTON) {
@@ -55,9 +53,9 @@ export const Tab = props => {
       <ReactResizeDetector handleWidth>
         {({ width }) => {
           if (width) {
-            if (currWidth !== width) {
+            if (currentWidth !== width) {
               widthHandler(width);
-              setCurrWidth(width);
+              setCurrentWidth(width);
             }
           }
 
@@ -99,18 +97,15 @@ Tab.propTypes = {
   widthHandler: PropTypes.func.isRequired,
   currWidth: PropTypes.number,
 };
-Tab.defaultProps = {
-  title: null,
-  hasClose: false,
-  closeHandler: null,
-  isActive: false,
-  TabComponent: null,
-  currWidth: null,
-};
 
 export const ExcessMenu = props => {
   const {
-    hiddenTabs, activeTab, onChange, onRemove, totalTabs, widthHandler,
+    widthHandler,
+    hiddenTabs = null,
+    activeTab = null,
+    onChange = null,
+    onRemove = null,
+    totalTabs = null,
   } = props;
 
   return (
@@ -141,16 +136,9 @@ ExcessMenu.propTypes = {
   totalTabs: PropTypes.number,
   widthHandler: PropTypes.func.isRequired,
 };
-ExcessMenu.defaultProps = {
-  hiddenTabs: null,
-  activeTab: null,
-  onChange: null,
-  onRemove: null,
-  totalTabs: null,
-};
 
 export const ExcessTabDropdown = props => {
-  const { closeDebouncePerdiod } = props;
+  const { closeDebouncePeriod = 500 } = props;
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [triggerMenu, setTriggerMenu] = useState(false);
@@ -164,7 +152,7 @@ export const ExcessTabDropdown = props => {
     }
     const handler = setTimeout(() => {
       setMenuIsOpen(triggerMenu);
-    }, closeDebouncePerdiod);
+    }, closeDebouncePeriod);
     return () => clearTimeout(handler);
   }, [triggerMenu]);
   return (
@@ -183,8 +171,5 @@ export const ExcessTabDropdown = props => {
 };
 
 ExcessTabDropdown.propTypes = {
-  closeDebouncePerdiod: PropTypes.number,
-};
-ExcessTabDropdown.defaultProps = {
-  closeDebouncePerdiod: 500,
+  closeDebouncePeriod: PropTypes.number,
 };

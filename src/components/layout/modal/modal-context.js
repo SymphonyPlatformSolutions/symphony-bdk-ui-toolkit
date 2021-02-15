@@ -9,7 +9,7 @@ const ModalContext = createContext({
   modalProps: {},
 });
 
-export const ModalProvider = ({ children }) => {
+export const ModalProvider = ({ children = [] }) => {
   const [modalState, setModalState] = useState({
     component: null,
     props: {},
@@ -38,10 +38,6 @@ export const ModalProvider = ({ children }) => {
 
 ModalProvider.propTypes = {
   children: PropTypes.array,
-};
-
-ModalProvider.defaultProps = {
-  children: [],
 };
 
 export const ModalConsumer = ModalContext.Consumer;

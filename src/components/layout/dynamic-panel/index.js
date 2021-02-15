@@ -79,14 +79,14 @@ const ADDITIONAL_ICON_WIDTH = 60;
 
 const DynamicPanel = props => {
   const {
-    tabs,
-    onChange,
-    activeTab,
-    renderMethod,
-    hasAddButton,
-    onRemove,
-    onCreate,
-    closeDebouncePerdiod,
+    tabs = null,
+    onChange = null,
+    activeTab = null,
+    onRemove = null,
+    renderMethod = 'single',
+    hasAddButton = true,
+    onCreate = null,
+    closeDebouncePeriod = 500,
   } = props;
   const [tabSizes, setTabSizes] = useState({});
   const [currFullWidth, setFullWidth] = useState(null);
@@ -174,7 +174,7 @@ const DynamicPanel = props => {
             hiddenTabs={hiddenTabs}
             activeTab={activeTab}
             widthHandler={widthHandler}
-            closeDebouncePerdiod={closeDebouncePerdiod}
+            closeDebouncePeriod={closeDebouncePeriod}
             onChange={onChange}
             totalTabs={tabs.length}
             onRemove={onRemove}
@@ -198,17 +198,7 @@ DynamicPanel.propTypes = {
   renderMethod: PropTypes.string,
   hasAddButton: PropTypes.bool,
   onCreate: PropTypes.func,
-  closeDebouncePerdiod: PropTypes.number,
-};
-DynamicPanel.defaultProps = {
-  tabs: null,
-  onChange: null,
-  activeTab: null,
-  onRemove: null,
-  renderMethod: 'single',
-  hasAddButton: true,
-  onCreate: null,
-  closeDebouncePerdiod: 500,
+  closeDebouncePeriod: PropTypes.number,
 };
 
 export default DynamicPanel;

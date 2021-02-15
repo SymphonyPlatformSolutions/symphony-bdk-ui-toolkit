@@ -40,7 +40,13 @@ export const TooltipBubble = (props) => {
 };
 
 const Tooltip = (props) => {
-  const { children, theme, bottom, size, color, ...rest } = props;
+  const { 
+    children, theme, 
+    bottom = false,
+    size = 15,
+    color = null,
+    ...rest 
+  } = props;
   const [isHover, changeHover] = useState(false);
   const tooltipRef = useRef(null);
 
@@ -72,12 +78,6 @@ Tooltip.propTypes = {
   bottom: PropTypes.bool,
   size: PropTypes.number,
   color: PropTypes.string,
-};
-
-Tooltip.defaultProps = {
-  bottom: false,
-  size: 15,
-  color: null,
 };
 
 export default withTheme(Tooltip);

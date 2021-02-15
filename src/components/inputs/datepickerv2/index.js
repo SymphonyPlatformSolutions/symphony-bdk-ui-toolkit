@@ -11,17 +11,17 @@ import InputField from '../input-field';
 
 const DatepickerV2 = (props) => {
   const {
-    isRange,
-    customWeekdayLabels,
-    firstDayOfWeek,
-    numberOfMonths,
-    navButtons,
-    closeOnSelect,
-    errorMessage,
-    disabled,
-    placeholder,
-    size,
-    defaultInitialVisibleMonth,
+    firstDayOfWeek = 0,
+    numberOfMonths = 1,
+    isRange = false,
+    customWeekdayLabels = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
+    navButtons = [],
+    closeOnSelect = false,
+    errorMessage = null,
+    disabled = false,
+    placeholder = 'Choose date...',
+    size = 'regular',
+    defaultInitialVisibleMonth = new Date(),
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -137,7 +137,6 @@ const DatepickerV2 = (props) => {
         size={size}
         disabled={disabled}
         errorMessage={errorMessage}
-        defaultValue=""
         value={formatDate(state, { isRange })}
         onMouseEnter={() => setMouseLeaveInput(false)}
         onMouseLeave={() => setMouseLeaveInput(true)}
@@ -163,20 +162,6 @@ DatepickerV2.propTypes = {
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['regular', 'large']),
   defaultInitialVisibleMonth: PropTypes.any,
-};
-
-DatepickerV2.defaultProps = {
-  firstDayOfWeek: 0,
-  numberOfMonths: 1,
-  isRange: false,
-  customWeekdayLabels: ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
-  navButtons: [],
-  closeOnSelect: false,
-  errorMessage: null,
-  disabled: false,
-  placeholder: 'Choose date...',
-  size: 'regular',
-  defaultInitialVisibleMonth: new Date(),
 };
 
 export default DatepickerV2;

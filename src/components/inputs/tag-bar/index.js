@@ -72,19 +72,19 @@ const MultiValueList = (props) => {
 
 const TagBar = (props) => {
   const {
-    placeholder,
-    value,
-    disabled,
-    size,
     onChoose,
-    onRemove,
     onClear,
     theme,
-    tooltip,
-    CustomValue,
-    errorMessage,
-    autocompleteList,
-    debouncePeriod,
+    placeholder = 'Input here...',
+    value = [],
+    disabled = false,
+    size = 'regular',
+    onRemove = null,
+    tooltip = null,
+    CustomValue = null,
+    errorMessage = null,
+    debouncePeriod = INIT_DEBOUNCE,
+    autocompleteList = null,
     ...rest
   } = props;
 
@@ -262,18 +262,6 @@ TagBar.propTypes = {
   errorMessage: PropTypes.string,
   debouncePeriod: PropTypes.number,
   autocompleteList: PropTypes.array,
-};
-TagBar.defaultProps = {
-  placeholder: 'Input here...',
-  value: [],
-  disabled: false,
-  size: 'regular',
-  onRemove: null,
-  tooltip: null,
-  CustomValue: null,
-  errorMessage: null,
-  debouncePeriod: INIT_DEBOUNCE,
-  autocompleteList: null,
 };
 
 export default withTheme(TagBar);

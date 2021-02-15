@@ -40,15 +40,15 @@ const executeSearch = (data, searchTerm) => {
 
 const Table = (props) => {
   const {
-    data,
-    columns,
+    data = null,
+    columns = null,
     theme,
-    maxHeight,
-    loading,
-    emptyMessage,
-    searchable,
-    Row,
-    align,
+    maxHeight = null,
+    loading = false,
+    emptyMessage = 'You have no content to display!',
+    searchable = false,
+    Row = null,
+    align = 'center',
     ...rest
   } = props;
 
@@ -203,16 +203,6 @@ Table.propTypes = {
   Row: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
-Table.defaultProps = {
-  data: null,
-  columns: null,
-  loading: false,
-  searchable: false,
-  emptyMessage: 'You have no content to display!',
-  maxHeight: null,
-  align: 'center',
-  Row: null,
-};
 
 export const TableComponents = {
   Cell,

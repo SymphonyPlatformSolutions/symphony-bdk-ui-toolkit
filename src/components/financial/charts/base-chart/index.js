@@ -22,12 +22,38 @@ import { ChartBackground, LoadingContainer } from '../helpers/themes';
 
 export const ChartBuilder = ({
   theme, data, width, height, ratio = 1,
-  hasGrid, clampType, hasEdgeIndicator,
-  tooltipContent, mouseMoveEvent, hasCrossHair,
-  hasZoom, margin, hasOHLCTooltip,
-  displayXAccessor, xScale, xAccessor, xExtents,
-  xPadding, yPadding,
-  title, fontFamily, children,
+  hasGrid = false, 
+  clampType = null, 
+  hasEdgeIndicator = false,
+  tooltipContent = null, 
+  mouseMoveEvent = true, 
+  hasCrossHair = false,
+  hasZoom = {
+    panEvent: false,
+    enabled: false,
+  }, 
+  margin = {
+    left: 0,
+    right: 50,
+    top: 30,
+    bottom: 30,
+  }, 
+  hasOHLCTooltip = false,
+  displayXAccessor = null, 
+  xScale = scaleTime(), 
+  xAccessor, 
+  xExtents,
+  xPadding = {
+    left: 0,
+    right: 0,
+  }, 
+  yPadding = {
+    top: 0,
+    bottom: 0,
+  },
+  title = null, 
+  fontFamily = '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif', 
+  children,
 }) => {
   const [gridCoordinates, setGridCoordinates] = useState({ xGrid: {}, yGrid: {} });
   const [suffix, setSuffix] = useState(0);
@@ -130,38 +156,6 @@ export const ChartBuilder = ({
   );
 };
 
-ChartBuilder.defaultProps = {
-  hasGrid: false,
-  hasCrossHair: false,
-  hasEdgeIndicator: false,
-  tooltipContent: null,
-  mouseMoveEvent: true,
-  hasOHLCTooltip: false,
-  hasZoom: {
-    panEvent: false,
-    enabled: false,
-  },
-  clampType: null,
-  margin: {
-    left: 0,
-    right: 50,
-    top: 30,
-    bottom: 30,
-  },
-  xPadding: {
-    left: 0,
-    right: 0,
-  },
-  yPadding: {
-    top: 0,
-    bottom: 0,
-  },
-  title: null,
-  displayXAccessor: null,
-  xScale: scaleTime(),
-  fontFamily: '"SymphonyLato", "Lato", "Segoe UI", "Helvetica Neue", "Verdana", "Arial", sans-serif',
-};
-
 ChartBuilder.propTypes = {
   hasGrid: PropTypes.bool,
   hasCrossHair: PropTypes.bool,
@@ -202,7 +196,16 @@ ChartBuilder.propTypes = {
 };
 
 const ChartContainer = ({
-  loading, data, children, margin, ...rest
+  data, 
+  children, 
+  loading = false,
+  margin = {
+    left: 0,
+    right: 50,
+    top: 30,
+    bottom: 30,
+  },
+  ...rest
 }) => {
   const mRef = useRef();
   const [size, setSize] = useState(null);
@@ -256,17 +259,6 @@ const ChartContainer = ({
       {Memoized}
     </div>
   );
-};
-
-
-ChartContainer.defaultProps = {
-  loading: false,
-  margin: {
-    left: 0,
-    right: 50,
-    top: 30,
-    bottom: 30,
-  },
 };
 
 ChartContainer.propTypes = {

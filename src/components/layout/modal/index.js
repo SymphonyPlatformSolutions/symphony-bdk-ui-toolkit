@@ -58,11 +58,11 @@ const Close = (props) => {
 
 export const TitleBar = (props) => {
   const {
+    hasClose = true,
+    filledTitle = false,
+    modalTitle = null,
     titleSize = 'regular',
     titlePadding = null,
-    hasClose = true,
-    modalTitle,
-    filledTitle,
   } = props;
 
   if (!modalTitle) {
@@ -98,13 +98,6 @@ TitleBar.propTypes = {
   modalTitle: PropTypes.string,
   filledTitle: PropTypes.bool,
 };
-TitleBar.defaultProps = {
-  hasClose: true,
-  filledTitle: false,
-  modalTitle: null,
-  titleSize: 'regular',
-  titlePadding: null,
-};
 
 const ModalRoot = ({ theme }) => (
   <ModalConsumer>
@@ -131,11 +124,11 @@ export default withTheme(ModalRoot);
 
 export const ThemelessDangerConfirmationModal = (props) => {
   const {
-    message,
-    modalTitle,
     hideModal,
     confirmationHandler,
-    confirmButtonText,
+    modalTitle = 'Are you sure?',
+    confirmButtonText = 'Yes',
+    message = 'This action cannot be undone.'
   } = props;
 
   return (
@@ -169,12 +162,6 @@ ThemelessDangerConfirmationModal.propTypes = {
   confirmButtonText: PropTypes.string,
   hideModal: PropTypes.func.isRequired,
   confirmationHandler: PropTypes.func.isRequired,
-};
-
-ThemelessDangerConfirmationModal.defaultProps = {
-  modalTitle: 'Are you sure?',
-  confirmButtonText: 'Yes',
-  message: 'This action cannot be undone.',
 };
 
 export const DangerConfirmationModal = withTheme(

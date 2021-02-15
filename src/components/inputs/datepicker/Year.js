@@ -7,7 +7,10 @@ import {
 } from './theme';
 
 function Year({
-  year, onClick, disabled, isSelected,
+  year = null,
+  onClick = () => {},
+  disabled = false,
+  isSelected = false,
 }) {
   const yearRef = useRef(null);
 
@@ -38,13 +41,6 @@ Year.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   isSelected: PropTypes.bool,
-};
-
-Year.defaultProps = {
-  year: null,
-  onClick: () => {},
-  disabled: false,
-  isSelected: false,
 };
 
 export default Year;

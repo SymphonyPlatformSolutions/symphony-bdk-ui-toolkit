@@ -28,10 +28,15 @@ const zoomConfig = {
 };
 
 const DiscontinousCandleStick = ({
-  loading, data: results, theme,
-  tickSizeX, yPadding, xPadding,
-  tickSizeY, hasTooltip, shownWindow,
-  hasZoom, ...rest
+  data: results, theme, tickSizeX, tickSizeY,
+  loading = false,
+  hasTooltip = false,
+  hasZoom = false,
+  yPadding = { top: 2, bottom: 2 },
+  xPadding = { right: 50, left: 0 },
+  shownWindow = 150,
+  children = [],
+  ...rest
 }) => {
   const yExtents = useCallback((d) => [(d.high + yPadding.top), (d.low - yPadding.bottom)]);
   zoomConfig.panEvent = hasZoom;
@@ -154,16 +159,6 @@ const DiscontinousCandleStick = ({
       )}
     </ChartContainer>
   );
-};
-
-DiscontinousCandleStick.defaultProps = {
-  loading: false,
-  hasTooltip: false,
-  hasZoom: false,
-  yPadding: { top: 2, bottom: 2 },
-  xPadding: { right: 50, left: 0 },
-  shownWindow: 150,
-  children: [],
 };
 
 DiscontinousCandleStick.propTypes = {

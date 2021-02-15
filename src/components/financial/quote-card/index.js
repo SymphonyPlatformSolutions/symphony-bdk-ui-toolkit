@@ -25,40 +25,28 @@ const PORTIONS = {
   menu: 'MENU',
 };
 
-const QuoteCardMenu = ({ children, portion, ...props }) => (
+const QuoteCardMenu = ({ children, portion = PORTIONS.menu, ...props }) => (
   <div {...props}>{children}</div>
 );
-QuoteCardMenu.defaultProps = {
-  portion: PORTIONS.menu,
-};
-const QuoteCardContent = ({ children, portion, ...props }) => (
+const QuoteCardContent = ({ children, portion = PORTIONS.content, ...props }) => (
   <div {...props}>{children}</div>
 );
-QuoteCardContent.defaultProps = {
-  portion: PORTIONS.content,
-};
-const QuoteCardHeader = ({ children, portion, ...props }) => (
+const QuoteCardHeader = ({ children, portion = PORTIONS.header, ...props }) => (
   <div {...props}>{children}</div>
 );
-QuoteCardHeader.defaultProps = {
-  portion: PORTIONS.header,
-};
-const QuoteCardTag = ({ children, portion, ...props }) => (
+const QuoteCardTag = ({ children, portion = PORTIONS.tag, ...props }) => (
   <div {...props}>{children}</div>
 );
-QuoteCardTag.defaultProps = {
-  portion: PORTIONS.tag,
-};
 
 const QuoteCard = props => {
   const {
     theme,
-    type,
     colorIndex,
-    onEdit,
-    onCancel,
     useDefaultContextMenu,
     children,
+    type = 'regular',
+    onEdit = null,
+    onCancel = null,
     ...rest
   } = props;
 
@@ -139,12 +127,6 @@ QuoteCard.propTypes = {
   onEdit: PropTypes.func,
   onCancel: PropTypes.func,
   children: PropTypes.node.isRequired,
-};
-
-QuoteCard.defaultProps = {
-  type: 'regular',
-  onEdit: null,
-  onCancel: null,
 };
 
 QuoteCard.QuoteCardTag = QuoteCardTag;

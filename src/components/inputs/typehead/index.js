@@ -112,24 +112,24 @@ const cleanUpData = (data) => {
 
 const Typehead = (props) => {
   const {
-    hideClear,
     theme,
-    data,
-    debouncePeriod,
-    size,
-    placeholder,
-    noResultsMessage,
-    CustomMenuItem,
-    CustomTag,
-    disabled,
-    clearMessage,
-    value,
     onChange,
-    loading,
-    errorMessage,
-    helpDebouncePeriod,
-    hideChevron,
-    CustomChevron,
+    debouncePeriod = INIT_DEBOUNCE,
+    placeholder = 'Type value...',
+    size = 'regular',
+    data = null,
+    clearMessage = 'clear',
+    noResultsMessage = 'No results found',
+    CustomMenuItem = null,
+    CustomTag = null,
+    disabled = false,
+    value = [],
+    hideClear = false,
+    hideChevron = false,
+    loading = false,
+    errorMessage = null,
+    helpDebouncePeriod = 1000,
+    CustomChevron = null,
     ...rest
   } = props;
 
@@ -327,25 +327,6 @@ Typehead.propTypes = {
   helpDebouncePeriod: PropTypes.number,
   hideChevron: PropTypes.bool,
   CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-};
-
-Typehead.defaultProps = {
-  debouncePeriod: INIT_DEBOUNCE,
-  placeholder: 'Type value...',
-  size: 'regular',
-  data: null,
-  clearMessage: 'clear',
-  noResultsMessage: 'No results found',
-  CustomMenuItem: null,
-  CustomTag: null,
-  disabled: false,
-  value: [],
-  hideClear: false,
-  hideChevron: false,
-  loading: false,
-  errorMessage: null,
-  helpDebouncePeriod: 1000,
-  CustomChevron: null,
 };
 
 export default withTheme(Typehead);

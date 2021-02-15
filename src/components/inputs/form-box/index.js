@@ -22,7 +22,7 @@ LabelText.propTypes = {
 };
 
 export const Label = ({
-  children, tooltip, htmlFor, ...rest
+  children, tooltip = null, htmlFor = null, ...rest
 }) => {
   if (typeof children === 'string') {
     if (tooltip) {
@@ -55,12 +55,8 @@ Label.propTypes = {
   tooltip: PropTypes.string,
   htmlFor: PropTypes.string,
 };
-Label.defaultProps = {
-  tooltip: null,
-  htmlFor: null,
-};
 
-export const FormGroup = ({ children, disabled, ...rest }) => (
+export const FormGroup = ({ children, disabled = false, ...rest }) => (
   <FieldSet disabled={disabled} {...rest}>
     {disabled ? children.map((child, i) => React.cloneElement(child, { disabled: true, key: i })) : children}
   </FieldSet>
@@ -69,13 +65,13 @@ FormGroup.propTypes = {
   children: PropTypes.any.isRequired,
   disabled: PropTypes.bool,
 };
-FormGroup.defaultProps = {
-  disabled: false,
-};
 
 const FormBox = (props) => {
   const {
-    children, onSubmit, disabled, ...rest
+    children, 
+    onSubmit = null,
+    disabled = false,
+    ...rest
   } = props;
 
   return (
@@ -90,10 +86,6 @@ FormBox.propTypes = {
   children: PropTypes.any.isRequired,
   onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
-};
-FormBox.defaultProps = {
-  onSubmit: null,
-  disabled: false,
 };
 
 export default FormBox;

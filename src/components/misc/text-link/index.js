@@ -5,7 +5,7 @@ import { withTheme } from 'styled-components';
 import { StyledText } from './theme';
 
 const TextLink = (props) => {
-  const { children, ...rest } = props;
+  const { children = null, ...rest } = props;
 
   return (
     <StyledText {...rest} isLink>
@@ -16,10 +16,6 @@ const TextLink = (props) => {
 
 TextLink.propTypes = {
   children: PropTypes.string,
-};
-
-TextLink.defaultProps = {
-  children: null,
 };
 
 export default withTheme(TextLink);

@@ -8,10 +8,10 @@ const CHEVRON_COLOR = '#008EFF';
 
 const Header = (props) => {
   const {
-    goToNextMonth,
-    goToPreviousMonth,
-    goToNextYear,
-    goToPreviousYear,
+    goToPreviousMonth = () => {},
+    goToNextMonth = () => {},
+    goToPreviousYear = () => {},
+    goToNextYear = () => {}
   } = props;
 
   return (
@@ -56,13 +56,6 @@ Header.propTypes = {
   goToNextMonth: PropTypes.func,
   goToPreviousYear: PropTypes.func,
   goToNextYear: PropTypes.func,
-};
-
-Header.defaultProps = {
-  goToPreviousMonth: () => {},
-  goToNextMonth: () => {},
-  goToPreviousYear: () => {},
-  goToNextYear: () => {},
 };
 
 export default Header;

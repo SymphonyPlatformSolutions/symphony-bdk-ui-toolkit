@@ -27,9 +27,15 @@ const zoomConfig = {
 };
 
 const CandleStickChart = ({
-  loading, data, theme,
-  tickSizeX, tickSizeY, hasTooltip,
-  hasZoom, ...rest
+  data, 
+  theme,
+  tickSizeX,
+  loading = false,
+  hasTooltip = false,
+  hasZoom = false,
+  tickSizeY = null,
+  children = [],
+  ...rest
 }) => {
   const yExtents = useCallback((d) => [d.high, d.low]);
   zoomConfig.panEvent = hasZoom;
@@ -137,14 +143,6 @@ const CandleStickChart = ({
       )}
     </ChartContainer>
   );
-};
-
-CandleStickChart.defaultProps = {
-  loading: false,
-  hasTooltip: false,
-  hasZoom: false,
-  tickSizeY: null,
-  children: [],
 };
 
 CandleStickChart.propTypes = {

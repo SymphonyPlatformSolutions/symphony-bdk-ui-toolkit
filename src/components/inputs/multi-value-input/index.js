@@ -124,18 +124,18 @@ const makeRequestCreator = () => {
 const MultiValueInput = (props) => {
   const {
     theme,
-    data,
     endpoints,
-    debouncePeriod,
-    size,
-    placeholder,
-    noResultsMessage,
     itemChooseHandler,
-    CustomMenuItem,
-    CustomTag,
-    disabled,
-    clearMessage,
-    value,
+    debouncePeriod = INIT_DEBOUNCE,
+    placeholder = 'Select values...',
+    size = 'regular',
+    data = null,
+    clearMessage = 'reset',
+    noResultsMessage = 'No results found',
+    CustomMenuItem = null,
+    CustomTag = null,
+    disabled = false,
+    value = [],
     ...rest
   } = props;
 
@@ -256,6 +256,7 @@ const MultiValueInput = (props) => {
             <SearchInputWrapper hide={hideInput}>
               <StyledSearch
                 {...rest}
+                theme={theme}
                 disabled={disabled}
                 ref={inputRef}
                 onKeyDown={specialKeyHandler}
@@ -315,19 +316,6 @@ MultiValueInput.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.array,
   clearMessage: PropTypes.string,
-};
-
-MultiValueInput.defaultProps = {
-  debouncePeriod: INIT_DEBOUNCE,
-  placeholder: 'Select values...',
-  size: 'regular',
-  data: null,
-  clearMessage: 'reset',
-  noResultsMessage: 'No results found',
-  CustomMenuItem: null,
-  CustomTag: null,
-  disabled: false,
-  value: [],
 };
 
 export default withTheme(MultiValueInput);

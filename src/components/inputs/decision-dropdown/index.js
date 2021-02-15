@@ -9,23 +9,23 @@ import { KEYCODES } from '../../utils/index';
 
 const DecisionDropdown = (props) => {
   const {
-    data,
     onChange,
-    loading,
-    disabled,
-    placeholder,
-    value,
-    errorMessage,
-    clickHandler,
-    hasBackButton,
-    size,
-    isMulti,
     theme,
-    tooltip,
-    CustomValue,
-    hideClear,
-    CustomChevron,
-    closeMenuOnSelect,
+    placeholder = 'Select...',
+    hasBackButton = false,
+    data = null,
+    loading = false,
+    disabled = false,
+    value = null,
+    errorMessage = null,
+    clickHandler = () => {},
+    isMulti = false,
+    size = 'regular',
+    tooltip = null,
+    CustomValue = null,
+    hideClear = false,
+    CustomChevron = null,
+    closeMenuOnSelect = true,
     ...rest
   } = props;
 
@@ -169,24 +169,6 @@ DecisionDropdown.propTypes = {
   hideClear: PropTypes.bool,
   CustomChevron: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   closeMenuOnSelect: PropTypes.bool,
-};
-
-DecisionDropdown.defaultProps = {
-  placeholder: 'Select...',
-  hasBackButton: false,
-  data: null,
-  loading: false,
-  disabled: false,
-  value: null,
-  errorMessage: null,
-  clickHandler: () => {},
-  isMulti: false,
-  size: 'regular',
-  tooltip: null,
-  CustomValue: null,
-  hideClear: false,
-  CustomChevron: null,
-  closeMenuOnSelect: true,
 };
 
 export default withTheme(DecisionDropdown);

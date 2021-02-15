@@ -11,7 +11,11 @@ const successIcon = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iM
 
 const QuoteProductTag = (props) => {
   const {
-    mainInfo, sideInfo, tagState, onClose, ...rest
+    mainInfo, 
+    sideInfo = null,
+    tagState = 'default',
+    onClose = null,
+    ...rest
   } = props;
 
   const renderIcon = () => {
@@ -60,12 +64,6 @@ QuoteProductTag.propTypes = {
   sideInfo: PropTypes.string,
   tagState: PropTypes.oneOf(['default', 'active', 'disabled', 'loading', 'error', 'success', 'removed', 'added']),
   onClose: PropTypes.func,
-};
-
-QuoteProductTag.defaultProps = {
-  sideInfo: null,
-  tagState: 'default',
-  onClose: null,
 };
 
 export default withTheme(QuoteProductTag);

@@ -79,7 +79,7 @@ const RecursiveSearch = (id, node, parent = null) => {
   return result;
 };
 
-const HelpPageBuilder = ({ config }) => {
+const HelpPageBuilder = ({ config = null }) => {
   const [currentTopics, setCurrentTopics] = useState({
     node: config,
     level: HELP_LEVELS.ROOT,
@@ -222,9 +222,6 @@ HelpPageBuilder.propTypes = {
       contents: PropTypes.array,
     })),
   }),
-};
-HelpPageBuilder.defaultProps = {
-  config: null,
 };
 
 export default HelpPageBuilder;
