@@ -23,6 +23,9 @@ export const getFocusedInput = (isRange, isStart) => {
   return isStart ? START_DATE : END_DATE;
 };
 
+export const formatSingleDate = (date) =>
+  `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+
 export const formatDate = (state, args) => {
   const { isRange } = args;
   const { startDate, endDate } = state;
@@ -30,21 +33,15 @@ export const formatDate = (state, args) => {
     return '';
   }
   if (!isRange) {
-    return `${
-      MONTHS[startDate.getMonth()]
-    } ${startDate.getDate()} ${startDate.getFullYear()}`;
+    return formatSingleDate(startDate);
   }
   let leftPart = 'Start';
   let rightPart = 'End';
   if (startDate) {
-    leftPart = `${
-      MONTHS[startDate.getMonth()]
-    } ${startDate.getDate()} ${startDate.getFullYear()}`;
+    leftPart = formatSingleDate(startDate);
   }
   if (endDate) {
-    rightPart = `${
-      MONTHS[endDate.getMonth()]
-    } ${endDate.getDate()} ${endDate.getFullYear()}`;
+    rightPart = formatSingleDate(endDate);
   }
   return `${leftPart} - ${rightPart}`;
 };
