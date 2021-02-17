@@ -6,8 +6,20 @@ import PropTypes from 'prop-types';
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
 import { formatDate, addDaysToDate } from './utils';
-import { Wrapper, MultipleCalendarWrapper } from './theme';
-import InputField from '../input-field';
+import {
+  Wrapper,
+  MultipleCalendarWrapper,
+  InputWrapper,
+  CustomInputField,
+  InputIcon,
+} from './theme';
+import { CalendarIcon } from '../../misc/icons';
+
+const DEFAULT_STATE = {
+  startDate: null,
+  endDate: null,
+  focusedInput: START_DATE,
+};
 
 const DatepickerV2 = (props) => {
   const {
@@ -19,9 +31,11 @@ const DatepickerV2 = (props) => {
     closeOnSelect = false,
     errorMessage = null,
     disabled = false,
-    placeholder = 'Choose date...',
+    placeholder = 'dd/mm/yyyy',
     size = 'regular',
     defaultInitialVisibleMonth = new Date(),
+    onDateChange = () => {},
+    initialDate = DEFAULT_STATE,
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -29,13 +43,9 @@ const DatepickerV2 = (props) => {
   const [mouseLeaveInput, setMouseLeaveInput] = useState(true);
   const [mouseLeaveWrapper, setMouseLeaveWrapper] = useState(true);
   const [initialVisibleMonth, setInitialVisibleMonth] = useState(
-    defaultInitialVisibleMonth
+    defaultInitialVisibleMonth,
   );
-  const [state, setState] = useState({
-    startDate: null,
-    endDate: null,
-    focusedInput: START_DATE,
-  });
+  const [state, setState] = useState(initialDate);
 
   const handleOnOpen = () => {
     setShouldRunFadeOut(false);
@@ -50,11 +60,14 @@ const DatepickerV2 = (props) => {
 
   const handleOnDateChange = (dateState, isOnlyEndDate) => {
     if (isOnlyEndDate) {
-      setState({ ...state, endDate: dateState.startDate });
+      const newDate = { ...state, endDate: dateState.startDate };
+      setState(newDate);
+      onDateChange(newDate);
       return;
     }
 
     setState(dateState);
+    onDateChange(dateState);
   };
 
   const handleOnBlur = (e) => {
@@ -100,6 +113,10 @@ const DatepickerV2 = (props) => {
     setInitialVisibleMonth(state.startDate);
   }, [state]);
 
+  useEffect(() => {
+    setState(initialDate);
+  }, [initialDate]);
+
   return (
     <PositioningPortal
       isOpen={isOpen}
@@ -129,18 +146,23 @@ const DatepickerV2 = (props) => {
       )}
       onClose={handleOnClose}
     >
-      <InputField
-        ref={inputRef}
-        onFocus={handleOnOpen}
-        onBlur={(e) => handleOnBlur(e)}
-        placeholder={placeholder}
-        size={size}
-        disabled={disabled}
-        errorMessage={errorMessage}
-        value={formatDate(state, { isRange })}
-        onMouseEnter={() => setMouseLeaveInput(false)}
-        onMouseLeave={() => setMouseLeaveInput(true)}
-      />
+      <InputWrapper isOpen={isOpen}>
+        <InputIcon>
+          <CalendarIcon color="white" />
+        </InputIcon>
+        <CustomInputField
+          ref={inputRef}
+          onFocus={handleOnOpen}
+          onBlur={(e) => handleOnBlur(e)}
+          placeholder={placeholder}
+          size={size}
+          disabled={disabled}
+          errorMessage={errorMessage}
+          value={formatDate(state, { isRange })}
+          onMouseEnter={() => setMouseLeaveInput(false)}
+          onMouseLeave={() => setMouseLeaveInput(true)}
+        />
+      </InputWrapper>
     </PositioningPortal>
   );
 };
@@ -154,14 +176,20 @@ DatepickerV2.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       daysToAdd: PropTypes.number.isRequired,
-    })
+    }),
   ),
+  initialDate: PropTypes.shape({
+    startDate: PropTypes.any,
+    endDate: PropTypes.any,
+    focusedInput: PropTypes.string.isRequired,
+  }),
   closeOnSelect: PropTypes.bool,
   errorMessage: PropTypes.string,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['regular', 'large']),
   defaultInitialVisibleMonth: PropTypes.any,
+  onDateChange: PropTypes.func,
 };
 
 export default DatepickerV2;

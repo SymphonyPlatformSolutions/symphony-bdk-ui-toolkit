@@ -139,3 +139,41 @@ For a single date, the controller component must inject a _`value`_ prop. The on
     </Box>
   </Story>
 </Preview>
+
+## Default single date
+
+<Preview>
+  <Story name="Default single date">
+    <Box>
+      <Datepicker
+        initialDate={{
+          startDate: new Date(),
+          endDate: new Date(),
+          focusedInput: 'startDate',
+        }}
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## Default range
+
+<Preview>
+  <Story name="Default range">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: (() => {
+            const now = new Date();
+            now.setDate(now.getDate() + 7);
+            return now;
+          })(),
+          focusedInput: 'startDate',
+        }}
+      />
+    </Box>
+  </Story>
+</Preview>

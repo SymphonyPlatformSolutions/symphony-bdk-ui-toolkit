@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-const getGridTemplateSize = ({ activeMonths = [] }) => {
-  return activeMonths.length;
-};
+const getGridTemplateSize = ({ activeMonths = [] }) => activeMonths.length;
 
 export const Wrapper = styled.div`
   display: grid;

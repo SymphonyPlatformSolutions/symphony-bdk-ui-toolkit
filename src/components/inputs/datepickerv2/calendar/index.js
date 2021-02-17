@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
 
@@ -55,7 +55,7 @@ const Calendar = (props) => {
     endDate: isRange ? defaultState.endDate : null,
     focusedInput: getFocusedInput(
       isRange,
-      defaultState.focusedInput === START_DATE
+      defaultState.focusedInput === START_DATE,
     ),
     onDatesChange,
     numberOfMonths,

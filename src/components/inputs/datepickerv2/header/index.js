@@ -11,7 +11,7 @@ const Header = (props) => {
     goToPreviousMonth = () => {},
     goToNextMonth = () => {},
     goToPreviousYear = () => {},
-    goToNextYear = () => {}
+    goToNextYear = () => {},
   } = props;
 
   return (
