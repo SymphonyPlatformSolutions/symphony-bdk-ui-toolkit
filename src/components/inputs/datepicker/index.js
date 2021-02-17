@@ -71,6 +71,7 @@ const Datepicker = (props) => {
     isMonthPicker = false,
     closeOnClick = false,
     footerNavigationButtons = [],
+    required,
     ...rest
   } = props;
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
@@ -90,7 +91,7 @@ const Datepicker = (props) => {
     setInputValue(
       dateValueFormatter
         ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
     );
     setTimeout(() => {
       setCalendarIsOpen(false);
@@ -107,7 +108,7 @@ const Datepicker = (props) => {
     setInputValue(
       dateValueFormatter
         ? dateValueFormatter(value, endValue, isRange)
-        : formatDate(value, endValue, isRange)
+        : formatDate(value, endValue, isRange),
     );
   }, [value, endValue, isRange]);
 
@@ -305,6 +306,7 @@ const Datepicker = (props) => {
             errorMessage={errorMessage}
             inputState={inputState}
             ref={textInputDateRef}
+            required={required}
           />
         </InputWrapper>
       </PositioningPortal>
@@ -337,6 +339,7 @@ Datepicker.propTypes = {
     label: PropTypes.string.isRequired,
     daysToSubstract: PropTypes.number.isRequired,
   })),
+  required: PropTypes.bool,
 };
 
 export default Datepicker;
