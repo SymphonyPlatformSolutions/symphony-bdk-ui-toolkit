@@ -34,8 +34,6 @@ const Button = ({
   }, [loading]);
 
   const handleClick = () => {
-    const { onClick } = rest;
-
     if (loading === null) {
       setIsLoading(true);
       Promise.resolve()
