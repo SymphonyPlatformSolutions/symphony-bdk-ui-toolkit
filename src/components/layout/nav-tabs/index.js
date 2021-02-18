@@ -75,7 +75,10 @@ const TabHeaderBadge = styled.div`
   right: -8px;
   top: 5px;
 `;
-export default function NavTabs({ children, activeTab = 0, overflow = 'inherit', ...rest }) {
+
+export default function NavTabs({
+  children, activeTab = 0, overflow = 'inherit', ...rest
+}) {
   const childrenArray = React.Children.toArray(children);
   const elRef = useRef([...Array(childrenArray.length)].map(() => createRef()));
   const [currentRef, setCurrentRef] = useState(null);
@@ -92,6 +95,7 @@ export default function NavTabs({ children, activeTab = 0, overflow = 'inherit',
 
   useEffect(() => {
     let hasRefs = true;
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < elRef.current.length; i++) {
       hasRefs = hasRefs && (elRef.current[i] !== undefined);
     }
@@ -104,13 +108,14 @@ export default function NavTabs({ children, activeTab = 0, overflow = 'inherit',
       <Box horizontal>
         <TabHeader>
           {childrenArray.map((child, index) => {
-            const {
-              label, align, badged, handleOnClick,
-            } = child.props;
+            const label = child.props['data-label'];
+            const align = child.props['data-align'];
+            const badged = child.props['data-badged'];
+            const handleOnClick = child.props['data-handleOnClick'];
             return (
               <TabHeaderItem
                 key={label}
-                ref={ref => elRef.current[index] = ref}
+                ref={ref => { elRef.current[index] = ref; }}
                 align={align}
                 onClick={() => onClickTabItem(index, align, handleOnClick)}
               >
@@ -129,7 +134,11 @@ export default function NavTabs({ children, activeTab = 0, overflow = 'inherit',
         </TabHeader>
       </Box>
       <Box vertical overflow={overflow}>
-        {childrenArray.filter((child, index) => index === activeTabIndex).map((child) => child.props.children)}
+        {
+          childrenArray
+            .filter((child, index) => index === activeTabIndex)
+            .map((child) => child.props.children)
+        }
       </Box>
     </BaseTabs>
   );
