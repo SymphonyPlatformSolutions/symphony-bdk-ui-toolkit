@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { PositioningPortal } from '@codastic/react-positioning-portal';
-import { START_DATE } from '@datepicker-react/hooks';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from "react";
+import { PositioningPortal } from "@codastic/react-positioning-portal";
+import { START_DATE } from "@datepicker-react/hooks";
+import PropTypes from "prop-types";
 
-import Calendar from './calendar/index';
-import NavButtons from './navButtons/index';
-import { formatDate, addDaysToDate } from './utils';
+import Calendar from "./calendar/index";
+import NavButtons from "./navButtons/index";
+import { formatDate, addDaysToDate } from "./utils";
 import {
   Wrapper,
   MultipleCalendarWrapper,
   InputWrapper,
   CustomInputField,
   InputIcon,
-} from './theme';
-import { CalendarIcon } from '../../misc/icons';
+} from "./theme";
+import { CalendarIcon } from "../../misc/icons";
 
 const DEFAULT_STATE = {
   startDate: null,
@@ -26,13 +26,13 @@ const DatepickerV2 = (props) => {
     firstDayOfWeek = 0,
     numberOfMonths = 1,
     isRange = false,
-    customWeekdayLabels = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'],
+    customWeekdayLabels = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"],
     navButtons = [],
     closeOnSelect = false,
     errorMessage = null,
     disabled = false,
-    placeholder = 'dd/mm/yyyy',
-    size = 'regular',
+    placeholder = "dd/mm/yyyy",
+    size = "regular",
     defaultInitialVisibleMonth = new Date(),
     onDateChange = () => {},
     initialDate = DEFAULT_STATE,
@@ -43,7 +43,7 @@ const DatepickerV2 = (props) => {
   const [mouseLeaveInput, setMouseLeaveInput] = useState(true);
   const [mouseLeaveWrapper, setMouseLeaveWrapper] = useState(true);
   const [initialVisibleMonth, setInitialVisibleMonth] = useState(
-    defaultInitialVisibleMonth,
+    defaultInitialVisibleMonth
   );
   const [state, setState] = useState(initialDate);
 
@@ -106,7 +106,7 @@ const DatepickerV2 = (props) => {
   }, [mouseLeaveInput, mouseLeaveWrapper]);
 
   useEffect(() => {
-    if (!state?.startDate) {
+    if (!state || !state.startDate) {
       return;
     }
 
@@ -176,7 +176,7 @@ DatepickerV2.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       daysToAdd: PropTypes.number.isRequired,
-    }),
+    })
   ),
   initialDate: PropTypes.shape({
     startDate: PropTypes.any,
@@ -187,7 +187,7 @@ DatepickerV2.propTypes = {
   errorMessage: PropTypes.string,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
-  size: PropTypes.oneOf(['regular', 'large']),
+  size: PropTypes.oneOf(["regular", "large"]),
   defaultInitialVisibleMonth: PropTypes.any,
   onDateChange: PropTypes.func,
 };
