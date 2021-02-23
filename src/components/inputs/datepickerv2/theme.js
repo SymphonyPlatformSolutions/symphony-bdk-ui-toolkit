@@ -52,6 +52,8 @@ export const Wrapper = styled.div`
 
   animation: ${getFadeInOrOutAnimation} 0.3s;
   animation-fill-mode: forwards;
+
+  box-shadow: 0px 24px 48px rgba(9, 10, 11, 0.24), 0px 4px 8px rgba(9, 10, 11, 0.16);
 `;
 
 export const MultipleCalendarWrapper = styled.div`

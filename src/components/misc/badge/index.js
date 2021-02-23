@@ -5,16 +5,16 @@ import { CloseIcon } from '../icons';
 import { Wrapper, IconWrapper, TextWrapper } from './theme';
 
 const Badge = ({
-  children, isClosable = false, onClose = NoOp,
+  children,
+  isClosable = false,
+  onClose = NoOp,
+  maxWidth = true,
 }) => (
   <Wrapper>
-    <TextWrapper>{ children }</TextWrapper>
-    { isClosable && (
+    <TextWrapper maxWidth={maxWidth}>{children}</TextWrapper>
+    {isClosable && (
       <IconWrapper onClick={onClose}>
-        <CloseIcon
-          size="8"
-          color="#000"
-        />
+        <CloseIcon size="8" color="#000" />
       </IconWrapper>
     )}
   </Wrapper>
@@ -24,6 +24,7 @@ Badge.propTypes = {
   isClosable: PropTypes.bool,
   onClose: PropTypes.func,
   children: PropTypes.node.isRequired,
+  maxWidth: PropTypes.bool,
 };
 
 export default Badge;
