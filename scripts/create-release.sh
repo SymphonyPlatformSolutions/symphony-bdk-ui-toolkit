@@ -16,7 +16,7 @@ mv package.json /tmp/bdk-build/nightly-package.json
 mv /tmp/bdk-build/package.json package.json
 BDK_GOOD_VERSION=$(grep version /tmp/bdk-build/nightly-package.json)
 BDK_WRONG_VERSION=$(grep version package.json)
-sed -i '' s/$BDK_WRONG_VERSION/$BDK_GOOD_VERSION/ package.json
+sed -i '' "s/$BDK_WRONG_VERSION/$BDK_GOOD_VERSION/" package.json
 git add dist package.json
 npm version $1 -m "release %s - $2" -f
 git push origin HEAD:nightly
