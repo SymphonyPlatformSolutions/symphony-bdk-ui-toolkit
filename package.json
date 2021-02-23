@@ -12,8 +12,8 @@
     "storybook": "start-storybook -p 6006 -s ./public & nodemon mock-json-server/mock-server.js",
     "mock": "nodemon mock-json-server/mock-server.js",
     "build-storybook": "build-storybook",
-    "build": "rm -rf dist/ && microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks && rm dist/index.module.js dist/index.module.js.map",
-    "dev": "microbundle --jsx React.createElement --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks --watch --compress false --raw  true",
+    "build": "rm -rf dist/ && microbundle --jsx React.createElement --jsxFragment React.Fragment --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks && rm dist/index.module.js dist/index.module.js.map",
+    "dev": "microbundle --jsx React.createElement --jsxFragment React.Fragment --external styled-components,d3-time,d3-scale,d3-shape,d3-time-format,react-stockcharts,@datepicker-react/hooks --watch --compress false --raw  true",
     "eslint": "eslint src"
   },
   "files": [
