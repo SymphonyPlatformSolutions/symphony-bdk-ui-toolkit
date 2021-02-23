@@ -62,7 +62,7 @@ export const MultipleCalendarWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #7c7f86;
+  background-color: #CFD0D2;
   border-radius: 4px;
   transition: all 0.3s;
   padding: 2px 0;
@@ -71,17 +71,6 @@ export const InputWrapper = styled.div`
     transition: all 0.3s;
     border: none !important;
   }
-
-  ${({ isOpen }) =>
-    isOpen
-      ? css`
-          background-color: #008eff;
-        `
-      : css`
-          &:hover {
-            background-color: #525760;
-          }
-        `}
 `;
 
 export const InputIcon = styled.div`
