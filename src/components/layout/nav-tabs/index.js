@@ -21,7 +21,7 @@ const BaseTabs = styled.div`
 const TabHeader = styled.ol`
   padding-left: 0;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 `;
 
 const TabHeaderLabel = styled(Text)`
@@ -57,9 +57,9 @@ const TabHeaderItem = styled.li`
 const TabHeaderIndicator = styled.div`
   width: ${props => getHeaderIndicatorWidth(props)};
   height: 3px;
-  display: absolute;
+  position: absolute;
   background: ${props => getHeaderIndicatorBackground(props)};
-  margin-top: 25px;
+  margin-top: 18px;
   margin-left: ${props => getTabHeaderIndicatorMarginLeft({ ...props, separatorWidthInPx })};
   transition-property: margin, width;
   transition-duration: .5s;
