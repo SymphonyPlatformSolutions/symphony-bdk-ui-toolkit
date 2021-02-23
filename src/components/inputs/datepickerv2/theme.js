@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import InputField from '../input-field';
 
 const WRAPPER_TRANSLATE_X = -25;
@@ -62,10 +62,9 @@ export const MultipleCalendarWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #CFD0D2;
+  background-color: #cfd0d2;
   border-radius: 4px;
   transition: all 0.3s;
-  padding: 2px 0;
 
   * {
     transition: all 0.3s;
@@ -76,15 +75,16 @@ export const InputWrapper = styled.div`
 export const InputIcon = styled.div`
   width: 16px;
   height: 16px;
-  padding: 8px;
+  padding: 6px 8px;
 `;
 
 export const CustomInputField = styled(InputField)`
-  color:#17181B;
+  color: #17181b;
   background-color: #fff;
-  font-size: 14px;
-  margin-right: 2px;
-  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 3px;
+  border-radius: 2px;
+  padding: 4px 12px;
 
   &::placeholder {
     color: #7c7f86;
