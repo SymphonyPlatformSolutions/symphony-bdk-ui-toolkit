@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import InputField from '../input-field';
 
 const WRAPPER_TRANSLATE_X = -25;
@@ -52,6 +52,11 @@ export const Wrapper = styled.div`
 
   animation: ${getFadeInOrOutAnimation} 0.3s;
   animation-fill-mode: forwards;
+
+  box-shadow: 0px 24px 48px rgba(9, 10, 11, 0.24),
+    0px 4px 8px rgba(9, 10, 11, 0.16);
+
+  z-index: 999;
 `;
 
 export const MultipleCalendarWrapper = styled.div`
@@ -62,40 +67,29 @@ export const MultipleCalendarWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #7c7f86;
+  background-color: #cfd0d2;
   border-radius: 4px;
   transition: all 0.3s;
-  padding: 2px 0;
 
   * {
     transition: all 0.3s;
     border: none !important;
   }
-
-  ${({ isOpen }) =>
-    isOpen
-      ? css`
-          background-color: #008eff;
-        `
-      : css`
-          &:hover {
-            background-color: #525760;
-          }
-        `}
 `;
 
 export const InputIcon = styled.div`
   width: 16px;
   height: 16px;
-  padding: 8px;
+  padding: 6px 8px;
 `;
 
 export const CustomInputField = styled(InputField)`
-  color:#17181B;
+  color: #17181b;
   background-color: #fff;
-  font-size: 14px;
-  margin-right: 2px;
-  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 3px;
+  border-radius: 2px;
+  padding: 4px 12px;
 
   &::placeholder {
     color: #7c7f86;
