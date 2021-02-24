@@ -22,6 +22,7 @@ const TabHeader = styled.ol`
   padding-left: 0;
   width: 100%;
   margin-bottom: 14px;
+  position: relative;
 `;
 
 const TabHeaderLabel = styled(Text)`
