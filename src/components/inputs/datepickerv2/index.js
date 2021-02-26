@@ -120,6 +120,7 @@ const DatepickerV2 = (props) => {
   return (
     <PositioningPortal
       isOpen={isOpen}
+      portalElement={<div style={{ zIndex: 6 }} />}
       portalContent={() => (
         <Wrapper
           isOpen={isOpen}
