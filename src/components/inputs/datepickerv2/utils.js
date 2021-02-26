@@ -15,6 +15,13 @@ export const MONTHS = [
   'Dec',
 ];
 
+const dateAreEquals = (startDate, endDate) => {
+  const methods = ['getFullYear', 'getMonth', 'getDate'];
+  return methods
+    .map((method) => startDate[method]() === endDate[method]())
+    .every((booleanValue) => booleanValue);
+};
+
 export const getFocusedInput = (isRange, isStart) => {
   if (!isRange) {
     return START_DATE;
@@ -37,6 +44,11 @@ export const formatDate = (state, args) => {
   }
   let leftPart = 'Start';
   let rightPart = 'End';
+
+  if (dateAreEquals(startDate, endDate)) {
+    return formatSingleDate(startDate);
+  }
+
   if (startDate) {
     leftPart = formatSingleDate(startDate);
   }
@@ -54,16 +66,5 @@ export const addDaysToDate = (date, daysToAdd) => {
 };
 
 export const isNow = (date) => {
-  if (!date) {
-    return false;
-  }
-
-  const now = new Date();
-  const methods = ['getFullYear', 'getMonth', 'getDate'];
-
-  const dateAreEquals = methods
-    .map((method) => date[method]() === now[method]())
-    .every((booleanValue) => booleanValue);
-
-  return dateAreEquals;
+  return date && dateAreEquals(date, new Date());
 };

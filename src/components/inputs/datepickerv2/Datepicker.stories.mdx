@@ -177,3 +177,21 @@ For a single date, the controller component must inject a _`value`_ prop. The on
     </Box>
   </Story>
 </Preview>
+
+## Default range - same dates
+
+<Preview>
+  <Story name="Default range - same dates">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: new Date(),
+          focusedInput: 'startDate',
+        }}
+      />
+    </Box>
+  </Story>
+</Preview>

@@ -90,6 +90,7 @@ export const CustomInputField = styled(InputField)`
   margin-right: 3px;
   border-radius: 2px;
   padding: 4px 12px;
+  min-width: 150px;
 
   &::placeholder {
     color: #7c7f86;
