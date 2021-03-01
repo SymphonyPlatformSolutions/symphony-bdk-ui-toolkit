@@ -46,8 +46,8 @@ export const formatDate = (state, args) => {
   if (!isRange) {
     return formatSingleDate(startDate);
   }
-  let leftPart = 'Start';
-  let rightPart = 'End';
+  let leftPart = 'start date';
+  let rightPart = 'end date';
 
   if (dateAreEquals(startDate, endDate)) {
     return formatSingleDate(startDate);
