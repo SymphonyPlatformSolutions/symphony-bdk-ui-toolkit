@@ -16,6 +16,10 @@ export const MONTHS = [
 ];
 
 const dateAreEquals = (startDate, endDate) => {
+  if (!startDate || !endDate) {
+    return false;
+  }
+  
   const methods = ['getFullYear', 'getMonth', 'getDate'];
   return methods
     .map((method) => startDate[method]() === endDate[method]())
