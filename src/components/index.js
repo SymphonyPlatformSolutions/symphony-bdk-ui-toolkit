@@ -104,7 +104,6 @@ export {
   default as Typehead,
   simpleFilter,
 } from './inputs/typehead';
-export { THEMES, THEME_TYPES } from '../styles/colors';
 export {
   default as BaseChart,
 } from './financial/charts/base-chart';
