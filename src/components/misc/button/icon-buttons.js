@@ -36,6 +36,7 @@ export const CloseButton = withTheme((props) => {
     onClick, theme, size, ...rest
   } = props;
   const [isHovering, setHovering] = useState(false);
+  const color = isHovering ? theme.colors.grey_800 : '#525760';
   return (
     <ButtonBG
       {...rest}
@@ -49,7 +50,7 @@ export const CloseButton = withTheme((props) => {
       <CloseIcon
         size={size}
         style={{ transform: 'translate(0.6px, 0.5px)' }}
-        color={isHovering ? theme.colors.grey_800 : theme.colors.grey_600}
+        color={color}
       />
     </ButtonBG>
   );
