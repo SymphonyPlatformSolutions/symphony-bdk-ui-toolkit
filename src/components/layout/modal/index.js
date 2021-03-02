@@ -43,7 +43,9 @@ const TextWrapper = styled.div`
   padding: ${({ titleSize, titlePadding }) => (titlePadding || TITLE_PADDING[titleSize])};
 `;
 const ModalTitle = styled(Text)`
-  color: ${({ theme, filledTitle }) => (filledTitle ? theme.colors.grey_800 : theme.colors.grey_700)};
+  color: #17181B;
+  font-size: 18px;
+  font-weight: 500;
 `;
 
 const Close = (props) => {
