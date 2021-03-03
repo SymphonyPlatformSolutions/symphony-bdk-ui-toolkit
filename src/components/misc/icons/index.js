@@ -794,7 +794,7 @@ export const RightArrowIcon = withTheme(({ size = 16, blueprint }) => (
   </IconWrapper>
 ));
 
-export const ExclamationCircleIcon = withTheme(({ size = 16, blueprint }) => (
+export const ExclamationCircleIcon = withTheme(({ size = 16, color = '#0077D6', blueprint }) => (
   <IconWrapper size={size} blueprint={blueprint}>
     <svg
       width={size || 24}
@@ -805,15 +805,15 @@ export const ExclamationCircleIcon = withTheme(({ size = 16, blueprint }) => (
     >
       <path
         d="M6 3C5.58579 3 5.25 3.33579 5.25 3.75L5.25 5.625C5.25 6.03921 5.58579 6.375 6 6.375C6.41421 6.375 6.75 6.03921 6.75 5.625V3.75C6.75 3.33579 6.41421 3 6 3Z"
-        fill="#0077D6"
+        fill={color}
       />
       <path
         d="M6 7.3125C5.48223 7.3125 5.0625 7.73223 5.0625 8.25C5.0625 8.76777 5.48223 9.1875 6 9.1875C6.51777 9.1875 6.9375 8.76777 6.9375 8.25C6.9375 7.73223 6.51777 7.3125 6 7.3125Z"
-        fill="#0077D6"
+        fill={color}
       />
       <path
         d="M6 0C2.68629 -2.89694e-07 2.89693e-07 2.68629 0 6C-2.89693e-07 9.31371 2.68629 12 6 12C9.31371 12 12 9.31371 12 6C12 2.6863 9.31371 2.89694e-07 6 0ZM6 1.5C8.48528 1.5 10.5 3.51472 10.5 6C10.5 8.48528 8.48528 10.5 6 10.5C3.51472 10.5 1.5 8.48528 1.5 6C1.5 3.51472 3.51472 1.5 6 1.5Z"
-        fill="#0077D6"
+        fill={color}
       />
     </svg>
   </IconWrapper>
