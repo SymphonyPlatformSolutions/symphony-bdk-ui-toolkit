@@ -6,11 +6,13 @@ import {
   Link,
 } from '@storybook/addon-docs/blocks';
 import Datepicker from './index';
+import { theme2Decorator } from '../../v2/storybook-helper';
 
 <Meta
   title="components/Inputs/Datepicker V2"
   component={Datepicker}
   parameters={{ order: 230 }}
+  decorators={[ theme2Decorator ]}
 />
 
 # Datepicker

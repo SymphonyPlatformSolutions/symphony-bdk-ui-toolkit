@@ -5,35 +5,32 @@ const CURRENT_DAY_DOT_SIZE = 3;
 const getBackgroundColorOfDayButton = ({
   isSelected,
   isSelectedStartOrEnd,
+  theme,
 }) => {
   if (isSelectedStartOrEnd) {
-    return '#008EFF';
+    return theme.colors.primary_default;
   }
 
   if (isSelected) {
-    return '#E0F1FF';
+    return theme.colors.primary_disabled;
   }
 
-  return '#fff';
+  return theme.colors.input_background;
 };
 
-const getColorOfDayButton = ({ isSelected, isSelectedStartOrEnd }) => {
+const getColorOfDayButton = ({ isSelectedStartOrEnd, theme }) => {
   if (isSelectedStartOrEnd) {
-    return '#fff';
+    return theme.colors.white;
   }
 
-  if (isSelected) {
-    return '#17181b';
-  }
-
-  return '#17181b';
+  return theme.colors.btn_graphite_plus_72;
 };
 
 const getBorderRadius = ({ isSelectedStartOrEnd }) => {
   return isSelectedStartOrEnd ? '2px' : 0;
 };
 
-const generateDotForNow = ({ isNow = false }) => {
+const generateDotForNow = ({ isNow = false, theme }) => {
   if (!isNow) {
     return '';
   }
@@ -44,7 +41,7 @@ const generateDotForNow = ({ isNow = false }) => {
     bottom: 2px;
     width: ${CURRENT_DAY_DOT_SIZE}px;
     height: ${CURRENT_DAY_DOT_SIZE}px;
-    background-color: #fff;
+    background-color: ${theme.colors.input_background};
     border-radius: 25px;
   `;
 };
@@ -69,9 +66,7 @@ export const DayButton = styled.button`
   cursor: pointer;
 
   :hover {
-    background-color: #fff;
-    color: #17181b;
-    border-color: #008eff;
+    border-color: ${({ theme }) => theme.colors.primary_default};
     border-radius: 2px;
   }
 
