@@ -53,7 +53,7 @@ const Close = (props) => {
 
   return (
     <IconContainer onClick={clickHandler}>
-      <CloseButton />
+      <CloseButton size={14} />
     </IconContainer>
   );
 };
