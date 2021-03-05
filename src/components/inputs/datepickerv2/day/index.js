@@ -3,7 +3,7 @@ import { useDay } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
 
 import DatepickerContext from '../datepickerContext';
-import { DayButton } from './theme';
+import { DayButton, DayButtonDisabled } from './theme';
 import { isNow } from '../utils';
 
 const Day = ({ day = null, date = null }) => {
@@ -27,6 +27,7 @@ const Day = ({ day = null, date = null }) => {
     onKeyDown,
     onMouseEnter,
     tabIndex,
+    disabledDate
   } = useDay({
     date,
     focusedDate,
@@ -40,12 +41,11 @@ const Day = ({ day = null, date = null }) => {
     onDateHover,
     dayRef,
   });
-
   if (!day) {
     return <></>;
   }
 
-  return (
+  return disabledDate ? <DayButtonDisabled>{day}</DayButtonDisabled> : (
     <DayButton
       ref={dayRef}
       onClick={onClick}

@@ -20,6 +20,7 @@ const Calendar = (props) => {
     closeOnSelect = false,
     defaultState = { startDate: null, endDate: null, focusedInput: START_DATE },
     initialVisibleMonth = new Date(),
+    isDateBlocked = () => false,
   } = props;
 
   const onDatesChange = (data) => {
@@ -75,7 +76,7 @@ const Calendar = (props) => {
       />
 
       <Wrapper activeMonths={activeMonths}>
-        <DatepickerContext.Provider value={otherCalendarProps}>
+        <DatepickerContext.Provider value={{ ...otherCalendarProps, isDateBlocked }}>
           {activeMonths.map((month) => (
             <Month
               key={`${month.year}-${month.month}`}
@@ -105,6 +106,7 @@ Calendar.propTypes = {
     focusedInput: PropTypes.string,
   }),
   initialVisibleMonth: PropTypes.any,
+  isDateBlocked: PropTypes.any,
 };
 
 export default Calendar;

@@ -36,6 +36,7 @@ const DatepickerV2 = (props) => {
     defaultInitialVisibleMonth = new Date(),
     onDateChange = () => {},
     initialDate = DEFAULT_STATE,
+    isDateBlocked,
     theme,
   } = props;
   const inputRef = useRef();
@@ -140,6 +141,7 @@ const DatepickerV2 = (props) => {
               onClose={handleOnClose}
               defaultState={state}
               initialVisibleMonth={initialVisibleMonth}
+              isDateBlocked={isDateBlocked}
             />
           </MultipleCalendarWrapper>
 
@@ -192,6 +194,7 @@ DatepickerV2.propTypes = {
   size: PropTypes.oneOf(['regular', 'large']),
   defaultInitialVisibleMonth: PropTypes.any,
   onDateChange: PropTypes.func,
+  isDateBlocked: PropTypes.func,
 };
 
 export default withTheme(DatepickerV2);

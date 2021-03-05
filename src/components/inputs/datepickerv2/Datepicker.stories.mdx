@@ -142,6 +142,16 @@ For a single date, the controller component must inject a _`value`_ prop. The on
   </Story>
 </Preview>
 
+
+## Two month with disabled dates
+<Preview>
+  <Story name="Two month with disabled dates">
+    <Box>
+      <Datepicker isRange numberOfMonths={2} isDateBlocked={(date) => date.getTime() > (new Date()).getTime()}/>
+    </Box>
+  </Story>
+</Preview>
+
 ## Default single date
 
 <Preview>
