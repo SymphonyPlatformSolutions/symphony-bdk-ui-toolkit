@@ -8,19 +8,27 @@ import {
   Link
 } from "@storybook/addon-docs/blocks";
 import Toggle from './index.js';
-import { ToggleController } from './samples/controller';
+import { ToggleController, ToggleControllerBase } from './samples/controller';
 
 <Meta title="components/Inputs/Toggle" component={Toggle} parameters={{order: 290}}/>
 
-# Toggle
+# Toggle (true)
 
 <hr />
 
 Toggle component. Works pretty much like a checkbox.
 
 <Preview withSource="none">
-  <Story name="Base">
+  <Story name="Base (true)">
     <ToggleController />
+  </Story>
+</Preview>
+
+# Toggle (false)
+
+<Preview withSource="none">
+  <Story name="Base (false)">
+    <ToggleControllerBase  />
   </Story>
 </Preview>
 
