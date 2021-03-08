@@ -17,6 +17,8 @@ const GREY_COLORS = {
 };
 
 const COMMON_THEME_COLORS = {
+  white: '#FFFFFF',
+  black: '#000000',
   red: '#EE3D3D',
   yellow: '#F8C43F',
   green: '#5AD269',
@@ -70,6 +72,11 @@ export const THEMES2 = [
       btn_graphite: GREY_COLORS.scolor_graphite,
       btn_graphite_plus_72: GREY_COLORS.scolor_graphite_plus_72,
       btn_destructive: '#EE3D3D',
+
+      input_background: COMMON_THEME_COLORS.white,
+      input_color: COMMON_THEME_COLORS.black,
+      input_border: GREY_COLORS.scolor_graphite_minus_72,
+      input_placeholder: GREY_COLORS.scolor_graphite_minus_24,
     },
   },
   {
@@ -116,6 +123,11 @@ export const THEMES2 = [
       btn_graphite: GREY_COLORS.scolor_graphite_minus_72,
       btn_graphite_plus_72: GREY_COLORS.scolor_graphite_minus_96,
       btn_destructive: '#F15C5C',
+
+      input_background: GREY_COLORS.scolor_graphite_plus_24,
+      input_color: GREY_COLORS.scolor_graphite_minus_96,
+      input_border: GREY_COLORS.scolor_graphite_minus_48,
+      input_placeholder: GREY_COLORS.scolor_graphite_minus_48
     },
   },
 ];

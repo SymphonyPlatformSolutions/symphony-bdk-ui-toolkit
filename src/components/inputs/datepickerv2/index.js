@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { PositioningPortal } from '@codastic/react-positioning-portal';
 import { START_DATE } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
-
+import { withTheme } from 'styled-components';
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
 import { formatDate, addDaysToDate } from './utils';
@@ -36,6 +36,8 @@ const DatepickerV2 = (props) => {
     defaultInitialVisibleMonth = new Date(),
     onDateChange = () => {},
     initialDate = DEFAULT_STATE,
+    isDateBlocked,
+    theme,
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -139,6 +141,7 @@ const DatepickerV2 = (props) => {
               onClose={handleOnClose}
               defaultState={state}
               initialVisibleMonth={initialVisibleMonth}
+              isDateBlocked={isDateBlocked}
             />
           </MultipleCalendarWrapper>
 
@@ -149,7 +152,7 @@ const DatepickerV2 = (props) => {
     >
       <InputWrapper isOpen={isOpen}>
         <InputIcon>
-          <CalendarIcon color="white" />
+          <CalendarIcon color={theme.mode === 'LIGHT' ? theme.colors.white : '#3E4249'} />
         </InputIcon>
         <CustomInputField
           ref={inputRef}
@@ -191,6 +194,7 @@ DatepickerV2.propTypes = {
   size: PropTypes.oneOf(['regular', 'large']),
   defaultInitialVisibleMonth: PropTypes.any,
   onDateChange: PropTypes.func,
+  isDateBlocked: PropTypes.func,
 };
 
-export default DatepickerV2;
+export default withTheme(DatepickerV2);

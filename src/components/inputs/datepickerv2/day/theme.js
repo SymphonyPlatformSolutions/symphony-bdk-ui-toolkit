@@ -5,36 +5,33 @@ const CURRENT_DAY_DOT_SIZE = 3;
 const getBackgroundColorOfDayButton = ({
   isSelected,
   isSelectedStartOrEnd,
+  theme,
 }) => {
   if (isSelectedStartOrEnd) {
-    return '#008EFF';
+    return theme.colors.primary_default;
   }
 
   if (isSelected) {
-    return '#E0F1FF';
+    return theme.colors.primary_disabled;
   }
 
-  return '#fff';
+  return theme.colors.input_background;
 };
 
-const getColorOfDayButton = ({ isSelected, isSelectedStartOrEnd }) => {
+const getColorOfDayButton = ({ isSelectedStartOrEnd, theme }) => {
   if (isSelectedStartOrEnd) {
-    return '#fff';
+    return theme.colors.white;
   }
 
-  if (isSelected) {
-    return '#17181b';
-  }
-
-  return '#17181b';
+  return theme.colors.btn_graphite_plus_72;
 };
 
 const getBorderRadius = ({ isSelectedStartOrEnd }) => {
   return isSelectedStartOrEnd ? '2px' : 0;
 };
 
-const generateDotForNow = ({ isNow = false }) => {
-  if (!isNow) {
+const generateDotForNow = (props) => {
+  if (!props.isNow) {
     return '';
   }
 
@@ -44,15 +41,16 @@ const generateDotForNow = ({ isNow = false }) => {
     bottom: 2px;
     width: ${CURRENT_DAY_DOT_SIZE}px;
     height: ${CURRENT_DAY_DOT_SIZE}px;
-    background-color: #fff;
+    background-color: ${getColorOfDayButton(props)};
     border-radius: 25px;
   `;
 };
 
-export const DayButton = styled.button`
+const BaseDayButton = styled.button`
   position: relative;
   width: 24px;
   height: 28px;
+  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,22 +58,25 @@ export const DayButton = styled.button`
   font-family: Segoe UI;
   font-size: 12px;
   line-height: 16px;
-  color: ${getColorOfDayButton};
-  border: none;
-  background-color: ${getBackgroundColorOfDayButton};
-  border-radius: ${getBorderRadius};
   transition: all 0.1s;
   border: 2px solid transparent;
-  cursor: pointer;
-
-  :hover {
-    background-color: #fff;
-    color: #17181b;
-    border-color: #008eff;
-    border-radius: 2px;
-  }
-
+  background-color: ${getBackgroundColorOfDayButton};
   &:after {
     ${generateDotForNow}
   }
+`
+
+export const DayButton = styled(BaseDayButton)`
+  color: ${getColorOfDayButton};
+  border-radius: ${getBorderRadius};
+  cursor: pointer;
+  :hover {
+    border-color: ${({ theme }) => theme.colors.primary_default};
+    border-radius: 2px;
+  }
+`;
+
+export const DayButtonDisabled = styled(BaseDayButton)`
+  color: ${({ theme }) => theme.colors.graphite}
+  text-decoration: line-through;
 `;

@@ -6,11 +6,13 @@ import {
   Link,
 } from '@storybook/addon-docs/blocks';
 import Datepicker from './index';
+import { theme2Decorator } from '../../v2/storybook-helper';
 
 <Meta
   title="components/Inputs/Datepicker V2"
   component={Datepicker}
   parameters={{ order: 230 }}
+  decorators={[ theme2Decorator ]}
 />
 
 # Datepicker
@@ -136,6 +138,16 @@ For a single date, the controller component must inject a _`value`_ prop. The on
   <Story name="Two month">
     <Box>
       <Datepicker isRange numberOfMonths={2} />
+    </Box>
+  </Story>
+</Preview>
+
+
+## Two month with disabled dates
+<Preview>
+  <Story name="Two month with disabled dates">
+    <Box>
+      <Datepicker isRange numberOfMonths={2} isDateBlocked={(date) => date.getTime() > (new Date()).getTime()}/>
     </Box>
   </Story>
 </Preview>

@@ -12,7 +12,7 @@ export const MonthLabelContainer = styled.div`
 export const MonthLabel = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: #17181b;
+  color: ${({ theme }) => theme.colors.btn_graphite_plus_72};
   text-transform: uppercase;
 `;
 
@@ -27,7 +27,7 @@ export const WeekdayLabel = styled.div`
   font-weight: bold;
   line-height: 16px;
   text-align: center;
-  color: #17181b;
+  color: ${({ theme }) => theme.colors.btn_graphite_plus_72};;
   text-transform: uppercase;
 `;
 

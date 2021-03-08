@@ -35,9 +35,9 @@ const Month = ({ year, month, firstDayOfWeek = 0, customWeekdayLabels }) => {
       <WeekdaysAndDaysContainer>
         {days.map(
           (day) =>
-            day.dayLabel && (
-              <Day key={day.dayLabel} date={day.date} day={day.dayLabel} />
-            )
+            day === 0
+              ? <span />
+              : <Day key={day.dayLabel} date={day.date} day={day.dayLabel} />
         )}
       </WeekdaysAndDaysContainer>
     </Wrapper>
