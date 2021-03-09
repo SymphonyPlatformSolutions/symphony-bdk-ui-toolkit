@@ -153,7 +153,7 @@ const DatepickerV2 = (props) => {
     >
       <InputWrapper isOpen={isOpen}>
         <InputIcon>
-          <CalendarIcon color={theme.colors.background} />
+          <CalendarIcon color={theme.colors.inverse} />
         </InputIcon>
         <CustomInputField
           ref={inputRef}

@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.inverse};
   transition: opacity 0.2s linear;
 
   border-radius: 8px;
@@ -86,7 +86,7 @@ export const InputIcon = styled.div`
 
 export const CustomInputField = styled(InputField)`
   color: ${({ theme }) => theme.colors.main};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.inverse};
   font-size: 12px;
   margin-right: 3px;
   border-radius: 2px;
