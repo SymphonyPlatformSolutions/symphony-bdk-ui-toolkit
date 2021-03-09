@@ -207,3 +207,22 @@ For a single date, the controller component must inject a _`value`_ prop. The on
     </Box>
   </Story>
 </Preview>
+
+## Custom input text
+
+<Preview>
+  <Story name="Custom input text">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: new Date(),
+          focusedInput: 'startDate',
+        }}
+        customInputText="Today"
+      />
+    </Box>
+  </Story>
+</Preview>

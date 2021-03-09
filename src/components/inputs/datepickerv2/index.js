@@ -38,6 +38,7 @@ const DatepickerV2 = (props) => {
     initialDate = DEFAULT_STATE,
     isDateBlocked,
     theme,
+    customInputText,
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -162,7 +163,7 @@ const DatepickerV2 = (props) => {
           size={size}
           disabled={disabled}
           errorMessage={errorMessage}
-          value={formatDate(state, { isRange })}
+          value={customInputText || formatDate(state, { isRange })}
           onMouseEnter={() => setMouseLeaveInput(false)}
           onMouseLeave={() => setMouseLeaveInput(true)}
         />
@@ -195,6 +196,8 @@ DatepickerV2.propTypes = {
   defaultInitialVisibleMonth: PropTypes.any,
   onDateChange: PropTypes.func,
   isDateBlocked: PropTypes.func,
+  theme: PropTypes.any,
+  customInputText: PropTypes.string,
 };
 
 export default withTheme(DatepickerV2);
