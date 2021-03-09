@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  background: ${({ theme }) => theme.colors.input_background};
+  background: ${({ theme }) => theme.colors.background};
   transition: opacity 0.2s linear;
 
   border-radius: 8px;
@@ -67,7 +67,7 @@ export const MultipleCalendarWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.input_border};
+  background-color: ${({ theme }) => theme.colors.graphite_minus_72};
   border-radius: 4px;
   transition: all 0.3s;
 
@@ -81,11 +81,12 @@ export const InputIcon = styled.div`
   width: 16px;
   height: 16px;
   padding: 6px 8px;
+  background-color: transparent;
 `;
 
 export const CustomInputField = styled(InputField)`
-  color: ${({ theme }) => theme.colors.input_color};
-  background-color: ${({ theme }) => theme.colors.input_background};
+  color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.background};
   font-size: 12px;
   margin-right: 3px;
   border-radius: 2px;
@@ -93,6 +94,6 @@ export const CustomInputField = styled(InputField)`
   min-width: 150px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.input_placeholder};
+    color: ${({ theme }) => theme.colors.graphite_minus_24};
   }
 `;

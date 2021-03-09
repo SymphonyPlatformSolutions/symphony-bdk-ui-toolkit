@@ -15,7 +15,7 @@ const getBackgroundColorOfDayButton = ({
     return theme.colors.primary_disabled;
   }
 
-  return theme.colors.input_background;
+  return 'inherit';
 };
 
 const getColorOfDayButton = ({ isSelectedStartOrEnd, theme }) => {
