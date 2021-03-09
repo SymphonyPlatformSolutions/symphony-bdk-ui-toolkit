@@ -34,7 +34,9 @@ export const THEMES2 = [
       ...THEMES[0].colors, // To Remove: this will ensure backward comtability until migration will be fully done
       ...COMMON_THEME_COLORS,
       main: '#000000',
+      inverse: '#FFFFFF',
       background: '#FFFFFF',
+      green_light: '#D4F3D2',
       // grey levels
       graphite_minus_96: GREY_COLORS.scolor_graphite_minus_96,
       graphite_minus_88: GREY_COLORS.scolor_graphite_minus_88,
@@ -73,10 +75,6 @@ export const THEMES2 = [
       btn_graphite_plus_72: GREY_COLORS.scolor_graphite_plus_72,
       btn_destructive: '#EE3D3D',
 
-      input_background: COMMON_THEME_COLORS.white,
-      input_color: COMMON_THEME_COLORS.black,
-      input_border: GREY_COLORS.scolor_graphite_minus_72,
-      input_placeholder: GREY_COLORS.scolor_graphite_minus_24,
     },
   },
   {
@@ -85,7 +83,9 @@ export const THEMES2 = [
       ...THEMES[1].colors, // To Remove: this will ensure backward comtability until migration will be fully done
       ...COMMON_THEME_COLORS,
       main: '#FFFFFF',
-      background: '#000000',
+      inverse: '#000000',
+      background: '#25272B',
+      green_light: '#154712',
       // grey levels
       graphite_minus_96: GREY_COLORS.scolor_graphite_plus_72,
       graphite_minus_88: GREY_COLORS.scolor_graphite_plus_48,
@@ -123,11 +123,6 @@ export const THEMES2 = [
       btn_graphite: GREY_COLORS.scolor_graphite_minus_72,
       btn_graphite_plus_72: GREY_COLORS.scolor_graphite_minus_96,
       btn_destructive: '#F15C5C',
-
-      input_background: GREY_COLORS.scolor_graphite_plus_24,
-      input_color: GREY_COLORS.scolor_graphite_minus_96,
-      input_border: GREY_COLORS.scolor_graphite_minus_48,
-      input_placeholder: GREY_COLORS.scolor_graphite_minus_48
     },
   },
 ];
