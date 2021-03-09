@@ -3,6 +3,7 @@ import { PositioningPortal } from '@codastic/react-positioning-portal';
 import { START_DATE } from '@datepicker-react/hooks';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
+
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
 import { formatDate, addDaysToDate } from './utils';
@@ -15,10 +16,15 @@ import {
 } from './theme';
 import { CalendarIcon } from '../../misc/icons';
 
+const WRAPPER_PADDING_TOP = 4;
 const DEFAULT_STATE = {
   startDate: null,
   endDate: null,
   focusedInput: START_DATE,
+};
+const WRAPPER_LEFT_POSITION = {
+  1: '39%',
+  2: '25%',
 };
 
 const DatepickerV2 = (props) => {
@@ -123,14 +129,20 @@ const DatepickerV2 = (props) => {
   return (
     <PositioningPortal
       isOpen={isOpen}
-      portalElement={<div style={{ zIndex: 6 }} />}
-      portalContent={() => (
-        <Wrapper
-          isOpen={isOpen}
-          shouldRunFadeOut={shouldRunFadeOut}
+      portalElement={(
+        <div
+          style={{
+            zIndex: 6,
+            marginTop: -WRAPPER_PADDING_TOP,
+            paddingTop: WRAPPER_PADDING_TOP * 2,
+            left: WRAPPER_LEFT_POSITION[numberOfMonths],
+          }}
           onMouseEnter={() => setMouseLeaveWrapper(false)}
           onMouseLeave={() => setMouseLeaveWrapper(true)}
-        >
+        />
+      )}
+      portalContent={() => (
+        <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
           <MultipleCalendarWrapper>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
