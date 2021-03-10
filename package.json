@@ -1,6 +1,6 @@
 {
   "name": "symphony-bdk-ui-toolkit",
-  "version": "1.0.100",
+  "version": "1.0.101",
   "description": "Package with component-based development of SMS",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -33,6 +33,7 @@
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.8",
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-modules": "^0.1.4",
     "@babel/preset-react": "^7.7.4",
