@@ -1,0 +1,5 @@
+# GitHub CODEOWNERS file is a simple way to automate away some of the pain associated with the review system on github,
+# by automatically assigning reviewers to a pull request based on which files were modified.
+#  see https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+* @Alankmc @AnthonyDS-symphony @daitan-rovaris @JulienBlacas @matthieucrouzet-sym @nolan-symphony @romain-guillot-symphony @StepankaBarotova @vanhauphan
