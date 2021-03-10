@@ -1,4 +1,7 @@
 #!/bin/bash
+# exit when any command fails
+set -e
+
 if [ "$#" -ne 2 ]; then
     echo "USAGE: yarn create-release [patch|minor|major] \"your commit message\""
   exit 1
