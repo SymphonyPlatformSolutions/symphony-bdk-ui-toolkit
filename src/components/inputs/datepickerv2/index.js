@@ -16,15 +16,11 @@ import {
 } from './theme';
 import { CalendarIcon } from '../../misc/icons';
 
-const WRAPPER_PADDING_TOP = 4;
+const DATEPICKER_ID = 'datepicker-wrapper';
 const DEFAULT_STATE = {
   startDate: null,
   endDate: null,
   focusedInput: START_DATE,
-};
-const WRAPPER_LEFT_POSITION = {
-  1: '39%',
-  2: '25%',
 };
 
 const DatepickerV2 = (props) => {
@@ -49,8 +45,6 @@ const DatepickerV2 = (props) => {
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shouldRunFadeOut, setShouldRunFadeOut] = useState(false);
-  const [mouseLeaveInput, setMouseLeaveInput] = useState(true);
-  const [mouseLeaveWrapper, setMouseLeaveWrapper] = useState(true);
   const [initialVisibleMonth, setInitialVisibleMonth] = useState(
     defaultInitialVisibleMonth,
   );
@@ -79,10 +73,29 @@ const DatepickerV2 = (props) => {
     onDateChange(dateState);
   };
 
-  const handleOnBlur = (e) => {
-    if (e.relatedTarget) {
+  const handleOnBlurModal = (e) => {
+    const { currentTarget, relatedTarget } = e;
+
+    // If `relatedTarget` is a child of `currentTarget`, then we don't want to close the modal.
+    if (currentTarget.contains(relatedTarget)) {
+      currentTarget.focus();
       return;
     }
+
+    handleOnClose();
+  };
+
+  const handleOnBlurInput = (e) => {
+    const { relatedTarget } = e;
+    const relatedTargetIsDatepicker = relatedTarget?.id === DATEPICKER_ID;
+    const relatedTargetIsChildOfDatepicker = document
+      .getElementById(DATEPICKER_ID)
+      .contains(relatedTarget);
+
+    if (relatedTargetIsDatepicker || relatedTargetIsChildOfDatepicker) {
+      return;
+    }
+
     handleOnClose();
   };
 
@@ -107,14 +120,6 @@ const DatepickerV2 = (props) => {
   };
 
   useEffect(() => {
-    if (!mouseLeaveInput || !mouseLeaveWrapper) {
-      return;
-    }
-
-    handleOnClose();
-  }, [mouseLeaveInput, mouseLeaveWrapper]);
-
-  useEffect(() => {
     if (!state || !state.startDate) {
       return;
     }
@@ -129,20 +134,15 @@ const DatepickerV2 = (props) => {
   return (
     <PositioningPortal
       isOpen={isOpen}
-      portalElement={(
-        <div
-          style={{
-            zIndex: 6,
-            marginTop: -WRAPPER_PADDING_TOP,
-            paddingTop: WRAPPER_PADDING_TOP * 2,
-            left: WRAPPER_LEFT_POSITION[numberOfMonths],
-          }}
-          onMouseEnter={() => setMouseLeaveWrapper(false)}
-          onMouseLeave={() => setMouseLeaveWrapper(true)}
-        />
-      )}
+      portalElement={<div onBlur={handleOnBlurModal} style={{ zIndex: 6 }} />}
       portalContent={() => (
-        <Wrapper isOpen={isOpen} shouldRunFadeOut={shouldRunFadeOut}>
+        <Wrapper
+          id={DATEPICKER_ID}
+          isOpen={isOpen}
+          shouldRunFadeOut={shouldRunFadeOut}
+          // Needed to be able to get this element by using `e.relatedTarget`.
+          tabIndex={0}
+        >
           <MultipleCalendarWrapper>
             <Calendar
               firstDayOfWeek={firstDayOfWeek}
@@ -170,14 +170,12 @@ const DatepickerV2 = (props) => {
         <CustomInputField
           ref={inputRef}
           onFocus={handleOnOpen}
-          onBlur={(e) => handleOnBlur(e)}
+          onBlur={handleOnBlurInput}
           placeholder={placeholder}
           size={size}
           disabled={disabled}
           errorMessage={errorMessage}
           value={customInputText || formatDate(state, { isRange })}
-          onMouseEnter={() => setMouseLeaveInput(false)}
-          onMouseLeave={() => setMouseLeaveInput(true)}
         />
       </InputWrapper>
     </PositioningPortal>
