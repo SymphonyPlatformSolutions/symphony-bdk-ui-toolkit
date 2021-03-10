@@ -37,12 +37,15 @@ const getFadeInOrOutAnimation = ({ isOpen, shouldRunFadeOut }) => {
 };
 
 export const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
   display: flex;
   flex-direction: column;
 
   background: ${({ theme }) => theme.colors.background};
   transition: opacity 0.2s linear;
-
   border-radius: 8px;
 
   * {
@@ -55,8 +58,6 @@ export const Wrapper = styled.div`
 
   box-shadow: 0px 24px 48px rgba(9, 10, 11, 0.24),
     0px 4px 8px rgba(9, 10, 11, 0.16);
-
-  z-index: 999;
 `;
 
 export const MultipleCalendarWrapper = styled.div`
