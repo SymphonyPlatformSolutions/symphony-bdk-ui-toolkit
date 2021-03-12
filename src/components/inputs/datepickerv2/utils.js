@@ -72,3 +72,10 @@ export const addDaysToDate = (date, daysToAdd) => {
 export const isNow = (date) => {
   return date && dateAreEquals(date, new Date());
 };
+
+export const isValidDateRange = ({ startDate, endDate }, limitDateRange) => {
+  if (!endDate || !limitDateRange) {
+    return true;
+  }
+  return Math.abs(endDate - startDate) / (24 * 60 * 60 * 1000) + 1 <= limitDateRange;
+}

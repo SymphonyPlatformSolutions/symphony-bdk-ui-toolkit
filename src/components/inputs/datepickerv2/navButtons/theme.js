@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 10px 0;
+  margin-bottom: 10px;
 `;
 
 export const Button = styled.button`

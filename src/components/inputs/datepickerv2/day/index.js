@@ -19,6 +19,7 @@ const Day = ({ day = null, date = null }) => {
     onDateSelect,
     onDateFocus,
     onDateHover,
+    error,
   } = useContext(DatepickerContext);
   const {
     isSelected,
@@ -56,6 +57,7 @@ const Day = ({ day = null, date = null }) => {
       isSelected={isSelected}
       isSelectedStartOrEnd={isSelectedStartOrEnd}
       isNow={currentDayIsNow}
+      error={error}
     >
       {day}
     </DayButton>

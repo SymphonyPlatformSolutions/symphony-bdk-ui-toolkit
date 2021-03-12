@@ -60,6 +60,21 @@ export const Wrapper = styled.div`
     0px 4px 8px rgba(9, 10, 11, 0.16);
 `;
 
+export const ErrorWrapper = styled.div`
+  margin-left: 20px;
+  margin-bottom: 16px;
+`
+
+export const ErrorText = styled.div`
+  font-size: 12px;
+  line-height: 16px;
+  color: ${({ theme }) => theme.colors.red};
+`
+
+export const DisplayWrapper = styled.div`
+  display: block !important;
+`
+
 export const MultipleCalendarWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -68,7 +83,7 @@ export const MultipleCalendarWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.graphite_minus_72};
+  background-color: ${({ theme, error }) => error ? theme.colors.red : theme.colors.graphite_minus_72};
   border-radius: 4px;
   transition: all 0.3s;
 

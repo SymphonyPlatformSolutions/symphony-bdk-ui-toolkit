@@ -5,6 +5,7 @@ import {
   Props,
   Link,
 } from '@storybook/addon-docs/blocks';
+import Box from '../../layout/box';
 import Datepicker from './index';
 import { theme2Decorator } from '../../v2/storybook-helper';
 
@@ -127,6 +128,8 @@ For a single date, the controller component must inject a _`value`_ prop. The on
           { label: 'LAST 7 DAYS', daysToAdd: -6 },
           { label: 'LAST 30 DAYS', daysToAdd: -29 },
         ]}
+        limitDateRange={30}
+        errorMessage="The date range cannot be more than 30 days."
       />
     </Box>
   </Story>
@@ -222,6 +225,26 @@ For a single date, the controller component must inject a _`value`_ prop. The on
           focusedInput: 'startDate',
         }}
         customInputText="Today"
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## With range selection limit
+
+<Preview>
+  <Story name="Range selection limit">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: new Date(),
+          focusedInput: 'startDate',
+        }}
+        limitDateRange={30}
+        errorMessage="The date range cannot be more than 30 days."
       />
     </Box>
   </Story>
