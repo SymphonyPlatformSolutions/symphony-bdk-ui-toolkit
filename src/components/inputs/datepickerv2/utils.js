@@ -77,5 +77,5 @@ export const isValidDateRange = ({ startDate, endDate }, limitDateRange) => {
   if (!endDate || !limitDateRange) {
     return true;
   }
-  return Math.abs(endDate - startDate) / (24 * 60 * 60 * 1000) + 1 <= limitDateRange;
+  return Math.abs(endDate - startDate) / (24 * 60 * 60 * 1000) <= limitDateRange;
 }

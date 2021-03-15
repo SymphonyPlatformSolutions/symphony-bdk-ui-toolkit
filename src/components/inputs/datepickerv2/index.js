@@ -66,15 +66,24 @@ const DatepickerV2 = (props) => {
     setTimeout(() => setIsOpen(false), 100);
   };
 
-  const handleOnDateChange = (dateState, isOnlyEndDate) => {
+  /**
+   * set date and error state base on initial/new date inputs
+   * return true if inputs are valid
+   * @param {*} newDateState 
+   */
+  const validateDateState = (newDateState) => {
+    const isValid = isValidDateRange(newDateState, limitDateRange);
+    setError(!isValid)
+    setDateState(newDateState);
+    return isValid;
+  }
+
+  const handleOnDateChange = (dateState, isOnlyEndDate = false) => {
     const newDate = isOnlyEndDate ? { ...dateState, endDate: dateState.startDate } : { ...dateState };
-    if (isValidDateRange(newDate, limitDateRange)) {
-      setError(false);
-      onDateChange(dateState);
-    } else {
-      setError(true);
+    const isValid = validateDateState(newDate);
+    if (isValid) {
+      onDateChange(newDate);
     }
-    setDateState(dateState);
   };
 
   const handleOnBlurModal = (e) => {
@@ -120,7 +129,7 @@ const DatepickerV2 = (props) => {
       handleOnClose();
     }
 
-    setDateState(tempState);
+    handleOnDateChange(tempState);
   };
 
   useEffect(() => {
@@ -132,7 +141,7 @@ const DatepickerV2 = (props) => {
   }, [dateState]);
 
   useEffect(() => {
-    setDateState(initialDate);
+    validateDateState(initialDate);
   }, [initialDate]);
 
   return (
