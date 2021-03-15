@@ -2,6 +2,7 @@ import React from 'react';
 
 export const datepickerContextDefaultValue = {
   focusedDate: null,
+  error: false,
   isDateFocused: () => false,
   isDateSelected: () => false,
   isDateHovered: () => false,

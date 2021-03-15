@@ -5,6 +5,7 @@ import {
   Props,
   Link,
 } from '@storybook/addon-docs/blocks';
+import Box from '../../layout/box';
 import Datepicker from './index';
 import { theme2Decorator } from '../../v2/storybook-helper';
 
@@ -108,7 +109,7 @@ For a single date, the controller component must inject a _`value`_ prop. The on
     <Box>
       <Datepicker
         isRange
-        navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -6 }]}
+        navButtons={[{ label: 'LAST 7 DAYS', daysToAdd: -7 }]}
       />
     </Box>
   </Story>
@@ -124,9 +125,11 @@ For a single date, the controller component must inject a _`value`_ prop. The on
         numberOfMonths={2}
         navButtons={[
           { label: 'TODAY', daysToAdd: 0 },
-          { label: 'LAST 7 DAYS', daysToAdd: -6 },
-          { label: 'LAST 30 DAYS', daysToAdd: -29 },
+          { label: 'LAST 7 DAYS', daysToAdd: -7 },
+          { label: 'LAST 30 DAYS', daysToAdd: -30 },
         ]}
+        limitDateRange={30}
+        errorMessage="The date range cannot be more than 30 days."
       />
     </Box>
   </Story>
@@ -208,6 +211,30 @@ For a single date, the controller component must inject a _`value`_ prop. The on
   </Story>
 </Preview>
 
+## Default range - highlighted error
+
+<Preview>
+  <Story name="Default range - highlighted error">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: (() => {
+            const now = new Date();
+            now.setDate(now.getDate() + 31);
+            return now;
+          })(),
+          focusedInput: 'startDate',
+        }}
+        limitDateRange={30}
+        errorMessage="The date range cannot be more than 30 days."
+      />
+    </Box>
+  </Story>
+</Preview>
+
 ## Custom input text
 
 <Preview>
@@ -222,6 +249,26 @@ For a single date, the controller component must inject a _`value`_ prop. The on
           focusedInput: 'startDate',
         }}
         customInputText="Today"
+      />
+    </Box>
+  </Story>
+</Preview>
+
+## With range selection limit
+
+<Preview>
+  <Story name="Range selection limit">
+    <Box>
+      <Datepicker
+        isRange
+        numberOfMonths={2}
+        initialDate={{
+          startDate: new Date(),
+          endDate: new Date(),
+          focusedInput: 'startDate',
+        }}
+        limitDateRange={30}
+        errorMessage="The date range cannot be more than 30 days."
       />
     </Box>
   </Story>

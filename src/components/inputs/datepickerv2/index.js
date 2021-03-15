@@ -6,13 +6,16 @@ import { withTheme } from 'styled-components';
 
 import Calendar from './calendar/index';
 import NavButtons from './navButtons/index';
-import { formatDate, addDaysToDate } from './utils';
+import { formatDate, addDaysToDate, isValidDateRange } from './utils';
 import {
   Wrapper,
   MultipleCalendarWrapper,
   InputWrapper,
   CustomInputField,
   InputIcon,
+  ErrorWrapper,
+  ErrorText,
+  DisplayWrapper,
 } from './theme';
 import { CalendarIcon } from '../../misc/icons';
 
@@ -41,6 +44,7 @@ const DatepickerV2 = (props) => {
     isDateBlocked,
     theme,
     customInputText,
+    limitDateRange
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +52,8 @@ const DatepickerV2 = (props) => {
   const [initialVisibleMonth, setInitialVisibleMonth] = useState(
     defaultInitialVisibleMonth,
   );
-  const [state, setState] = useState(initialDate);
+  const [dateState, setDateState] = useState(initialDate);
+  const [error, setError] = useState(false);
 
   const handleOnOpen = () => {
     setShouldRunFadeOut(false);
@@ -61,16 +66,24 @@ const DatepickerV2 = (props) => {
     setTimeout(() => setIsOpen(false), 100);
   };
 
-  const handleOnDateChange = (dateState, isOnlyEndDate) => {
-    if (isOnlyEndDate) {
-      const newDate = { ...state, endDate: dateState.startDate };
-      setState(newDate);
-      onDateChange(newDate);
-      return;
-    }
+  /**
+   * set date and error state base on initial/new date inputs
+   * return true if inputs are valid
+   * @param {*} newDateState 
+   */
+  const validateDateState = (newDateState) => {
+    const isValid = isValidDateRange(newDateState, limitDateRange);
+    setError(!isValid)
+    setDateState(newDateState);
+    return isValid;
+  }
 
-    setState(dateState);
-    onDateChange(dateState);
+  const handleOnDateChange = (dateState, isOnlyEndDate = false) => {
+    const newDate = isOnlyEndDate ? { ...dateState, endDate: dateState.startDate } : { ...dateState };
+    const isValid = validateDateState(newDate);
+    if (isValid) {
+      onDateChange(newDate);
+    }
   };
 
   const handleOnBlurModal = (e) => {
@@ -100,7 +113,7 @@ const DatepickerV2 = (props) => {
   };
 
   const handleOnNavigate = (daysToAdd) => {
-    const tempState = { ...state };
+    const tempState = { ...dateState };
     const now = new Date();
 
     // Means "TODAY" button click.
@@ -116,19 +129,19 @@ const DatepickerV2 = (props) => {
       handleOnClose();
     }
 
-    setState(tempState);
+    handleOnDateChange(tempState);
   };
 
   useEffect(() => {
-    if (!state || !state.startDate) {
+    if (!dateState || !dateState.startDate) {
       return;
     }
 
-    setInitialVisibleMonth(state.startDate);
-  }, [state]);
+    setInitialVisibleMonth(dateState.startDate);
+  }, [dateState]);
 
   useEffect(() => {
-    setState(initialDate);
+    validateDateState(initialDate);
   }, [initialDate]);
 
   return (
@@ -152,32 +165,42 @@ const DatepickerV2 = (props) => {
               isRange={isRange}
               onChange={handleOnDateChange}
               onClose={handleOnClose}
-              defaultState={state}
+              defaultState={dateState}
               initialVisibleMonth={initialVisibleMonth}
               isDateBlocked={isDateBlocked}
+              error={error}
+              errorMessage={errorMessage}
             />
           </MultipleCalendarWrapper>
-
+          
+          {error &&
+          <ErrorWrapper>
+            <ErrorText>{errorMessage}</ErrorText>
+          </ErrorWrapper>}
+          
           <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
         </Wrapper>
       )}
       onClose={handleOnClose}
     >
-      <InputWrapper isOpen={isOpen}>
-        <InputIcon>
-          <CalendarIcon color={theme.colors.inverse} />
-        </InputIcon>
-        <CustomInputField
-          ref={inputRef}
-          onFocus={handleOnOpen}
-          onBlur={handleOnBlurInput}
-          placeholder={placeholder}
-          size={size}
-          disabled={disabled}
-          errorMessage={errorMessage}
-          value={customInputText || formatDate(state, { isRange })}
-        />
-      </InputWrapper>
+      <DisplayWrapper>
+        <InputWrapper isOpen={isOpen} error={error}>
+          <InputIcon>
+            <CalendarIcon color={theme.colors.inverse} />
+          </InputIcon>
+          <CustomInputField
+            ref={inputRef}
+            onFocus={handleOnOpen}
+            onBlur={handleOnBlurInput}
+            placeholder={placeholder}
+            size={size}
+            disabled={disabled}
+            errorMessage={errorMessage}
+            value={error ? 'Range exceeded' : customInputText || formatDate(dateState, { isRange })}
+          />
+        </InputWrapper>
+        {error && !isOpen && <ErrorText>{errorMessage}</ErrorText>}
+      </DisplayWrapper>
     </PositioningPortal>
   );
 };

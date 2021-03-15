@@ -5,14 +5,15 @@ const CURRENT_DAY_DOT_SIZE = 3;
 const getBackgroundColorOfDayButton = ({
   isSelected,
   isSelectedStartOrEnd,
+  error,
   theme,
 }) => {
   if (isSelectedStartOrEnd) {
-    return theme.colors.primary_default;
+    return error ? theme.colors.red : theme.colors.primary_default;
   }
 
   if (isSelected) {
-    return theme.colors.primary_disabled;
+    return error ? theme.colors.destructive_disabled : theme.colors.primary_disabled;
   }
 
   return 'inherit';
@@ -60,7 +61,6 @@ const BaseDayButton = styled.button`
   line-height: 16px;
   transition: all 0.1s;
   border: 2px solid transparent;
-  background-color: ${getBackgroundColorOfDayButton};
   &:after {
     ${generateDotForNow}
   }
@@ -69,6 +69,7 @@ const BaseDayButton = styled.button`
 export const DayButton = styled(BaseDayButton)`
   color: ${getColorOfDayButton};
   border-radius: ${getBorderRadius};
+  background-color: ${getBackgroundColorOfDayButton};
   cursor: pointer;
   :hover {
     border-color: ${({ theme }) => theme.colors.primary_default};
@@ -77,6 +78,7 @@ export const DayButton = styled(BaseDayButton)`
 `;
 
 export const DayButtonDisabled = styled(BaseDayButton)`
-  color: ${({ theme }) => theme.colors.graphite}
+  background-color: inherit;
+  color: ${({ theme }) => theme.colors.graphite};
   text-decoration: line-through;
 `;

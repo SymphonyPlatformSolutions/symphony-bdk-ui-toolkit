@@ -20,7 +20,7 @@ const Header = (props) => {
         type="button"
         onClick={goToPreviousYear}
         turnHalf
-        spacing={10}
+        spacing={20}
       >
         <DoubleChevron width={12.5} height={10} color={CHEVRON_COLOR} />
       </ChevronButton>
@@ -29,12 +29,12 @@ const Header = (props) => {
         type="button"
         onClick={goToPreviousMonth}
         turnLeft
-        spacing={30}
+        spacing={40}
       >
         <DownChevron size={10} color={CHEVRON_COLOR} />
       </ChevronButton>
 
-      <ChevronButton type="button" onClick={goToNextMonth} isRight spacing={30}>
+      <ChevronButton type="button" onClick={goToNextMonth} isRight spacing={40}>
         <DownChevron size={10} color={CHEVRON_COLOR} />
       </ChevronButton>
 
@@ -43,7 +43,7 @@ const Header = (props) => {
         onClick={goToNextYear}
         isRight
         noRotation
-        spacing={10}
+        spacing={20}
       >
         <DoubleChevron width={12.5} height={10} color={CHEVRON_COLOR} />
       </ChevronButton>

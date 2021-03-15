@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDatepicker, START_DATE } from '@datepicker-react/hooks';
+import { useDatepicker, START_DATE, END_DATE } from '@datepicker-react/hooks';
 
 import DatepickerContext from '../datepickerContext';
 import { getFocusedInput } from '../utils';
@@ -21,13 +21,16 @@ const Calendar = (props) => {
     defaultState = { startDate: null, endDate: null, focusedInput: START_DATE },
     initialVisibleMonth = new Date(),
     isDateBlocked = () => false,
+    error = false,
   } = props;
 
   const onDatesChange = (data) => {
     let newData = data;
 
-    if (!data.focusedInput) {
+    if (!data.focusedInput) { // endDate has been selected
       newData = { ...data, focusedInput: START_DATE };
+    } else if (data.focusedInput === END_DATE) { // startDate has been selected, just clear previous endDate value
+      newData = { ...data, endDate: null };
     }
 
     onChange(newData);
@@ -76,7 +79,7 @@ const Calendar = (props) => {
       />
 
       <Wrapper activeMonths={activeMonths}>
-        <DatepickerContext.Provider value={{ ...otherCalendarProps, isDateBlocked }}>
+        <DatepickerContext.Provider value={{ ...otherCalendarProps, isDateBlocked, error }}>
           {activeMonths.map((month) => (
             <Month
               key={`${month.year}-${month.month}`}
@@ -107,6 +110,7 @@ Calendar.propTypes = {
   }),
   initialVisibleMonth: PropTypes.any,
   isDateBlocked: PropTypes.any,
+  error: PropTypes.bool,
 };
 
 export default Calendar;
