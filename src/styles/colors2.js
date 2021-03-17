@@ -21,6 +21,8 @@ const COMMON_THEME_COLORS = {
   black: '#000000',
   red: '#EE3D3D',
   yellow: '#F8C43F',
+  yellow_10: '#F9F1D8',
+  yellow_30: '#E3B137',
   green: '#5AD269',
   blue: '#008EFF',
   focus: '#85C9FF',
