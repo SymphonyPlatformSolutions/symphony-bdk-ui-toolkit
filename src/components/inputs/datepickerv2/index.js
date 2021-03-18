@@ -44,7 +44,7 @@ const DatepickerV2 = (props) => {
     isDateBlocked,
     theme,
     customInputText,
-    limitDateRange
+    limitDateRange,
   } = props;
   const inputRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -69,17 +69,19 @@ const DatepickerV2 = (props) => {
   /**
    * set date and error state base on initial/new date inputs
    * return true if inputs are valid
-   * @param {*} newDateState 
+   * @param {*} newDateState
    */
   const validateDateState = (newDateState) => {
     const isValid = isValidDateRange(newDateState, limitDateRange);
-    setError(!isValid)
+    setError(!isValid);
     setDateState(newDateState);
     return isValid;
-  }
+  };
 
-  const handleOnDateChange = (dateState, isOnlyEndDate = false) => {
-    const newDate = isOnlyEndDate ? { ...dateState, endDate: dateState.startDate } : { ...dateState };
+  const handleOnDateChange = (newDateState, isOnlyEndDate = false) => {
+    const newDate = isOnlyEndDate
+      ? { ...newDateState, endDate: newDateState.startDate }
+      : { ...newDateState };
     const isValid = validateDateState(newDate);
     if (isValid) {
       onDateChange(newDate);
@@ -172,12 +174,13 @@ const DatepickerV2 = (props) => {
               errorMessage={errorMessage}
             />
           </MultipleCalendarWrapper>
-          
-          {error &&
-          <ErrorWrapper>
-            <ErrorText>{errorMessage}</ErrorText>
-          </ErrorWrapper>}
-          
+
+          {error && (
+            <ErrorWrapper>
+              <ErrorText>{errorMessage}</ErrorText>
+            </ErrorWrapper>
+          )}
+
           <NavButtons buttons={navButtons} onNavigate={handleOnNavigate} />
         </Wrapper>
       )}
@@ -186,7 +189,7 @@ const DatepickerV2 = (props) => {
       <DisplayWrapper>
         <InputWrapper isOpen={isOpen} error={error}>
           <InputIcon>
-            <CalendarIcon color={theme.colors.inverse} />
+            <CalendarIcon color={theme.colors.white} />
           </InputIcon>
           <CustomInputField
             ref={inputRef}
@@ -231,6 +234,7 @@ DatepickerV2.propTypes = {
   isDateBlocked: PropTypes.func,
   theme: PropTypes.any,
   customInputText: PropTypes.string,
+  limitDateRange: PropTypes.number,
 };
 
 export default withTheme(DatepickerV2);
