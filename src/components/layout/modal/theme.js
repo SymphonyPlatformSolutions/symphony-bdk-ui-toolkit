@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { THEME_TYPES } from '../../../styles/colors';
 
 export const Overlay = styled.div`
-  background-color: #808080c7;
+  background-color: #000C;
   width: 100%;
   height: 100%;
   position: fixed;
