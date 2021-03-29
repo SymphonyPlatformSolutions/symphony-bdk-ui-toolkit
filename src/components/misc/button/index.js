@@ -33,15 +33,15 @@ const Button = ({
     setIsLoading(loading);
   }, [loading]);
 
-  const handleClick = () => {
+  const handleClick = (ev) => {
     if (loading === null) {
       setIsLoading(true);
       Promise.resolve()
-        .then(onClick)
+        .then(() => onClick(ev))
         .catch((err) => err)
         .then(() => setIsLoading(false));
     } else {
-      onClick();
+      onClick(ev);
     }
   };
 

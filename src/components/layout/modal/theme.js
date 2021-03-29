@@ -8,7 +8,7 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 9000;
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   opacity: ${({ open }) => (open ? 1 : 0)};
   transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -21,7 +21,6 @@ export const Modal = styled.div`
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   overflow: visible;
   background: ${props => getBackgroundColor(props)};
-  z-index: 9000;
   position: absolute;
   top: 30%;
   border-radius: 4px;
